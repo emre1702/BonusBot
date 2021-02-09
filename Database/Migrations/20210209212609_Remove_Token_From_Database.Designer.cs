@@ -2,14 +2,16 @@
 using BonusBot.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BonusBot.Database.Migrations
 {
     [DbContext(typeof(FunDbContext))]
-    partial class FunDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210209212609_Remove_Token_From_Database")]
+    partial class Remove_Token_From_Database
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

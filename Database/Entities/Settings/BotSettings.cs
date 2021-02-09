@@ -7,7 +7,6 @@ namespace BonusBot.Database.Entities.Settings
     {
         public int Id { get; set; } = -1;
         public string DefaultName { get; set; } = "BonusBot";
-        public string Token { get; set; } = "";
     }
 
     public class BotSettingsConfiguration : IEntityTypeConfiguration<BotSettings>
