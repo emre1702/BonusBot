@@ -4,6 +4,7 @@ using BonusBot.Services.Events;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using BonusBot.Common.Defaults;
 
 namespace BonusBot.Services.DiscordNet
 {
@@ -11,28 +12,17 @@ namespace BonusBot.Services.DiscordNet
     {
         public TaskCompletionSource<DiscordSocketClient> ClientSource { get; } = new TaskCompletionSource<DiscordSocketClient>();
 
-        public SocketClientHandler(FunDbContextFactory dbContextFactory, EventsHandler eventsHandler)
+        public SocketClientHandler(EventsHandler eventsHandler)
         {
-            InitializeSocketClient(dbContextFactory, eventsHandler);
+            InitializeSocketClient(eventsHandler);
         }
 
-        private async void InitializeSocketClient(FunDbContextFactory dbContextFactory, EventsHandler eventsHandler)
+        private async void InitializeSocketClient(EventsHandler eventsHandler)
         {
-            using var dbContext = dbContextFactory.CreateDbContext();
             var client = CreateClient();
 
             AddEventHandlers(client, eventsHandler);
-
-            var settings = await dbContext.BotSettings.FirstAsync();
-
-            if (settings.Token.Length == 0)
-            {
-                var token = await ConnectWithNewToken(client);
-                settings.Token = token;
-                await dbContext.SaveChangesAsync();
-            }
-            else
-                await ConnectWithToken(client, settings.Token);
+            await Start(client);
 
             client.Ready += () => Client_Ready(client);
         }
@@ -62,56 +52,10 @@ namespace BonusBot.Services.DiscordNet
             client.MessageReceived += eventsHandler.TriggerMessage;
         }
 
-        private async Task<string> ConnectWithNewToken(DiscordSocketClient client)
+        private async Task Start(DiscordSocketClient client)
         {
-            string? token = null;
-            while (token is null)
-            {
-                Console.WriteLine("Kein Bot-Token wurde gespeichert. Bitte gebe den Token des Bots ein.");
-                var tryToken = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(tryToken))
-                    continue;
-                if (!await TryLogin(client, tryToken))
-                    continue;
-                if (!await TryStart(client))
-                    continue;
-                token = tryToken;
-            }
-
-            return token;
-        }
-
-        private async Task<bool> TryLogin(DiscordSocketClient client, string token)
-        {
+            var token = Environment.GetEnvironmentVariable(Constants.TokenEnvironmentVariable);
             await client.LoginAsync(Discord.TokenType.Bot, token, true);
-            try
-            {
-                return true;
-            }
-            catch
-            {
-                Console.WriteLine("Der Bot konnte sich nicht einloggen.");
-                return false;
-            }
-        }
-
-        private async Task<bool> TryStart(DiscordSocketClient client)
-        {
-            try
-            {
-                await client.StartAsync();
-                return true;
-            }
-            catch
-            {
-                Console.WriteLine("Der Bot konnte nicht gestartet werden.");
-                return false;
-            }
-        }
-
-        private async Task ConnectWithToken(DiscordSocketClient client, string token)
-        {
-            await client.LoginAsync(Discord.TokenType.Bot, token);
             await client.StartAsync();
         }
     }
