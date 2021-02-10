@@ -1,10 +1,11 @@
-﻿using Discord;
-using Discord.WebSocket;
-using BonusBot.Common.Defaults;
+﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Extensions;
+using BonusBot.Database;
 using BonusBot.GamePlaningModule.Language;
 using BonusBot.Services.DiscordNet;
-using System;
-using System.Collections.Generic;
+using Discord;
+using Discord.WebSocket;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -12,48 +13,54 @@ namespace BonusBot.GamePlaningModule
 {
     public partial class GamePlaning
     {
-        private readonly SocketClientHandler _socketClientHandler;
+        private static bool _initialized;
 
-        public GamePlaning(SocketClientHandler socketClientHandler)
+        private readonly SocketClientHandler _socketClientHandler;
+        private readonly FunDbContextFactory _dbContextFactory;
+
+        public GamePlaning(SocketClientHandler socketClientHandler, FunDbContextFactory dbContextFactory)
         {
             _socketClientHandler = socketClientHandler;
-            AddEvents(socketClientHandler);
-        }
-
-        private async void AddEvents(SocketClientHandler socketClientHandler)
-        {
-            var client = await socketClientHandler.ClientSource.Task;
+            _dbContextFactory = dbContextFactory;
             ModuleTexts.Culture = Constants.Culture;
 
+            AddEvents();
+        }
+
+        private async void AddEvents()
+        {
+            if (_initialized) return;
+
+            _initialized = true;
+            var client = await _socketClientHandler.ClientSource.Task;
             client.ReactionAdded += SetParticipantsToMessage;
             client.ReactionRemoved += SetParticipantsToMessage;
         }
 
         private async Task SetParticipantsToMessage(Cacheable<IUserMessage, ulong> cachedMessageOrId, ISocketMessageChannel channel, SocketReaction reaction)
         {
-            lock (_announcementMessageIds)
-            {
-                if (!_announcementMessageIds.Contains(reaction.MessageId))
-                    return;
-            }
-            if (_lastAnnouncementEmote?.Id != (reaction.Emote as Emote)?.Id)
-                return;
             var message = await cachedMessageOrId.DownloadAsync();
             if (!message.Author.IsBot)
                 return;
+            var embed = message.Embeds.FirstOrDefault();
+            if (embed is null)
+                return;
+            if (!embed.Footer.HasValue || embed.Footer.Value.Text != Helpers.GetAnnouncementFooter())
+                return;
 
-            var reactedUsers = await message.GetReactionUsersAsync(reaction.Emote, 100).FlattenAsync();
             var guildChannel = (SocketGuildChannel)channel;
+            var emote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.AnnouncementEmoteId);
+            var reactedUsers = await message.GetReactionUsersAsync(emote, 100).FlattenAsync();
 
             var names = await Helpers.GetUserNames(_socketClientHandler, reactedUsers, guildChannel).ToListAsync();
             var namesStr = string.Join(", ", names);
-            var msgText = Helpers.GetWithoutParticipantsMessage(message.Content);
 
-            await message.ModifyAsync(prop => prop.Content = msgText
-                + Environment.NewLine + Environment.NewLine
-                + ModuleTexts.MeetupAnnouncementParticipantsTitle + $" ({names.Count})"
-                + Environment.NewLine
-                + namesStr);
+            var author = embed.Author!.Value;
+            var newEmbedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embed.Fields[0].Value, embed.Fields[1].Value, namesStr, names.Count, emote)
+                .WithAuthor(author.Name, author.IconUrl, author.Url);
+            await message.ModifyAsync(prop => prop.Embed = newEmbedBuilder.Build());
+
+            var msgText = Helpers.GetWithoutParticipantsMessage(message.Content);
         }
     }
 }

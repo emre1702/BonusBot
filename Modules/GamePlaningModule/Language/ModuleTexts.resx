@@ -117,12 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MeetupAnnouncement" xml:space="preserve">
-    <value>{0} wants to play '{1}' with you.
-Time: **{2}**
-If you want to play, you can click on the {3} icon below.</value>
+  <data name="DateTime" xml:space="preserve">
+    <value>Date &amp; time</value>
   </data>
-  <data name="MeetupAnnouncementParticipantsTitle" xml:space="preserve">
-    <value>**Participants**</value>
+  <data name="Game" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="MeetupAnnouncementDescription" xml:space="preserve">
+    <value>A meetup has been organized.
+Click on the {0} icon below to confirm your participation.</value>
+  </data>
+  <data name="MeetupAnnouncementTitle" xml:space="preserve">
+    <value>Meetup announcement</value>
+  </data>
+  <data name="Participants" xml:space="preserve">
+    <value>Participants</value>
   </data>
 </root>

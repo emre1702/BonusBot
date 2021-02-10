@@ -61,22 +61,48 @@ namespace BonusBot.GamePlaningModule.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} wants to play &apos;{1}&apos; with you.
-        ///Time: **{2}**
-        ///If you want to play, you can click on the {3} icon below..
+        ///   Looks up a localized string similar to Date &amp; time.
         /// </summary>
-        internal static string MeetupAnnouncement {
+        internal static string DateTime {
             get {
-                return ResourceManager.GetString("MeetupAnnouncement", resourceCulture);
+                return ResourceManager.GetString("DateTime", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to **Participants**.
+        ///   Looks up a localized string similar to Game.
         /// </summary>
-        internal static string MeetupAnnouncementParticipantsTitle {
+        internal static string Game {
             get {
-                return ResourceManager.GetString("MeetupAnnouncementParticipantsTitle", resourceCulture);
+                return ResourceManager.GetString("Game", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A meetup has been organized.
+        ///Click on the {0} icon below to confirm your participation..
+        /// </summary>
+        internal static string MeetupAnnouncementDescription {
+            get {
+                return ResourceManager.GetString("MeetupAnnouncementDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meetup announcement.
+        /// </summary>
+        internal static string MeetupAnnouncementTitle {
+            get {
+                return ResourceManager.GetString("MeetupAnnouncementTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Participants.
+        /// </summary>
+        internal static string Participants {
+            get {
+                return ResourceManager.GetString("Participants", resourceCulture);
             }
         }
     }
