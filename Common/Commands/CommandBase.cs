@@ -3,6 +3,7 @@ using BonusBot.Database;
 using Discord;
 using Discord.Commands;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Threading.Tasks;
 
 namespace BonusBot.Common.Extensions
@@ -34,6 +35,15 @@ namespace BonusBot.Common.Extensions
 
         protected async Task<Emote?> GetSettingEmote(FunDbContextFactory dbContextFactory, IGuild guild, string settingKey)
         {
+            var emoteId = await GetSetting<ulong>(dbContextFactory, guild, settingKey);
+            if (emoteId == 0)
+                return null;
+
+            return await guild.GetEmoteAsync(emoteId);
+        }
+
+        protected async Task<T?> GetSetting<T>(FunDbContextFactory dbContextFactory, IGuild guild, string settingKey)
+        {
             var moduleName = GetType().Assembly.GetName()!.Name!.ToModuleName();
 
             using var dbContext = dbContextFactory.CreateDbContext();
@@ -41,12 +51,10 @@ namespace BonusBot.Common.Extensions
                 s.GuildId == guild.Id &&
                 EF.Functions.Like(s.Module, moduleName) &&
                 EF.Functions.Like(s.Key, settingKey));
-            if (guildSetting is null) return null;
+            if (guildSetting is null) return default;
 
-            if (!ulong.TryParse(guildSetting.Value, out ulong emoteId))
-                return null;
-
-            return await guild.GetEmoteAsync(emoteId);
+            var ret = Convert.ChangeType(guildSetting.Value, typeof(T));
+            return ret is T ? (T)ret : default;
         }
     }
 }
