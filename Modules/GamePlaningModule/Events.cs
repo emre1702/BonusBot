@@ -1,13 +1,10 @@
 ﻿using BonusBot.Common.Defaults;
-using BonusBot.Common.Extensions;
 using BonusBot.Database;
 using BonusBot.GamePlaningModule.Language;
 using BonusBot.GamePlaningModule.Models;
 using BonusBot.Services.DiscordNet;
 using Discord;
 using Discord.WebSocket;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
