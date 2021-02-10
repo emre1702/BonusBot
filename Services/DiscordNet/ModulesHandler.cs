@@ -43,7 +43,7 @@ namespace BonusBot.Services.DiscordNet
 
             foreach (var file in Directory.EnumerateFiles(execPath, "*Module.dll", SearchOption.AllDirectories))
             {
-                var context = new AssemblyLoadContext(file, true);
+                var context = new AssemblyLoadContext(file);
                 var assembly = context.LoadFromAssemblyPath(file);
                 var name = assembly.GetName().Name!.ToModuleName();
                 lock (assembly)
