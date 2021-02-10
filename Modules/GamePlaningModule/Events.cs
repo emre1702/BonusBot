@@ -2,10 +2,12 @@
 using BonusBot.Common.Extensions;
 using BonusBot.Database;
 using BonusBot.GamePlaningModule.Language;
+using BonusBot.GamePlaningModule.Models;
 using BonusBot.Services.DiscordNet;
 using Discord;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -49,18 +51,35 @@ namespace BonusBot.GamePlaningModule
                 return;
 
             var guildChannel = (SocketGuildChannel)channel;
-            var emote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.AnnouncementEmoteId);
-            var reactedUsers = await message.GetReactionUsersAsync(emote, 100).FlattenAsync();
 
-            var names = await Helpers.GetUserNames(_socketClientHandler, reactedUsers, guildChannel).ToListAsync();
-            var namesStr = string.Join(", ", names);
+            var participationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.ParticipationEmoteId);
+            var lateParticipationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.LateParticipationEmoteId);
+            var cancellationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.CancellationEmoteId);
+            var mentionEveryone = await GetSetting<bool>(_dbContextFactory, guildChannel.Guild, Settings.MentionEveryone);
+
+            var participantNames = await Helpers.GetReactedUsers(message, participationEmote, guildChannel.Guild, _socketClientHandler);
+            var lateParticipantNames = await Helpers.GetReactedUsers(message, lateParticipationEmote, guildChannel.Guild, _socketClientHandler);
+            var cancellationtNames = await Helpers.GetReactedUsers(message, cancellationEmote, guildChannel.Guild, _socketClientHandler);
 
             var author = embed.Author!.Value;
-            var newEmbedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embed.Fields[0].Value, embed.Fields[1].Value, namesStr, names.Count, emote)
+            var embedData = new AnnouncementEmbedData(embed.Fields[0].Value, embed.Fields[1].Value, participantNames, participationEmote, lateParticipantNames, lateParticipationEmote, cancellationtNames, cancellationEmote);
+            var newEmbedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embedData)
                 .WithAuthor(author.Name, author.IconUrl, author.Url);
-            await message.ModifyAsync(prop => prop.Embed = newEmbedBuilder.Build());
+            await message.ModifyAsync(prop =>
+            {
+                prop.Embed = newEmbedBuilder.Build();
+                if (mentionEveryone)
+                    prop.Content = guildChannel.Guild.EveryoneRole.Mention;
+            });
 
             var msgText = Helpers.GetWithoutParticipantsMessage(message.Content);
+
+            if (participantNames.Count == 0)
+                await message.AddReactionAsync(participationEmote);
+            if (lateParticipantNames.Count == 0)
+                await message.AddReactionAsync(lateParticipationEmote);
+            if (cancellationtNames.Count == 0)
+                await message.AddReactionAsync(cancellationEmote);
         }
     }
 }

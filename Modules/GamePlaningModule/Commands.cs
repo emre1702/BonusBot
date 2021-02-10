@@ -1,5 +1,6 @@
 ﻿using BonusBot.Common.Commands.Conditions;
 using BonusBot.Common.Extensions;
+using BonusBot.GamePlaningModule.Models;
 using Discord;
 using Discord.Commands;
 using System;
@@ -13,19 +14,26 @@ namespace BonusBot.GamePlaningModule
         [Command("treffen")]
         [Alias("meet", "meetup", "gameplan", "gameplaning", "playplan", "playplaning", "plangame", "planinggame", "planplay", "planingplay", "treff", "termin")]
         [RequireBotPermission(GuildPermission.SendMessages)]
-        [RequireEmoteSetting(Settings.AnnouncementEmoteId)]
-        [RequireSetting(Settings.AnnouncementMentionEveryone, typeof(bool))]
+        [RequireEmoteSetting(Settings.ParticipationEmoteId)]
+        [RequireEmoteSetting(Settings.LateParticipationEmoteId)]
+        [RequireEmoteSetting(Settings.CancellationEmoteId)]
+        [RequireSetting(Settings.MentionEveryone, typeof(bool))]
         public async Task PlanMeetup(string game, DateTime time)
         {
-            var emote = Context.GetRequiredEmoteSetting(Settings.AnnouncementEmoteId);
-            var mentionEveryone = Context.GetRequiredSettingValue<bool>(Settings.AnnouncementMentionEveryone);
+            var participationEmote = Context.GetRequiredEmoteSetting(Settings.ParticipationEmoteId);
+            var lateParticipationEmote = Context.GetRequiredEmoteSetting(Settings.LateParticipationEmoteId);
+            var cancellationEmote = Context.GetRequiredEmoteSetting(Settings.CancellationEmoteId);
+            var mentionEveryone = Context.GetRequiredSettingValue<bool>(Settings.MentionEveryone);
 
-            var embedBuilder = Helpers.CreateAnnouncementEmbedBuilder(game, time.ToString(), string.Empty, 0, emote).WithAuthor(Context.SocketUser);
-            if (mentionEveryone)
-                embedBuilder.Description = Context.Guild.EveryoneRole.Mention + " " + embedBuilder.Description;
+            var embedData = new AnnouncementEmbedData(game, time.ToString(), new() { }, participationEmote, new() { }, lateParticipationEmote, new(), cancellationEmote);
+            var embedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embedData)
+                .WithAuthor(Context.SocketUser);
 
-            var message = await Context.Channel.SendMessageAsync(embed: embedBuilder.Build());
-            await message.AddReactionAsync(emote);
+            var text = mentionEveryone ? Context.Guild.EveryoneRole.Mention : string.Empty;
+            var message = await Context.Channel.SendMessageAsync(text, embed: embedBuilder.Build());
+            await message.AddReactionAsync(participationEmote);
+            await message.AddReactionAsync(lateParticipationEmote);
+            await message.AddReactionAsync(cancellationEmote);
         }
     }
 }

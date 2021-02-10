@@ -117,18 +117,26 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancellations" xml:space="preserve">
+    <value>Absagen</value>
+  </data>
   <data name="DateTime" xml:space="preserve">
     <value>Datum und Uhrzeit</value>
   </data>
   <data name="Game" xml:space="preserve">
     <value>Spiel</value>
   </data>
+  <data name="LateParticipants" xml:space="preserve">
+    <value>Verspätende Teilnehmer</value>
+  </data>
   <data name="MeetupAnnouncementDescription" xml:space="preserve">
     <value>Ein Treffen wurde organisiert.
-Klicke auf das {0} Icon unten, um deine Teilnahme zu bestätigen.</value>
+Klicke auf das {0} Icon unten, um deine Teilnahme zu bestätigen.
+Falls du später hinzukommen wirst, nutze {1}.
+Zum Absagen, kannst du auf {2} drücken.</value>
   </data>
   <data name="MeetupAnnouncementTitle" xml:space="preserve">
-    <value>Treffen Ankündigung</value>
+    <value>Treff-Ankündigung</value>
   </data>
   <data name="Participants" xml:space="preserve">
     <value>Teilnehmer</value>

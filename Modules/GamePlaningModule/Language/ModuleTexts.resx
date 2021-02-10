@@ -117,15 +117,23 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Cancellations" xml:space="preserve">
+    <value>Cancellations</value>
+  </data>
   <data name="DateTime" xml:space="preserve">
     <value>Date &amp; time</value>
   </data>
   <data name="Game" xml:space="preserve">
     <value>Game</value>
   </data>
+  <data name="LateParticipants" xml:space="preserve">
+    <value>Late participants</value>
+  </data>
   <data name="MeetupAnnouncementDescription" xml:space="preserve">
     <value>A meetup has been organized.
-Click on the {0} icon below to confirm your participation.</value>
+Click on the {0} icon below to confirm your participation.
+If you want to join later, use {1}.
+To cancel, you can press {2}.</value>
   </data>
   <data name="MeetupAnnouncementTitle" xml:space="preserve">
     <value>Meetup announcement</value>

@@ -4,7 +4,9 @@ namespace BonusBot.GamePlaningModule
 {
     public class Settings : IGuildSettingsConstantProperties
     {
-        public const string AnnouncementEmoteId = "AnnouncementEmoteId";
-        public const string AnnouncementMentionEveryone = "AnnouncementMentionEveryone";
+        public const string ParticipationEmoteId = "ParticipationEmoteId";
+        public const string LateParticipationEmoteId = "LateParticipationEmoteId";
+        public const string CancellationEmoteId = "CancellationEmoteId";
+        public const string MentionEveryone = "MentionEveryone";
     }
 }

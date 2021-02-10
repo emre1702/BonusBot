@@ -61,6 +61,15 @@ namespace BonusBot.GamePlaningModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancellations.
+        /// </summary>
+        internal static string Cancellations {
+            get {
+                return ResourceManager.GetString("Cancellations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date &amp; time.
         /// </summary>
         internal static string DateTime {
@@ -79,8 +88,19 @@ namespace BonusBot.GamePlaningModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Late participants.
+        /// </summary>
+        internal static string LateParticipants {
+            get {
+                return ResourceManager.GetString("LateParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A meetup has been organized.
-        ///Click on the {0} icon below to confirm your participation..
+        ///Click on the {0} icon below to confirm your participation.
+        ///If you want to join later, use {1}.
+        ///To cancel, you can press {2}..
         /// </summary>
         internal static string MeetupAnnouncementDescription {
             get {
