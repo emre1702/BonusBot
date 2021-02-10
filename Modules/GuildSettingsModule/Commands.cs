@@ -8,11 +8,10 @@ using BonusBot.GuildSettingsModule.Language;
 using BonusBot.Services.DiscordNet;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace GuildSettingsModule
 {
-    [RequireContext(ContextType.Guild)]
-    [RequireUserPermission(GuildPermission.Administrator)]
     [Group("config")]
     [Alias("settings", "setting")]
     public class GuildSettings : CommandBase
@@ -28,6 +27,8 @@ namespace GuildSettingsModule
             ModuleTexts.Culture = Constants.Culture;
         }
 
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command]
         public async Task Set(string moduleName, string key, [Remainder] string value)
         {
@@ -36,23 +37,52 @@ namespace GuildSettingsModule
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
                 return;
             }
-            moduleName = moduleName.ToModuleName();
 
             using var dbContext = _dbContextFactory.CreateDbContext();
-            var setting = await dbContext.GuildsSettings.FirstOrDefaultAsync(s =>
-                s.GuildId == Context.Guild.Id &&
-                EF.Functions.Like(s.Key, key) &&
-                EF.Functions.Like(s.Module, moduleName));
+            var setting = await dbContext.GuildsSettings.Get(Context.Guild.Id, key, moduleName);
 
             if (setting is null)
-            {
-                setting = new GuildsSettings { GuildId = Context.Guild.Id, Module = moduleName, Key = key };
-                dbContext.GuildsSettings.Add(setting);
-            }
-
-            setting.Value = value;
+                setting = dbContext.GuildsSettings.Create(Context.Guild.Id, moduleName, key, value);
+            else
+                setting.Value = value;
             await dbContext.SaveChangesAsync();
             await ReplyToUserAsync(ModuleTexts.SettingSavedSuccessfully);
+        }
+
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command("get")]
+        [Priority(1)]
+        public async Task Get(string moduleName, string key)
+        {
+            if (!Helpers.DoesSettingExists(_modulesHandler, key, moduleName))
+            {
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
+                return;
+            }
+
+            using var dbContext = _dbContextFactory.CreateDbContext();
+            var setting = await dbContext.GuildsSettings.Get(Context.Guild.Id, key, moduleName);
+
+            string value = "-";
+            if (setting is not null)
+                value = setting.Value;
+
+            await ReplyToUserAsync(string.Format(ModuleTexts.SettingGetInfo, key, moduleName, value));
+        }
+
+        [Command("help")]
+        public async Task Help()
+        {
+            var modulesStr = Helpers.GetAllModulesNamesJoined(_modulesHandler);
+            await ReplyToUserAsync(ModuleTexts.HelpTextMain + modulesStr);
+        }
+
+        [Command("help")]
+        public async Task Help(string moduleName)
+        {
+            var moduleSettingsStr = Helpers.GetModuleSettingsJoined(_modulesHandler, moduleName);
+            await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextModule, moduleName) + moduleSettingsStr);
         }
     }
 }

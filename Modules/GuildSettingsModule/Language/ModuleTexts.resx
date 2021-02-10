@@ -117,6 +117,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="HelpTextMain" xml:space="preserve">
+    <value>Every module has its own settings.
+To show every setting of a module you can use this command:
+"!config help [module]"
+
+With this command you can set a value:
+"!config [module] [setting] [value]"
+
+This command returns the value of a setting:
+"!config get [module] [setting]"
+
+Loaded modules:
+
+</value>
+  </data>
+  <data name="HelpTextModule" xml:space="preserve">
+    <value>All settings of this module {0}:
+</value>
+  </data>
+  <data name="SettingGetInfo" xml:space="preserve">
+    <value>The value for the setting '{0}' for the module '{1}' is:
+{2}</value>
+  </data>
   <data name="SettingInThisModuleDoesNotExist" xml:space="preserve">
     <value>The setting '{0}' in module '{1}' does not exist.</value>
   </data>

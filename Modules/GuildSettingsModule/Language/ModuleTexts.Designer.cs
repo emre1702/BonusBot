@@ -61,6 +61,47 @@ namespace BonusBot.GuildSettingsModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Every module has its own settings.
+        ///To show every setting of a module you can use this command:
+        ///&quot;!config help [module]&quot;
+        ///
+        ///With this command you can set a value:
+        ///&quot;!config [module] [setting] [value]&quot;
+        ///
+        ///This command returns the value of a setting:
+        ///&quot;!config get [module] [setting]&quot;
+        ///
+        ///Loaded modules:
+        ///
+        ///.
+        /// </summary>
+        internal static string HelpTextMain {
+            get {
+                return ResourceManager.GetString("HelpTextMain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All settings of this module {0}:
+        ///.
+        /// </summary>
+        internal static string HelpTextModule {
+            get {
+                return ResourceManager.GetString("HelpTextModule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value for the setting &apos;{0}&apos; for the module &apos;{1}&apos; is:
+        ///{2}.
+        /// </summary>
+        internal static string SettingGetInfo {
+            get {
+                return ResourceManager.GetString("SettingGetInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The setting &apos;{0}&apos; in module &apos;{1}&apos; does not exist..
         /// </summary>
         internal static string SettingInThisModuleDoesNotExist {

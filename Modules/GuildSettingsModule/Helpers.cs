@@ -34,5 +34,25 @@ namespace GuildSettingsModule
             var fields = GetSettingFields(assembly);
             return fields.Where(fi => fi.GetRawConstantValue() != null).Select(fi => fi.GetRawConstantValue()!.ToString()!);
         }
+
+        internal static string GetAllModulesNamesJoined(ModulesHandler modulesHandler)
+        {
+            var modulesStr = string.Empty;
+            lock (modulesHandler.LoadedModuleAssemblies)
+            {
+                var moduleNames = modulesHandler.LoadedModuleAssemblies.Select(a => a.GetName()?.Name?.ToString().ToModuleName());
+                modulesStr = string.Join(", ", moduleNames);
+            }
+            return modulesStr;
+        }
+
+        internal static string GetModuleSettingsJoined(ModulesHandler modulesHandler, string moduleName)
+        {
+            var module = modulesHandler.FindAssemblyByModuleName(moduleName);
+            if (module is null)
+                return "-";
+            var settingKeys = GetSettingKeys(module);
+            return string.Join(", ", settingKeys);
+        }
     }
 }
