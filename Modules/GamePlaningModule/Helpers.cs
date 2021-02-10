@@ -1,13 +1,11 @@
-﻿using Discord;
-using Discord.WebSocket;
+﻿using BonusBot.Common.Extensions;
 using BonusBot.GamePlaningModule.Language;
 using BonusBot.Services.DiscordNet;
+using Discord;
+using Discord.WebSocket;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using BonusBot.Common.Extensions;
-using BonusBot.Common.Languages;
-using System;
 
 namespace BonusBot.GamePlaningModule
 {
@@ -35,9 +33,15 @@ namespace BonusBot.GamePlaningModule
             {
                 var guildUser = channel.Guild.GetUser(user.Id);
                 if (guildUser is { })
-                    yield return guildUser.Nickname;
+                    yield return guildUser.Nickname ?? guildUser.Username;
                 else
-                    yield return await GetRestUserName(socketClientHandler, channel.Guild.Id, user.Id);
+                {
+                    var restUserName = await GetRestUserName(socketClientHandler, channel.Guild.Id, user.Id);
+                    if (restUserName is { })
+                        yield return restUserName;
+                    else
+                        yield return user.Username;
+                }
             }
         }
 
@@ -49,8 +53,11 @@ namespace BonusBot.GamePlaningModule
                 .WithFields(
                     new() { Name = ModuleTexts.Game + ":", Value = game, IsInline = true },
                     new() { Name = ModuleTexts.DateTime + ":", Value = dateTimeStr, IsInline = true },
+
                     new() { Name = ModuleTexts.Participants + $" ({amountParticipants}):", Value = !string.IsNullOrWhiteSpace(participantsString) ? participantsString : "-", IsInline = false })
+
                 .WithFooter(GetAnnouncementFooter())
+
                 .WithTitle(ModuleTexts.MeetupAnnouncementTitle);
 
         internal static string GetAnnouncementFooter()
