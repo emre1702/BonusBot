@@ -10,21 +10,26 @@ namespace BonusBot.Common.Extensions
 {
     public class CommandBase : ModuleBase<CustomContext>
     {
-        protected Task<IUserMessage> ReplyAsync(EmbedBuilder embed)
+        public Task<IUserMessage> ReplyAsync(EmbedBuilder embed)
         {
             if (!embed.Color.HasValue)
                 embed.WithColor(171, 31, 242);
             return base.ReplyAsync(embed: embed.Build());
         }
 
-        protected async Task<IUserMessage> ReplyToUserAsync(string msg)
+        public Task<IUserMessage> ReplyAsync(string message)
+        {
+            return base.ReplyAsync(message);
+        }
+
+        public async Task<IUserMessage> ReplyToUserAsync(string msg)
         {
             var user = Context.SocketUser;
             var channel = await user.GetOrCreateDMChannelAsync();
             return await channel.SendMessageAsync(msg);
         }
 
-        protected async Task<IUserMessage> ReplyToUserAsync(EmbedBuilder embed)
+        public async Task<IUserMessage> ReplyToUserAsync(EmbedBuilder embed)
         {
             if (!embed.Color.HasValue)
                 embed.WithColor(171, 31, 242);
@@ -33,7 +38,7 @@ namespace BonusBot.Common.Extensions
             return await channel.SendMessageAsync(embed: embed.Build());
         }
 
-        protected async Task<Emote?> GetSettingEmote(FunDbContextFactory dbContextFactory, IGuild guild, string settingKey)
+        public async Task<Emote?> GetSettingEmote(BonusDbContextFactory dbContextFactory, IGuild guild, string settingKey)
         {
             var emoteId = await GetSetting<ulong>(dbContextFactory, guild, settingKey);
             if (emoteId == 0)
@@ -42,7 +47,7 @@ namespace BonusBot.Common.Extensions
             return await guild.GetEmoteAsync(emoteId);
         }
 
-        protected async Task<T?> GetSetting<T>(FunDbContextFactory dbContextFactory, IGuild guild, string settingKey)
+        public async Task<T?> GetSetting<T>(BonusDbContextFactory dbContextFactory, IGuild guild, string settingKey)
         {
             var moduleName = GetType().Assembly.GetName()!.Name!.ToModuleName();
 
@@ -54,7 +59,7 @@ namespace BonusBot.Common.Extensions
             if (guildSetting is null) return default;
 
             var ret = Convert.ChangeType(guildSetting.Value, typeof(T));
-            return ret is T ? (T)ret : default;
+            return ret is T t ? t : default;
         }
     }
 }

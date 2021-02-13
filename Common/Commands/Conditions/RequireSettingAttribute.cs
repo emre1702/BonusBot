@@ -18,7 +18,7 @@ namespace BonusBot.Common.Commands.Conditions
 
         public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
         {
-            var dbContextFactory = services.GetRequiredService<FunDbContextFactory>();
+            var dbContextFactory = services.GetRequiredService<BonusDbContextFactory>();
             using var dbContext = dbContextFactory.CreateDbContext();
 
             var moduleName = command.Module.Name.ToModuleName();
