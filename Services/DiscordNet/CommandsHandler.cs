@@ -16,11 +16,11 @@ namespace BonusBot.Services.DiscordNet
     {
         public CommandService CommandService { get; init; }
 
-        private readonly FunDbContextFactory _dbContextFactory;
+        private readonly BonusDbContextFactory _dbContextFactory;
         private readonly SocketClientHandler _socketClientHandler;
         private readonly IServiceProvider _serviceProvider;
 
-        public CommandsHandler(EventsHandler eventsHandler, FunDbContextFactory dbContextFactory, SocketClientHandler socketClientHandler, IServiceProvider serviceProvider)
+        public CommandsHandler(EventsHandler eventsHandler, BonusDbContextFactory dbContextFactory, SocketClientHandler socketClientHandler, IServiceProvider serviceProvider)
         {
             _dbContextFactory = dbContextFactory;
             _socketClientHandler = socketClientHandler;
@@ -130,6 +130,9 @@ $@"{result.Error} error occured. Message:
 
 Used command: ""{context.Message.Content}""");
             }
+
+            if (context is CustomContext ctx && ctx.MessageData.NeedsDelete)
+                await context.Message.DeleteAsync();
         }
     }
 }

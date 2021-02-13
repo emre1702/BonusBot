@@ -21,9 +21,6 @@ namespace BonusBot.Services.Events
             MessageData messageData = new(socketMessage);
             await (MessageCheck?.InvokeAsync(messageData) ?? Task.CompletedTask);
             await (Message?.InvokeAsync(messageData) ?? Task.CompletedTask);
-
-            if (messageData.NeedsDelete)
-                await messageData.Message.DeleteAsync();
         }
     }
 }
