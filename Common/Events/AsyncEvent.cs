@@ -44,5 +44,11 @@ namespace BonusBot.Helper.Events
             foreach (var callback in tmpInvocationList)
                 await callback(arg).ConfigureAwait(false);
         }
+
+        public void Clear()
+        {
+            lock (_invocationList)
+                _invocationList.Clear();
+        }
     }
 }

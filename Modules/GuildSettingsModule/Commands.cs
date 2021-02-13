@@ -17,9 +17,9 @@ namespace GuildSettingsModule
     public class GuildSettings : CommandBase
     {
         private readonly ModulesHandler _modulesHandler;
-        private readonly FunDbContextFactory _dbContextFactory;
+        private readonly BonusDbContextFactory _dbContextFactory;
 
-        public GuildSettings(ModulesHandler modulesHandler, FunDbContextFactory dbContextFactory)
+        public GuildSettings(ModulesHandler modulesHandler, BonusDbContextFactory dbContextFactory)
         {
             _modulesHandler = modulesHandler;
             _dbContextFactory = dbContextFactory;
@@ -39,12 +39,7 @@ namespace GuildSettingsModule
             }
 
             using var dbContext = _dbContextFactory.CreateDbContext();
-            var setting = await dbContext.GuildsSettings.Get(Context.Guild.Id, key, moduleName);
-
-            if (setting is null)
-                setting = dbContext.GuildsSettings.Create(Context.Guild.Id, moduleName, key, value);
-            else
-                setting.Value = value;
+            await dbContext.GuildsSettings.AddOrUpdate(Context.Guild.Id, key, moduleName, value);
             await dbContext.SaveChangesAsync();
             await ReplyToUserAsync(ModuleTexts.SettingSavedSuccessfully);
         }
@@ -62,7 +57,7 @@ namespace GuildSettingsModule
             }
 
             using var dbContext = _dbContextFactory.CreateDbContext();
-            var setting = await dbContext.GuildsSettings.Get(Context.Guild.Id, key, moduleName);
+            var setting = await GuildsSettingsExtensions.Get(dbContext.GuildsSettings, Context.Guild.Id, key, moduleName);
 
             string value = "-";
             if (setting is not null)
@@ -75,14 +70,14 @@ namespace GuildSettingsModule
         public async Task Help()
         {
             var modulesStr = Helpers.GetAllModulesNamesJoined(_modulesHandler);
-            await ReplyToUserAsync(ModuleTexts.HelpTextMain + modulesStr);
+            await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextMain, modulesStr));
         }
 
         [Command("help")]
         public async Task Help(string moduleName)
         {
             var moduleSettingsStr = Helpers.GetModuleSettingsJoined(_modulesHandler, moduleName);
-            await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextModule, moduleName) + moduleSettingsStr);
+            await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextModule, moduleName, moduleSettingsStr));
         }
     }
 }

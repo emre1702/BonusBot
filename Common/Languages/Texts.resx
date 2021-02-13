@@ -123,6 +123,12 @@
   <data name="CommandInvalidTimeSpanError" xml:space="preserve">
     <value>Input could not be parsed as a time span.</value>
   </data>
+  <data name="CommandOnlyAllowedInGuild" xml:space="preserve">
+    <value>This command is only allowed in a guild channel.</value>
+  </data>
+  <data name="NumberRangeError" xml:space="preserve">
+    <value>The value for {0} has to be between {1} and {2}.</value>
+  </data>
   <data name="SettingChannelDoesNotExist" xml:space="preserve">
     <value>The setting '{0}' for module '{1}' contains the id of a channel ({2}) which does not exist (anymore). Please use '!setting {1} {0} [VALUE]' to set a correct channel id.</value>
   </data>

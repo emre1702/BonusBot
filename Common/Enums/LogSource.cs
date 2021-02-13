@@ -4,5 +4,8 @@
     {
         Discord,
         Core,
+        Module,
+        AudioModule,
+        Unknown
     }
 }

@@ -6,9 +6,9 @@ namespace BonusBot.Database
 {
 #nullable disable
 
-    public class FunDbContext : DbContext
+    public class BonusDbContext : DbContext
     {
-        public FunDbContext(DbContextOptions options) : base(options)
+        public BonusDbContext(DbContextOptions options) : base(options)
         {
             ChangeTracker.LazyLoadingEnabled = false;
         }
@@ -28,7 +28,7 @@ namespace BonusBot.Database
 
             modelBuilder
                 .HasSeeds()
-                .ApplyConfigurationsFromAssembly(typeof(FunDbContext).Assembly);
+                .ApplyConfigurationsFromAssembly(typeof(BonusDbContext).Assembly);
         }
     }
 }

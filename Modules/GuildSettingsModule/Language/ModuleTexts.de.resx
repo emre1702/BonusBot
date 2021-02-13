@@ -129,11 +129,11 @@ Dieser Befehl gibt dir den Wert einer Einstellung zurück:
 "!config get [Modul] [Einstellung]"
 
 Geladene Module:
-</value>
+{0}</value>
   </data>
   <data name="HelpTextModule" xml:space="preserve">
     <value>Alle Einstellungen des Moduls {0}:
-</value>
+{1}</value>
   </data>
   <data name="SettingGetInfo" xml:space="preserve">
     <value>Der Wert für die Einstellung '{0}' für das Modul '{1}' ist:

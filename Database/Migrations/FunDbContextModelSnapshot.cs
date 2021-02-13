@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BonusBot.Database.Migrations
 {
-    [DbContext(typeof(FunDbContext))]
+    [DbContext(typeof(BonusDbContext))]
     partial class FunDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

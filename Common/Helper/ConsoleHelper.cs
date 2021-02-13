@@ -18,6 +18,13 @@ namespace BonusBot.Common.Helper
             }
         }
 
+        public static void Log(LogSeverity severity, string source, string message, Exception? exception = null)
+        {
+            if (!Enum.TryParse<LogSource>(source, out var sourceEnum))
+                sourceEnum = LogSource.Unknown;
+            Log(severity, sourceEnum, message, exception);
+        }
+
         public static void PrintHeader()
         {
             var logo =
@@ -31,9 +38,8 @@ namespace BonusBot.Common.Helper
 | $$$$$$$/|  $$$$$$/| $$  | $$|  $$$$$$/ /$$$$$$$/| $$$$$$$/|  $$$$$$/  |  $$$$/
 |_______/  \______/ |__/  |__/ \______/ |_______/ |_______/  \______/    \___/";
 
-            Append(logo, Color.Orchid);
-            Append($"{Environment.NewLine}   {new string('=', 100)}", Color.AliceBlue);
-            Write(Environment.NewLine);
+            AppendLine(logo, Color.Orchid);
+            WriteLine(Environment.NewLine);
         }
 
         private static void HandleLog(LogSeverity severity, LogSource source, string message, Exception? exception)
@@ -48,15 +54,21 @@ namespace BonusBot.Common.Helper
                 Append(message, Color.White);
 
             if (exception is { })
-                Append(exception.Message, Color.IndianRed);
+                AppendLine(exception.ToString(), Color.IndianRed);
 
-            Write(Environment.NewLine);
+            WriteLine();
         }
 
         private static void Append(string message, Color color)
         {
             ForegroundColor = color;
             Write(message);
+        }
+
+        private static void AppendLine(string message, Color color)
+        {
+            ForegroundColor = color;
+            WriteLine(message);
         }
 
         private static (Color Color, string Simplified) ProcessSource(LogSource source)
@@ -66,6 +78,10 @@ namespace BonusBot.Common.Helper
                     => (Color.RoyalBlue, "DSCD"),
                 LogSource.Core
                     => (Color.DarkSalmon, "CORE"),
+                LogSource.Module
+                    => (Color.DarkGreen, "MDUL"),
+                LogSource.AudioModule
+                    => (Color.DarkGreen, "AMDL"),
                 _ => (Color.Gray, "UKWN")
             };
 

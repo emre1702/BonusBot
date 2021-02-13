@@ -129,12 +129,11 @@ This command returns the value of a setting:
 "!config get [module] [setting]"
 
 Loaded modules:
-
-</value>
+{0}</value>
   </data>
   <data name="HelpTextModule" xml:space="preserve">
     <value>All settings of this module {0}:
-</value>
+{1}</value>
   </data>
   <data name="SettingGetInfo" xml:space="preserve">
     <value>The value for the setting '{0}' for the module '{1}' is:

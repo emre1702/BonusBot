@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BonusBot.Database.Migrations
 {
-    [DbContext(typeof(FunDbContext))]
+    [DbContext(typeof(BonusDbContext))]
     [Migration("20210209140934_GuildsSettings_Proper_Keys")]
     partial class GuildsSettings_Proper_Keys
     {

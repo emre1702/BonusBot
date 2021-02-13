@@ -9,7 +9,7 @@ namespace BonusBot.Services.Database
     {
         public async Task InitializeAsync()
         {
-            using var dbContext = new FunDbContextFactory().CreateDbContext(Array.Empty<string>());
+            using var dbContext = new BonusDbContextFactory().CreateDbContext(Array.Empty<string>());
 
             await dbContext.Database.MigrateAsync();
         }

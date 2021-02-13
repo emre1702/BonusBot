@@ -79,6 +79,24 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This command is only allowed in a guild channel..
+        /// </summary>
+        public static string CommandOnlyAllowedInGuild {
+            get {
+                return ResourceManager.GetString("CommandOnlyAllowedInGuild", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The value for {0} has to be between {1} and {2}..
+        /// </summary>
+        public static string NumberRangeError {
+            get {
+                return ResourceManager.GetString("NumberRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The setting &apos;{0}&apos; for module &apos;{1}&apos; contains the id of a channel ({2}) which does not exist (anymore). Please use &apos;!setting {1} {0} [VALUE]&apos; to set a correct channel id..
         /// </summary>
         public static string SettingChannelDoesNotExist {

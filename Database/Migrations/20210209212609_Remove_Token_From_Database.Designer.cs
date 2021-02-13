@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BonusBot.Database.Migrations
 {
-    [DbContext(typeof(FunDbContext))]
+    [DbContext(typeof(BonusDbContext))]
     [Migration("20210209212609_Remove_Token_From_Database")]
     partial class Remove_Token_From_Database
     {

@@ -72,8 +72,7 @@ namespace BonusBot.GuildSettingsModule.Language {
         ///&quot;!config get [module] [setting]&quot;
         ///
         ///Loaded modules:
-        ///
-        ///.
+        ///{0}.
         /// </summary>
         internal static string HelpTextMain {
             get {
@@ -83,7 +82,7 @@ namespace BonusBot.GuildSettingsModule.Language {
         
         /// <summary>
         ///   Looks up a localized string similar to All settings of this module {0}:
-        ///.
+        ///{1}.
         /// </summary>
         internal static string HelpTextModule {
             get {

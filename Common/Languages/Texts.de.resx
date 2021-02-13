@@ -123,6 +123,12 @@
   <data name="CommandInvalidTimeSpanError" xml:space="preserve">
     <value>Die Eingabe konnte nicht als Zeitspanne geparst werden.</value>
   </data>
+  <data name="CommandOnlyAllowedInGuild" xml:space="preserve">
+    <value>Dieser Befehl ist nur erlaubt in einem Gilden-Channel.</value>
+  </data>
+  <data name="NumberRangeError" xml:space="preserve">
+    <value>Der Wert für {0} muss zwischen {1} und {2} sein.</value>
+  </data>
   <data name="SettingChannelDoesNotExist" xml:space="preserve">
     <value>Die Einstellung '{0}' für das Modul '{1}' beinhaltet die ID eines Channels ({2}), welches nicht (mehr) existiert. Bitte nutze '!setting {1} {0} [WERT]', um eine richtige Channel-ID einzugeben.</value>
   </data>

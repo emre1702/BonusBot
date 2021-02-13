@@ -15,9 +15,9 @@ namespace BonusBot.GamePlaningModule
         private static bool _initialized;
 
         private readonly SocketClientHandler _socketClientHandler;
-        private readonly FunDbContextFactory _dbContextFactory;
+        private readonly BonusDbContextFactory _dbContextFactory;
 
-        public GamePlaning(SocketClientHandler socketClientHandler, FunDbContextFactory dbContextFactory)
+        public GamePlaning(SocketClientHandler socketClientHandler, BonusDbContextFactory dbContextFactory)
         {
             _socketClientHandler = socketClientHandler;
             _dbContextFactory = dbContextFactory;
