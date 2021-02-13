@@ -18,9 +18,9 @@ namespace BonusBot.Services.Guilds
         private readonly HashSet<ulong> _guildIdsInitialized = new();
         private readonly SemaphoreSlim _semaphore = new(1, 1);
 
-        private readonly FunDbContextFactory _dbContextFactory;
+        private readonly BonusDbContextFactory _dbContextFactory;
 
-        public GuildsInitializationHandler(EventsHandler eventsHandler, FunDbContextFactory dbContextFactory)
+        public GuildsInitializationHandler(EventsHandler eventsHandler, BonusDbContextFactory dbContextFactory)
         {
             _dbContextFactory = dbContextFactory;
 
@@ -42,11 +42,9 @@ namespace BonusBot.Services.Guilds
                 if (settings is null)
                     settings = await CreateGuildSettings(arg.Guild, dbContext);
 
-                await arg.Guild.ModifyAsync(prop =>
+                await arg.Client.CurrentUser.ModifyAsync(prop =>
                 {
-                    prop.Name = settings.Name;
-                    prop.PreferredCulture = Constants.Culture;
-                    prop.PreferredLocale = Constants.Culture.Name;
+                    prop.Username = settings.Name;
                 });
                 _guildIdsInitialized.Add(arg.Guild.Id);
                 ConsoleHelper.Log(Discord.LogSeverity.Info, Common.Enums.LogSource.Discord, $"Initialized Guild '{arg.Guild.Name}'.");
@@ -57,7 +55,7 @@ namespace BonusBot.Services.Guilds
             }
         }
 
-        private async Task<GuildCoreSettings> CreateGuildSettings(SocketGuild guild, FunDbContext dbContext)
+        private async Task<GuildCoreSettings> CreateGuildSettings(SocketGuild guild, BonusDbContext dbContext)
         {
             var botSettings = await dbContext.BotSettings.FirstAsync();
 
