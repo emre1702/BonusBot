@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamePlaningModule", "Module
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuildSettingsModule", "Modules\GuildSettingsModule\GuildSettingsModule.csproj", "{1B8E6973-194C-436F-A5EC-665A64D0DABB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioModule", "Modules\AudioModule\AudioModule.csproj", "{8F85D02B-783A-45A3-96E5-54787703EE70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AudioModule", "Modules\AudioModule\AudioModule.csproj", "{8F85D02B-783A-45A3-96E5-54787703EE70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDSConnectorServerModule", "Modules\TDSConnectorServer\TDSConnectorServerModule.csproj", "{40E0FE90-02CB-4E76-BF30-8B14C6959DCB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,10 @@ Global
 		{8F85D02B-783A-45A3-96E5-54787703EE70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F85D02B-783A-45A3-96E5-54787703EE70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F85D02B-783A-45A3-96E5-54787703EE70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40E0FE90-02CB-4E76-BF30-8B14C6959DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40E0FE90-02CB-4E76-BF30-8B14C6959DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40E0FE90-02CB-4E76-BF30-8B14C6959DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40E0FE90-02CB-4E76-BF30-8B14C6959DCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +75,7 @@ Global
 		{1643CA56-CC95-4991-A9A2-5D674F12ADE9} = {EF36A847-25E4-4C83-908A-00F99881D0F0}
 		{1B8E6973-194C-436F-A5EC-665A64D0DABB} = {EF36A847-25E4-4C83-908A-00F99881D0F0}
 		{8F85D02B-783A-45A3-96E5-54787703EE70} = {EF36A847-25E4-4C83-908A-00F99881D0F0}
+		{40E0FE90-02CB-4E76-BF30-8B14C6959DCB} = {EF36A847-25E4-4C83-908A-00F99881D0F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F62F0D4-1E2A-4680-BA3D-B5AC670BF321}

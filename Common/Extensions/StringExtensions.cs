@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BonusBot.Common.Extensions
 {
@@ -134,5 +135,11 @@ namespace BonusBot.Common.Extensions
                 .Replace('ç', 'c')
                 .Replace('Ş', 'S')
                 .Replace('ş', 's');
+
+        public static IEnumerable<string> SplitByLength(this string str, int length)
+        {
+            for (int i = 0; i <= str.Length; i += length)
+                yield return str.Substring(i, Math.Min(length, str.Length - i));
+        }
     }
 }

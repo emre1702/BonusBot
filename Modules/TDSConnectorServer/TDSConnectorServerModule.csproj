@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <OutDir>..\..\Core\bin\Debug\net5.0\</OutDir>
+    <Nullable>enable</Nullable>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AssemblyName>BonusBot.TDSConnectorServerModule</AssemblyName>
+    <RootNamespace>BonusBot.TDSConnectorServerModule</RootNamespace>
+    <OutputType>Library</OutputType>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\*.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\MessageToChannel.proto" />
+    <None Remove="Protos\MessageToUser.proto" />
+    <None Remove="Protos\RAGEServerStats.proto" />
+    <None Remove="Protos\Shared.proto" />
+    <None Remove="Protos\SupportRequest.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.14.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.34.0" />
+    <PackageReference Include="Grpc.Core" Version="2.35.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj" />
+    <ProjectReference Include="..\..\Services\Services.csproj" />
+  </ItemGroup>
+</Project>
