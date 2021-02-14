@@ -1,14 +1,11 @@
-﻿using Discord;
-using Discord.Commands;
-using BonusBot.Common.Defaults;
+﻿using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using BonusBot.Database;
-using BonusBot.Database.Entities.Settings;
 using BonusBot.GuildSettingsModule.Language;
 using BonusBot.Services.DiscordNet;
-using Microsoft.EntityFrameworkCore;
+using Discord;
+using Discord.Commands;
 using System.Threading.Tasks;
-using System.Linq;
 
 namespace GuildSettingsModule
 {
@@ -69,7 +66,7 @@ namespace GuildSettingsModule
         [Command("help")]
         public async Task Help()
         {
-            var modulesStr = Helpers.GetAllModulesNamesJoined(_modulesHandler);
+            var modulesStr = Helpers.GetAllModulesAndCommonNamesJoined(_modulesHandler);
             await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextMain, modulesStr));
         }
 

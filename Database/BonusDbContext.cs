@@ -14,7 +14,6 @@ namespace BonusBot.Database
         }
 
         public DbSet<BotSettings> BotSettings { get; set; }
-        public DbSet<GuildCoreSettings> GuildCoreSettings { get; set; }
         public DbSet<GuildsSettings> GuildsSettings { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

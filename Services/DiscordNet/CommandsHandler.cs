@@ -9,6 +9,9 @@ using BonusBot.Database.Entities.Settings;
 using BonusBot.Services.Events;
 using System;
 using System.Threading.Tasks;
+using BonusBot.Common.Defaults;
+using BonusBot.Common.Extensions;
+using BonusBot.Common;
 
 namespace BonusBot.Services.DiscordNet
 {
@@ -81,8 +84,7 @@ namespace BonusBot.Services.DiscordNet
                 return false;
             }
 
-            var defaultGuildSettings = new GuildCoreSettings();
-            if (!GetIsCommand(message, defaultGuildSettings.CommandPrefix, defaultGuildSettings.CommandMentionAllowed, botClient, out prefixLength))
+            if (!GetIsCommand(message, Constants.DefaultCommandPrefix, Constants.DefaultCommandMentionAllowed, botClient, out prefixLength))
                 return false;
 
             return true;
@@ -94,11 +96,11 @@ namespace BonusBot.Services.DiscordNet
                 return (false, 0);
 
             using var dbContext = _dbContextFactory.CreateDbContext();
-            var guild = await dbContext.GuildCoreSettings.FindAsync(channel.Guild.Id);
-            if (guild is null)
-                return (false, 0);
 
-            if (!GetIsCommand(message, guild.CommandPrefix, guild.CommandMentionAllowed, botClient, out int prefixLength))
+            var commandPrefix = await dbContext.GuildsSettings.GetString(channel.Guild.Id, CommonSettings.CommandPrefix, GetType().Assembly);
+            var commandMentionAllowed = await dbContext.GuildsSettings.GetBool(channel.Guild.Id, CommonSettings.CommandPrefixMentionAllowed, GetType().Assembly);
+
+            if (!GetIsCommand(message, commandPrefix ?? Constants.DefaultCommandPrefix, commandMentionAllowed ?? Constants.DefaultCommandMentionAllowed, botClient, out int prefixLength))
                 return (false, 0);
 
             return (true, prefixLength);

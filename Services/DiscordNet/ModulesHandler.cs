@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using BonusBot.Common;
 
 namespace BonusBot.Services.DiscordNet
 {
@@ -23,9 +24,13 @@ namespace BonusBot.Services.DiscordNet
 
         public Assembly? FindAssemblyByModuleName(string moduleName)
         {
+            moduleName = moduleName.ToModuleName();
+            if (moduleName.Equals(typeof(CommonSettings).Assembly.GetName().Name?.ToModuleName()))
+                return typeof(CommonSettings).Assembly;
+
             lock (LoadedModuleAssemblies)
             {
-                return LoadedModuleAssemblies.FirstOrDefault(a => a.GetName().Name?.ToModuleName().Equals(moduleName.ToModuleName(), StringComparison.CurrentCultureIgnoreCase) == true);
+                return LoadedModuleAssemblies.FirstOrDefault(a => a.GetName().Name?.ToModuleName().Equals(moduleName, StringComparison.CurrentCultureIgnoreCase) == true);
             }
         }
 

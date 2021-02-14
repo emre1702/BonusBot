@@ -46,6 +46,9 @@ namespace GuildSettingsModule
             return modulesStr;
         }
 
+        internal static string GetAllModulesAndCommonNamesJoined(ModulesHandler modulesHandler)
+            => "Common, " + GetAllModulesNamesJoined(modulesHandler);
+
         internal static string GetModuleSettingsJoined(ModulesHandler modulesHandler, string moduleName)
         {
             var module = modulesHandler.FindAssemblyByModuleName(moduleName);

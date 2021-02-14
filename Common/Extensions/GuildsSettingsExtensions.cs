@@ -16,6 +16,24 @@ namespace BonusBot.Common.Extensions
                EF.Functions.Like(s.Module, moduleName)) as Task<GuildsSettings?>;
         }
 
+        public static async Task<string?> GetString(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName)
+        {
+            var setting = await Get(dbSet, guildId, key, moduleName);
+            return setting?.Value;
+        }
+
+        public static async Task<bool?> GetBool(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName)
+        {
+            var setting = await Get(dbSet, guildId, key, moduleName);
+            if (setting is null)
+                return null;
+
+            if (!bool.TryParse(setting.Value, out var value))
+                return null;
+
+            return value;
+        }
+
         public static async Task<int?> GetInt32(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName)
         {
             var setting = await Get(dbSet, guildId, key, moduleName);
@@ -43,6 +61,12 @@ namespace BonusBot.Common.Extensions
         public static Task<GuildsSettings?> Get(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
             => Get(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
 
+        public static Task<string?> GetString(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
+            => GetString(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
+
+        public static Task<bool?> GetBool(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
+            => GetBool(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
+
         public static Task<int?> GetInt32(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
             => GetInt32(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
 
@@ -64,6 +88,27 @@ namespace BonusBot.Common.Extensions
                 setting = Create(dbSet, guildId, key, moduleName, string.Empty);
             return setting;
         }
+
+        public static async Task<GuildsSettings> GetOrCreate(this DbSet<GuildsSettings> dbSet, DbContext dbContext, ulong guildId, string key, string moduleName, object defaultValue)
+        {
+            var setting = await Get(dbSet, guildId, key, moduleName);
+            if (setting is null)
+            {
+                setting = Create(dbSet, guildId, key, moduleName, defaultValue.ToString() ?? string.Empty);
+                await dbContext.SaveChangesAsync();
+            }
+
+            return setting;
+        }
+
+        public static async Task<string?> GetOrCreateString(this DbSet<GuildsSettings> dbSet, DbContext dbContext, ulong guildId, string key, string moduleName, object defaultValue)
+        {
+            var setting = await GetOrCreate(dbSet, dbContext, guildId, key, moduleName, defaultValue);
+            return setting.Value;
+        }
+
+        public static Task<string?> GetOrCreateString(this DbSet<GuildsSettings> dbSet, DbContext dbContext, ulong guildId, string key, Assembly moduleAssembly, object defaultValue)
+            => GetOrCreateString(dbSet, dbContext, guildId, key, moduleAssembly.GetName()!.Name!, defaultValue);
 
         public static async Task<GuildsSettings> AddOrUpdate(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName, string value)
         {

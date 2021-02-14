@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using BonusBot.Common.Extensions;
+using BonusBot.Common;
 
 namespace BonusBot.Services.Guilds
 {
@@ -38,13 +40,11 @@ namespace BonusBot.Services.Guilds
 
                 using var dbContext = _dbContextFactory.CreateDbContext();
 
-                var settings = await dbContext.GuildCoreSettings.FirstOrDefaultAsync(s => s.GuildId == arg.Guild.Id);
-                if (settings is null)
-                    settings = await CreateGuildSettings(arg.Guild, dbContext);
+                var userName = await dbContext.GuildsSettings.GetString(arg.Guild.Id, CommonSettings.BotName, typeof(CommonSettings).Assembly);
 
                 await arg.Client.CurrentUser.ModifyAsync(prop =>
                 {
-                    prop.Username = settings.Name;
+                    prop.Username = userName ?? Constants.DefaultBotName;
                 });
                 _guildIdsInitialized.Add(arg.Guild.Id);
                 ConsoleHelper.Log(Discord.LogSeverity.Info, Common.Enums.LogSource.Discord, $"Initialized Guild '{arg.Guild.Name}'.");
@@ -53,17 +53,6 @@ namespace BonusBot.Services.Guilds
             {
                 _semaphore.Release();
             }
-        }
-
-        private async Task<GuildCoreSettings> CreateGuildSettings(SocketGuild guild, BonusDbContext dbContext)
-        {
-            var botSettings = await dbContext.BotSettings.FirstAsync();
-
-            var settings = new GuildCoreSettings { GuildId = guild.Id, Name = botSettings.DefaultName };
-            dbContext.GuildCoreSettings.Add(settings);
-            await dbContext.SaveChangesAsync();
-
-            return settings;
         }
     }
 }
