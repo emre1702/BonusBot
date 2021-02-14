@@ -1,5 +1,6 @@
 ﻿using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.Common.Extensions;
+using BonusBot.Common.Helper;
 using BonusBot.Database;
 using Discord;
 using System.Threading.Tasks;
@@ -29,7 +30,11 @@ namespace BonusBot.AudioModule.LavaLink
         {
             player.TrackChanged += track => _audioInfoHandler.TrackChanged(player, track);
             player.VolumeChanged += volume => _audioInfoHandler.VolumeChanged(player, volume);
-            player.QueueChanged += () => _audioInfoHandler.QueueChanged(player, player.Queue).IgnoreResult();
+            player.QueueChanged += () =>
+            {
+                ConsoleHelper.Log(LogSeverity.Debug, Common.Enums.LogSource.AudioModule, $"Queue changed. Current queue:{System.Environment.NewLine}{player.Queue}");
+                _audioInfoHandler.QueueChanged(player, player.Queue).IgnoreResult();
+            };
             player.StatusChanged += data => _audioInfoHandler.StatusChanged(player, data.New);
         }
     }
