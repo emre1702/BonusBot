@@ -2,13 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <OutDir>..\..\Core\bin\Debug\net5.0\</OutDir>
     <Nullable>enable</Nullable>
-    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AssemblyName>BonusBot.TDSConnectorServerModule</AssemblyName>
     <RootNamespace>BonusBot.TDSConnectorServerModule</RootNamespace>
-    <OutputType>Library</OutputType>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <ItemGroup>

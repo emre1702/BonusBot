@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Modules\AudioModule\AudioModule.csproj" />
     <ProjectReference Include="..\Modules\GamePlaningModule\GamePlaningModule.csproj" />
     <ProjectReference Include="..\Modules\GuildSettingsModule\GuildSettingsModule.csproj" />
+    <ProjectReference Include="..\Modules\TDSConnectorServer\TDSConnectorServerModule.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 </Project>
