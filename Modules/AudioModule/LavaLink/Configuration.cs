@@ -8,7 +8,7 @@ namespace BonusBot.AudioModule.LavaLink
         /// <summary>
         /// Lavalink host.
         /// </summary>
-        public string Host { get; set; } = "localhost";
+        public string Host { get; set; } = "lavalink";
 
         /// <summary>
         /// Lavalink port.
