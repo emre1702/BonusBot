@@ -229,7 +229,7 @@ There are no more items left in the queue.</value>
 Now playing: {2}</value>
   </data>
   <data name="FinishedPlayingNowPlayingInfo" xml:space="preserve">
-    <value>Finished playing: {0}. 
-Now playing: {1}.</value>
+    <value>Finished playing: {0}
+Now playing: {1}</value>
   </data>
 </root>

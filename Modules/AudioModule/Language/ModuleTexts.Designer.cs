@@ -80,8 +80,8 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finished playing: {0}. 
-        ///Now playing: {1}..
+        ///   Looks up a localized string similar to Finished playing: {0}
+        ///Now playing: {1}.
         /// </summary>
         internal static string FinishedPlayingNowPlayingInfo {
             get {
