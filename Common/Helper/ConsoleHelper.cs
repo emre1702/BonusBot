@@ -1,8 +1,8 @@
-﻿using System;
-using Color = System.Drawing.Color;
-using static Colorful.Console;
+﻿using BonusBot.Common.Enums;
 using Discord;
-using BonusBot.Common.Enums;
+using System;
+using static Colorful.Console;
+using Color = System.Drawing.Color;
 
 namespace BonusBot.Common.Helper
 {
@@ -23,6 +23,14 @@ namespace BonusBot.Common.Helper
             if (!Enum.TryParse<LogSource>(source, out var sourceEnum))
                 sourceEnum = LogSource.Unknown;
             Log(severity, sourceEnum, message, exception);
+        }
+
+        public static void Log(LogMessage message)
+        {
+            var source = message.Source;
+            if (!Enum.TryParse<LogSource>(source, out var sourceEnum))
+                sourceEnum = LogSource.Unknown;
+            Log(message.Severity, sourceEnum, message.Message, message.Exception);
         }
 
         public static void PrintHeader()

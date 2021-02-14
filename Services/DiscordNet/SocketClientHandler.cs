@@ -1,10 +1,9 @@
-﻿using Discord.WebSocket;
-using BonusBot.Database;
+﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Helper;
 using BonusBot.Services.Events;
-using Microsoft.EntityFrameworkCore;
+using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
-using BonusBot.Common.Defaults;
 
 namespace BonusBot.Services.DiscordNet
 {
@@ -42,6 +41,7 @@ namespace BonusBot.Services.DiscordNet
                 DefaultRetryMode = Discord.RetryMode.AlwaysRetry,
                 HandlerTimeout = 3 * 60 * 1000,
                 ExclusiveBulkDelete = true,
+                LogLevel = Discord.LogSeverity.Warning
             };
             return new DiscordSocketClient(socketClientConfig);
         }
@@ -50,6 +50,7 @@ namespace BonusBot.Services.DiscordNet
         {
             client.GuildAvailable += guild => eventsHandler.TriggerGuildAvailable(client, guild);
             client.MessageReceived += eventsHandler.TriggerMessage;
+            client.Log += message => { ConsoleHelper.Log(message); return Task.CompletedTask; };
         }
 
         private async Task Start(DiscordSocketClient client)
