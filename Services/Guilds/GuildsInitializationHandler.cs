@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using BonusBot.Common.Extensions;
 using BonusBot.Common;
+using Discord;
 
 namespace BonusBot.Services.Guilds
 {
@@ -45,9 +46,9 @@ namespace BonusBot.Services.Guilds
                 await arg.Guild.CurrentUser.ModifyAsync(prop =>
                 {
                     prop.Nickname = userName ?? Constants.DefaultBotName;
-                });
+                }, new RequestOptions { RetryMode = RetryMode.RetryRatelimit });
                 _guildIdsInitialized.Add(arg.Guild.Id);
-                ConsoleHelper.Log(Discord.LogSeverity.Info, Common.Enums.LogSource.Discord, $"Initialized Guild '{arg.Guild.Name}'.");
+                ConsoleHelper.Log(LogSeverity.Info, Common.Enums.LogSource.Discord, $"Initialized Guild '{arg.Guild.Name}'.");
             }
             finally
             {
