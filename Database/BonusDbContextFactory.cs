@@ -6,7 +6,7 @@ namespace BonusBot.Database
 {
     public class BonusDbContextFactory : IDesignTimeDbContextFactory<BonusDbContext>
     {
-        private const string _connectionString = "Data Source=BonusBot.db;";
+        private const string _connectionString = "Data Source=/bonusbot-data/BonusBot.db;";
 
         public BonusDbContext CreateDbContext(string[] args)
         {
