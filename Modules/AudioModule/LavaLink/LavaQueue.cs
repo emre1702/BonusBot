@@ -65,21 +65,22 @@ namespace BonusBot.AudioModule.LavaLink
             {
                 var index = _random.Next(_list.Count);
                 _list.Insert(index, item);
-                QueueChanged?.Invoke();
             }
+            QueueChanged?.Invoke();
         }
 
         public T? Dequeue()
         {
+            T? firstValue;
             lock (_list)
             {
-                var firstValue = _list.FirstOrDefault();
+                firstValue = _list.FirstOrDefault();
                 if (firstValue is null)
                     return default;
                 _list.RemoveAt(0);
-                QueueChanged?.Invoke();
-                return firstValue;
             }
+            QueueChanged?.Invoke();
+            return firstValue;
         }
 
         public bool TryDequeue([NotNullWhen(true)] out T? item)
@@ -108,27 +109,31 @@ namespace BonusBot.AudioModule.LavaLink
 
         public void Clear()
         {
+            var cleared = false;
             lock (_list)
             {
                 if (_list.Count > 0)
                 {
+                    cleared = true;
                     _list.Clear();
-                    QueueChanged?.Invoke();
                 }
             }
+            if (cleared)
+                QueueChanged?.Invoke();
         }
 
         public T? RemoveAt(int index)
         {
+            T? item;
             lock (_list)
             {
                 if (_list.Count <= index)
                     return default;
-                var item = _list[index];
+                item = _list[index];
                 _list.RemoveAt(index);
-                QueueChanged?.Invoke();
-                return item;
             }
+            QueueChanged?.Invoke();
+            return item;
         }
 
         private void Shuffle()
@@ -136,8 +141,8 @@ namespace BonusBot.AudioModule.LavaLink
             lock (_list)
             {
                 _list = _list.Shuffle().ToList();
-                QueueChanged?.Invoke();
             }
+            QueueChanged?.Invoke();
         }
 
         public override string ToString()
