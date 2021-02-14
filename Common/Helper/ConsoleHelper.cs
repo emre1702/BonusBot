@@ -59,7 +59,7 @@ namespace BonusBot.Common.Helper
             Append($" -> {simplified} -> ", color);
 
             if (!string.IsNullOrWhiteSpace(message))
-                Append(message, Color.White);
+                AppendLine(message, Color.White);
 
             if (exception is { })
                 AppendLine(exception.ToString(), Color.IndianRed);
