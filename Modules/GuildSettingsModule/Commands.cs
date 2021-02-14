@@ -16,7 +16,7 @@ namespace GuildSettingsModule
     {
         private readonly ModulesHandler _modulesHandler;
         private readonly BonusDbContextFactory _dbContextFactory;
-        private readonly SettingChangeEffects _settingChangeEffects;
+        private static readonly SettingChangeEffects _settingChangeEffects = new();
 
         public GuildSettings(ModulesHandler modulesHandler, BonusDbContextFactory dbContextFactory)
         {
