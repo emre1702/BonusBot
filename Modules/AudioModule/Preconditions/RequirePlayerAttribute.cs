@@ -16,6 +16,10 @@ namespace BonusBot.AudioModule.Preconditions
     internal class RequirePlayerAttribute : PreconditionAttribute
     {
         private static LavaPlayerInitHandler? _lavaPlayerInitHandler;
+        private readonly bool _createPlayerIfNotExists;
+
+        public RequirePlayerAttribute(bool createPlayerIfNotExists = true)
+            => _createPlayerIfNotExists = createPlayerIfNotExists;
 
         public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
         {
@@ -29,6 +33,8 @@ namespace BonusBot.AudioModule.Preconditions
                     return PreconditionResult.FromError(Texts.CommandOnlyAllowedInGuild);
                 if (ctx.User.VoiceChannel is null)
                     return PreconditionResult.FromError(ModuleTexts.NotConnectToVoiceChannel);
+                if (!_createPlayerIfNotExists)
+                    return PreconditionResult.FromError(ModuleTexts.NoPlayerForGuildError);
 
                 var bonusDbContextFactory = services.GetRequiredService<BonusDbContextFactory>();
                 _lavaPlayerInitHandler = new(bonusDbContextFactory);

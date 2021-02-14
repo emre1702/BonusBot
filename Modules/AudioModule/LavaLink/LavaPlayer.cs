@@ -24,6 +24,7 @@ namespace BonusBot.AudioModule.LavaLink
 
         public IVoiceChannel VoiceChannel { get; set; }
         public ITextChannel? TextChannel { get; set; }
+        public List<LavaLinkTrack>? LastSearchResult { get; set; }
 
         public CancellationTokenSource? DisconnectToken { get; set; }
 
@@ -48,17 +49,21 @@ namespace BonusBot.AudioModule.LavaLink
             _socketHelper = socketHelper;
         }
 
-        public async Task Play(AudioTrack track, bool noReplace = false)
+        public async Task Play(AudioTrack? track, bool noReplace = false)
         {
             PreviousTrack = CurrentTrack;
             CurrentTrack = track;
 
-            var payload = new PlayPayload(VoiceChannel.GuildId, track.Audio.Hash, noReplace);
-            await _socketHelper.SendPayload(payload).ConfigureAwait(false);
+            if (track is { })
+            {
+                var payload = new PlayPayload(VoiceChannel.GuildId, track.Audio.Hash, noReplace);
+                await _socketHelper.SendPayload(payload).ConfigureAwait(false);
+            }
+
             await AfterPlay(track).ConfigureAwait(false);
         }
 
-        public async Task Play(AudioTrack track, TimeSpan startTime, TimeSpan stopTime, bool noReplace = false)
+        public async Task Play(AudioTrack? track, TimeSpan startTime, TimeSpan stopTime, bool noReplace = false)
         {
             if (startTime.TotalMilliseconds < 0 || stopTime.TotalMilliseconds < 0)
                 throw new InvalidOperationException(ModuleTexts.NegativeStartOrStopError);
@@ -69,15 +74,21 @@ namespace BonusBot.AudioModule.LavaLink
             PreviousTrack = CurrentTrack;
             CurrentTrack = track;
 
-            var payload = new PlayPayload(VoiceChannel.GuildId, track.Audio.Hash, startTime, stopTime, noReplace);
-            await _socketHelper.SendPayload(payload).ConfigureAwait(false);
+            if (track is { })
+            {
+                var payload = new PlayPayload(VoiceChannel.GuildId, track.Audio.Hash, startTime, stopTime, noReplace);
+                await _socketHelper.SendPayload(payload).ConfigureAwait(false);
+            }
+
             await AfterPlay(track).ConfigureAwait(false);
         }
 
-        private async ValueTask AfterPlay(AudioTrack track)
+        private async ValueTask AfterPlay(AudioTrack? track)
         {
-            if (Status != PlayerStatus.Paused)
+            if (Status != PlayerStatus.Paused && track is { })
                 await SetStatus(PlayerStatus.Playing).ConfigureAwait(false);
+            else if (track is null)
+                await SetStatus(PlayerStatus.Stopped).ConfigureAwait(false);
 
             if (TrackChanged is { })
                 await TrackChanged.InvokeAsync(track).ConfigureAwait(false);
@@ -92,6 +103,7 @@ namespace BonusBot.AudioModule.LavaLink
             await _socketHelper.SendPayload(payload).ConfigureAwait(false);
 
             CurrentTrack = null;
+            Queue.Clear();
             await SetStatus(PlayerStatus.Stopped).ConfigureAwait(false);
         }
 
@@ -180,7 +192,20 @@ namespace BonusBot.AudioModule.LavaLink
             PreviousTrack = CurrentTrack;
             CurrentTrack = track;
             if (TrackChanged is { })
-                await TrackChanged.InvokeAsync(track);
+                await TrackChanged.InvokeAsync(track).ConfigureAwait(false);
+        }
+
+        public async Task MoveChannels(IVoiceChannel voiceChannel, bool selfDeaf = true)
+        {
+            if (VoiceChannel.Id == voiceChannel.Id)
+                return;
+
+            await Pause().ConfigureAwait(false);
+            await VoiceChannel.DisconnectAsync().ConfigureAwait(false);
+            await voiceChannel.ConnectAsync(selfDeaf, false, true).ConfigureAwait(false);
+            await Resume().ConfigureAwait(false);
+
+            VoiceChannel = voiceChannel;
         }
 
         public void Dispose()

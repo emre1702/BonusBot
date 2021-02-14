@@ -2,5 +2,5 @@
 
 namespace BonusBot.AudioModule.Models.CommandArgs
 {
-    internal record SetVolumeArgs(int Volume) : ICommandHandlerArgsBase;
+    internal record PlaySearchCommandArgs(int Number) : ICommandHandlerArgsBase;
 }

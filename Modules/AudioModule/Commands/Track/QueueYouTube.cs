@@ -1,14 +1,12 @@
 ﻿using BonusBot.AudioModule.Language;
-using BonusBot.AudioModule.LavaLink.Enums;
 using BonusBot.AudioModule.LavaLink.Models;
 using BonusBot.AudioModule.Models.CommandArgs;
-using BonusBot.Common.Commands;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Commands.Track
 {
-    internal class QueueYouTube : CommandHandlerBase<Main, PlayArgs>
+    internal class QueueYouTube : SearchBase<Main, PlayArgs>
     {
         public QueueYouTube(Main main) : base(main)
         {
@@ -22,36 +20,19 @@ namespace BonusBot.AudioModule.Commands.Track
                 query = query.Substring(0, playlistInUrlIndex);
             }*/
 
-            var searchResult = await Main.LavaRestClient.SearchYouTube(args.Query);
+            var searchResult = await Main.LavaRestClient.SearchYouTube(args.Query, 1);
             if (await CheckHasErrors(searchResult))
                 return;
             var audioTrack = GetAudioTrack(searchResult);
 
-            if (Main.Player!.Queue.Count > 0 || Main.Player.CurrentTrack is { })
-                Main.Player.Queue.Enqueue(audioTrack);
+            if (Class.Player!.Queue.Count > 0 || Class.Player.CurrentTrack is { })
+                Class.Player.Queue.Enqueue(audioTrack);
             else
-                await Main.Player.Play(audioTrack);
-            await Main.ReplyAsync(string.Format(ModuleTexts.TrackHasBeenEnqueuedInfo, audioTrack));
-        }
-
-        private async Task<bool> CheckHasErrors(SearchResult searchResult)
-        {
-            if (searchResult.LoadType == LoadType.LoadFailed)
-            {
-                await Main.ReplyAsync(ModuleTexts.LavaLinkLoadError);
-                return true;
-            }
-
-            if (searchResult.LoadType == LoadType.NoMatches)
-            {
-                await Main.ReplyAsync(ModuleTexts.LavaLinkNoMatchesError);
-                return true;
-            }
-
-            return false;
+                await Class.Player.Play(audioTrack);
+            await Class.ReplyAsync(string.Format(ModuleTexts.TrackHasBeenEnqueuedInfo, audioTrack));
         }
 
         private AudioTrack GetAudioTrack(SearchResult searchResult)
-            => new(searchResult.Tracks.First(), Main.Context.User!);
+            => new(searchResult.Tracks.First(), Class.Context.User!);
     }
 }

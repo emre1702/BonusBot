@@ -1,8 +1,13 @@
-﻿using BonusBot.AudioModule.Commands.PlayerStatusChange;
+﻿using BonusBot.AudioModule.Commands.Channel;
+using BonusBot.AudioModule.Commands.PlayerStatusChange;
+using BonusBot.AudioModule.Commands.Queue;
+using BonusBot.AudioModule.Commands.Search;
 using BonusBot.AudioModule.Commands.Track;
 using BonusBot.AudioModule.Commands.Volume;
+using BonusBot.AudioModule.Language;
 using BonusBot.AudioModule.LavaLink;
 using BonusBot.AudioModule.LavaLink.Clients;
+using BonusBot.AudioModule.Models;
 using BonusBot.AudioModule.Preconditions;
 using BonusBot.Common.Commands.Conditions;
 using BonusBot.Common.Extensions;
@@ -10,21 +15,19 @@ using BonusBot.Database;
 using BonusBot.Services.DiscordNet;
 using Discord;
 using Discord.Commands;
-using Discord.WebSocket;
 using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule
 {
     [RequireContext(ContextType.Guild)]
     [RequireBotPermission(GuildPermission.Speak & GuildPermission.Connect)]
-    public class Main : CommandBase
+    public class Main : AudioCommandBase
     {
+        protected static Main? Instance { get; private set; }
         internal static LavaRestClient LavaRestClient = new();
         public BonusDbContextFactory DbContextFactory { get; }
 
         private static bool _initialized;
-
-        internal LavaPlayer? Player { get; private set; }
 
         [Command("play")]
         [Alias("yt", "youtube", "ytplay", "youtubeplay", "playyt", "playyoutube")]
@@ -40,15 +43,18 @@ namespace BonusBot.AudioModule
 
         [Command("resume")]
         [Alias("unpause")]
+        [RequirePlayer(false)]
         public Task Resume()
             => new Resume(this).Do(new());
 
         [Command("pause")]
         [Alias("unresume")]
+        [RequirePlayer(false)]
         public Task Pause()
             => new Pause(this).Do(new());
 
         [Command("stop")]
+        [RequirePlayer(false)]
         public Task Stop()
             => new Stop(this).Do(new());
 
@@ -62,8 +68,115 @@ namespace BonusBot.AudioModule
         public Task GetVolume()
             => new GetVolume(this).Do(new());
 
+        [Command("replay")]
+        [Alias("wiederholen", "replaycurrent", "replaynow")]
+        [RequirePlayer(false)]
+        public Task ReplayCurrent()
+            => new ReplayCurrent(this).Do(new());
+
+        [Command("replayprevious")]
+        [Alias("wiederholevorherigen", "wiederholevorherig", "previousreplay")]
+        [RequirePlayer(false)]
+        public Task ReplayPrevious()
+            => new ReplayPrevious(this).Do(new());
+
+        [Command("position")]
+        [Alias("SetPosition", "PositionSet", "Vorspulen", "Spulen", "Zurückspulen")]
+        [RequireCurrentTrack]
+        [Priority(1)]
+        public Task InvalidPosition(int _)
+            => ReplyAsync(ModuleTexts.SetPositionWrongFormatError);
+
+        [Command("position")]
+        [Alias("SetPosition", "PositionSet", "Vorspulen", "Spulen", "Zurückspulen")]
+        [RequireCurrentTrack]
+        public Task InvalidPosition(string input)
+            => new SetPosition(this).Do(new(input));
+
+        [Command("skip")]
+        [Alias("Überspringen", "skippen", "next", "weiter")]
+        [RequireCurrentTrack]
+        public Task Skip()
+            => new Skip(this).Do(new());
+
+        [Command("shuffle")]
+        [Alias("mix")]
+        [RequirePlayer]
+        public Task Shuffle()
+            => new Shuffle(this).Do(new());
+
+        [Command("NowPlaying")]
+        [Alias("playing")]
+        [RequireCurrentTrack]
+        public Task OutputCurrentlyPlaying()
+            => new NowPlaying(this).Do(new());
+
+        [Command("Lyrics")]
+        [RequireCurrentTrack]
+        public Task OutputLyrics()
+            => new Lyrics(this).Do(new());
+
+        [Command("Queue")]
+        [RequirePlayer(false)]
+        public Task OutputQueue()
+            => new OutputQueue(this).Do(new());
+
+        [Command("disconnect")]
+        [Alias("leave")]
+        [RequirePlayer(false)]
+        public Task Leave()
+            => new Leave(this).Do(new());
+
+        [Command("join")]
+        [Alias("come")]
+        [RequirePlayer]
+        public Task Join()
+            => new Join(this).Do(new());
+
+        [Group("search")]
+        [Alias("YouTubeSearch", "ytSearch", "SearchYt", "SearchYouTube")]
+        [RequirePlayer]
+        public class SearchGroup : AudioCommandBase
+        {
+            [Command]
+            [Alias("youtube", "yt", "y")]
+            [Priority(2)]
+            [RequirePlayer(true)]
+            public Task SearchYouTube([Remainder] string query)
+                => new SearchYouTube(this).Do(new(query, 10));
+
+            [Command]
+            [Alias("youtube", "yt", "y")]
+            [Priority(1)]
+            [RequirePlayer(true)]
+            public Task SearchYouTube([RequireNumberRange(1, 20)] int limit, [Remainder] string query)
+                => new SearchYouTube(this).Do(new(query, limit));
+
+            [Command("SoundCloud")]
+            [Alias("sc", "s")]
+            [Priority(4)]
+            [RequirePlayer(true)]
+            public Task SearchSoundcloudAsync([Remainder] string query)
+                => new SearchSoundcloud(this).Do(new(query, 10));
+
+            [Command("SoundCloud")]
+            [Alias("sc", "s")]
+            [Priority(3)]
+            [RequirePlayer(true)]
+            public Task SearchSoundcloudAsync([RequireNumberRange(1, 20)] int limit, [Remainder] string query)
+                => new SearchSoundcloud(this).Do(new(query, limit));
+
+            [Command]
+            [Alias("play", "start")]
+            [Priority(5)]
+            [RequireSearchResult]
+            public Task PlaySearchResult([RequireNumberRange(1, 20)] int number)
+                => new PlaySearchResult(this).Do(new(number));
+        }
+
         public Main(SocketClientHandler socketClientHandler, BonusDbContextFactory bonusDbContextFactory)
         {
+            Instance = this;
             DbContextFactory = bonusDbContextFactory;
             Initialize(socketClientHandler);
         }
@@ -73,22 +186,9 @@ namespace BonusBot.AudioModule
             if (_initialized) return;
 
             _initialized = true;
+
             var client = await socketClientHandler.ClientSource.Task;
             await LavaSocketClient.Instance.Start(client);
-        }
-
-        protected override void BeforeExecute(CommandInfo command)
-        {
-            Player = LavaSocketClient.Instance.GetPlayer(Context.Guild.Id);
-
-            base.BeforeExecute(command);
-        }
-
-        protected override void AfterExecute(CommandInfo command)
-        {
-            Context.MessageData.NeedsDelete = false;
-
-            base.AfterExecute(command);
         }
     }
 }

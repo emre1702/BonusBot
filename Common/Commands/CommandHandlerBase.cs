@@ -5,11 +5,11 @@ namespace BonusBot.Common.Commands
 {
     public abstract class CommandHandlerBase<ClassT, ArgsT>
         where ClassT : CommandBase
-        where ArgsT : CommandHandlerArgsBase
+        where ArgsT : ICommandHandlerArgsBase
     {
-        public ClassT Main { get; }
+        public ClassT Class { get; }
 
-        public CommandHandlerBase(ClassT main) => Main = main;
+        public CommandHandlerBase(ClassT c) => Class = c;
 
         public abstract Task Do(ArgsT args);
     }

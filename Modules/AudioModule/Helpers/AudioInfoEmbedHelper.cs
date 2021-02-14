@@ -3,6 +3,7 @@ using BonusBot.AudioModule.LavaLink;
 using BonusBot.AudioModule.LavaLink.Enums;
 using BonusBot.AudioModule.LavaLink.Models;
 using BonusBot.AudioModule.Models;
+using BonusBot.Common.Helper;
 using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
@@ -100,8 +101,8 @@ namespace BonusBot.AudioModule.Helpers
             return builder.Build();
         }
 
-        private static EmbedBuilder DefaultAudioInfo
-            => new EmbedBuilder()
+        public static EmbedBuilder DefaultAudioInfo
+            => EmbedHelper.DefaultEmbed
             .WithColor(0, 0, 150)
             .WithFooter("Audio info")
             .WithFields(
@@ -110,7 +111,6 @@ namespace BonusBot.AudioModule.Helpers
                 new EmbedFieldBuilder().WithIsInline(true).WithName("Length:"),
                 new EmbedFieldBuilder().WithIsInline(true).WithName("Added:"),
                 new EmbedFieldBuilder().WithIsInline(false).WithName("Queue:")
-            )
-            .WithCurrentTimestamp();
+            );
     }
 }

@@ -1,33 +1,34 @@
 ﻿using BonusBot.AudioModule.Language;
+using BonusBot.AudioModule.Models.CommandArgs;
 using BonusBot.Common.Commands;
 using BonusBot.Common.Extensions;
 using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Commands.Volume
 {
-    internal class GetVolume : CommandHandlerBase<Main, CommandHandlerArgsBase>
+    internal class GetVolume : CommandHandlerBase<Main, EmptyCommandArgs>
     {
         public GetVolume(Main main) : base(main)
         {
         }
 
-        public override async Task Do(CommandHandlerArgsBase _)
+        public override async Task Do(EmptyCommandArgs _)
         {
-            if (Main.Player is { })
+            if (Class.Player is { })
             {
-                await Main.ReplyAsync(string.Format(ModuleTexts.GetVolumeInfo, Main.Player.CurrentVolume));
+                await Class.ReplyAsync(string.Format(ModuleTexts.GetVolumeInfo, Class.Player.CurrentVolume));
                 return;
             }
 
-            using var dbContext = Main.DbContextFactory.CreateDbContext();
-            var volume = await dbContext.GuildsSettings.GetInt32(Main.Context.Guild.Id, Settings.Volume, GetType().Assembly);
+            using var dbContext = Class.DbContextFactory.CreateDbContext();
+            var volume = await dbContext.GuildsSettings.GetInt32(Class.Context.Guild.Id, Settings.Volume, GetType().Assembly);
             if (volume is { })
             {
-                await Main.ReplyAsync(string.Format(ModuleTexts.GetVolumeInfo, volume.Value));
+                await Class.ReplyAsync(string.Format(ModuleTexts.GetVolumeInfo, volume.Value));
                 return;
             }
 
-            await Main.ReplyAsync(ModuleTexts.NoVolumeSavedError);
+            await Class.ReplyAsync(ModuleTexts.NoVolumeSavedError);
         }
     }
 }

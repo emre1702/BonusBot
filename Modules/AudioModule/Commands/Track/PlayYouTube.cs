@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Commands.Track
 {
-    internal class PlayYouTube : CommandHandlerBase<Main, PlayArgs>
+    internal class PlayYouTube : SearchBase<Main, PlayArgs>
     {
         public PlayYouTube(Main main) : base(main)
         {
@@ -22,33 +22,16 @@ namespace BonusBot.AudioModule.Commands.Track
                 query = query.Substring(0, playlistInUrlIndex);
             }*/
 
-            var searchResult = await Main.LavaRestClient.SearchYouTube(args.Query);
+            var searchResult = await Main.LavaRestClient.SearchYouTube(args.Query, 1);
             if (await CheckHasErrors(searchResult))
                 return;
             var audioTrack = GetAudioTrack(searchResult);
 
-            await Main.Player!.Play(audioTrack);
-            await Main.ReplyAsync(string.Format(ModuleTexts.NowPlayingInfo, audioTrack));
-        }
-
-        private async Task<bool> CheckHasErrors(SearchResult searchResult)
-        {
-            if (searchResult.LoadType == LoadType.LoadFailed)
-            {
-                await Main.ReplyAsync(ModuleTexts.LavaLinkLoadError);
-                return true;
-            }
-
-            if (searchResult.LoadType == LoadType.NoMatches)
-            {
-                await Main.ReplyAsync(ModuleTexts.LavaLinkNoMatchesError);
-                return true;
-            }
-
-            return false;
+            await Class.Player!.Play(audioTrack);
+            await Class.ReplyAsync(string.Format(ModuleTexts.NowPlayingInfo, audioTrack));
         }
 
         private AudioTrack GetAudioTrack(SearchResult searchResult)
-            => new(searchResult.Tracks.First(), Main.Context.User!);
+            => new(searchResult.Tracks.First(), Class.Context.User!);
     }
 }

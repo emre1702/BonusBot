@@ -14,13 +14,13 @@ namespace BonusBot.AudioModule.Commands.Volume
 
         public override async Task Do(SetVolumeArgs args)
         {
-            await (Main.Player?.SetVolume(args.Volume) ?? Task.CompletedTask);
+            await (Class.Player?.SetVolume(args.Volume) ?? Task.CompletedTask);
 
-            using var dbContext = Main.DbContextFactory.CreateDbContext();
-            await dbContext.GuildsSettings.AddOrUpdate(Main.Context.Guild.Id, Settings.Volume, GetType().Assembly, args.Volume.ToString());
+            using var dbContext = Class.DbContextFactory.CreateDbContext();
+            await dbContext.GuildsSettings.AddOrUpdate(Class.Context.Guild.Id, Settings.Volume, GetType().Assembly, args.Volume.ToString());
             await dbContext.SaveChangesAsync();
 
-            await Main.ReplyAsync(string.Format(ModuleTexts.SetVolumeInfo, args.Volume));
+            await Class.ReplyAsync(string.Format(ModuleTexts.SetVolumeInfo, args.Volume));
         }
     }
 }

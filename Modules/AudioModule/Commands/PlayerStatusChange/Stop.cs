@@ -1,20 +1,16 @@
-﻿using BonusBot.AudioModule.LavaLink.Enums;
+﻿using BonusBot.AudioModule.Models.CommandArgs;
 using BonusBot.Common.Commands;
 using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Commands.PlayerStatusChange
 {
-    internal class Stop : CommandHandlerBase<Main, CommandHandlerArgsBase>
+    internal class Stop : CommandHandlerBase<Main, EmptyCommandArgs>
     {
         public Stop(Main main) : base(main)
         {
         }
 
-        public override Task Do(CommandHandlerArgsBase _)
-        {
-            if (Main.Player is { })
-                return Main.Player.Stop();
-            return Task.CompletedTask;
-        }
+        public override Task Do(EmptyCommandArgs _)
+            => Class.Player!.Stop();
     }
 }

@@ -120,6 +120,9 @@
   <data name="EqualizerParamsError" xml:space="preserve">
     <value>Der Gain-Wert muss zwischen -0,25 - 1,0 und der Band-Wert zwischen 0 - 14 liegen.</value>
   </data>
+  <data name="FoundTracksAmountInfo" xml:space="preserve">
+    <value>{0} Songs wurden gefunden.</value>
+  </data>
   <data name="GetVolumeInfo" xml:space="preserve">
     <value>Aktuelle Lautstärke: {0}.</value>
   </data>
@@ -129,8 +132,17 @@
   <data name="LavaLinkNoMatchesError" xml:space="preserve">
     <value>Nichts gefunden.</value>
   </data>
+  <data name="LyricsForInfo" xml:space="preserve">
+    <value>Lyrics für: {0}</value>
+  </data>
+  <data name="LyricsNotFoundError" xml:space="preserve">
+    <value>Lyrics konnten nicht gefunden werden für '{0}'.</value>
+  </data>
   <data name="NegativeStartOrStopError" xml:space="preserve">
     <value>Start und Stop müssen mindestens 0 sein.</value>
+  </data>
+  <data name="NoPlayerForGuildError" xml:space="preserve">
+    <value>Ich bin nicht mit einem Sprach-Chat verbunden oder kann gerade keine Musik abspielen.</value>
   </data>
   <data name="NotConnectToVoiceChannel" xml:space="preserve">
     <value>Du bist nicht mit einem Sprach-Kanal verbunden.</value>
@@ -141,22 +153,83 @@
   <data name="NotInitializedYetError" xml:space="preserve">
     <value>Dieses Modul wurde noch nicht initialisiert.</value>
   </data>
+  <data name="NoTrackRunningError" xml:space="preserve">
+    <value>Es läuft gerade kein Song.</value>
+  </data>
+  <data name="NoTrackToReplayError" xml:space="preserve">
+    <value>Es gibt keinen Song zum Wiederholen.</value>
+  </data>
   <data name="NoVolumeSavedError" xml:space="preserve">
     <value>Für diese Gilde wurde noch keine Lautstärke gespeichert.</value>
   </data>
   <data name="NowPlayingInfo" xml:space="preserve">
-    <value>Spielt nun: {0}</value>
+    <value>Spiele nun: {0}</value>
+  </data>
+  <data name="PositionLargeThanLengthError" xml:space="preserve">
+    <value>Diese Position ({0} - {1}%) ist größer als die aktuelle Länge.</value>
+  </data>
+  <data name="QueueEmptyInfo" xml:space="preserve">
+    <value>Es gibt keine Songs in der Playlist.</value>
+  </data>
+  <data name="ReplayingSongInfo" xml:space="preserve">
+    <value>Wiederhole Song: {0}.</value>
   </data>
   <data name="SeekPositionTooHigh" xml:space="preserve">
     <value>Die Position {0} ist größer als die Länge {1} der aktuellen Spur.</value>
   </data>
+  <data name="SetPositionInfo" xml:space="preserve">
+    <value>Position gesetzt auf {0} ({1}%).</value>
+  </data>
+  <data name="SetPositionWrongFormatError" xml:space="preserve">
+    <value>Ungültige Eingabe.
+Bitte nutze ?% für Prozent, ?s für Sekunden, ?m für Minuten oder Minuten:Sekunden für eine spezifische Zeitangabe.</value>
+  </data>
   <data name="SetVolumeInfo" xml:space="preserve">
     <value>Lautstärke geändert auf {0}.</value>
+  </data>
+  <data name="ShuffleInfo" xml:space="preserve">
+    <value>Die Playlist ist nun gemischt.</value>
+  </data>
+  <data name="SkippedTrackNowPlayingInfo" xml:space="preserve">
+    <value>Übersprungen: {0}
+Spiele nun: {1}</value>
+  </data>
+  <data name="SkippedTrackNowStoppedInfo" xml:space="preserve">
+    <value>Übersprungen: {0}
+Es gibt keine weiteren Songs in der Playlist.</value>
   </data>
   <data name="StartTimeLessThanStopTimeError" xml:space="preserve">
     <value>Stop-Zeit muss größer sein als Start-Zeit.</value>
   </data>
   <data name="TrackHasBeenEnqueuedInfo" xml:space="preserve">
     <value>{0} wurde in die Wiedergabeliste aufgenommen.</value>
+  </data>
+  <data name="NoLastSearchError" xml:space="preserve">
+    <value>Du hast den Such-Befehl noch nicht benutzt. Suche zuerst nach einem Song.</value>
+  </data>
+  <data name="LastSearchEmptyError" xml:space="preserve">
+    <value>Die letzte Suche hat keinen Song zurück geliefert. Es gibt nichts zum Abspielen.</value>
+  </data>
+  <data name="SongAtThisSearchNumberNotExistsError" xml:space="preserve">
+    <value>Ein Song an dieser Such-Nummer existiert nicht.</value>
+  </data>
+  <data name="PlayerIsPausedInfo" xml:space="preserve">
+    <value>Der Bot is pausiert, nutze den resume Befehl, um zu starten.</value>
+  </data>
+  <data name="FinishedPlayingNoMoreItemsInQueueInfo" xml:space="preserve">
+    <value>Zuende gespielt: {0}.
+Es gibt keine weiteren Songs in der Playlist.</value>
+  </data>
+  <data name="TrackStuckNoMoreItemsInQueueInfo" xml:space="preserve">
+    <value>Song {0} steckt für {1} ms fest und wurde deswegen übersprungen.
+Es gibt keine weiteren Songs in der Playlist.</value>
+  </data>
+  <data name="TrackStuckNextSongInfo" xml:space="preserve">
+    <value>Song {0} steckt für {1} ms fest und wurde deswegen übersprungen.
+Spiele nun: {2}</value>
+  </data>
+  <data name="FinishedPlayingNowPlayingInfo" xml:space="preserve">
+    <value>Zu Ende gespielt: {0}
+Spiele nun: {1}</value>
   </data>
 </root>

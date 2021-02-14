@@ -30,7 +30,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
         public AsyncEvent<(int Code, string Reason, bool ByRemote)>? SocketClosed;
         public AsyncEvent<(LavaPlayer Player, LavaLinkTrack? FinishedTrack, string Error)>? TrackException;
         public AsyncEvent<(LavaPlayer Player, LavaLinkTrack? FinishedTrack, TrackEndReason Reason)>? TrackFinished;
-        public AsyncEvent<(LavaPlayer Player, LavaLinkTrack? FinishedTrack, long TimeoutMs)>? TrackStuck;
+        public AsyncEvent<(LavaPlayer Player, LavaLinkTrack FinishedTrack, long TimeoutMs)>? TrackStuck;
 
         protected Configuration? Configuration { get; set; }
 
@@ -177,20 +177,11 @@ namespace BonusBot.AudioModule.LavaLink.Clients
                 await DisconnectPlayer(player.VoiceChannel);
         }
 
-        public async Task MoveChannelsAsync(IVoiceChannel voiceChannel)
+        public Task MoveChannels(IVoiceChannel voiceChannel)
         {
             if (!_players.TryGetValue(voiceChannel.GuildId, out var player))
-                return;
-
-            if (player.VoiceChannel.Id == voiceChannel.Id)
-                return;
-
-            await player.Pause();
-            await player.VoiceChannel.DisconnectAsync().ConfigureAwait(false);
-            await voiceChannel.ConnectAsync(Configuration?.SelfDeaf == true, false, true).ConfigureAwait(false);
-            await player.Resume();
-
-            player.VoiceChannel = voiceChannel;
+                return Task.CompletedTask;
+            return player.MoveChannels(voiceChannel, Configuration?.SelfDeaf == true);
         }
 
         public void SetTextChannel(ulong guildId, ITextChannel textChannel)
@@ -256,8 +247,13 @@ namespace BonusBot.AudioModule.LavaLink.Clients
 
         private ulong GetGuildIdFromJsonElement(JsonElement json)
         {
-            if (json.TryGetProperty("guildId", out var guildIdElement) && guildIdElement.TryGetUInt64(out var guildId))
-                return guildId;
+            if (json.TryGetProperty("guildId", out var guildIdElement))
+            {
+                var guildIdStr = guildIdElement.ToString();
+                if (ulong.TryParse(guildIdStr, out var guildId))
+                    return guildId;
+            }
+
             return 0;
         }
 
@@ -301,7 +297,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
                     break;
 
                 case EventType.TrackStuck:
-                    await HandleMessageEventTrackStuck(json, player, track);
+                    await HandleMessageEventTrackStuck(json, player, track!);
                     break;
 
                 case EventType.WebSocketClosed:
@@ -316,7 +312,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
 
         private async Task HandleMessageEventTrackEnd(JsonElement json, LavaPlayer player, LavaLinkTrack? track)
         {
-            var endReason = JsonSerializer.Deserialize<TrackEndReason>(json.GetProperty("reason")!.GetString()!);
+            var endReason = Enum.Parse<TrackEndReason>(json.GetProperty("reason")!.GetString()!, true);
             if (endReason != TrackEndReason.Replaced)
             {
                 await player.SetCurrentTrack(null);
@@ -332,7 +328,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             await (TrackException?.InvokeAsync((player, track, error)) ?? Task.CompletedTask);
         }
 
-        private async Task HandleMessageEventTrackStuck(JsonElement json, LavaPlayer player, LavaLinkTrack? track)
+        private async Task HandleMessageEventTrackStuck(JsonElement json, LavaPlayer player, LavaLinkTrack track)
         {
             var timeoutMs = json.GetProperty("thresholdMs")!.GetInt64()!;
             await (TrackStuck?.InvokeAsync((player, track, timeoutMs)) ?? Task.CompletedTask);

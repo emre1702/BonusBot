@@ -65,6 +65,7 @@ namespace BonusBot.AudioModule.LavaLink
             {
                 var index = _random.Next(_list.Count);
                 _list.Insert(index, item);
+                QueueChanged?.Invoke();
             }
         }
 
@@ -74,7 +75,7 @@ namespace BonusBot.AudioModule.LavaLink
             {
                 var firstValue = _list.FirstOrDefault();
                 if (firstValue is null)
-                    return firstValue;
+                    return default;
                 _list.RemoveAt(0);
                 QueueChanged?.Invoke();
                 return firstValue;
@@ -117,12 +118,15 @@ namespace BonusBot.AudioModule.LavaLink
             }
         }
 
-        public T RemoveAt(int index)
+        public T? RemoveAt(int index)
         {
             lock (_list)
             {
+                if (_list.Count <= index)
+                    return default;
                 var item = _list[index];
                 _list.RemoveAt(index);
+                QueueChanged?.Invoke();
                 return item;
             }
         }
@@ -132,6 +136,7 @@ namespace BonusBot.AudioModule.LavaLink
             lock (_list)
             {
                 _list = _list.Shuffle().ToList();
+                QueueChanged?.Invoke();
             }
         }
 

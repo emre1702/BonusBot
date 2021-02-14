@@ -25,23 +25,23 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             _password = configuration.Password;
         }
 
-        public Task<SearchResult> SearchSoundcloud(string query)
+        public Task<SearchResult> SearchSoundcloud(string query, int limit = 20)
         {
             if (Uri.TryCreate(query, UriKind.Absolute, out Uri? uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
-                return SearchTracks(query);
-            return SearchTracks($"scsearch:{query}");
+                return SearchTracks(query, limit);
+            return SearchTracks($"scsearch:{query}", limit);
         }
 
-        public Task<SearchResult> SearchYouTube(string query)
+        public Task<SearchResult> SearchYouTube(string query, int limit = 20)
         {
             if (Uri.TryCreate(query, UriKind.Absolute, out Uri? uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
-                return SearchTracks(query);
-            return SearchTracks($"ytsearch:{query}");
+                return SearchTracks(query, limit);
+            return SearchTracks($"ytsearch:{query}", limit);
         }
 
-        public async Task<SearchResult> SearchTracks(string query)
+        public async Task<SearchResult> SearchTracks(string query, int limit = 20)
         {
-            var url = new Uri($"http://{_host}:{_port}/loadtracks?identifier={WebUtility.UrlEncode(query)}");
+            var url = new Uri($"http://{_host}:{_port}/loadtracks?identifier={WebUtility.UrlEncode(query)}&max-results={limit}");
             var request = await HttpHelper.Instance
                 .WithCustomHeader("Authorization", _password)
                 .GetString(url)

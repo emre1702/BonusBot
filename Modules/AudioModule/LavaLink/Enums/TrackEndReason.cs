@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace BonusBot.AudioModule.LavaLink.Enums
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
+    [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum TrackEndReason
     {
         [EnumMember(Value = "FINISHED")]

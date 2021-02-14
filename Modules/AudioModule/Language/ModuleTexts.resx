@@ -120,6 +120,9 @@
   <data name="EqualizerParamsError" xml:space="preserve">
     <value>Gain value must be between -0.25 - 1.0 and Band value must be between 0 - 14.</value>
   </data>
+  <data name="FoundTracksAmountInfo" xml:space="preserve">
+    <value>Found {0} tracks.</value>
+  </data>
   <data name="GetVolumeInfo" xml:space="preserve">
     <value>Current volume: {0}.</value>
   </data>
@@ -129,8 +132,17 @@
   <data name="LavaLinkNoMatchesError" xml:space="preserve">
     <value>Nothing found.</value>
   </data>
+  <data name="LyricsForInfo" xml:space="preserve">
+    <value>Lyrics for: {0}</value>
+  </data>
+  <data name="LyricsNotFoundError" xml:space="preserve">
+    <value>Lyrics could not be found for '{0}'.</value>
+  </data>
   <data name="NegativeStartOrStopError" xml:space="preserve">
     <value>Start and stop must be atleast 0.</value>
+  </data>
+  <data name="NoPlayerForGuildError" xml:space="preserve">
+    <value>I'm currently not connected to a voice channel or maybe can't play a song at this time.</value>
   </data>
   <data name="NotConnectToVoiceChannel" xml:space="preserve">
     <value>You're not connected to a voice channel.</value>
@@ -141,22 +153,83 @@
   <data name="NotInitializedYetError" xml:space="preserve">
     <value>This module has not been initialized yet.</value>
   </data>
+  <data name="NoTrackRunningError" xml:space="preserve">
+    <value>Currently there is no track running.</value>
+  </data>
+  <data name="NoTrackToReplayError" xml:space="preserve">
+    <value>There is no track to replay.</value>
+  </data>
   <data name="NoVolumeSavedError" xml:space="preserve">
     <value>No volume has been saved for this guild yet.</value>
   </data>
   <data name="NowPlayingInfo" xml:space="preserve">
     <value>Now playing: {0}</value>
   </data>
+  <data name="PositionLargeThanLengthError" xml:space="preserve">
+    <value>The position ({0} - {1}%) is actually larger than the actual length.</value>
+  </data>
+  <data name="QueueEmptyInfo" xml:space="preserve">
+    <value>There are no tracks in the queue.</value>
+  </data>
+  <data name="ReplayingSongInfo" xml:space="preserve">
+    <value>Replaying song: {0}.</value>
+  </data>
   <data name="SeekPositionTooHigh" xml:space="preserve">
     <value>The position {0} is greater than current track's length of {1}.</value>
   </data>
+  <data name="SetPositionInfo" xml:space="preserve">
+    <value>Set position to {0} ({1}%).</value>
+  </data>
+  <data name="SetPositionWrongFormatError" xml:space="preserve">
+    <value>Invalid input.
+Please use ?% for percent, ?s for seconds, ?m for minutes or minutes:seconds for a specific time.</value>
+  </data>
   <data name="SetVolumeInfo" xml:space="preserve">
     <value>Changed volume to {0}.</value>
+  </data>
+  <data name="ShuffleInfo" xml:space="preserve">
+    <value>The queue is now shuffled.</value>
+  </data>
+  <data name="SkippedTrackNowPlayingInfo" xml:space="preserve">
+    <value>Skipped: {0}
+Now playing: {1}</value>
+  </data>
+  <data name="SkippedTrackNowStoppedInfo" xml:space="preserve">
+    <value>Skipped: {0}
+There are no more tracks left in the queue.</value>
   </data>
   <data name="StartTimeLessThanStopTimeError" xml:space="preserve">
     <value>Stop time must be greater than start time.</value>
   </data>
   <data name="TrackHasBeenEnqueuedInfo" xml:space="preserve">
     <value>{0} has been put into the playlist.</value>
+  </data>
+  <data name="NoLastSearchError" xml:space="preserve">
+    <value>You haven't use the search command yet. Search for a song first.</value>
+  </data>
+  <data name="LastSearchEmptyError" xml:space="preserve">
+    <value>The last search result was empty. There are no songs to play.</value>
+  </data>
+  <data name="SongAtThisSearchNumberNotExistsError" xml:space="preserve">
+    <value>A song at this search number does not exist.</value>
+  </data>
+  <data name="PlayerIsPausedInfo" xml:space="preserve">
+    <value>The player is paused, use the resume command to continue.</value>
+  </data>
+  <data name="FinishedPlayingNoMoreItemsInQueueInfo" xml:space="preserve">
+    <value>Finished playing: {0}. 
+There are no more items left in the queue.</value>
+  </data>
+  <data name="TrackStuckNoMoreItemsInQueueInfo" xml:space="preserve">
+    <value>Track {0} got stuck for {1} ms and therefore skipped.
+There are no more items left in the queue.</value>
+  </data>
+  <data name="TrackStuckNextSongInfo" xml:space="preserve">
+    <value>Track {0} got stuck for {1} ms and therefore skipped.
+Now playing: {2}</value>
+  </data>
+  <data name="FinishedPlayingNowPlayingInfo" xml:space="preserve">
+    <value>Finished playing: {0}. 
+Now playing: {1}.</value>
   </data>
 </root>

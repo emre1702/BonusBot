@@ -1,5 +1,6 @@
 ﻿using BonusBot.AudioModule.LavaLink.Models.Lyrics.SearchExact;
 using BonusBot.AudioModule.LavaLink.Models.Lyrics.Suggest;
+using BonusBot.Common.Extensions;
 using System;
 using System.Linq;
 using System.Text.Json;
@@ -96,12 +97,14 @@ namespace BonusBot.AudioModule.LavaLink.Helpers
             while (regex.IsMatch(title))
                 title = regex.Replace(title, string.Empty);
 
-            return author switch
+            var (returnAuthor, returnTitle) = author switch
             {
                 "" or null => (trackAuthor, title),
                 var _ when string.Equals(author, trackAuthor, StringComparison.OrdinalIgnoreCase) => (trackAuthor, title),
                 _ => (author, title),
             };
+
+            return (returnAuthor!.ReplaceCountrySpecialChars(), returnTitle!.ReplaceCountrySpecialChars());
         }
     }
 }
