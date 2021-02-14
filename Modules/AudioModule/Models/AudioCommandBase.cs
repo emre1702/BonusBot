@@ -1,5 +1,7 @@
-﻿using BonusBot.AudioModule.LavaLink;
+﻿using BonusBot.AudioModule.Language;
+using BonusBot.AudioModule.LavaLink;
 using BonusBot.AudioModule.LavaLink.Clients;
+using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using Discord.Commands;
 
@@ -8,6 +10,11 @@ namespace BonusBot.AudioModule.Models
     public class AudioCommandBase : CommandBase
     {
         internal LavaPlayer? Player { get; private set; }
+
+        public AudioCommandBase()
+        {
+            ModuleTexts.Culture = Constants.Culture;
+        }
 
         protected override void BeforeExecute(CommandInfo command)
         {

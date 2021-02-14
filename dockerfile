@@ -20,7 +20,8 @@ RUN apt-get update && apt-get install -y \
     libc6-dev \
 	libunwind8 \
     libssl1.1 \
-	&& rm -rf /var/lib/apt/lists/*
+    locales \
+	&& rm -rf /var/lib/apt/lists/* 
 
 # Add bonusbot user
 RUN useradd -m -d /home/bonusbot bonusbot
