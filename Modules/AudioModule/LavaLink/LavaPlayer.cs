@@ -51,7 +51,8 @@ namespace BonusBot.AudioModule.LavaLink
 
         public async Task Play(AudioTrack? track, bool noReplace = false)
         {
-            PreviousTrack = CurrentTrack;
+            if (CurrentTrack is { })
+                PreviousTrack = CurrentTrack;
             CurrentTrack = track;
 
             if (track is { })
@@ -71,7 +72,8 @@ namespace BonusBot.AudioModule.LavaLink
             if (startTime <= stopTime)
                 throw new InvalidOperationException(ModuleTexts.StartTimeLessThanStopTimeError);
 
-            PreviousTrack = CurrentTrack;
+            if (CurrentTrack is { })
+                PreviousTrack = CurrentTrack;
             CurrentTrack = track;
 
             if (track is { })
@@ -189,7 +191,8 @@ namespace BonusBot.AudioModule.LavaLink
 
         public async ValueTask SetCurrentTrack(AudioTrack? track)
         {
-            PreviousTrack = CurrentTrack;
+            if (CurrentTrack is { })
+                PreviousTrack = CurrentTrack;
             CurrentTrack = track;
             if (TrackChanged is { })
                 await TrackChanged.InvokeAsync(track).ConfigureAwait(false);

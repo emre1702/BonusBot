@@ -304,6 +304,9 @@ namespace BonusBot.AudioModule.LavaLink.Clients
                     await HandleMessageEventWebSocketClosed(json);
                     break;
 
+                case EventType.TrackStart:
+                    break;
+
                 default:
                     Log?.WriteLog(LogSeverity.Warning, $"Missing implementation of {evt} event.");
                     break;

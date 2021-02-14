@@ -10,7 +10,7 @@ namespace BonusBot.AudioModule.LavaLink.Enums
         Finished,
 
         [EnumMember(Value = "LOAD_FAILED")]
-        LoadFailed,
+        Load_Failed,
 
         [EnumMember(Value = "STOPPED")]
         Stopped,
