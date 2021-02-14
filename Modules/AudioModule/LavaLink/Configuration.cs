@@ -33,7 +33,7 @@ namespace BonusBot.AudioModule.LavaLink
         /// <summary>
         /// Logging severity.
         /// </summary>
-        public LogSeverity LogSeverity { get; set; } = LogSeverity.Debug;
+        public LogSeverity LogSeverity { get; set; } = LogSeverity.Warning;
 
         /// <summary>
         /// Websocket reconnect attempts.
