@@ -1,6 +1,7 @@
 ﻿using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using BonusBot.Database;
+using BonusBot.GuildSettingsModule;
 using BonusBot.GuildSettingsModule.Language;
 using BonusBot.Services.DiscordNet;
 using Discord;
@@ -15,6 +16,7 @@ namespace GuildSettingsModule
     {
         private readonly ModulesHandler _modulesHandler;
         private readonly BonusDbContextFactory _dbContextFactory;
+        private readonly SettingChangeEffects _settingChangeEffects;
 
         public GuildSettings(ModulesHandler modulesHandler, BonusDbContextFactory dbContextFactory)
         {
@@ -38,6 +40,7 @@ namespace GuildSettingsModule
             using var dbContext = _dbContextFactory.CreateDbContext();
             await dbContext.GuildsSettings.AddOrUpdate(Context.Guild.Id, key, moduleName, value);
             await dbContext.SaveChangesAsync();
+            await _settingChangeEffects.Changed(Context.Guild, moduleName, key, value);
             await ReplyToUserAsync(ModuleTexts.SettingSavedSuccessfully);
         }
 
