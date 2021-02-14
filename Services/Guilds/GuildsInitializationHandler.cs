@@ -42,9 +42,9 @@ namespace BonusBot.Services.Guilds
 
                 var userName = await dbContext.GuildsSettings.GetString(arg.Guild.Id, CommonSettings.BotName, typeof(CommonSettings).Assembly);
 
-                await arg.Client.CurrentUser.ModifyAsync(prop =>
+                await arg.Guild.CurrentUser.ModifyAsync(prop =>
                 {
-                    prop.Username = userName ?? Constants.DefaultBotName;
+                    prop.Nickname = userName ?? Constants.DefaultBotName;
                 });
                 _guildIdsInitialized.Add(arg.Guild.Id);
                 ConsoleHelper.Log(Discord.LogSeverity.Info, Common.Enums.LogSource.Discord, $"Initialized Guild '{arg.Guild.Name}'.");
