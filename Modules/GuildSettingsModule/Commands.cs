@@ -29,6 +29,7 @@ namespace GuildSettingsModule
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command]
+        [Priority(0)]
         public async Task Set(string moduleName, string key, [Remainder] string value)
         {
             if (!Helpers.DoesSettingExists(_modulesHandler, key, moduleName))
