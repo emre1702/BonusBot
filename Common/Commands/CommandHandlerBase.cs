@@ -9,7 +9,7 @@ namespace BonusBot.Common.Commands
     {
         public ClassT Class { get; }
 
-        public CommandHandlerBase(ClassT c) => Class = c;
+        protected CommandHandlerBase(ClassT c) => Class = c;
 
         public abstract Task Do(ArgsT args);
     }
