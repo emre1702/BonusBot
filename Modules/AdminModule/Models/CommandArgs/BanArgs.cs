@@ -1,8 +1,8 @@
 ﻿using BonusBot.Common.Commands;
-using Discord.WebSocket;
+using Discord;
 using System;
 
 namespace BonusBot.AdminModule.Models.CommandArgs
 {
-    internal record BanArgs(SocketGuildUser GuildUser, TimeSpan Time, string Reason) : ICommandHandlerArgs;
+    internal record BanArgs(IUser User, TimeSpan Time, string Reason) : ICommandHandlerArgs;
 }
