@@ -6,7 +6,7 @@ namespace BonusBot.AdminModule.Commands
 {
     internal class Ban : CommandHandlerBase<Main, BanArgs>
     {
-        protected Ban(Main main) : base(main)
+        public Ban(Main main) : base(main)
         {
         }
 
