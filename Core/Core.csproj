@@ -8,7 +8,7 @@
     <Nullable>enable</Nullable>
     <StartupObject>Core.Startup</StartupObject>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-    <DockerfileContext>..\</DockerfileContext>
+    <DockerfileContext>.</DockerfileContext>
     <DockerfileFile>..\dockerfile</DockerfileFile>
   </PropertyGroup>
 
