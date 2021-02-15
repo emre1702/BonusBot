@@ -21,6 +21,8 @@ RUN apt-get update && apt-get install -y \
 	libunwind8 \
     libssl1.1 \
     locales \
+    unzip \
+    && curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l /vsdbg \
 	&& rm -rf /var/lib/apt/lists/* 
 
 # Add bonusbot user
