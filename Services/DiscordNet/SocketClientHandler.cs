@@ -1,6 +1,7 @@
 ﻿using BonusBot.Common.Defaults;
 using BonusBot.Common.Helper;
 using BonusBot.Services.Events;
+using Discord;
 using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
@@ -38,10 +39,11 @@ namespace BonusBot.Services.DiscordNet
             {
                 AlwaysDownloadUsers = true,
                 ConnectionTimeout = 3 * 60 * 1000,
-                DefaultRetryMode = Discord.RetryMode.AlwaysRetry,
+                DefaultRetryMode = RetryMode.AlwaysRetry,
                 HandlerTimeout = 3 * 60 * 1000,
                 ExclusiveBulkDelete = true,
-                LogLevel = Discord.LogSeverity.Warning
+                LogLevel = LogSeverity.Warning,
+                MessageCacheSize = 1
             };
             return new DiscordSocketClient(socketClientConfig);
         }
@@ -56,7 +58,7 @@ namespace BonusBot.Services.DiscordNet
         private async Task Start(DiscordSocketClient client)
         {
             var token = Environment.GetEnvironmentVariable(Constants.TokenEnvironmentVariable);
-            await client.LoginAsync(Discord.TokenType.Bot, token, true);
+            await client.LoginAsync(TokenType.Bot, token, true);
             await client.StartAsync();
         }
     }

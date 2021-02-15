@@ -46,7 +46,7 @@ namespace BonusBot.Services.Guilds
                 await arg.Guild.CurrentUser.ModifyAsync(prop =>
                 {
                     prop.Nickname = userName ?? Constants.DefaultBotName;
-                }, new RequestOptions { RetryMode = RetryMode.RetryRatelimit });
+                });
                 _guildIdsInitialized.Add(arg.Guild.Id);
                 ConsoleHelper.Log(LogSeverity.Info, Common.Enums.LogSource.Discord, $"Initialized Guild '{arg.Guild.Name}'.");
             }
