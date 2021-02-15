@@ -46,6 +46,34 @@ namespace GuildSettingsModule
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
+        [Command]
+        [Priority(10)]
+        public Task Set(string moduleName, string key, IChannel channel)
+            => Set(moduleName, key, channel.Id.ToString());
+
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command]
+        [Priority(10)]
+        public Task Set(string moduleName, string key, IRole role)
+            => Set(moduleName, key, role.Id.ToString());
+
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command]
+        [Priority(10)]
+        public Task Set(string moduleName, string key, IMessage message)
+            => Set(moduleName, key, message.Id.ToString());
+
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command]
+        [Priority(10)]
+        public Task Set(string moduleName, string key, IUser user)
+            => Set(moduleName, key, user.Id.ToString());
+
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
         [Command("get")]
         [Priority(1)]
         public async Task Get(string moduleName, string key)
