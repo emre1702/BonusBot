@@ -89,9 +89,14 @@ namespace BonusBot.AudioModule.LavaLink
             return item is { };
         }
 
-        public T Peek()
+        public T? Peek()
         {
-            lock (_list) return _list[0];
+            lock (_list)
+            {
+                if (_list.Count > 0)
+                    return _list[0];
+                return default;
+            }
         }
 
         public bool Remove(T item)
