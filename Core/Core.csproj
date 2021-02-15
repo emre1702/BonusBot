@@ -7,6 +7,9 @@
     <RootNamespace>BonusBot.Core</RootNamespace>
     <Nullable>enable</Nullable>
     <StartupObject>Core.Startup</StartupObject>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\</DockerfileContext>
+    <DockerfileFile>..\dockerfile</DockerfileFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
