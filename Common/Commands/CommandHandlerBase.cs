@@ -5,7 +5,7 @@ namespace BonusBot.Common.Commands
 {
     public abstract class CommandHandlerBase<ClassT, ArgsT>
         where ClassT : CommandBase
-        where ArgsT : ICommandHandlerArgsBase
+        where ArgsT : ICommandHandlerArgs
     {
         public ClassT Class { get; }
 

@@ -130,12 +130,21 @@
     <value>The value for {0} has to be between {1} and {2}.</value>
   </data>
   <data name="SettingChannelDoesNotExist" xml:space="preserve">
-    <value>The setting '{0}' for module '{1}' contains the id of a channel ({2}) which does not exist (anymore). Please use '!setting {1} {0} [VALUE]' to set a correct channel id.</value>
+    <value>The setting '{0}' for module '{1}' contains the id of a channel ({2}) which does not exist (anymore). 
+
+If you are an admin of the guild, please use '!setting {1} {0} [VALUE]' to set a correct channel id.
+If not, tell an admin to do it.</value>
   </data>
   <data name="SettingInvalidError" xml:space="preserve">
-    <value>The setting '{0}' is invalid. Please use '!setting {1} {0} [VALUE]' to set it again.</value>
+    <value>The setting '{0}' is invalid. 
+
+If you are an admin of the guild, please use '!setting {1} {0} [VALUE]' to set it again.
+If not, tell an admin to do it.</value>
   </data>
   <data name="SettingMissingError" xml:space="preserve">
-    <value>The setting '{0}' is missing. Please use '!setting {1} {0} [VALUE]' to set it.</value>
+    <value>The setting '{0}' is missing.
+
+If you are an admin of the guild, please use '!setting {1} {0} [VALUE]' to set it.
+If not, tell an admin to do it.</value>
   </data>
 </root>

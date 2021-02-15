@@ -2,7 +2,7 @@
 
 namespace BonusBot.AudioModule.Models.CommandArgs
 {
-    internal interface IQueryArgs : ICommandHandlerArgsBase
+    internal interface IQueryArgs : ICommandHandlerArgs
     {
         public string Query { get; init; }
     }

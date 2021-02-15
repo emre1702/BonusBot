@@ -2,7 +2,7 @@
 
 namespace BonusBot.AudioModule.Models.CommandArgs
 {
-    public class EmptyCommandArgs : ICommandHandlerArgsBase
+    public class EmptyCommandArgs : ICommandHandlerArgs
     {
     }
 }

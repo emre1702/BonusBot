@@ -1,6 +1,6 @@
 ﻿namespace BonusBot.Common.Commands
 {
-    public interface ICommandHandlerArgsBase
+    public interface ICommandHandlerArgs
     {
     }
 }

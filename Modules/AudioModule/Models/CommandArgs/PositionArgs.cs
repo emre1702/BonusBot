@@ -2,5 +2,5 @@
 
 namespace BonusBot.AudioModule.Models.CommandArgs
 {
-    public record PositionArgs(string Position) : ICommandHandlerArgsBase;
+    public record PositionArgs(string Position) : ICommandHandlerArgs;
 }

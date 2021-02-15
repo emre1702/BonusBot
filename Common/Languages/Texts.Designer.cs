@@ -97,7 +97,10 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The setting &apos;{0}&apos; for module &apos;{1}&apos; contains the id of a channel ({2}) which does not exist (anymore). Please use &apos;!setting {1} {0} [VALUE]&apos; to set a correct channel id..
+        ///   Looks up a localized string similar to The setting &apos;{0}&apos; for module &apos;{1}&apos; contains the id of a channel ({2}) which does not exist (anymore). 
+        ///
+        ///If you are an admin of the guild, please use &apos;!setting {1} {0} [VALUE]&apos; to set a correct channel id.
+        ///If not, tell an admin to do it..
         /// </summary>
         public static string SettingChannelDoesNotExist {
             get {
@@ -106,7 +109,10 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The setting &apos;{0}&apos; is invalid. Please use &apos;!setting {1} {0} [VALUE]&apos; to set it again..
+        ///   Looks up a localized string similar to The setting &apos;{0}&apos; is invalid. 
+        ///
+        ///If you are an admin of the guild, please use &apos;!setting {1} {0} [VALUE]&apos; to set it again.
+        ///If not, tell an admin to do it..
         /// </summary>
         public static string SettingInvalidError {
             get {
@@ -115,7 +121,10 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The setting &apos;{0}&apos; is missing. Please use &apos;!setting {1} {0} [VALUE]&apos; to set it..
+        ///   Looks up a localized string similar to The setting &apos;{0}&apos; is missing.
+        ///
+        ///If you are an admin of the guild, please use &apos;!setting {1} {0} [VALUE]&apos; to set it.
+        ///If not, tell an admin to do it..
         /// </summary>
         public static string SettingMissingError {
             get {

@@ -130,12 +130,21 @@
     <value>Der Wert für {0} muss zwischen {1} und {2} sein.</value>
   </data>
   <data name="SettingChannelDoesNotExist" xml:space="preserve">
-    <value>Die Einstellung '{0}' für das Modul '{1}' beinhaltet die ID eines Channels ({2}), welches nicht (mehr) existiert. Bitte nutze '!setting {1} {0} [WERT]', um eine richtige Channel-ID einzugeben.</value>
+    <value>Die Einstellung '{0}' für das Modul '{1}' beinhaltet die ID eines Channels ({2}), welches nicht (mehr) existiert. 
+
+Falls du ein Admin bist, nutze bitte '!setting {1} {0} [WERT]', um eine richtige Channel-ID einzugeben.
+Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
   </data>
   <data name="SettingInvalidError" xml:space="preserve">
-    <value>Die Einstellung '{0}' ist ungültig. Bitte nutze '!setting {1} {0} [WERT]', um die Einstellung erneut zu setzen.</value>
+    <value>Die Einstellung '{0}' ist ungültig. 
+
+Falls du ein Admin bist, nutze bitte '!setting {1} {0} [WERT]', um die Einstellung erneut zu setzen.
+Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
   </data>
   <data name="SettingMissingError" xml:space="preserve">
-    <value>Die Einstellung '{0}' wurde nicht gesetzt. Bitte nutze '!setting {1} {0} [WERT]', um die Einstellung zu setzen.</value>
+    <value>Die Einstellung '{0}' wurde nicht gesetzt. 
+
+Falls du ein Admin bist, nutze bitte '!setting {1} {0} [WERT]', um die Einstellung zu setzen.
+Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
   </data>
 </root>
