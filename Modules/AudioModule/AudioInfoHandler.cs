@@ -10,7 +10,6 @@ using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,30 +37,23 @@ namespace BonusBot.AudioModule
 
         private async ValueTask Do(LavaPlayer player, Func<EmbedInfo, Task> func)
         {
+            var semaphore = _guildLocks.GetOrAdd(player.VoiceChannel.Guild.Id, new SemaphoreSlim(1, 1));
+            await semaphore.WaitAsync();
             try
             {
                 var channel = await GetAudioInfoChannel(player.Guild);
                 if (channel is null) return;
                 var embedInfo = await AudioInfoEmbedHelper.GetEmbedInfo(channel);
 
-                var semaphore = _guildLocks.GetOrAdd(player.VoiceChannel.Guild.Id, new SemaphoreSlim(1, 1));
-                await semaphore.WaitAsync();
-                try
-                {
-                    await func(embedInfo);
-                }
-                catch
-                {
-                    throw;
-                }
-                finally
-                {
-                    semaphore.Release();
-                }
+                await func(embedInfo);
             }
             catch (Exception ex)
             {
                 ConsoleHelper.Log(LogSeverity.Error, Common.Enums.LogSource.AudioModule, "Exception in AudioInfoHandler do occured.", ex);
+            }
+            finally
+            {
+                semaphore.Release();
             }
         }
 
