@@ -1,10 +1,7 @@
 ARG DOTNET_VER_SDK=5.0.102-focal
-ARG DOTNET_VER_ASPNET=5.0.2-focal
-ARG OPERATING_SYSTEM=ubuntu.20.04-x64
-ARG OPERATING_SYSTEM_IMAGE=20.04
+ARG DOTNET_VER_RUNTIME=5.0.2-focal
 
 FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VER_SDK} AS build-env
-ARG OPERATING_SYSTEM
 ARG CERTIFICATE_PASSWORD
 WORKDIR /bonusbot-source
 
@@ -12,10 +9,7 @@ COPY . .
 
 RUN dotnet publish ./Core/Core.csproj -p:PublishProfile=LinuxDebug
 
-RUN dotnet publish -o build -c Debug -r ${OPERATING_SYSTEM}
-
-#FROM ubuntu:${OPERATING_SYSTEM_IMAGE} AS release
-FROM mcr.microsoft.com/dotnet/aspnet:${DOTNET_VER_ASPNET} AS release
+FROM mcr.microsoft.com/dotnet/runtime:${DOTNET_VER_RUNTIME} AS release
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
