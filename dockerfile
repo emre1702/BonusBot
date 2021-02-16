@@ -10,6 +10,8 @@ WORKDIR /bonusbot-source
 
 COPY . .
 
+RUN dotnet publish ./Core/Core.csproj -p:PublishProfile=LinuxDebug
+
 RUN dotnet publish -o build -c Debug -r ${OPERATING_SYSTEM}
 
 #FROM ubuntu:${OPERATING_SYSTEM_IMAGE} AS release
@@ -21,8 +23,6 @@ RUN apt-get update && apt-get install -y \
 	libunwind8 \
     libssl1.1 \
     locales \
-    unzip \
-    && curl -sSL https://aka.ms/getvsdbgsh | /bin/sh /dev/stdin -v latest -l /vsdbg \
 	&& rm -rf /var/lib/apt/lists/* 
 
 # Add bonusbot user
