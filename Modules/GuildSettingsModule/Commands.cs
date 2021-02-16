@@ -32,46 +32,64 @@ namespace GuildSettingsModule
         [Priority(0)]
         public async Task Set(string moduleName, string key, [Remainder] string value)
         {
-            if (!Helpers.DoesSettingExists(_modulesHandler, key, moduleName))
-            {
-                await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
-                return;
-            }
-
-            using var dbContext = _dbContextFactory.CreateDbContext();
-            await dbContext.GuildsSettings.AddOrUpdate(Context.Guild.Id, key, moduleName, value);
-            await dbContext.SaveChangesAsync();
-            await _settingChangeEffects.Changed(Context.Guild, moduleName, key, value);
-            await ReplyToUserAsync(ModuleTexts.SettingSavedSuccessfully);
+            if (await SetSetting(moduleName, key, value))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingStringSavedSuccessfully, value));
         }
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command]
         [Priority(10)]
-        public Task Set(string moduleName, string key, IChannel channel)
-            => Set(moduleName, key, channel.Id.ToString());
+        public async Task Set(string moduleName, string key, IChannel channel)
+        {
+            if (await SetSetting(moduleName, key, channel.Id.ToString()))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingChannelSavedSuccessfully, channel.Name));
+        }
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command]
         [Priority(10)]
-        public Task Set(string moduleName, string key, IRole role)
-            => Set(moduleName, key, role.Id.ToString());
+        public async Task Set(string moduleName, string key, IRole role)
+        {
+            if (await SetSetting(moduleName, key, role.Id.ToString()))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingRoleSavedSuccessfully, role.Name));
+        }
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command]
         [Priority(10)]
-        public Task Set(string moduleName, string key, IMessage message)
-            => Set(moduleName, key, message.Id.ToString());
+        public async Task Set(string moduleName, string key, IMessage message)
+        {
+            if (await SetSetting(moduleName, key, message.Id.ToString()))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingMessageSavedSuccessfully, message.Content));
+        }
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command]
         [Priority(10)]
-        public Task Set(string moduleName, string key, IUser user)
-            => Set(moduleName, key, user.Id.ToString());
+        public async Task Set(string moduleName, string key, IUser user)
+        {
+            if (await SetSetting(moduleName, key, user.Id.ToString()))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingUserSavedSuccessfully, user.Username + "#" + user.Discriminator));
+        }
+
+        private async Task<bool> SetSetting(string moduleName, string key, string value)
+        {
+            if (!Helpers.DoesSettingExists(_modulesHandler, key, moduleName))
+            {
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
+                return false;
+            }
+
+            using var dbContext = _dbContextFactory.CreateDbContext();
+            await dbContext.GuildsSettings.AddOrUpdate(Context.Guild.Id, key, moduleName, value);
+            await dbContext.SaveChangesAsync();
+            await _settingChangeEffects.Changed(Context.Guild, moduleName, key, value);
+            return true;
+        }
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]

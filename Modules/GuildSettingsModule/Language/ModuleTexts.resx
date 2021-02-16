@@ -142,7 +142,20 @@ Loaded modules:
   <data name="SettingInThisModuleDoesNotExist" xml:space="preserve">
     <value>The setting '{0}' in module '{1}' does not exist.</value>
   </data>
-  <data name="SettingSavedSuccessfully" xml:space="preserve">
-    <value>The setting has been saved successfully.</value>
+  <data name="SettingStringSavedSuccessfully" xml:space="preserve">
+    <value>The setting was successfully saved with the value '{0}'.</value>
+  </data>
+  <data name="SettingRoleSavedSuccessfully" xml:space="preserve">
+    <value>The setting was successfully saved with the role '{0}'.</value>
+  </data>
+  <data name="SettingUserSavedSuccessfully" xml:space="preserve">
+    <value>The setting was successfully saved with the user '{0}'.</value>
+  </data>
+  <data name="SettingChannelSavedSuccessfully" xml:space="preserve">
+    <value>The setting was successfully saved with the channel '{0}'.</value>
+  </data>
+  <data name="SettingMessageSavedSuccessfully" xml:space="preserve">
+    <value>The setting was successfully saved with the message with this content:
+{0}</value>
   </data>
 </root>

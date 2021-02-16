@@ -91,6 +91,15 @@ namespace BonusBot.GuildSettingsModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The setting was successfully saved with the channel &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingChannelSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("SettingChannelSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value for the setting &apos;{0}&apos; for the module &apos;{1}&apos; is:
         ///{2}.
         /// </summary>
@@ -110,11 +119,39 @@ namespace BonusBot.GuildSettingsModule.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The setting has been saved successfully..
+        ///   Looks up a localized string similar to The setting was successfully saved with the message with this content:
+        ///{0}.
         /// </summary>
-        internal static string SettingSavedSuccessfully {
+        internal static string SettingMessageSavedSuccessfully {
             get {
-                return ResourceManager.GetString("SettingSavedSuccessfully", resourceCulture);
+                return ResourceManager.GetString("SettingMessageSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The setting was successfully saved with the role &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingRoleSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("SettingRoleSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The setting was successfully saved with the value &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingStringSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("SettingStringSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The setting was successfully saved with the user &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingUserSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("SettingUserSavedSuccessfully", resourceCulture);
             }
         }
     }
