@@ -1,16 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace BonusBot.Common.Extensions
 {
     public static class TaskExtensions
     {
-        public static async void IgnoreResult(this Task task)
-        {
-            try
-            {
-                await task;
-            }
-            catch { }
-        }
-    }
+	    public static async void SafeFireAndForget(this Task task, bool continueOnCapturedContext = true, Action<Exception> onException = null)
+	    {
+		    try
+		    {
+			    await task.ConfigureAwait(continueOnCapturedContext);
+		    }
+		    catch (Exception ex) when (onException != null)
+		    {
+			    onException(ex);
+		    }
+	    }
+	}
 }
