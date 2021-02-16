@@ -14,7 +14,7 @@ namespace BonusBot.AdminModule
             "RemoveBan", "BanRemove", "DeleteBan", "BanDelete", "UBan", "UnBan", "BanU")]
         [RequireBotPermission(GuildPermission.BanMembers)]
         [RequireUserPermission(GuildPermission.BanMembers)]
-        public async Task Ban(IUser user, TimeSpan time, [Remainder] string reason)
+        public Task Ban(IUser user, TimeSpan time, [Remainder] string reason)
             => new Ban(this).Do(new(user, time, reason));
     }
 }
