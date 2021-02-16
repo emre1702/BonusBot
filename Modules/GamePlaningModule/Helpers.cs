@@ -56,12 +56,13 @@ namespace BonusBot.GamePlaningModule
             => new EmbedBuilder()
                 .WithColor(Color.Green)
                 .WithCurrentTimestamp()
-                .WithDescription(string.Format(ModuleTexts.MeetupAnnouncementDescription, data.ParticipationEmoteString, data.LateParticipationEmoteString, data.CancellationEmoteString))
+                .WithDescription(string.Format(ModuleTexts.MeetupAnnouncementDescription, data.ParticipationEmoteString, data.LateParticipationEmoteString, data.MaybeParticipationEmoteString, data.CancellationEmoteString))
                 .WithFields(
                     new() { Name = ModuleTexts.Game + ":", Value = data.Game, IsInline = true },
                     new() { Name = ModuleTexts.DateTime + ":", Value = data.DateTimeStr, IsInline = true },
                     new() { Name = ModuleTexts.Participants + $" ({data.AmountParticipants}):", Value = data.ParticipantsString, IsInline = false },
                     new() { Name = ModuleTexts.LateParticipants + $" ({data.AmountLateParticipants}):", Value = data.LateParticipantsString, IsInline = false },
+                    new() { Name = ModuleTexts.MaybeParticipants + $" ({data.AmountMaybeParticipants}):", Value = data.MaybeParticipantsString, IsInline = false },
                     new() { Name = ModuleTexts.Cancellations + $" ({data.AmountCancellations}):", Value = data.CancellationsString, IsInline = false }
                 )
 

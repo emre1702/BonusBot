@@ -51,15 +51,18 @@ namespace BonusBot.GamePlaningModule
 
             var participationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.ParticipationEmoteId);
             var lateParticipationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.LateParticipationEmoteId);
+            var maybeEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.MaybeEmoteId);
             var cancellationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.CancellationEmoteId);
             var mentionEveryone = await GetSetting<bool>(_dbContextFactory, guildChannel.Guild, Settings.MentionEveryone);
 
             var participantNames = await Helpers.GetReactedUsers(message, participationEmote, guildChannel.Guild, _socketClientHandler);
             var lateParticipantNames = await Helpers.GetReactedUsers(message, lateParticipationEmote, guildChannel.Guild, _socketClientHandler);
+            var maybeNames = await Helpers.GetReactedUsers(message, maybeEmote, guildChannel.Guild, _socketClientHandler);
             var cancellationtNames = await Helpers.GetReactedUsers(message, cancellationEmote, guildChannel.Guild, _socketClientHandler);
 
             var author = embed.Author!.Value;
-            var embedData = new AnnouncementEmbedData(embed.Fields[0].Value, embed.Fields[1].Value, participantNames, participationEmote, lateParticipantNames, lateParticipationEmote, cancellationtNames, cancellationEmote);
+            var embedData = new AnnouncementEmbedData(embed.Fields[0].Value, embed.Fields[1].Value, participantNames, participationEmote, lateParticipantNames, lateParticipationEmote,
+                maybeNames, maybeEmote, cancellationtNames, cancellationEmote);
             var newEmbedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embedData)
                 .WithAuthor(author.Name, author.IconUrl, author.Url);
             await message.ModifyAsync(prop =>
@@ -75,6 +78,8 @@ namespace BonusBot.GamePlaningModule
                 await message.AddReactionAsync(participationEmote);
             if (lateParticipantNames.Count == 0)
                 await message.AddReactionAsync(lateParticipationEmote);
+            if (maybeNames.Count == 0)
+                await message.AddReactionAsync(maybeEmote);
             if (cancellationtNames.Count == 0)
                 await message.AddReactionAsync(cancellationEmote);
         }

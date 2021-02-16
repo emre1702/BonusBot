@@ -17,6 +17,10 @@ namespace BonusBot.GamePlaningModule.Models
         public int AmountLateParticipants { get; set; }
         public string LateParticipationEmoteString { get; set; }
 
+        public string MaybeParticipantsString { get; set; }
+        public int AmountMaybeParticipants { get; set; }
+        public string MaybeParticipationEmoteString { get; set; }
+
         public string CancellationsString { get; set; }
         public int AmountCancellations { get; set; }
         public string CancellationEmoteString { get; set; }
@@ -24,6 +28,7 @@ namespace BonusBot.GamePlaningModule.Models
         public AnnouncementEmbedData(string game, string dateTimeStr,
             List<string> participantNames, IEmote? participationEmote,
             List<string> lateParticipantNames, IEmote? lateParticipationEmote,
+             List<string> maybeParticipantNames, IEmote? maybeEmote,
             List<string> cancellationNames, IEmote? cancellationEmote)
         {
             Game = game;
@@ -38,6 +43,11 @@ namespace BonusBot.GamePlaningModule.Models
             LateParticipantsString = !string.IsNullOrWhiteSpace(LateParticipantsString) ? LateParticipantsString : "-";
             AmountLateParticipants = lateParticipantNames.Count;
             LateParticipationEmoteString = lateParticipationEmote?.ToString() ?? string.Empty;
+
+            MaybeParticipantsString = string.Join(", ", maybeParticipantNames);
+            MaybeParticipantsString = !string.IsNullOrWhiteSpace(MaybeParticipantsString) ? MaybeParticipantsString : "-";
+            AmountMaybeParticipants = maybeParticipantNames.Count;
+            MaybeParticipationEmoteString = maybeEmote?.ToString() ?? string.Empty;
 
             CancellationsString = string.Join(", ", cancellationNames);
             CancellationsString = !string.IsNullOrWhiteSpace(CancellationsString) ? CancellationsString : "-";

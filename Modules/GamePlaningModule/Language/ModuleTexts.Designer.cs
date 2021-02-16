@@ -97,10 +97,20 @@ namespace BonusBot.GamePlaningModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maybe.
+        /// </summary>
+        internal static string MaybeParticipants {
+            get {
+                return ResourceManager.GetString("MaybeParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A meetup has been organized.
         ///Click on the {0} icon below to confirm your participation.
         ///If you want to join later, use {1}.
-        ///To cancel, you can press {2}..
+        ///You&apos;re still unsure if you&apos;ll be able to come? {2}
+        ///To cancel, you can press {3}..
         /// </summary>
         internal static string MeetupAnnouncementDescription {
             get {

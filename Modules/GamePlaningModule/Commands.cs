@@ -17,15 +17,17 @@ namespace BonusBot.GamePlaningModule
         [RequireEmoteSetting(Settings.ParticipationEmoteId)]
         [RequireEmoteSetting(Settings.LateParticipationEmoteId)]
         [RequireEmoteSetting(Settings.CancellationEmoteId)]
+        [RequireEmoteSetting(Settings.MaybeEmoteId)]
         [RequireSetting(Settings.MentionEveryone, typeof(bool))]
         public async Task PlanMeetup(string game, DateTime time)
         {
             var participationEmote = Context.GetRequiredEmoteSetting(Settings.ParticipationEmoteId);
             var lateParticipationEmote = Context.GetRequiredEmoteSetting(Settings.LateParticipationEmoteId);
             var cancellationEmote = Context.GetRequiredEmoteSetting(Settings.CancellationEmoteId);
+            var maybeEmote = Context.GetRequiredEmoteSetting(Settings.MaybeEmoteId);
             var mentionEveryone = Context.GetRequiredSettingValue<bool>(Settings.MentionEveryone);
 
-            var embedData = new AnnouncementEmbedData(game, time.ToString(), new() { }, participationEmote, new() { }, lateParticipationEmote, new(), cancellationEmote);
+            var embedData = new AnnouncementEmbedData(game, time.ToString(), new() { }, participationEmote, new() { }, maybeEmote, new(), lateParticipationEmote, new(), cancellationEmote);
             var embedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embedData)
                 .WithAuthor(Context.SocketUser);
 

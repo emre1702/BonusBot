@@ -129,11 +129,15 @@
   <data name="LateParticipants" xml:space="preserve">
     <value>Late participants</value>
   </data>
+  <data name="MaybeParticipants" xml:space="preserve">
+    <value>Maybe</value>
+  </data>
   <data name="MeetupAnnouncementDescription" xml:space="preserve">
     <value>A meetup has been organized.
 Click on the {0} icon below to confirm your participation.
 If you want to join later, use {1}.
-To cancel, you can press {2}.</value>
+You're still unsure if you'll be able to come? {2}
+To cancel, you can press {3}.</value>
   </data>
   <data name="MeetupAnnouncementTitle" xml:space="preserve">
     <value>Meetup announcement</value>

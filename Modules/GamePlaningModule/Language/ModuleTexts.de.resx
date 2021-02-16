@@ -129,11 +129,15 @@
   <data name="LateParticipants" xml:space="preserve">
     <value>Verspätende Teilnehmer</value>
   </data>
+  <data name="MaybeParticipants" xml:space="preserve">
+    <value>Vielleicht</value>
+  </data>
   <data name="MeetupAnnouncementDescription" xml:space="preserve">
     <value>Ein Treffen wurde organisiert.
 Klicke auf das {0} Icon unten, um deine Teilnahme zu bestätigen.
 Falls du später hinzukommen wirst, nutze {1}.
-Zum Absagen, kannst du auf {2} drücken.</value>
+Du bist dir noch unsicher, ob du kommen kannst? {2}
+Zum Absagen, kannst du auf {3} drücken.</value>
   </data>
   <data name="MeetupAnnouncementTitle" xml:space="preserve">
     <value>Treff-Ankündigung</value>
