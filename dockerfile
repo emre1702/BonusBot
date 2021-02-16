@@ -24,7 +24,7 @@ RUN useradd -m -d /home/bonusbot bonusbot
 
 WORKDIR /home/bonusbot
 
-COPY --from=build-env /bonusbot-source/build .
+COPY --from=build-env /bonusbot-source/Build .
 
 RUN [ ! -d /bonusbot-data ] && mkdir -p /bonusbot-data; exit 0
 
