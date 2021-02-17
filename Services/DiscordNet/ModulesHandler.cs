@@ -25,7 +25,7 @@ namespace BonusBot.Services.DiscordNet
         public Assembly? FindAssemblyByModuleName(string moduleName)
         {
             moduleName = moduleName.ToModuleName();
-            if (moduleName.Equals(typeof(CommonSettings).Assembly.GetName().Name?.ToModuleName()))
+            if (moduleName.Equals(typeof(CommonSettings).GetModuleName()))
                 return typeof(CommonSettings).Assembly;
 
             lock (LoadedModuleAssemblies)
@@ -50,7 +50,7 @@ namespace BonusBot.Services.DiscordNet
             {
                 var context = new AssemblyLoadContext(file);
                 var assembly = context.LoadFromAssemblyPath(file);
-                var name = assembly.GetName().Name!.ToModuleName();
+                var name = assembly.ToModuleName();
                 lock (assembly)
                 {
                     LoadedModuleAssemblies.Add(assembly);

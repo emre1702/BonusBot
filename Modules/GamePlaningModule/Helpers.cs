@@ -71,6 +71,6 @@ namespace BonusBot.GamePlaningModule
                 .WithTitle(ModuleTexts.MeetupAnnouncementTitle);
 
         internal static string GetAnnouncementFooter()
-            => typeof(Helpers).Assembly.GetName().Name!.ToModuleName() + " Announcement";
+            => typeof(Helpers).GetModuleName() + " Announcement";
     }
 }

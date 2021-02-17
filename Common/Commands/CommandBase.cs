@@ -49,7 +49,7 @@ namespace BonusBot.Common.Extensions
 
         public async Task<T?> GetSetting<T>(BonusDbContextFactory dbContextFactory, IGuild guild, string settingKey)
         {
-            var moduleName = GetType().Assembly.GetName()!.Name!.ToModuleName();
+            var moduleName = GetType().Assembly.ToModuleName();
 
             using var dbContext = dbContextFactory.CreateDbContext();
             var guildSetting = await EntityFrameworkQueryableExtensions.FirstOrDefaultAsync(dbContext.GuildsSettings, s =>

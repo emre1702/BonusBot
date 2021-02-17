@@ -59,19 +59,19 @@ namespace BonusBot.Common.Extensions
         }
 
         public static Task<GuildsSettings?> Get(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => Get(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
+            => Get(dbSet, guildId, key, moduleAssembly.ToModuleName());
 
         public static Task<string?> GetString(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => GetString(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
+            => GetString(dbSet, guildId, key, moduleAssembly.ToModuleName());
 
         public static Task<bool?> GetBool(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => GetBool(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
+            => GetBool(dbSet, guildId, key, moduleAssembly.ToModuleName());
 
         public static Task<int?> GetInt32(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => GetInt32(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
+            => GetInt32(dbSet, guildId, key, moduleAssembly.ToModuleName());
 
         public static Task<ulong?> GetUInt64(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => GetUInt64(dbSet, guildId, key, moduleAssembly.GetName()!.Name!);
+            => GetUInt64(dbSet, guildId, key, moduleAssembly.ToModuleName());
 
         public static GuildsSettings Create(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName, string value)
         {
@@ -108,7 +108,7 @@ namespace BonusBot.Common.Extensions
         }
 
         public static Task<string?> GetOrCreateString(this DbSet<GuildsSettings> dbSet, DbContext dbContext, ulong guildId, string key, Assembly moduleAssembly, object defaultValue)
-            => GetOrCreateString(dbSet, dbContext, guildId, key, moduleAssembly.GetName()!.Name!, defaultValue);
+            => GetOrCreateString(dbSet, dbContext, guildId, key, moduleAssembly.ToModuleName(), defaultValue);
 
         public static async Task<GuildsSettings> AddOrUpdate(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName, string value)
         {
@@ -120,6 +120,6 @@ namespace BonusBot.Common.Extensions
         }
 
         public static Task<GuildsSettings> AddOrUpdate(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly, string value)
-            => AddOrUpdate(dbSet, guildId, key, moduleAssembly.GetName()!.Name!, value);
+            => AddOrUpdate(dbSet, guildId, key, moduleAssembly.ToModuleName(), value);
     }
 }
