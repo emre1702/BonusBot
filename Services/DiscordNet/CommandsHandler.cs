@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using BonusBot.Common;
+using BonusBot.Services.Guilds;
 
 namespace BonusBot.Services.DiscordNet
 {
@@ -19,15 +20,16 @@ namespace BonusBot.Services.DiscordNet
     {
         public CommandService CommandService { get; init; }
 
-        private readonly BonusDbContextFactory _dbContextFactory;
         private readonly SocketClientHandler _socketClientHandler;
         private readonly IServiceProvider _serviceProvider;
+        private readonly GuildsHandler _guildsHandler;
 
-        public CommandsHandler(EventsHandler eventsHandler, BonusDbContextFactory dbContextFactory, SocketClientHandler socketClientHandler, IServiceProvider serviceProvider)
+        public CommandsHandler(EventsHandler eventsHandler, SocketClientHandler socketClientHandler, IServiceProvider serviceProvider,
+            GuildsHandler guildsHandler)
         {
-            _dbContextFactory = dbContextFactory;
             _socketClientHandler = socketClientHandler;
             _serviceProvider = serviceProvider;
+            _guildsHandler = guildsHandler;
 
             CommandService = CreateCommandService();
             AddTypeReaders(CommandService);
@@ -94,11 +96,13 @@ namespace BonusBot.Services.DiscordNet
         {
             if (message.Channel is not SocketGuildChannel channel)
                 return (false, 0);
+            var guild = _guildsHandler.GetGuild(channel.Guild);
+            if (guild is null)
+                return (false, 0);
 
-            using var dbContext = _dbContextFactory.CreateDbContext();
-
-            var commandPrefix = await dbContext.GuildsSettings.GetString(channel.Guild.Id, CommonSettings.CommandPrefix, GetType().Assembly);
-            var commandMentionAllowed = await dbContext.GuildsSettings.GetBool(channel.Guild.Id, CommonSettings.CommandPrefixMentionAllowed, GetType().Assembly);
+            var moduleName = GetType().Assembly.ToModuleName();
+            var commandPrefix = await guild.Settings.Get<string>(moduleName, CommonSettings.CommandPrefix);
+            bool? commandMentionAllowed = await guild.Settings.Get<bool>(moduleName, CommonSettings.CommandPrefixMentionAllowed);
 
             if (!GetIsCommand(message, commandPrefix ?? Constants.DefaultCommandPrefix, commandMentionAllowed ?? Constants.DefaultCommandMentionAllowed, botClient, out int prefixLength))
                 return (false, 0);

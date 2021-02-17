@@ -24,6 +24,9 @@ namespace BonusBot.Common.Helper
                 TokenOf<Emote> => await GetEmote(value, guild),
                 TokenOf<IEmote> => await GetIEmote(value, guild),
 
+                TokenOf<string> => value.ToString(),
+                TokenOf<bool> => bool.TryParse(value.ToString(), out var b) ? b : null,
+
                 _ => default
             });
 
