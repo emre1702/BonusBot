@@ -1,0 +1,39 @@
+﻿using BonusBot.Common.Extensions;
+using BonusBot.Common.Interfaces.Guilds;
+using System.Collections.Generic;
+using System.Reflection;
+
+namespace GuildsSystem.Settings
+{
+    public class GuildSettingsCache : IGuildSettingsCache
+    {
+        private readonly Dictionary<string, Dictionary<string, object>> _keyValueSettingByModuleName = new();
+
+        public object? Get(string moduleName, string key)
+        {
+            lock (_keyValueSettingByModuleName)
+            {
+                if (!_keyValueSettingByModuleName.ContainsKey(moduleName))
+                    _keyValueSettingByModuleName[moduleName] = new();
+                _keyValueSettingByModuleName[moduleName].TryGetValue(key, out var value);
+                return value;
+            }
+        }
+
+        public object? Get(Assembly assembly, string key)
+            => Get(assembly.ToModuleName(), key);
+
+        public void Set(string moduleName, string key, object value)
+        {
+            lock (_keyValueSettingByModuleName)
+            {
+                if (!_keyValueSettingByModuleName.ContainsKey(moduleName))
+                    _keyValueSettingByModuleName[moduleName] = new();
+                _keyValueSettingByModuleName[moduleName][key] = value;
+            }
+        }
+
+        public void Set(Assembly assembly, string key, object value)
+            => Set(assembly.ToModuleName(), key, value);
+    }
+}

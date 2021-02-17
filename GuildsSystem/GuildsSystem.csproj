@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>BonusBot.GuildsSystem</AssemblyName>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Database\Database.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
+</Project>
