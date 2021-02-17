@@ -27,10 +27,11 @@ namespace BonusBot.Services.DiscordNet
             client.Ready += () => Client_Ready(client);
         }
 
-        private Task Client_Ready(DiscordSocketClient client)
+        private async Task Client_Ready(DiscordSocketClient client)
         {
+            await client.CurrentUser.ModifyAsync(prop => prop.Username = Constants.DefaultBotName);
+
             ClientSource.SetResult(client);
-            return Task.CompletedTask;
         }
 
         private DiscordSocketClient CreateClient()
