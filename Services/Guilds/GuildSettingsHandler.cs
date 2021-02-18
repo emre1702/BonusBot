@@ -18,7 +18,7 @@ namespace BonusBot.Services.Guilds
         private readonly BonusDbContextFactory _bonusDbContextFactory;
         private readonly SocketClientHandler _socketClientHandler;
 
-        internal GuildSettingsHandler(IGuildSettingsCache settingsCache, BonusDbContextFactory bonusDbContextFactory, SocketClientHandler socketClientHandler)
+        public GuildSettingsHandler(IGuildSettingsCache settingsCache, BonusDbContextFactory bonusDbContextFactory, SocketClientHandler socketClientHandler)
             => (_settingsCache, _bonusDbContextFactory, _socketClientHandler) = (settingsCache, bonusDbContextFactory, socketClientHandler);
 
         public void Init(SocketGuild guild)
