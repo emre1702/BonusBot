@@ -25,7 +25,7 @@ namespace BonusBot.Common.Helper
                 ulong unsignedLong => unsignedLong.ToString(),
                 bool boolean => boolean ? bool.TrueString : bool.FalseString,
 
-                _ => throw new NotSupportedException($"GetIdentifier is not support for type {value.GetType().Name}.")
+                _ => throw new NotSupportedException($"GetIdentifier is not supported for type {value.GetType().Name}.")
             };
     }
 }
