@@ -16,7 +16,12 @@ namespace BonusBot.Common.Helper
                 IMessage message => message.Id.ToString(),
 
                 string str => str,
+                int signedInt => signedInt.ToString(),
+                uint unsignedInt => unsignedInt.ToString(),
+                long signedLong => signedLong.ToString(),
                 ulong unsignedLong => unsignedLong.ToString(),
+                bool boolean => boolean ? bool.TrueString : bool.FalseString,
+
                 _ => throw new NotSupportedException($"GetIdentifier is not support for type {value.GetType().Name}.")
             };
     }
