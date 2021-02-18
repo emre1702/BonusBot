@@ -10,22 +10,24 @@ namespace GuildsSystem
 {
     public class Guild : IBonusGuild
     {
-        public SocketGuild DiscordGuild { get; }
+#nullable disable
+        public SocketGuild DiscordGuild { get; private set; }
+#nullable restore
         public IGuildSettingsHandler Settings { get; }
 
         private readonly BonusDbContextFactory _dbContextFactory;
 
-        public Guild(SocketGuild discordGuild, BonusDbContextFactory dbContextFactory, IGuildSettingsHandler guildSettingsHandler)
+        public Guild(BonusDbContextFactory dbContextFactory, IGuildSettingsHandler guildSettingsHandler)
         {
-            DiscordGuild = discordGuild;
             _dbContextFactory = dbContextFactory;
             Settings = guildSettingsHandler;
-
-            Settings.Init(discordGuild);
         }
 
-        public async Task Initialize()
+        public async Task Initialize(SocketGuild discordGuild)
         {
+            DiscordGuild = discordGuild;
+            Settings.Init(discordGuild);
+
             using var dbContext = _dbContextFactory.CreateDbContext();
 
             var userName = await dbContext.GuildsSettings.GetString(DiscordGuild.Id, CommonSettings.BotName, typeof(CommonSettings).Assembly);

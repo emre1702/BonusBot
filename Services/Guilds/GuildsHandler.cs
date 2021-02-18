@@ -48,7 +48,7 @@ namespace BonusBot.Services.Guilds
                         return;
                 }
 
-                var guild = await _bonusGuildProvider.Create();
+                var guild = await _bonusGuildProvider.Create(arg.Guild);
 
                 lock (_guildsInitialized) _guildsInitialized[arg.Guild.Id] = guild;
                 ConsoleHelper.Log(LogSeverity.Info, LogSource.Discord, $"Initialized Guild '{arg.Guild.Name}'.");

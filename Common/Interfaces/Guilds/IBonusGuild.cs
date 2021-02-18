@@ -8,6 +8,6 @@ namespace BonusBot.Common.Interfaces.Guilds
         SocketGuild DiscordGuild { get; }
         IGuildSettingsHandler Settings { get; }
 
-        Task Initialize();
+        Task Initialize(SocketGuild discordGuild);
     }
 }

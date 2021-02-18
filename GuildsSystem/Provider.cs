@@ -1,4 +1,5 @@
 ﻿using BonusBot.Common.Interfaces.Guilds;
+using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
@@ -12,10 +13,10 @@ namespace GuildsSystem
         public Provider(IServiceProvider serviceProvider)
             => _serviceProvider = serviceProvider;
 
-        public async Task<IBonusGuild> Create()
+        public async Task<IBonusGuild> Create(SocketGuild discordGuild)
         {
             var guild = ActivatorUtilities.CreateInstance<Guild>(_serviceProvider);
-            await guild.Initialize();
+            await guild.Initialize(discordGuild);
 
             return guild;
         }
