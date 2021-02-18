@@ -1,6 +1,4 @@
-﻿using BonusBot.Common.Defaults;
-using BonusBot.Common.Extensions;
-using BonusBot.Database;
+﻿using BonusBot.Common.Extensions;
 using BonusBot.GuildSettingsModule;
 using BonusBot.GuildSettingsModule.Language;
 using BonusBot.Services.DiscordNet;
@@ -16,12 +14,18 @@ namespace GuildSettingsModule
     {
         private readonly ModulesHandler _modulesHandler;
         private static readonly SettingChangeEffects _settingChangeEffects = new();
+        private static readonly SettingValuePreparations _settingValuePreparations = new();
 
         public GuildSettings(ModulesHandler modulesHandler)
         {
             _modulesHandler = modulesHandler;
+        }
 
-            ModuleTexts.Culture = Constants.Culture;
+        protected override void BeforeExecute(CommandInfo command)
+        {
+            ModuleTexts.Culture = Context.BonusGuild.Settings.CultureInfo;
+
+            base.BeforeExecute(command);
         }
 
         [RequireContext(ContextType.Guild)]
@@ -82,9 +86,10 @@ namespace GuildSettingsModule
                 return false;
             }
 
+            value = _settingValuePreparations.GetPreparedValue(moduleName, key, value);
             await Context.BonusGuild.Settings.Set(moduleName, key, value);
+            await _settingChangeEffects.Changed(Context.BonusGuild, moduleName, key, value);
 
-            await _settingChangeEffects.Changed(Context.Guild, moduleName, key, value);
             return true;
         }
 

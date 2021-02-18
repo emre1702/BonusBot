@@ -26,7 +26,7 @@ namespace GuildsSystem
         public async Task Initialize(SocketGuild discordGuild)
         {
             DiscordGuild = discordGuild;
-            Settings.Init(discordGuild);
+            await Settings.Init(discordGuild);
 
             using var dbContext = _dbContextFactory.CreateDbContext();
 

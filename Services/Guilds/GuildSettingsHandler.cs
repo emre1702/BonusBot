@@ -1,9 +1,12 @@
-﻿using BonusBot.Common.Extensions;
+﻿using BonusBot.Common;
+using BonusBot.Common.Defaults;
+using BonusBot.Common.Extensions;
 using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Database;
 using BonusBot.Services.DiscordNet;
 using Discord.WebSocket;
+using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -12,6 +15,8 @@ namespace BonusBot.Services.Guilds
     public class GuildSettingsHandler : IGuildSettingsHandler
     {
 #nullable disable
+        public CultureInfo CultureInfo { get; set; }
+
         private SocketGuild _guild;
 #nullable restore
         private readonly IGuildSettingsCache _settingsCache;
@@ -21,8 +26,11 @@ namespace BonusBot.Services.Guilds
         public GuildSettingsHandler(IGuildSettingsCache settingsCache, BonusDbContextFactory bonusDbContextFactory, SocketClientHandler socketClientHandler)
             => (_settingsCache, _bonusDbContextFactory, _socketClientHandler) = (settingsCache, bonusDbContextFactory, socketClientHandler);
 
-        public void Init(SocketGuild guild)
-            => (_guild) = (guild);
+        public async Task Init(SocketGuild guild)
+        {
+            _guild = guild;
+            CultureInfo = await Get<CultureInfo>(typeof(CommonSettings).Assembly, CommonSettings.Locale) ?? Constants.DefaultCultureInfo;
+        }
 
         public async ValueTask<T?> Get<T>(string moduleName, string key)
         {

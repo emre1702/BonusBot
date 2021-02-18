@@ -188,5 +188,12 @@ namespace BonusBot.AudioModule
             var client = await socketClientHandler.ClientSource.Task;
             await LavaSocketClient.Instance.Start(client);
         }
+
+        protected override void BeforeExecute(CommandInfo command)
+        {
+            ModuleTexts.Culture = Context.BonusGuild.Settings.CultureInfo;
+
+            base.BeforeExecute(command);
+        }
     }
 }

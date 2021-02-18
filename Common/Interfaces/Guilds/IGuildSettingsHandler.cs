@@ -1,4 +1,5 @@
 ﻿using Discord.WebSocket;
+using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -6,7 +7,9 @@ namespace BonusBot.Common.Interfaces.Guilds
 {
     public interface IGuildSettingsHandler
     {
-        void Init(SocketGuild guild);
+        CultureInfo CultureInfo { get; set; }
+
+        Task Init(SocketGuild guild);
 
         ValueTask<T?> Get<T>(string moduleName, string key);
 
