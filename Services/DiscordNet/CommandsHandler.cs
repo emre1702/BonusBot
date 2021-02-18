@@ -13,6 +13,7 @@ using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using BonusBot.Common;
 using BonusBot.Services.Guilds;
+using BonusBot.Common.Interfaces.Guilds;
 
 namespace BonusBot.Services.DiscordNet
 {
@@ -22,10 +23,10 @@ namespace BonusBot.Services.DiscordNet
 
         private readonly SocketClientHandler _socketClientHandler;
         private readonly IServiceProvider _serviceProvider;
-        private readonly GuildsHandler _guildsHandler;
+        private readonly IGuildsHandler _guildsHandler;
 
         public CommandsHandler(EventsHandler eventsHandler, SocketClientHandler socketClientHandler, IServiceProvider serviceProvider,
-            GuildsHandler guildsHandler)
+            IGuildsHandler guildsHandler)
         {
             _socketClientHandler = socketClientHandler;
             _serviceProvider = serviceProvider;
@@ -122,7 +123,7 @@ namespace BonusBot.Services.DiscordNet
                 return;
 
             var botClient = await _socketClientHandler.ClientSource.Task;
-            var context = new CustomContext(botClient, messageData);
+            var context = new CustomContext(botClient, messageData, _guildsHandler);
             await CommandService.ExecuteAsync(context, messageData.CommandPrefixLength, _serviceProvider, MultiMatchHandling.Best);
         }
 

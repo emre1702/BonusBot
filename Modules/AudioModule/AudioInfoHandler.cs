@@ -3,9 +3,8 @@ using BonusBot.AudioModule.LavaLink;
 using BonusBot.AudioModule.LavaLink.Enums;
 using BonusBot.AudioModule.LavaLink.Models;
 using BonusBot.AudioModule.Models;
-using BonusBot.Common.Extensions;
 using BonusBot.Common.Helper;
-using BonusBot.Database;
+using BonusBot.Common.Interfaces.Guilds;
 using Discord;
 using Discord.WebSocket;
 using System;
@@ -19,9 +18,9 @@ namespace BonusBot.AudioModule
     {
         private readonly ConcurrentDictionary<ulong, SemaphoreSlim> _guildLocks = new ConcurrentDictionary<ulong, SemaphoreSlim>();
 
-        private readonly BonusDbContextFactory _bonusDbContextFactory;
+        private readonly IGuildsHandler _guildsHandler;
 
-        public AudioInfoHandler(BonusDbContextFactory bonusDbContextFactory) => _bonusDbContextFactory = bonusDbContextFactory;
+        public AudioInfoHandler(IGuildsHandler guildsHandler) => _guildsHandler = guildsHandler;
 
         public Task TrackChanged(LavaPlayer player, AudioTrack? audioTrack)
             => Do(player, embedInfo => AudioInfoEmbedHelper.UpdateEmbed(embedInfo, player, embed => GetWithNewAudioTrackInfo(embed, audioTrack))).AsTask();
@@ -68,11 +67,10 @@ namespace BonusBot.AudioModule
 
         private async Task<SocketTextChannel?> GetAudioInfoChannel(SocketGuild guild)
         {
-            using var dbContext = _bonusDbContextFactory.CreateDbContext();
-            var channelId = await dbContext.GuildsSettings.GetUInt64(guild.Id, Settings.AudioInfoChannelId, GetType().Assembly);
-            if (!channelId.HasValue)
-                return null;
-            return guild.GetTextChannel(channelId.Value);
+            var bonusGuild = _guildsHandler.GetGuild(guild);
+            if (bonusGuild is null) return null;
+
+            return await bonusGuild.Settings.Get<SocketTextChannel>(GetType().Assembly, Settings.AudioInfoChannelId);
         }
 
         private async Task<Embed> GetWithNewAudioTrackInfo(Embed embed, AudioTrack? audioTrack)

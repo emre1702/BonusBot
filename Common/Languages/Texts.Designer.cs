@@ -88,6 +88,15 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The guild is not initialized yet. Try again after some seconds..
+        /// </summary>
+        public static string GuildNotInitializedYet {
+            get {
+                return ResourceManager.GetString("GuildNotInitializedYet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value for {0} has to be between {1} and {2}..
         /// </summary>
         public static string NumberRangeError {
@@ -97,14 +106,26 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The setting &apos;{0}&apos; for module &apos;{1}&apos; contains the id of a channel ({2}) which does not exist (anymore). 
+        ///   Looks up a localized string similar to The setting &apos;{0}&apos; for module &apos;{1}&apos; contains a channel which does not exist (anymore). 
         ///
-        ///If you are an admin of the guild, please use &apos;!setting {1} {0} [VALUE]&apos; to set a correct channel id.
+        ///If you are an admin of the guild, please use &apos;!setting {1} {0} [VALUE]&apos; to set a correct channel.
         ///If not, tell an admin to do it..
         /// </summary>
         public static string SettingChannelDoesNotExist {
             get {
                 return ResourceManager.GetString("SettingChannelDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The setting &apos;{0}&apos; for module &apos;{1}&apos; contains an emote which does not exist (anymore). 
+        ///
+        ///If you are an admin of the guild, please use &apos;!setting {1} {0} [VALUE]&apos; to set a correct emote.
+        ///If not, tell an admin to do it..
+        /// </summary>
+        public static string SettingEmoteDoesNotExist {
+            get {
+                return ResourceManager.GetString("SettingEmoteDoesNotExist", resourceCulture);
             }
         }
         

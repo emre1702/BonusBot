@@ -1,4 +1,5 @@
 ﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Database;
 using BonusBot.GamePlaningModule.Language;
 using BonusBot.GamePlaningModule.Models;
@@ -15,12 +16,13 @@ namespace BonusBot.GamePlaningModule
         private static bool _initialized;
 
         private readonly SocketClientHandler _socketClientHandler;
-        private readonly BonusDbContextFactory _dbContextFactory;
+        private readonly IGuildsHandler _guildsHandler;
 
-        public GamePlaning(SocketClientHandler socketClientHandler, BonusDbContextFactory dbContextFactory)
+        public GamePlaning(SocketClientHandler socketClientHandler, IGuildsHandler guildsHandler)
         {
             _socketClientHandler = socketClientHandler;
-            _dbContextFactory = dbContextFactory;
+            _guildsHandler = guildsHandler;
+
             ModuleTexts.Culture = Constants.Culture;
 
             AddEvents();
@@ -48,21 +50,18 @@ namespace BonusBot.GamePlaningModule
                 return;
 
             var guildChannel = (SocketGuildChannel)channel;
+            var bonusGuild = _guildsHandler.GetGuild(guildChannel.Guild);
+            if (bonusGuild is null)
+                return;
 
-            var participationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.ParticipationEmoteId);
-            var lateParticipationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.LateParticipationEmoteId);
-            var maybeEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.MaybeEmoteId);
-            var cancellationEmote = await GetSettingEmote(_dbContextFactory, guildChannel.Guild, Settings.CancellationEmoteId);
-            var mentionEveryone = await GetSetting<bool>(_dbContextFactory, guildChannel.Guild, Settings.MentionEveryone);
-
-            var participantNames = await Helpers.GetReactedUsers(message, participationEmote, guildChannel.Guild, _socketClientHandler);
-            var lateParticipantNames = await Helpers.GetReactedUsers(message, lateParticipationEmote, guildChannel.Guild, _socketClientHandler);
-            var maybeNames = await Helpers.GetReactedUsers(message, maybeEmote, guildChannel.Guild, _socketClientHandler);
-            var cancellationtNames = await Helpers.GetReactedUsers(message, cancellationEmote, guildChannel.Guild, _socketClientHandler);
+            var participationData = await GetEmoteData(bonusGuild, message, Settings.ParticipationEmoteId);
+            var lateParticipationData = await GetEmoteData(bonusGuild, message, Settings.LateParticipationEmoteId);
+            var maybeData = await GetEmoteData(bonusGuild, message, Settings.MaybeEmoteId);
+            var cancellationData = await GetEmoteData(bonusGuild, message, Settings.CancellationEmoteId);
+            var mentionEveryone = await bonusGuild.Settings.Get<bool>(GetType().Assembly, Settings.MentionEveryone);
 
             var author = embed.Author!.Value;
-            var embedData = new AnnouncementEmbedData(embed.Fields[0].Value, embed.Fields[1].Value, participantNames, participationEmote, lateParticipantNames, lateParticipationEmote,
-                maybeNames, maybeEmote, cancellationtNames, cancellationEmote);
+            var embedData = new AnnouncementEmbedData(embed.Fields[0].Value, embed.Fields[1].Value, participationData, lateParticipationData, maybeData, cancellationData);
             var newEmbedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embedData)
                 .WithAuthor(author.Name, author.IconUrl, author.Url);
             await message.ModifyAsync(prop =>
@@ -74,14 +73,21 @@ namespace BonusBot.GamePlaningModule
 
             var msgText = Helpers.GetWithoutParticipantsMessage(message.Content);
 
-            if (participantNames.Count == 0)
-                await message.AddReactionAsync(participationEmote);
-            if (lateParticipantNames.Count == 0)
-                await message.AddReactionAsync(lateParticipationEmote);
-            if (maybeNames.Count == 0)
-                await message.AddReactionAsync(maybeEmote);
-            if (cancellationtNames.Count == 0)
-                await message.AddReactionAsync(cancellationEmote);
+            if (participationData.Reactors.Count == 0)
+                await message.AddReactionAsync(participationData.Emote);
+            if (lateParticipationData.Reactors.Count == 0)
+                await message.AddReactionAsync(lateParticipationData.Emote);
+            if (maybeData.Reactors.Count == 0)
+                await message.AddReactionAsync(maybeData.Emote);
+            if (cancellationData.Reactors.Count == 0)
+                await message.AddReactionAsync(cancellationData.Emote);
+        }
+
+        private async Task<EmoteData> GetEmoteData(IBonusGuild bonusGuild, IUserMessage message, string key)
+        {
+            var emote = await bonusGuild.Settings.Get<Emote>(GetType().Assembly, key);
+            var reactors = await Helpers.GetReactedUsers(message, emote, bonusGuild.DiscordGuild, _socketClientHandler);
+            return new(emote, reactors);
         }
     }
 }

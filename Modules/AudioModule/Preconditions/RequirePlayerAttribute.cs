@@ -3,6 +3,7 @@ using BonusBot.AudioModule.LavaLink;
 using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.Common.Commands;
 using BonusBot.Common.Extensions;
+using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Languages;
 using BonusBot.Database;
 using Discord;
@@ -36,20 +37,20 @@ namespace BonusBot.AudioModule.Preconditions
                 if (!_createPlayerIfNotExists)
                     return PreconditionResult.FromError(ModuleTexts.NoPlayerForGuildError);
 
-                var bonusDbContextFactory = services.GetRequiredService<BonusDbContextFactory>();
-                _lavaPlayerInitHandler = new(bonusDbContextFactory);
+                var guildsHandler = services.GetRequiredService<IGuildsHandler>();
+                _lavaPlayerInitHandler = new(guildsHandler);
 
-                var defaultVolume = await GetDefaultVolume(ctx.Guild.Id, bonusDbContextFactory);
+                var defaultVolume = await GetDefaultVolume(ctx.Guild.Id, guildsHandler);
                 await _lavaPlayerInitHandler.Create(ctx.User.VoiceChannel, ctx.Channel as ITextChannel, defaultVolume);
             }
 
             return PreconditionResult.FromSuccess();
         }
 
-        private async Task<int> GetDefaultVolume(ulong guildId, BonusDbContextFactory dbContextFactory)
+        private async Task<int> GetDefaultVolume(ulong guildId, IGuildsHandler guildsHandler)
         {
-            using var dbContext = dbContextFactory.CreateDbContext();
-            var volume = await dbContext.GuildsSettings.GetInt32(guildId, Settings.Volume, GetType().Assembly);
+            var bonusGuild = guildsHandler.GetGuild(guildId)!;
+            int? volume = await bonusGuild.Settings.Get<int>(GetType().Assembly, Settings.Volume);
             return volume ?? 100;
         }
     }

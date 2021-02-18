@@ -26,33 +26,33 @@ namespace BonusBot.GamePlaningModule.Models
         public string CancellationEmoteString { get; set; }
 
         public AnnouncementEmbedData(string game, string dateTimeStr,
-            List<string> participantNames, IEmote? participationEmote,
-            List<string> lateParticipantNames, IEmote? lateParticipationEmote,
-             List<string> maybeParticipantNames, IEmote? maybeEmote,
-            List<string> cancellationNames, IEmote? cancellationEmote)
+            EmoteData participationData,
+            EmoteData lateParticipationData,
+            EmoteData maybeData,
+            EmoteData cancellationData)
         {
             Game = game;
             DateTimeStr = dateTimeStr;
 
-            ParticipantsString = string.Join(", ", participantNames);
+            ParticipantsString = string.Join(", ", participationData.Reactors);
             ParticipantsString = !string.IsNullOrWhiteSpace(ParticipantsString) ? ParticipantsString : "-";
-            AmountParticipants = participantNames.Count;
-            ParticipationEmoteString = participationEmote?.ToString() ?? string.Empty;
+            AmountParticipants = participationData.Reactors.Count;
+            ParticipationEmoteString = participationData.Emote?.ToString() ?? string.Empty;
 
-            LateParticipantsString = string.Join(", ", lateParticipantNames);
+            LateParticipantsString = string.Join(", ", lateParticipationData.Reactors);
             LateParticipantsString = !string.IsNullOrWhiteSpace(LateParticipantsString) ? LateParticipantsString : "-";
-            AmountLateParticipants = lateParticipantNames.Count;
-            LateParticipationEmoteString = lateParticipationEmote?.ToString() ?? string.Empty;
+            AmountLateParticipants = lateParticipationData.Reactors.Count;
+            LateParticipationEmoteString = lateParticipationData.Emote?.ToString() ?? string.Empty;
 
-            MaybeParticipantsString = string.Join(", ", maybeParticipantNames);
+            MaybeParticipantsString = string.Join(", ", maybeData.Reactors);
             MaybeParticipantsString = !string.IsNullOrWhiteSpace(MaybeParticipantsString) ? MaybeParticipantsString : "-";
-            AmountMaybeParticipants = maybeParticipantNames.Count;
-            MaybeParticipationEmoteString = maybeEmote?.ToString() ?? string.Empty;
+            AmountMaybeParticipants = maybeData.Reactors.Count;
+            MaybeParticipationEmoteString = maybeData.Emote?.ToString() ?? string.Empty;
 
-            CancellationsString = string.Join(", ", cancellationNames);
+            CancellationsString = string.Join(", ", cancellationData.Reactors);
             CancellationsString = !string.IsNullOrWhiteSpace(CancellationsString) ? CancellationsString : "-";
-            AmountCancellations = cancellationNames.Count;
-            CancellationEmoteString = cancellationEmote?.ToString() ?? string.Empty;
+            AmountCancellations = cancellationData.Reactors.Count;
+            CancellationEmoteString = cancellationData.Emote?.ToString() ?? string.Empty;
         }
     }
 }

@@ -20,9 +20,8 @@ namespace BonusBot.AudioModule.Commands.Volume
                 return;
             }
 
-            using var dbContext = Class.DbContextFactory.CreateDbContext();
-            var volume = await dbContext.GuildsSettings.GetInt32(Class.Context.Guild.Id, Settings.Volume, GetType().Assembly);
-            if (volume is { })
+            int? volume = await Class.Context.BonusGuild.Settings.Get<int>(GetType().Assembly, Settings.Volume);
+            if (volume.HasValue)
             {
                 await Class.ReplyAsync(string.Format(ModuleTexts.GetVolumeInfo, volume.Value));
                 return;

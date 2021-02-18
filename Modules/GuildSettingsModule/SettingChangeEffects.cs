@@ -8,16 +8,16 @@ namespace BonusBot.GuildSettingsModule
 {
     internal class SettingChangeEffects
     {
-        internal async ValueTask Changed(SocketGuild guild, string moduleName, string key, string value)
+        internal async ValueTask Changed(SocketGuild guild, string moduleName, string key, object value)
         {
             if (moduleName.Equals(typeof(CommonSettings).GetModuleName(), StringComparison.CurrentCultureIgnoreCase))
                 await CommonSettingChanged(guild, key, value);
         }
 
-        private async ValueTask CommonSettingChanged(SocketGuild guild, string key, string value)
+        private async ValueTask CommonSettingChanged(SocketGuild guild, string key, object value)
         {
             if (key.Equals(CommonSettings.BotName, StringComparison.CurrentCultureIgnoreCase))
-                await guild.CurrentUser.ModifyAsync(prop => prop.Nickname = value);
+                await guild.CurrentUser.ModifyAsync(prop => prop.Nickname = value.ToString());
         }
     }
 }

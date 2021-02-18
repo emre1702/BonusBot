@@ -2,7 +2,6 @@
 using BonusBot.Common.Events.Arguments;
 using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Guilds;
-using BonusBot.Database;
 using BonusBot.Services.Events;
 using Discord;
 using System.Collections.Generic;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BonusBot.Services.Guilds
 {
-    public class GuildsHandler
+    public class GuildsHandler : IGuildsHandler
     {
         private readonly Dictionary<ulong, IBonusGuild> _guildsInitialized = new();
         private readonly SemaphoreSlim _initializeSemaphore = new(1, 1);

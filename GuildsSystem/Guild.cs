@@ -10,14 +10,14 @@ namespace GuildsSystem
 {
     public class Guild : IBonusGuild
     {
+        public SocketGuild DiscordGuild { get; }
         public IGuildSettingsHandler Settings { get; }
 
-        private readonly SocketGuild _discordGuild;
         private readonly BonusDbContextFactory _dbContextFactory;
 
         public Guild(SocketGuild discordGuild, BonusDbContextFactory dbContextFactory, IGuildSettingsHandler guildSettingsHandler)
         {
-            _discordGuild = discordGuild;
+            DiscordGuild = discordGuild;
             _dbContextFactory = dbContextFactory;
             Settings = guildSettingsHandler;
 
@@ -28,9 +28,9 @@ namespace GuildsSystem
         {
             using var dbContext = _dbContextFactory.CreateDbContext();
 
-            var userName = await dbContext.GuildsSettings.GetString(_discordGuild.Id, CommonSettings.BotName, typeof(CommonSettings).Assembly);
+            var userName = await dbContext.GuildsSettings.GetString(DiscordGuild.Id, CommonSettings.BotName, typeof(CommonSettings).Assembly);
 
-            await _discordGuild.CurrentUser.ModifyAsync(prop =>
+            await DiscordGuild.CurrentUser.ModifyAsync(prop =>
             {
                 prop.Nickname = userName ?? Constants.DefaultBotName;
             });

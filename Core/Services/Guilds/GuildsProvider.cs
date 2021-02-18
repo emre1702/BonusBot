@@ -9,7 +9,7 @@ namespace BonusBot.Core.Services.Guilds
     {
         internal static IServiceCollection WithGuilds(this IServiceCollection serviceCollection)
             => serviceCollection
-                .AddSingleton<GuildsHandler>()
+                .AddSingleton<IGuildsHandler, GuildsHandler>()
                 .AddTransient<IGuildSettingsCache, GuildSettingsCache>()
                 .AddTransient<IGuildSettingsHandler, GuildSettingsHandler>()
                 .AddSingleton<IBonusGuildProvider, GuildsSystem.Provider>();

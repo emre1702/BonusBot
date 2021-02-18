@@ -18,16 +18,21 @@ namespace BonusBot.GamePlaningModule
         [RequireEmoteSetting(Settings.LateParticipationEmoteId)]
         [RequireEmoteSetting(Settings.CancellationEmoteId)]
         [RequireEmoteSetting(Settings.MaybeEmoteId)]
-        [RequireSetting(Settings.MentionEveryone, typeof(bool))]
+        [RequireSetting(Settings.MentionEveryone)]
         public async Task PlanMeetup(string game, DateTime time)
         {
-            var participationEmote = Context.GetRequiredEmoteSetting(Settings.ParticipationEmoteId);
-            var lateParticipationEmote = Context.GetRequiredEmoteSetting(Settings.LateParticipationEmoteId);
-            var cancellationEmote = Context.GetRequiredEmoteSetting(Settings.CancellationEmoteId);
-            var maybeEmote = Context.GetRequiredEmoteSetting(Settings.MaybeEmoteId);
-            var mentionEveryone = Context.GetRequiredSettingValue<bool>(Settings.MentionEveryone);
+            var moduleName = GetType().Assembly.ToModuleName();
+            var participationEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.ParticipationEmoteId);
+            var lateParticipationEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.LateParticipationEmoteId);
+            var cancellationEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.CancellationEmoteId);
+            var maybeEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.MaybeEmoteId);
+            var mentionEveryone = await Context.BonusGuild.Settings.Get<bool>(moduleName, Settings.MentionEveryone);
 
-            var embedData = new AnnouncementEmbedData(game, time.ToString(), new() { }, participationEmote, new() { }, maybeEmote, new(), lateParticipationEmote, new(), cancellationEmote);
+            var embedData = new AnnouncementEmbedData(game, time.ToString(),
+                new(participationEmote, new()),
+                new(lateParticipationEmote, new()),
+                new(maybeEmote, new()),
+                new(cancellationEmote, new()));
             var embedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embedData)
                 .WithAuthor(Context.SocketUser);
 
@@ -35,6 +40,7 @@ namespace BonusBot.GamePlaningModule
             var message = await Context.Channel.SendMessageAsync(text, embed: embedBuilder.Build());
             await message.AddReactionAsync(participationEmote);
             await message.AddReactionAsync(lateParticipationEmote);
+            await message.AddReactionAsync(maybeEmote);
             await message.AddReactionAsync(cancellationEmote);
         }
     }

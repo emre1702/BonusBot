@@ -15,13 +15,11 @@ namespace GuildSettingsModule
     public class GuildSettings : CommandBase
     {
         private readonly ModulesHandler _modulesHandler;
-        private readonly BonusDbContextFactory _dbContextFactory;
         private static readonly SettingChangeEffects _settingChangeEffects = new();
 
-        public GuildSettings(ModulesHandler modulesHandler, BonusDbContextFactory dbContextFactory)
+        public GuildSettings(ModulesHandler modulesHandler)
         {
             _modulesHandler = modulesHandler;
-            _dbContextFactory = dbContextFactory;
 
             ModuleTexts.Culture = Constants.Culture;
         }
@@ -42,7 +40,7 @@ namespace GuildSettingsModule
         [Priority(10)]
         public async Task Set(string moduleName, string key, IChannel channel)
         {
-            if (await SetSetting(moduleName, key, channel.Id.ToString()))
+            if (await SetSetting(moduleName, key, channel))
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingChannelSavedSuccessfully, channel.Name));
         }
 
@@ -52,7 +50,7 @@ namespace GuildSettingsModule
         [Priority(10)]
         public async Task Set(string moduleName, string key, IRole role)
         {
-            if (await SetSetting(moduleName, key, role.Id.ToString()))
+            if (await SetSetting(moduleName, key, role))
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingRoleSavedSuccessfully, role.Name));
         }
 
@@ -62,7 +60,7 @@ namespace GuildSettingsModule
         [Priority(10)]
         public async Task Set(string moduleName, string key, IMessage message)
         {
-            if (await SetSetting(moduleName, key, message.Id.ToString()))
+            if (await SetSetting(moduleName, key, message))
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingMessageSavedSuccessfully, message.Content));
         }
 
@@ -72,11 +70,11 @@ namespace GuildSettingsModule
         [Priority(10)]
         public async Task Set(string moduleName, string key, IUser user)
         {
-            if (await SetSetting(moduleName, key, user.Id.ToString()))
+            if (await SetSetting(moduleName, key, user))
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingUserSavedSuccessfully, user.Username + "#" + user.Discriminator));
         }
 
-        private async Task<bool> SetSetting(string moduleName, string key, string value)
+        private async Task<bool> SetSetting(string moduleName, string key, object value)
         {
             if (!Helpers.DoesSettingExists(_modulesHandler, key, moduleName))
             {
@@ -84,9 +82,8 @@ namespace GuildSettingsModule
                 return false;
             }
 
-            using var dbContext = _dbContextFactory.CreateDbContext();
-            await dbContext.GuildsSettings.AddOrUpdate(Context.Guild.Id, key, moduleName, value);
-            await dbContext.SaveChangesAsync();
+            await Context.BonusGuild.Settings.Set(moduleName, key, value);
+
             await _settingChangeEffects.Changed(Context.Guild, moduleName, key, value);
             return true;
         }
@@ -103,13 +100,7 @@ namespace GuildSettingsModule
                 return;
             }
 
-            using var dbContext = _dbContextFactory.CreateDbContext();
-            var setting = await GuildsSettingsExtensions.Get(dbContext.GuildsSettings, Context.Guild.Id, key, moduleName);
-
-            string value = "-";
-            if (setting is not null)
-                value = setting.Value;
-
+            var value = await Context.BonusGuild.Settings.Get<object>(moduleName, key) ?? "-";
             await ReplyToUserAsync(string.Format(ModuleTexts.SettingGetInfo, key, moduleName, value));
         }
 

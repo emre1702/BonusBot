@@ -4,6 +4,7 @@ using BonusBot.Database;
 using BonusBot.Common.Helper;
 using Discord;
 using System.Threading.Tasks;
+using BonusBot.Common.Interfaces.Guilds;
 
 namespace BonusBot.AudioModule.LavaLink
 {
@@ -11,9 +12,9 @@ namespace BonusBot.AudioModule.LavaLink
     {
         private readonly AudioInfoHandler _audioInfoHandler;
 
-        public LavaPlayerInitHandler(BonusDbContextFactory bonusDbContextFactory)
+        public LavaPlayerInitHandler(IGuildsHandler guildsHandler)
         {
-            _audioInfoHandler = new(bonusDbContextFactory);
+            _audioInfoHandler = new(guildsHandler);
         }
 
         public async Task<LavaPlayer> Create(IVoiceChannel voiceChannel, ITextChannel? textChannel = null, int defaultVolume = 100)

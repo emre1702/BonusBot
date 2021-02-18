@@ -26,6 +26,7 @@ namespace BonusBot.Services.Guilds
 
         public async ValueTask<T?> Get<T>(string moduleName, string key)
         {
+            moduleName = moduleName.ToModuleName();
             var client = await _socketClientHandler.ClientSource.Task;
 
             var cachedSetting = _settingsCache.Get(moduleName, key);
@@ -45,6 +46,7 @@ namespace BonusBot.Services.Guilds
 
         public async Task Set(string moduleName, string key, object value)
         {
+            moduleName = moduleName.ToModuleName();
             _settingsCache.Set(moduleName, key, value);
 
             var identifier = value.GetIdentifier();
@@ -52,5 +54,8 @@ namespace BonusBot.Services.Guilds
             await dbContext.GuildsSettings.AddOrUpdate(_guild.Id, key, moduleName, identifier);
             await dbContext.SaveChangesAsync();
         }
+
+        public Task Set(Assembly moduleAssembly, string key, object value)
+            => Set(moduleAssembly.ToModuleName(), key, value);
     }
 }

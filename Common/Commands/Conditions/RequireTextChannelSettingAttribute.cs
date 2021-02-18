@@ -3,12 +3,15 @@ using BonusBot.Common.Extensions;
 using BonusBot.Common.Languages;
 using System;
 using System.Threading.Tasks;
+using Discord.WebSocket;
+using Microsoft.Extensions.DependencyInjection;
+using BonusBot.Common.Interfaces.Guilds;
 
 namespace BonusBot.Common.Commands.Conditions
 {
     public class RequireTextChannelSettingAttribute : RequireSettingAttribute
     {
-        public RequireTextChannelSettingAttribute(string settingKey) : base(settingKey, typeof(ulong))
+        public RequireTextChannelSettingAttribute(string settingKey) : base(settingKey)
         {
         }
 
@@ -19,13 +22,14 @@ namespace BonusBot.Common.Commands.Conditions
                 return result;
 
             var context = (CustomContext)cmdContext;
-            var channelId = context.GetRequiredSettingValue<ulong>(SettingKey);
-            var channel = context.Guild.GetTextChannel(channelId);
+            var guildsHandler = services.GetRequiredService<IGuildsHandler>();
+            var bonusGuild = guildsHandler.GetGuild(context.Guild);
+
+            var channel = await bonusGuild!.Settings.Get<SocketTextChannel>(command.Module.Name.ToModuleName(), SettingKey);
 
             if (channel is null)
-                return PreconditionResult.FromError(string.Format(Texts.SettingChannelDoesNotExist, SettingKey, command.Module.Name.ToModuleName(), channelId));
+                return PreconditionResult.FromError(string.Format(Texts.SettingChannelDoesNotExist, SettingKey, command.Module.Name.ToModuleName()));
 
-            context.RequiredSettingValues[SettingKey] = channel;
             return PreconditionResult.FromSuccess();
         }
     }

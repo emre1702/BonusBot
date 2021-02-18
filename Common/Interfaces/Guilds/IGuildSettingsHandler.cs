@@ -13,5 +13,7 @@ namespace BonusBot.Common.Interfaces.Guilds
         ValueTask<T?> Get<T>(Assembly moduleAssembly, string key);
 
         Task Set(string moduleName, string key, object value);
+
+        Task Set(Assembly moduleAssembly, string key, object value);
     }
 }

@@ -16,9 +16,7 @@ namespace BonusBot.AudioModule.Commands.Volume
         {
             await (Class.Player?.SetVolume(args.Volume) ?? Task.CompletedTask);
 
-            using var dbContext = Class.DbContextFactory.CreateDbContext();
-            await dbContext.GuildsSettings.AddOrUpdate(Class.Context.Guild.Id, Settings.Volume, GetType().Assembly, args.Volume.ToString());
-            await dbContext.SaveChangesAsync();
+            await Class.Context.BonusGuild.Settings.Set(GetType().Assembly, Settings.Volume, args.Volume);
 
             await Class.ReplyAsync(string.Format(ModuleTexts.SetVolumeInfo, args.Volume));
         }

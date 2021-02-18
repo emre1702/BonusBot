@@ -2,6 +2,7 @@
 using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace BonusBot.Common.Helper
     public static class TypeConvertHelper
     {
         public static async ValueTask<T?> ConvertTo<T>(this object value, DiscordSocketClient? client = null, IGuild? guild = null)
-            => (T?)(object)(default(TokenOf<T>) switch
+            => (T?)(object?)(default(TokenOf<T>) switch
             {
                 TokenOf<SocketGuild> => GetSocketGuild(value, client),
                 TokenOf<IGuild> => GetSocketGuild(value, client),
@@ -26,6 +27,10 @@ namespace BonusBot.Common.Helper
 
                 TokenOf<string> => value.ToString(),
                 TokenOf<bool> => bool.TryParse(value.ToString(), out var b) ? b : null,
+                TokenOf<int> => int.TryParse(value.ToString(), out var intValue) ? intValue : null,
+                TokenOf<ulong> => value.GetIdentifier(),
+
+                TokenOf<object> => value,
 
                 _ => default
             });
@@ -37,11 +42,11 @@ namespace BonusBot.Common.Helper
             if (client is null)
                 return null;
 
-            var valueStr = value.ToString();
-            if (ulong.TryParse(valueStr, out var guildId))
+            var valueId = value.GetIdentifier();
+            if (ulong.TryParse(valueId, out var guildId))
                 return client.GetGuild(guildId);
 
-            return client.Guilds.FirstOrDefault(g => g.Name == valueStr);
+            return client.Guilds.FirstOrDefault(g => g.Name == value.ToString());
         }
 
         private static async ValueTask<IGuildUser?> GetIGuildUser(object value, DiscordSocketClient? client, IGuild? guild)
@@ -51,8 +56,8 @@ namespace BonusBot.Common.Helper
             if (guild is null)
                 return null;
 
-            var valueStr = value.ToString();
-            if (ulong.TryParse(valueStr, out var userId))
+            var valueId = value.GetIdentifier();
+            if (ulong.TryParse(valueId, out var userId))
             {
                 var user = (guild as SocketGuild)?.GetUser(userId);
                 if (user is { })
@@ -74,8 +79,8 @@ namespace BonusBot.Common.Helper
             if (guild is null)
                 return null;
 
-            var valueStr = value.ToString();
-            if (ulong.TryParse(valueStr, out var userId))
+            var valueId = value.GetIdentifier();
+            if (ulong.TryParse(valueId, out var userId))
             {
                 var user = guild.GetUser(userId);
                 if (user is { })
@@ -92,8 +97,8 @@ namespace BonusBot.Common.Helper
             if (guild is null)
                 return null;
 
-            var valueStr = value.ToString();
-            if (ulong.TryParse(valueStr, out var channelId))
+            var valueId = value.GetIdentifier();
+            if (ulong.TryParse(valueId, out var channelId))
                 return guild.GetChannel(channelId);
 
             return null;
@@ -104,8 +109,8 @@ namespace BonusBot.Common.Helper
             if (value is SocketTextChannel valueTextChannel)
                 return valueTextChannel;
 
-            var valueStr = value.ToString();
-            if (ulong.TryParse(valueStr, out var channelId))
+            var valueId = value.GetIdentifier();
+            if (ulong.TryParse(valueId, out var channelId))
             {
                 var guildTextChannel = guild?.GetTextChannel(channelId);
                 if (guildTextChannel is { })
@@ -126,8 +131,8 @@ namespace BonusBot.Common.Helper
             if (guild is null)
                 return null;
 
-            var valueStr = value.ToString();
-            if (ulong.TryParse(valueStr, out var emoteId))
+            var valueId = value.GetIdentifier();
+            if (ulong.TryParse(valueId, out var emoteId))
             {
                 var emote = guild.Emotes.FirstOrDefault(e => e.Id == emoteId);
                 if (emote is { })
@@ -137,7 +142,7 @@ namespace BonusBot.Common.Helper
                 return emote;
             }
 
-            if (Emote.TryParse(valueStr, out var parsedEmote))
+            if (Emote.TryParse(valueId, out var parsedEmote))
                 return parsedEmote;
 
             return null;
