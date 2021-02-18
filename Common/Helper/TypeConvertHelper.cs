@@ -3,6 +3,7 @@ using Discord;
 using Discord.Rest;
 using Discord.WebSocket;
 using System;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,6 +25,8 @@ namespace BonusBot.Common.Helper
 
                 TokenOf<Emote> => await GetEmote(value, guild),
                 TokenOf<IEmote> => await GetIEmote(value, guild),
+
+                TokenOf<CultureInfo> => CultureInfo.GetCultureInfo(value.ToString()!),
 
                 TokenOf<string> => value.ToString(),
                 TokenOf<bool> => bool.TryParse(value.ToString(), out var b) ? b : null,

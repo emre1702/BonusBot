@@ -1,5 +1,6 @@
 ﻿using Discord;
 using System;
+using System.Globalization;
 
 namespace BonusBot.Common.Helper
 {
@@ -14,6 +15,8 @@ namespace BonusBot.Common.Helper
                 IGuild guild => guild.Id.ToString(),
                 Emote emote => emote.Id.ToString(),
                 IMessage message => message.Id.ToString(),
+
+                CultureInfo cultureInfo => cultureInfo.Name,
 
                 string str => str,
                 int signedInt => signedInt.ToString(),
