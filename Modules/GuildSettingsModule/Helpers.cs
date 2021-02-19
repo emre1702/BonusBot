@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Extensions;
+﻿using BonusBot.Common.Attributes;
+using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces;
 using BonusBot.Services.DiscordNet;
 using System.Collections.Generic;
@@ -15,7 +16,6 @@ namespace GuildSettingsModule
             if (assembly is null)
                 return false;
 
-            var settingsType = typeof(IGuildSettingsConstantProperties);
             var settingsKeys = GetSettingKeys(assembly);
 
             return settingsKeys.Any(k => k.Equals(key, System.StringComparison.CurrentCultureIgnoreCase));
@@ -23,8 +23,7 @@ namespace GuildSettingsModule
 
         private static IEnumerable<FieldInfo> GetSettingFields(Assembly assembly)
         {
-            var settingsType = typeof(IGuildSettingsConstantProperties);
-            var classesWithSettings = assembly.GetTypes().OfType<TypeInfo>().Where(t => t.ImplementedInterfaces.Any(i => i == settingsType));
+            var classesWithSettings = assembly.GetTypes().Where(t => t.GetCustomAttribute<GuildSettingsContainerAttribute>() is { });
             var fields = classesWithSettings.SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy).Where(fi => fi.IsLiteral && !fi.IsInitOnly));
             return fields;
         }

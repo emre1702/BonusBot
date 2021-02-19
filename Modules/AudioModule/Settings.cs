@@ -1,8 +1,9 @@
-﻿using BonusBot.Common.Interfaces;
+﻿using BonusBot.Common.Attributes;
 
 namespace BonusBot.AudioModule
 {
-    public class Settings : IGuildSettingsConstantProperties
+    [GuildSettingsContainer]
+    public class Settings
     {
         public const string AudioBotUserRoleId = "AudioBotUserRoleId";
         public const string AudioInfoChannelId = "AudioInfoChannelId";

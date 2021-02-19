@@ -1,8 +1,9 @@
-﻿using BonusBot.Common.Interfaces;
+﻿using BonusBot.Common.Attributes;
 
 namespace BonusBot.GamePlaningModule
 {
-    public class Settings : IGuildSettingsConstantProperties
+    [GuildSettingsContainer]
+    public class Settings
     {
         public const string ParticipationEmoteId = "ParticipationEmoteId";
         public const string LateParticipationEmoteId = "LateParticipationEmoteId";

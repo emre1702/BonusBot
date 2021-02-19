@@ -1,8 +1,9 @@
-﻿using BonusBot.Common.Interfaces;
+﻿using BonusBot.Common.Attributes;
 
 namespace BonusBot.Common
 {
-    public class CommonSettings : IGuildSettingsConstantProperties
+    [GuildSettingsContainer]
+    public class CommonSettings
     {
         public const string BotName = "BotName";
         public const string CommandPrefix = "CommandPrefix";
