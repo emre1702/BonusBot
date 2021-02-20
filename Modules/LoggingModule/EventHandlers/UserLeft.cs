@@ -20,7 +20,10 @@ namespace BonusBot.LoggingModule.EventHandlers
             var channel = await bonusGuild.Settings.Get<SocketTextChannel>(GetType().Assembly, Settings.UserLeftLogChannelId);
             if (channel is null) return;
 
-            await channel.SendMessageAsync(string.Format(ModuleTexts.PlayerLeftGuildLogInfo, arg.Nickname, arg.Username + "#" + arg.Discriminator));
+            var userName = arg.Username + "#" + arg.Discriminator;
+            if (!string.IsNullOrWhiteSpace(arg.Nickname))
+                userName = arg.Nickname + " / " + userName;
+            await channel.SendMessageAsync(string.Format(ModuleTexts.PlayerLeftGuildLogInfo, arg.Mention, userName));
         }
     }
 }
