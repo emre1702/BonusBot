@@ -58,13 +58,10 @@ namespace BonusBot.Common.Helper
             (color, simplified) = ProcessSource(source);
             Append($" -> {simplified} -> ", color);
 
-            if (!string.IsNullOrWhiteSpace(message))
-                AppendLine(message, Color.White);
+            AppendLine(message ?? string.Empty, Color.White);
 
             if (exception is { })
                 AppendLine(exception.ToString(), Color.IndianRed);
-
-            WriteLine();
         }
 
         private static void Append(string message, Color color)
