@@ -156,4 +156,7 @@ Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
 Falls du ein Admin bist, nutze bitte '!setting {1} {0} [WERT]', um einen richtigen Emote anzugeben.
 Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
   </data>
+  <data name="TargetIsHigherInHierarchyError" xml:space="preserve">
+    <value>Das Ziel '{0}' ist höher in der Hierarchie als du.</value>
+  </data>
 </root>

@@ -6,6 +6,6 @@ namespace BonusBot.Database.Seeds
     internal static class SeedsInitializer
     {
         internal static ModelBuilder HasSeeds(this ModelBuilder modelBuilder)
-            => modelBuilder.HasSettings();
+            => modelBuilder;
     }
 }

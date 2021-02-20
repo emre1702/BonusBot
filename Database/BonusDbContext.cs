@@ -1,6 +1,9 @@
-﻿using BonusBot.Database.Entities.Settings;
+﻿using BonusBot.Database.Entities.Cases;
+using BonusBot.Database.Entities.Logging;
+using BonusBot.Database.Entities.Settings;
 using BonusBot.Database.Seeds;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace BonusBot.Database
 {
@@ -13,8 +16,9 @@ namespace BonusBot.Database
             ChangeTracker.LazyLoadingEnabled = false;
         }
 
-        public DbSet<BotSettings> BotSettings { get; set; }
         public DbSet<GuildsSettings> GuildsSettings { get; set; }
+        public DbSet<Logs> Logs { get; set; }
+        public DbSet<TimedActions> TimedActions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,7 +31,10 @@ namespace BonusBot.Database
 
             modelBuilder
                 .HasSeeds()
-                .ApplyConfigurationsFromAssembly(typeof(BonusDbContext).Assembly);
+                .ApplyConfigurationsFromAssembly(typeof(BonusDbContext).Assembly, IsNotBaseConfiguration);
         }
+
+        private bool IsNotBaseConfiguration(Type type)
+            => !type.Name.EndsWith("BaseConfiguration");
     }
 }

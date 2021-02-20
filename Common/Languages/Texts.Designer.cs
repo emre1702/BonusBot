@@ -152,5 +152,14 @@ namespace BonusBot.Common.Languages {
                 return ResourceManager.GetString("SettingMissingError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The target &apos;{0}&apos; is higher in the hierachie than you..
+        /// </summary>
+        public static string TargetIsHigherInHierarchyError {
+            get {
+                return ResourceManager.GetString("TargetIsHigherInHierarchyError", resourceCulture);
+            }
+        }
     }
 }
