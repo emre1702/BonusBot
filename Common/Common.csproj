@@ -17,6 +17,7 @@
     <PackageReference Include="Colorful.Console" Version="1.2.15" />
     <PackageReference Include="Macross.Json.Extensions" Version="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="System.Linq.Async" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>

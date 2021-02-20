@@ -18,6 +18,9 @@ namespace BonusBot.Common.Commands.Conditions
 
         public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, ParameterInfo parameter, object value, IServiceProvider services)
         {
+            if (value is null && parameter.IsOptional)
+                return Task.FromResult(PreconditionResult.FromSuccess());
+
             var val = Convert.ToInt32(value);
             return Min >= 0 && val <= Max
                 ? Task.FromResult(PreconditionResult.FromSuccess())

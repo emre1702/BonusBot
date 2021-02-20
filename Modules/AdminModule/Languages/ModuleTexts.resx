@@ -120,6 +120,9 @@
   <data name="Added" xml:space="preserve">
     <value>Added</value>
   </data>
+  <data name="DeletedMessagesInfo" xml:space="preserve">
+    <value>I have deleted {0} messages.</value>
+  </data>
   <data name="ErrorHappenedChangesReverted" xml:space="preserve">
     <value>An error happened, the changes were reverted.</value>
   </data>

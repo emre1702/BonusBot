@@ -70,6 +70,15 @@ namespace BonusBot.AdminModule.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to I have deleted {0} messages..
+        /// </summary>
+        internal static string DeletedMessagesInfo {
+            get {
+                return ResourceManager.GetString("DeletedMessagesInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error happened, the changes were reverted..
         /// </summary>
         internal static string ErrorHappenedChangesReverted {

@@ -1,4 +1,5 @@
 ﻿using BonusBot.AdminModule.Commands.Bans;
+using BonusBot.AdminModule.Commands.Messages;
 using BonusBot.AdminModule.Languages;
 using BonusBot.Common.Commands.Conditions;
 using BonusBot.Common.Extensions;
@@ -29,6 +30,15 @@ namespace BonusBot.AdminModule
         [RequireBotPermission(ChannelPermission.SendMessages)]
         public Task BanInfo(IUser target)
            => new BanInfo(this).Do(new(target));
+
+        [Command("DeleteMessages")]
+        [Alias("DeleteMessage", "DelMessages", "DelMessage", "MessagesDelete", "MessageDelete", "MessagesDel", "MessageDel", "DelMsg", "MsgDel", "DeleteMsg", "MsgDelete",
+            "NachrichtLöschen", "NachrichtLösche", "LöscheNachricht", "LöschenNachricht", "DeleteNachricht", "DelNachricht")]
+        [RequireBotPermission(ChannelPermission.ManageMessages)]
+        [RequireBotPermission(ChannelPermission.SendMessages)]
+        [RequireUserPermission(ChannelPermission.ManageMessages)]
+        public Task DeleteMessages([RequireNumberRange(1, 1000)] int limit = 1, IUser? user = null)
+            => new DeleteMessages(this).Do(new(limit, user));
 
         public Main(BonusDbContextFactory bonusDbContextFactory)
             => (DbContextFactory) = (bonusDbContextFactory);
