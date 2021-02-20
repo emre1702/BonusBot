@@ -24,20 +24,11 @@ namespace BonusBot.AdminModule
         public Task Ban(IUser target, TimeSpan time, string reason, int pruneDays = 0)
             => new Ban(this).Do(new(target, time, reason, pruneDays));
 
-        [Command("ban")]
-        [Alias("TBan", "TimeBan", "BanT", "BanTime", "PermaBan", "PermanentBan", "BanPerma", "BanPermanent", "PBan", "BanP",
-            "RemoveBan", "BanRemove", "DeleteBan", "BanDelete", "UBan", "UnBan", "BanU")]
-        [RequireBotPermission(GuildPermission.BanMembers)]
-        [RequireBotPermission(ChannelPermission.SendMessages)]
-        [RequireUserPermission(GuildPermission.BanMembers)]
-        public Task Ban([RequireLowerHierarchy] SocketGuildUser target, TimeSpan time, string reason, int pruneDays = 0)
-            => new Ban(this).Do(new(target, time, reason, pruneDays));
-
         [Command("baninfo")]
         [Alias("infoban", "banshow", "showban")]
         [RequireBotPermission(ChannelPermission.SendMessages)]
-        public Task BanInfo([RequireLowerHierarchy] SocketGuildUser target, TimeSpan time, string reason, int pruneDays = 0)
-           => new Ban(this).Do(new(target, time, reason, pruneDays));
+        public Task BanInfo(IUser target)
+           => new BanInfo(this).Do(new(target));
 
         public Main(BonusDbContextFactory bonusDbContextFactory)
             => (DbContextFactory) = (bonusDbContextFactory);
