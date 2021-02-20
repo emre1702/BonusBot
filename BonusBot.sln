@@ -32,7 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TDSConnectorServerModule", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdminModule", "Modules\AdminModule\AdminModule.csproj", "{C0EB0028-B6D2-456F-BB45-F9A1E270B6FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuildsSystem", "GuildsSystem\GuildsSystem.csproj", "{8E42736B-6FC4-4999-88BC-37E97C39DF83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuildsSystem", "GuildsSystem\GuildsSystem.csproj", "{8E42736B-6FC4-4999-88BC-37E97C39DF83}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingModule", "Modules\LoggingModule\LoggingModule.csproj", "{7ACCE443-3AFC-44A3-9443-386E0156EDBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +82,10 @@ Global
 		{8E42736B-6FC4-4999-88BC-37E97C39DF83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E42736B-6FC4-4999-88BC-37E97C39DF83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E42736B-6FC4-4999-88BC-37E97C39DF83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7ACCE443-3AFC-44A3-9443-386E0156EDBA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ACCE443-3AFC-44A3-9443-386E0156EDBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ACCE443-3AFC-44A3-9443-386E0156EDBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ACCE443-3AFC-44A3-9443-386E0156EDBA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,6 +96,7 @@ Global
 		{8F85D02B-783A-45A3-96E5-54787703EE70} = {EF36A847-25E4-4C83-908A-00F99881D0F0}
 		{40E0FE90-02CB-4E76-BF30-8B14C6959DCB} = {EF36A847-25E4-4C83-908A-00F99881D0F0}
 		{C0EB0028-B6D2-456F-BB45-F9A1E270B6FB} = {EF36A847-25E4-4C83-908A-00F99881D0F0}
+		{7ACCE443-3AFC-44A3-9443-386E0156EDBA} = {EF36A847-25E4-4C83-908A-00F99881D0F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1F62F0D4-1E2A-4680-BA3D-B5AC670BF321}
