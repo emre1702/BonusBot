@@ -130,21 +130,22 @@ namespace BonusBot.AudioModule.LavaLink.Clients
                 return;
             if (player.Status == PlayerStatus.Disconnected)
                 return;
-            if (player.DisconnectToken is { })
+            if (player.DisconnectToken is { IsCancellationRequested: false })
                 return;
 
             Log?.WriteLog(LogSeverity.Warning, $"Automatically disconnecting in {Configuration.InactivityTimeout.TotalSeconds} seconds.");
 
             player.DisconnectToken = new();
+            var disconnectToken = player.DisconnectToken;
             Task.Run(async () =>
             {
                 await Task.Delay(Configuration.InactivityTimeout).ConfigureAwait(false);
-                if (player.DisconnectToken?.IsCancellationRequested == true)
+                if (disconnectToken.IsCancellationRequested == true)
                     return;
-                if (player.Status == PlayerStatus.Playing)
+                if (player.Status == PlayerStatus.Playing && player.CurrentTrack is { })
                     await player.Stop().ConfigureAwait(false);
                 await DisconnectPlayer(player.VoiceChannel).ConfigureAwait(false);
-            }, player.DisconnectToken.Token);
+            }, disconnectToken.Token);
         }
 
         private void StopAutoDisconnect(ulong guildId)
