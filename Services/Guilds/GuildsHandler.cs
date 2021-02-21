@@ -24,17 +24,18 @@ namespace BonusBot.Services.Guilds
             eventsHandler.GuildAvailable += InitGuild;
         }
 
-        public IBonusGuild? GetGuild(ulong guildId)
+        public IBonusGuild? GetGuild(ulong? guildId)
         {
+            if (guildId is null) return null;
             lock (_guildsInitialized)
             {
-                _guildsInitialized.TryGetValue(guildId, out var guild);
+                _guildsInitialized.TryGetValue(guildId.Value, out var guild);
                 return guild;
             }
         }
 
-        public IBonusGuild? GetGuild(IGuild guild)
-            => GetGuild(guild.Id);
+        public IBonusGuild? GetGuild(IGuild? guild)
+            => GetGuild(guild?.Id);
 
         private async Task InitGuild(ClientGuildArg arg)
         {
