@@ -1,5 +1,6 @@
 ﻿using BonusBot.AudioModule.Language;
 using BonusBot.Common.Commands;
+using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Languages;
 using BonusBot.Services.Guilds;
 using Discord;
@@ -15,7 +16,7 @@ namespace BonusBot.AudioModule.Preconditions
     {
         public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
         {
-            var guildsHandler = services.GetRequiredService<GuildsHandler>();
+            var guildsHandler = services.GetRequiredService<IGuildsHandler>();
             var bonusGuild = guildsHandler.GetGuild(context.Guild);
 
             if (bonusGuild is null)
