@@ -26,6 +26,9 @@ namespace BonusBot.Common.Helper
                 TokenOf<Emote> => await GetEmote(value, guild),
                 TokenOf<IEmote> => await GetIEmote(value, guild),
 
+                TokenOf<IRole> => GetIRole(value, guild),
+                TokenOf<SocketRole> => GetSocketRole(value, guild),
+
                 TokenOf<CultureInfo> => CultureInfo.GetCultureInfo(value.ToString()!),
 
                 TokenOf<string> => value.ToString(),
@@ -161,6 +164,42 @@ namespace BonusBot.Common.Helper
                 return emote;
 
             return new Emoji(value.ToString());
+        }
+
+        private static IRole? GetIRole(object value, IGuild? guild)
+        {
+            if (value is IRole valueRole)
+                return valueRole;
+            if (guild is null)
+                return null;
+
+            var valueId = value.GetIdentifier();
+            if (ulong.TryParse(valueId, out var roleId))
+            {
+                var role = guild.GetRole(roleId);
+                if (role is { })
+                    return role;
+            }
+
+            return null;
+        }
+
+        private static SocketRole? GetSocketRole(object value, IGuild? guild)
+        {
+            if (value is SocketRole valueRole)
+                return valueRole;
+            if (guild is not SocketGuild socketGuild)
+                return null;
+
+            var valueId = value.GetIdentifier();
+            if (ulong.TryParse(valueId, out var roleId))
+            {
+                var role = socketGuild.GetRole(roleId);
+                if (role is { })
+                    return role;
+            }
+
+            return null;
         }
     }
 }

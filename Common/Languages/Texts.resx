@@ -132,6 +132,9 @@
   <data name="NumberRangeError" xml:space="preserve">
     <value>The value for {0} has to be between {1} and {2}.</value>
   </data>
+  <data name="RoleRequiredError" xml:space="preserve">
+    <value>Role '{0}' is required for this action.</value>
+  </data>
   <data name="SettingChannelDoesNotExist" xml:space="preserve">
     <value>The setting '{0}' for module '{1}' contains a channel which does not exist (anymore). 
 

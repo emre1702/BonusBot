@@ -232,4 +232,7 @@ Now playing: {2}</value>
     <value>Finished playing: {0}
 Now playing: {1}</value>
   </data>
+  <data name="OnlyAllowedInGuildChat" xml:space="preserve">
+    <value>This command is only allowed in a guild text channel.</value>
+  </data>
 </root>

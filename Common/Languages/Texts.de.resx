@@ -159,4 +159,7 @@ Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
   <data name="TargetIsHigherInHierarchyError" xml:space="preserve">
     <value>Das Ziel '{0}' ist höher in der Hierarchie als du.</value>
   </data>
+  <data name="RoleRequiredError" xml:space="preserve">
+    <value>Rolle '{0}' wird benötigt für diese Aktion.</value>
+  </data>
 </root>

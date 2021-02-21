@@ -106,6 +106,15 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Role &apos;{0}&apos; is required for this action..
+        /// </summary>
+        public static string RoleRequiredError {
+            get {
+                return ResourceManager.GetString("RoleRequiredError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The setting &apos;{0}&apos; for module &apos;{1}&apos; contains a channel which does not exist (anymore). 
         ///
         ///If you are an admin of the guild, please use &apos;!setting {1} {0} [VALUE]&apos; to set a correct channel.

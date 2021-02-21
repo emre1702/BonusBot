@@ -20,6 +20,7 @@ namespace BonusBot.AudioModule
 {
     [RequireContext(ContextType.Guild)]
     [RequireBotPermission(GuildPermission.Speak & GuildPermission.Connect)]
+    [RequireAudioBotRole]
     public class Main : AudioCommandBase
     {
         protected static Main? Instance { get; private set; }
@@ -135,6 +136,7 @@ namespace BonusBot.AudioModule
         [Group("search")]
         [Alias("YouTubeSearch", "ytSearch", "SearchYt", "SearchYouTube")]
         [RequirePlayer]
+        [RequireAudioBotRole]
         public class SearchGroup : AudioCommandBase
         {
             [Command]

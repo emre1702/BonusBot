@@ -232,4 +232,7 @@ Spiele nun: {2}</value>
     <value>Zu Ende gespielt: {0}
 Spiele nun: {1}</value>
   </data>
+  <data name="OnlyAllowedInGuildChat" xml:space="preserve">
+    <value>Dieser Befehl ist nur erlaubt in einem Gilden Text-Kanal.</value>
+  </data>
 </root>

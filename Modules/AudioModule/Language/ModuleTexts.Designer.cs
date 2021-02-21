@@ -243,6 +243,15 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This command is only allowed in a guild text channel..
+        /// </summary>
+        internal static string OnlyAllowedInGuildChat {
+            get {
+                return ResourceManager.GetString("OnlyAllowedInGuildChat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The player is paused, use the resume command to continue..
         /// </summary>
         internal static string PlayerIsPausedInfo {
