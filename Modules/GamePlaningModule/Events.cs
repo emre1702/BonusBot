@@ -7,6 +7,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.GamePlaningModule
@@ -24,13 +25,6 @@ namespace BonusBot.GamePlaningModule
             _guildsHandler = guildsHandler;
 
             AddEvents();
-        }
-
-        protected override void BeforeExecute(CommandInfo command)
-        {
-            ModuleTexts.Culture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
-
-            base.BeforeExecute(command);
         }
 
         private async void AddEvents()
@@ -59,7 +53,7 @@ namespace BonusBot.GamePlaningModule
             if (bonusGuild is null)
                 return;
 
-            ModuleTexts.Culture = bonusGuild.Settings.CultureInfo;
+            Thread.CurrentThread.CurrentUICulture = bonusGuild.Settings.CultureInfo;
             var participationData = await GetEmoteData(bonusGuild, message, Settings.ParticipationEmoteId);
             var lateParticipationData = await GetEmoteData(bonusGuild, message, Settings.LateParticipationEmoteId);
             var maybeData = await GetEmoteData(bonusGuild, message, Settings.MaybeEmoteId);

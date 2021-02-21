@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
 using BonusBot.Common.Interfaces.Guilds;
+using System.Threading;
+using BonusBot.Common.Defaults;
 
 namespace BonusBot.Common.Commands.Conditions
 {
@@ -26,7 +28,7 @@ namespace BonusBot.Common.Commands.Conditions
             var bonusGuild = guildsHandler.GetGuild(context.Guild);
 
             var channel = await bonusGuild!.Settings.Get<SocketTextChannel>(command.Module.Name.ToModuleName(), SettingKey);
-
+            Thread.CurrentThread.CurrentUICulture = context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             if (channel is null)
                 return PreconditionResult.FromError(string.Format(Texts.SettingChannelDoesNotExist, SettingKey, command.Module.Name.ToModuleName()));
 

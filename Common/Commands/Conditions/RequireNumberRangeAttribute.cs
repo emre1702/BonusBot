@@ -1,6 +1,8 @@
-﻿using BonusBot.Common.Languages;
+﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Languages;
 using Discord.Commands;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.Common.Commands.Conditions
@@ -21,6 +23,7 @@ namespace BonusBot.Common.Commands.Conditions
             if (value is null && parameter.IsOptional)
                 return Task.FromResult(PreconditionResult.FromSuccess());
 
+            Thread.CurrentThread.CurrentUICulture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             var val = Convert.ToInt32(value);
             return Min >= 0 && val <= Max
                 ? Task.FromResult(PreconditionResult.FromSuccess())

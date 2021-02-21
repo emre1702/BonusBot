@@ -2,6 +2,8 @@
 using BonusBot.Common.Languages;
 using System;
 using System.Threading.Tasks;
+using System.Threading;
+using BonusBot.Common.Defaults;
 
 namespace BonusBot.Common.Commands.TypeReaders
 {
@@ -14,6 +16,7 @@ namespace BonusBot.Common.Commands.TypeReaders
             if (IsNo(input))
                 return Task.FromResult(TypeReaderResult.FromSuccess(false));
 
+            Thread.CurrentThread.CurrentUICulture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             return Task.FromResult(TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidBooleanError));
         }
 

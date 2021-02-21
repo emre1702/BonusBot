@@ -2,6 +2,7 @@
 using BonusBot.AudioModule.LavaLink;
 using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.Common.Commands;
+using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Languages;
@@ -10,6 +11,7 @@ using Discord;
 using Discord.Commands;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Preconditions
@@ -28,6 +30,7 @@ namespace BonusBot.AudioModule.Preconditions
             var lavaClient = LavaSocketClient.Instance;
             var player = lavaClient.GetPlayer(context.Guild.Id);
 
+            Thread.CurrentThread.CurrentUICulture = ctx.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             if (player is null)
             {
                 if (ctx.User is null)

@@ -1,6 +1,8 @@
 ﻿using BonusBot.Common.Commands;
+using BonusBot.Common.Defaults;
 using Discord;
 using Discord.Commands;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.Common.Extensions
@@ -33,6 +35,13 @@ namespace BonusBot.Common.Extensions
             var user = Context.SocketUser;
             var channel = await user.GetOrCreateDMChannelAsync();
             return await channel.SendMessageAsync(embed: embed.Build());
+        }
+
+        protected override void BeforeExecute(CommandInfo command)
+        {
+            Thread.CurrentThread.CurrentUICulture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
+
+            base.BeforeExecute(command);
         }
     }
 }

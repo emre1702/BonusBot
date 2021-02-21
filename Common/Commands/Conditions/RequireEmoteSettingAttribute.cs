@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using BonusBot.Common.Interfaces.Guilds;
 using Discord;
+using System.Threading;
+using BonusBot.Common.Defaults;
 
 namespace BonusBot.Common.Commands.Conditions
 {
@@ -24,6 +26,7 @@ namespace BonusBot.Common.Commands.Conditions
             var guildsHandler = services.GetRequiredService<IGuildsHandler>();
             var bonusGuild = guildsHandler.GetGuild(context.Guild);
 
+            Thread.CurrentThread.CurrentUICulture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             var emote = await bonusGuild!.Settings.Get<Emote>(command.Module.Name.ToModuleName(), SettingKey);
             if (emote is null)
                 return PreconditionResult.FromError(string.Format(Texts.SettingEmoteDoesNotExist, SettingKey, command.Module.Name.ToModuleName()));

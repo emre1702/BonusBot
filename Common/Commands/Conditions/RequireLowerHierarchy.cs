@@ -1,7 +1,9 @@
-﻿using BonusBot.Common.Languages;
+﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Languages;
 using Discord.Commands;
 using Discord.WebSocket;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.Common.Commands.Conditions
@@ -13,6 +15,7 @@ namespace BonusBot.Common.Commands.Conditions
             var ctx = (CustomContext)context;
             var target = (SocketGuildUser)value;
 
+            Thread.CurrentThread.CurrentUICulture = ctx.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             return ctx.User!.Hierarchy > target.Hierarchy
                 ? Task.FromResult(PreconditionResult.FromSuccess())
                 : Task.FromResult(PreconditionResult.FromError(string.Format(Texts.TargetIsHigherInHierarchyError, target.Nickname)));

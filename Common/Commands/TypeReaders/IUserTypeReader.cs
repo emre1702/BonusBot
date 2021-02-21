@@ -1,10 +1,12 @@
-﻿using BonusBot.Common.Languages;
+﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Languages;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.Common.Commands.TypeReaders
@@ -25,6 +27,7 @@ namespace BonusBot.Common.Commands.TypeReaders
                 user ??= await GetUserByBan(ctx.Guild, input);
             }
 
+            Thread.CurrentThread.CurrentUICulture = ctx.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             return user is { }
                 ? TypeReaderResult.FromSuccess(user)
                 : TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidUserError);

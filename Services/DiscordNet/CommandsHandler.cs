@@ -12,6 +12,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.Services.DiscordNet
@@ -131,7 +132,7 @@ namespace BonusBot.Services.DiscordNet
         {
             if (!result.IsSuccess)
             {
-                Texts.Culture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
+                Thread.CurrentThread.CurrentUICulture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
                 await context.User.SendMessageAsync(
                     string.Format(Texts.CommandExecutedError, result.Error, result.ErrorReason, context.Message.Content));
             }

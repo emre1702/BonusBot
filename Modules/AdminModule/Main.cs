@@ -43,12 +43,5 @@ namespace BonusBot.AdminModule
 
         public Main(BonusDbContextFactory bonusDbContextFactory)
             => (DbContextFactory) = (bonusDbContextFactory);
-
-        protected override void BeforeExecute(CommandInfo command)
-        {
-            ModuleTexts.Culture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
-
-            base.BeforeExecute(command);
-        }
     }
 }

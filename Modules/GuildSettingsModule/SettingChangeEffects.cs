@@ -4,6 +4,7 @@ using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.GuildSettingsModule.Language;
 using System;
 using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.GuildSettingsModule
@@ -23,7 +24,7 @@ namespace BonusBot.GuildSettingsModule
             else if (key.Equals(CommonSettings.Locale, StringComparison.CurrentCultureIgnoreCase))
             {
                 bonusGuild.Settings.CultureInfo = (CultureInfo)value;
-                ModuleTexts.Culture = bonusGuild.Settings.CultureInfo;
+                Thread.CurrentThread.CurrentUICulture = bonusGuild.Settings.CultureInfo;
             }
         }
     }

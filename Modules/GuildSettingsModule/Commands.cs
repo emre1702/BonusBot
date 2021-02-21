@@ -22,13 +22,6 @@ namespace GuildSettingsModule
             _modulesHandler = modulesHandler;
         }
 
-        protected override void BeforeExecute(CommandInfo command)
-        {
-            ModuleTexts.Culture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
-
-            base.BeforeExecute(command);
-        }
-
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command]

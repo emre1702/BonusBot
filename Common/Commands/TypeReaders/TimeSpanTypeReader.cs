@@ -3,6 +3,8 @@ using BonusBot.Common.Languages;
 using System;
 using System.Threading.Tasks;
 using BonusBot.Common.Extensions;
+using System.Threading;
+using BonusBot.Common.Defaults;
 
 namespace BonusBot.Common.Commands.TypeReaders
 {
@@ -20,6 +22,7 @@ namespace BonusBot.Common.Commands.TypeReaders
                 return Task.FromResult(TypeReaderResult.FromSuccess(timeSpan));
             }
 
+            Thread.CurrentThread.CurrentUICulture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             return Task.FromResult(TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidTimeSpanError));
         }
     }
