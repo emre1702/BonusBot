@@ -61,6 +61,19 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; error occured. Message:
+        ///&quot;{1}&quot;
+        ///
+        ///Used command: 
+        ///&apos;{2}&apos;.
+        /// </summary>
+        public static string CommandExecutedError {
+            get {
+                return ResourceManager.GetString("CommandExecutedError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input could not be parsed as a boolean..
         /// </summary>
         public static string CommandInvalidBooleanError {

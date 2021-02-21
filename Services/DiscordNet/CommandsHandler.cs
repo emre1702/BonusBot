@@ -1,20 +1,18 @@
-﻿using Discord;
-using Discord.Commands;
-using Discord.WebSocket;
+﻿using BonusBot.Common;
 using BonusBot.Common.Commands;
 using BonusBot.Common.Commands.TypeReaders;
-using BonusBot.Common.Events.Arguments;
-using BonusBot.Database;
-using BonusBot.Database.Entities.Settings;
-using BonusBot.Services.Events;
-using System;
-using System.Threading.Tasks;
 using BonusBot.Common.Defaults;
+using BonusBot.Common.Events.Arguments;
 using BonusBot.Common.Extensions;
-using BonusBot.Common;
-using BonusBot.Services.Guilds;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
+using BonusBot.Common.Languages;
+using BonusBot.Services.Events;
+using Discord;
+using Discord.Commands;
+using Discord.WebSocket;
+using System;
+using System.Threading.Tasks;
 
 namespace BonusBot.Services.DiscordNet
 {
@@ -133,11 +131,9 @@ namespace BonusBot.Services.DiscordNet
         {
             if (!result.IsSuccess)
             {
+                Texts.Culture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
                 await context.User.SendMessageAsync(
-$@"{result.Error} error occured. Message:
-""{result.ErrorReason}""
-
-Used command: ""{context.Message.Content}""");
+                    string.Format(Texts.CommandExecutedError, result.Error, result.ErrorReason, context.Message.Content));
             }
 
             if (context is CustomContext ctx && ctx.MessageData.NeedsDelete)
