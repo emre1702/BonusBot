@@ -1,6 +1,6 @@
 ﻿using BonusBot.Common.Interfaces.Guilds;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.LoggingModule.EventHandlers;
-using BonusBot.Services.DiscordNet;
 using Discord.Commands;
 
 namespace LoggingModule
@@ -9,17 +9,17 @@ namespace LoggingModule
     {
         private static bool _initialized;
 
-        public Main(SocketClientHandler socketClientHandler, IGuildsHandler guildsHandler)
+        public Main(IDiscordClientHandler discordClientHandler, IGuildsHandler guildsHandler)
         {
-            Initialize(socketClientHandler, guildsHandler);
+            Initialize(discordClientHandler, guildsHandler);
         }
 
-        private async void Initialize(SocketClientHandler socketClientHandler, IGuildsHandler guildsHandler)
+        private async void Initialize(IDiscordClientHandler discordClientHandler, IGuildsHandler guildsHandler)
         {
             if (_initialized) return;
             _initialized = true;
 
-            var client = await socketClientHandler.ClientSource.Task;
+            var client = await discordClientHandler.ClientSource.Task;
 
             client.UserLeft += new UserLeft(guildsHandler).Log;
         }

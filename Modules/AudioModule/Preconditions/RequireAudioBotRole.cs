@@ -2,7 +2,6 @@
 using BonusBot.Common.Commands;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Languages;
-using BonusBot.Services.Guilds;
 using Discord;
 using Discord.Commands;
 using Microsoft.Extensions.DependencyInjection;

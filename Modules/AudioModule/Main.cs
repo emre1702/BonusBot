@@ -10,8 +10,8 @@ using BonusBot.AudioModule.Models;
 using BonusBot.AudioModule.Preconditions;
 using BonusBot.Common.Commands.Conditions;
 using BonusBot.Common.Defaults;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.Database;
-using BonusBot.Services.DiscordNet;
 using Discord;
 using Discord.Commands;
 using System.Threading.Tasks;
@@ -175,20 +175,20 @@ namespace BonusBot.AudioModule
                 => new PlaySearchResult(this).Do(new(number));
         }
 
-        public Main(SocketClientHandler socketClientHandler, BonusDbContextFactory bonusDbContextFactory)
+        public Main(IDiscordClientHandler discordClientHandler, BonusDbContextFactory bonusDbContextFactory)
         {
             Instance = this;
             DbContextFactory = bonusDbContextFactory;
-            Initialize(socketClientHandler);
+            Initialize(discordClientHandler);
         }
 
-        private async void Initialize(SocketClientHandler socketClientHandler)
+        private async void Initialize(IDiscordClientHandler discordClientHandler)
         {
             if (_initialized) return;
 
             _initialized = true;
 
-            var client = await socketClientHandler.ClientSource.Task;
+            var client = await discordClientHandler.ClientSource.Task;
             await LavaSocketClient.Instance.Start(client);
         }
 

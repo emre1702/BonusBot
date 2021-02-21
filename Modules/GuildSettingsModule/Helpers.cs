@@ -1,7 +1,6 @@
 ﻿using BonusBot.Common.Attributes;
 using BonusBot.Common.Extensions;
-using BonusBot.Common.Interfaces;
-using BonusBot.Services.DiscordNet;
+using BonusBot.Common.Interfaces.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -10,7 +9,7 @@ namespace GuildSettingsModule
 {
     internal static class Helpers
     {
-        internal static bool DoesSettingExists(ModulesHandler modulesHandler, string key, string moduleName)
+        internal static bool DoesSettingExists(IModulesHandler modulesHandler, string key, string moduleName)
         {
             var assembly = modulesHandler.FindAssemblyByModuleName(moduleName);
             if (assembly is null)
@@ -34,7 +33,7 @@ namespace GuildSettingsModule
             return fields.Where(fi => fi.GetRawConstantValue() != null).Select(fi => fi.GetRawConstantValue()!.ToString()!);
         }
 
-        internal static string GetAllModulesNamesJoined(ModulesHandler modulesHandler)
+        internal static string GetAllModulesNamesJoined(IModulesHandler modulesHandler)
         {
             var modulesStr = string.Empty;
             lock (modulesHandler.LoadedModuleAssemblies)
@@ -45,10 +44,10 @@ namespace GuildSettingsModule
             return modulesStr;
         }
 
-        internal static string GetAllModulesAndCommonNamesJoined(ModulesHandler modulesHandler)
+        internal static string GetAllModulesAndCommonNamesJoined(IModulesHandler modulesHandler)
             => "Common, " + GetAllModulesNamesJoined(modulesHandler);
 
-        internal static string GetModuleSettingsJoined(ModulesHandler modulesHandler, string moduleName)
+        internal static string GetModuleSettingsJoined(IModulesHandler modulesHandler, string moduleName)
         {
             var module = modulesHandler.FindAssemblyByModuleName(moduleName);
             if (module is null)

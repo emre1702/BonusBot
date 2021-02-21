@@ -1,8 +1,8 @@
 ﻿using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.GuildSettingsModule;
 using BonusBot.GuildSettingsModule.Language;
-using BonusBot.Services.DiscordNet;
 using Discord;
 using Discord.Commands;
 using System.Threading.Tasks;
@@ -13,11 +13,11 @@ namespace GuildSettingsModule
     [Alias("settings", "setting")]
     public class GuildSettings : CommandBase
     {
-        private readonly ModulesHandler _modulesHandler;
+        private readonly IModulesHandler _modulesHandler;
         private static readonly SettingChangeEffects _settingChangeEffects = new();
         private static readonly SettingValuePreparations _settingValuePreparations = new();
 
-        public GuildSettings(ModulesHandler modulesHandler)
+        public GuildSettings(IModulesHandler modulesHandler)
         {
             _modulesHandler = modulesHandler;
         }

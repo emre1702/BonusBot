@@ -1,5 +1,6 @@
 ﻿using BonusBot.Common.Defaults;
 using BonusBot.Common.Helper;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.Services.Events;
 using Discord;
 using Discord.WebSocket;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BonusBot.Services.DiscordNet
 {
-    public class SocketClientHandler
+    public class SocketClientHandler : IDiscordClientHandler
     {
         public TaskCompletionSource<DiscordSocketClient> ClientSource { get; } = new TaskCompletionSource<DiscordSocketClient>();
 

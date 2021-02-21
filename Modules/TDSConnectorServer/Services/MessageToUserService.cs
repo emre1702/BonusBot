@@ -1,8 +1,7 @@
-﻿using BonusBot.Services.DiscordNet;
+﻿using BonusBot.Common.Interfaces.Services;
 using Discord;
 using Discord.WebSocket;
 using Grpc.Core;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
@@ -10,16 +9,16 @@ namespace BonusBot.TDSConnectorServerModule.Services
 {
     public class MessageToUserService : MessageToUser.MessageToUserBase
     {
-        private readonly SocketClientHandler _socketClientHandler;
+        private readonly IDiscordClientHandler _discordClientHandler;
 
-        public MessageToUserService(SocketClientHandler socketClientHandler)
-            => _socketClientHandler = socketClientHandler;
+        public MessageToUserService(IDiscordClientHandler discordClientHandler)
+            => _discordClientHandler = discordClientHandler;
 
         public override async Task<MessageToUserRequestReply> Send(MessageToUserRequest request, ServerCallContext context)
         {
             try
             {
-                var client = await _socketClientHandler.ClientSource.Task;
+                var client = await _discordClientHandler.ClientSource.Task;
 
                 var guild = client.GetGuild(request.GuildId);
                 if (guild is null)
@@ -66,7 +65,7 @@ namespace BonusBot.TDSConnectorServerModule.Services
         {
             try
             {
-                var client = await _socketClientHandler.ClientSource.Task;
+                var client = await _discordClientHandler.ClientSource.Task;
 
                 var guild = client.GetGuild(request.GuildId);
                 if (guild is null)

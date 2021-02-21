@@ -14,6 +14,7 @@ using BonusBot.Common.Extensions;
 using BonusBot.Common;
 using BonusBot.Services.Guilds;
 using BonusBot.Common.Interfaces.Guilds;
+using BonusBot.Common.Interfaces.Services;
 
 namespace BonusBot.Services.DiscordNet
 {
@@ -21,14 +22,14 @@ namespace BonusBot.Services.DiscordNet
     {
         public CommandService CommandService { get; init; }
 
-        private readonly SocketClientHandler _socketClientHandler;
+        private readonly IDiscordClientHandler _discordClientHandler;
         private readonly IServiceProvider _serviceProvider;
         private readonly IGuildsHandler _guildsHandler;
 
-        public CommandsHandler(EventsHandler eventsHandler, SocketClientHandler socketClientHandler, IServiceProvider serviceProvider,
+        public CommandsHandler(EventsHandler eventsHandler, IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider,
             IGuildsHandler guildsHandler)
         {
-            _socketClientHandler = socketClientHandler;
+            _discordClientHandler = discordClientHandler;
             _serviceProvider = serviceProvider;
             _guildsHandler = guildsHandler;
 
@@ -66,7 +67,7 @@ namespace BonusBot.Services.DiscordNet
             if (messageData.Message is not SocketUserMessage message)
                 return;
 
-            var botClient = await _socketClientHandler.ClientSource.Task;
+            var botClient = await _discordClientHandler.ClientSource.Task;
             if (!IsMessagePrivateChatCommand(message, botClient, out int prefixLength))
             {
                 bool isGuildCommand;
@@ -123,7 +124,7 @@ namespace BonusBot.Services.DiscordNet
             if (!messageData.IsCommand)
                 return;
 
-            var botClient = await _socketClientHandler.ClientSource.Task;
+            var botClient = await _discordClientHandler.ClientSource.Task;
             var context = new CustomContext(botClient, messageData, _guildsHandler);
             await CommandService.ExecuteAsync(context, messageData.CommandPrefixLength, _serviceProvider, MultiMatchHandling.Best);
         }

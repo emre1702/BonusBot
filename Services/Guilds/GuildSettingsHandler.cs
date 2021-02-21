@@ -3,8 +3,8 @@ using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Guilds;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.Database;
-using BonusBot.Services.DiscordNet;
 using Discord.WebSocket;
 using System.Globalization;
 using System.Reflection;
@@ -21,10 +21,10 @@ namespace BonusBot.Services.Guilds
 #nullable restore
         private readonly IGuildSettingsCache _settingsCache;
         private readonly BonusDbContextFactory _bonusDbContextFactory;
-        private readonly SocketClientHandler _socketClientHandler;
+        private readonly IDiscordClientHandler _discordClientHandler;
 
-        public GuildSettingsHandler(IGuildSettingsCache settingsCache, BonusDbContextFactory bonusDbContextFactory, SocketClientHandler socketClientHandler)
-            => (_settingsCache, _bonusDbContextFactory, _socketClientHandler) = (settingsCache, bonusDbContextFactory, socketClientHandler);
+        public GuildSettingsHandler(IGuildSettingsCache settingsCache, BonusDbContextFactory bonusDbContextFactory, IDiscordClientHandler discordClientHandler)
+            => (_settingsCache, _bonusDbContextFactory, _discordClientHandler) = (settingsCache, bonusDbContextFactory, discordClientHandler);
 
         public async Task Init(SocketGuild guild)
         {
@@ -35,7 +35,7 @@ namespace BonusBot.Services.Guilds
         public async ValueTask<T?> Get<T>(string moduleName, string key)
         {
             moduleName = moduleName.ToModuleName();
-            var client = await _socketClientHandler.ClientSource.Task;
+            var client = await _discordClientHandler.ClientSource.Task;
 
             var cachedSetting = _settingsCache.Get(moduleName, key);
             if (cachedSetting is { })

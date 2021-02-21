@@ -1,4 +1,4 @@
-﻿using BonusBot.Services.DiscordNet;
+﻿using BonusBot.Common.Interfaces.Services;
 using Discord;
 using Discord.Net;
 using Discord.Rest;
@@ -19,10 +19,10 @@ namespace BonusBot.TDSConnectorServerModule.Services
         private static Timer? _checkServerOfflineTimer;
         private static readonly RequestOptions _requestOptions = new RequestOptions { RetryMode = RetryMode.AlwaysFail, Timeout = 5000 };
 
-        private readonly SocketClientHandler _socketClientHandler;
+        private readonly IDiscordClientHandler _discordClientHandler;
 
-        public RAGEServerStatsService(SocketClientHandler socketClientHandler)
-            => _socketClientHandler = socketClientHandler;
+        public RAGEServerStatsService(IDiscordClientHandler discordClientHandler)
+            => _discordClientHandler = discordClientHandler;
 
         public override async Task<RAGEServerStatsRequestReply> Send(RAGEServerStatsRequest request, ServerCallContext context)
         {
@@ -34,7 +34,7 @@ namespace BonusBot.TDSConnectorServerModule.Services
                     _checkServerOfflineTimer = null;
                 }
 
-                var client = await _socketClientHandler.ClientSource.Task;
+                var client = await _discordClientHandler.ClientSource.Task;
 
                 var guild = client.GetGuild(request.GuildId);
                 if (guild is null)

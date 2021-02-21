@@ -1,25 +1,25 @@
-﻿using Discord;
-using Discord.Commands;
+﻿using BonusBot.Common;
 using BonusBot.Common.Enums;
 using BonusBot.Common.Extensions;
 using BonusBot.Common.Helper;
+using BonusBot.Common.Interfaces.Services;
+using Discord;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
-using BonusBot.Common;
 
 namespace BonusBot.Services.DiscordNet
 {
-    public class ModulesHandler
+    public class ModulesHandler : IModulesHandler
     {
-        public List<Assembly> LoadedModuleAssemblies = new();
+        public List<Assembly> LoadedModuleAssemblies { get; } = new();
 
-        public ModulesHandler(SocketClientHandler socketClientHandler, IServiceProvider serviceProvider, CommandsHandler commandsHandler)
+        public ModulesHandler(IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider, CommandsHandler commandsHandler)
         {
-            AddModules(socketClientHandler, serviceProvider, commandsHandler);
+            AddModules(discordClientHandler, serviceProvider, commandsHandler);
         }
 
         public Assembly? FindAssemblyByModuleName(string moduleName)
@@ -34,9 +34,9 @@ namespace BonusBot.Services.DiscordNet
             }
         }
 
-        private async void AddModules(SocketClientHandler socketClientHandler, IServiceProvider serviceProvider, CommandsHandler commandsHandler)
+        private async void AddModules(IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider, CommandsHandler commandsHandler)
         {
-            await socketClientHandler.ClientSource.Task;
+            await discordClientHandler.ClientSource.Task;
 
             foreach (var assembly in GetModuleAssemblies())
                 await commandsHandler.CommandService.AddModulesAsync(assembly, serviceProvider);

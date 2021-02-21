@@ -1,7 +1,7 @@
 ﻿using BonusBot.Common.Extensions;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.GamePlaningModule.Language;
 using BonusBot.GamePlaningModule.Models;
-using BonusBot.Services.DiscordNet;
 using Discord;
 using Discord.WebSocket;
 using System.Collections.Generic;
@@ -21,14 +21,14 @@ namespace BonusBot.GamePlaningModule
             return msg[0..(index - 1)].TrimEnd();
         }
 
-        internal static async Task<string> GetRestUserName(SocketClientHandler socketClientHandler, ulong guildId, ulong userId)
+        internal static async Task<string> GetRestUserName(IDiscordClientHandler discordClientHandler, ulong guildId, ulong userId)
         {
-            var client = await socketClientHandler.ClientSource.Task;
+            var client = await discordClientHandler.ClientSource.Task;
             var user = await client.Rest.GetGuildUserAsync(guildId, userId);
             return user.Nickname;
         }
 
-        internal static async IAsyncEnumerable<string> GetUserNames(SocketClientHandler socketClientHandler, IEnumerable<IUser> reactedUsers, SocketGuild guild)
+        internal static async IAsyncEnumerable<string> GetUserNames(IDiscordClientHandler discordClientHandler, IEnumerable<IUser> reactedUsers, SocketGuild guild)
         {
             foreach (var user in reactedUsers.Where(u => !u.IsBot))
             {
@@ -37,7 +37,7 @@ namespace BonusBot.GamePlaningModule
                     yield return guildUser.Nickname ?? guildUser.Username;
                 else
                 {
-                    var restUserName = await GetRestUserName(socketClientHandler, guild.Id, user.Id);
+                    var restUserName = await GetRestUserName(discordClientHandler, guild.Id, user.Id);
                     if (restUserName is { })
                         yield return restUserName;
                     else
@@ -46,10 +46,10 @@ namespace BonusBot.GamePlaningModule
             }
         }
 
-        internal static async Task<List<string>> GetReactedUsers(IUserMessage message, Emote? emote, SocketGuild guild, SocketClientHandler socketClientHandler)
+        internal static async Task<List<string>> GetReactedUsers(IUserMessage message, Emote? emote, SocketGuild guild, IDiscordClientHandler discordClientHandler)
         {
             var reactedUsers = emote is { } ? await message.GetReactionUsersAsync(emote, 100).FlattenAsync() : new List<IUser>();
-            return await GetUserNames(socketClientHandler, reactedUsers, guild).ToListAsync();
+            return await GetUserNames(discordClientHandler, reactedUsers, guild).ToListAsync();
         }
 
         internal static EmbedBuilder CreateAnnouncementEmbedBuilder(AnnouncementEmbedData data)
