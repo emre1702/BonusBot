@@ -51,9 +51,9 @@ namespace BonusBot.AudioModule.LavaLink
         public bool AutoDisconnect { get; set; } = true;
 
         /// <summary>
-        /// Should players be preserved if Victoria loses connection?
+        /// Should players be preserved if BonusBot loses connection?
         /// </summary>
-        public bool PreservePlayers { get; set; } = false;
+        public bool PreservePlayers { get; set; } = true;
 
         /// <summary>
         /// Timeout before <see cref="AutoDisconnect"/>.
