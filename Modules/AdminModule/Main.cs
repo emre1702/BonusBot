@@ -2,16 +2,17 @@
 using BonusBot.AdminModule.Commands.Messages;
 using BonusBot.AdminModule.Languages;
 using BonusBot.Common.Commands.Conditions;
+using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using BonusBot.Database;
 using Discord;
 using Discord.Commands;
-using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
 
 namespace BonusBot.AdminModule
 {
+    [RequireContext(ContextType.Guild)]
     public class Main : CommandBase
     {
         internal BonusDbContextFactory DbContextFactory { get; private init; }
@@ -45,7 +46,7 @@ namespace BonusBot.AdminModule
 
         protected override void BeforeExecute(CommandInfo command)
         {
-            ModuleTexts.Culture = Context.BonusGuild.Settings.CultureInfo;
+            ModuleTexts.Culture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
 
             base.BeforeExecute(command);
         }

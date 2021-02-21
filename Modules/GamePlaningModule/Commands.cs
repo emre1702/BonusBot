@@ -22,7 +22,7 @@ namespace BonusBot.GamePlaningModule
         public async Task PlanMeetup(string game, DateTime time)
         {
             var moduleName = GetType().Assembly.ToModuleName();
-            var participationEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.ParticipationEmoteId);
+            var participationEmote = await Context.BonusGuild!.Settings.Get<Emote>(moduleName, Settings.ParticipationEmoteId);
             var lateParticipationEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.LateParticipationEmoteId);
             var cancellationEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.CancellationEmoteId);
             var maybeEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.MaybeEmoteId);

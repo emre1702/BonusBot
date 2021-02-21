@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Discord.Net" Version="2.3.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.2">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -34,6 +34,7 @@
     <ProjectReference Include="..\Modules\GamePlaningModule\GamePlaningModule.csproj" />
     <ProjectReference Include="..\Modules\GuildSettingsModule\GuildSettingsModule.csproj" />
     <ProjectReference Include="..\Modules\LoggingModule\LoggingModule.csproj" />
+    <ProjectReference Include="..\Modules\TDSConnectorClientModule\TDSConnectorClientModule.csproj" />
     <ProjectReference Include="..\Modules\TDSConnectorServer\TDSConnectorServerModule.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>

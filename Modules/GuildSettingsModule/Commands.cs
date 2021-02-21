@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Extensions;
+﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Extensions;
 using BonusBot.GuildSettingsModule;
 using BonusBot.GuildSettingsModule.Language;
 using BonusBot.Services.DiscordNet;
@@ -23,7 +24,7 @@ namespace GuildSettingsModule
 
         protected override void BeforeExecute(CommandInfo command)
         {
-            ModuleTexts.Culture = Context.BonusGuild.Settings.CultureInfo;
+            ModuleTexts.Culture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
 
             base.BeforeExecute(command);
         }
@@ -87,7 +88,7 @@ namespace GuildSettingsModule
             }
 
             value = _settingValuePreparations.GetPreparedValue(moduleName, key, value);
-            await Context.BonusGuild.Settings.Set(moduleName, key, value);
+            await Context.BonusGuild!.Settings.Set(moduleName, key, value);
             await _settingChangeEffects.Changed(Context.BonusGuild, moduleName, key, value);
 
             return true;
@@ -105,7 +106,7 @@ namespace GuildSettingsModule
                 return;
             }
 
-            var value = await Context.BonusGuild.Settings.Get<object>(moduleName, key) ?? "-";
+            var value = await Context.BonusGuild!.Settings.Get<object>(moduleName, key) ?? "-";
             await ReplyToUserAsync(string.Format(ModuleTexts.SettingGetInfo, key, moduleName, value));
         }
 

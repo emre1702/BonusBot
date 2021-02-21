@@ -29,7 +29,7 @@ namespace BonusBot.GamePlaningModule
 
         protected override void BeforeExecute(CommandInfo command)
         {
-            ModuleTexts.Culture = Context.BonusGuild.Settings.CultureInfo;
+            ModuleTexts.Culture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
 
             base.BeforeExecute(command);
         }

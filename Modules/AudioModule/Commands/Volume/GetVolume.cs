@@ -20,7 +20,7 @@ namespace BonusBot.AudioModule.Commands.Volume
                 return;
             }
 
-            int? volume = await Class.Context.BonusGuild.Settings.Get<int>(GetType().Assembly, Settings.Volume);
+            int? volume = await Class.Context.BonusGuild!.Settings.Get<int>(GetType().Assembly, Settings.Volume);
             if (volume.HasValue)
             {
                 await Class.ReplyAsync(string.Format(ModuleTexts.GetVolumeInfo, volume.Value));

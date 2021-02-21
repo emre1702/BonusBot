@@ -9,6 +9,7 @@ using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.AudioModule.Models;
 using BonusBot.AudioModule.Preconditions;
 using BonusBot.Common.Commands.Conditions;
+using BonusBot.Common.Defaults;
 using BonusBot.Database;
 using BonusBot.Services.DiscordNet;
 using Discord;
@@ -191,7 +192,7 @@ namespace BonusBot.AudioModule
 
         protected override void BeforeExecute(CommandInfo command)
         {
-            ModuleTexts.Culture = Context.BonusGuild.Settings.CultureInfo;
+            ModuleTexts.Culture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
 
             base.BeforeExecute(command);
         }

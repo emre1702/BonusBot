@@ -16,7 +16,7 @@ namespace BonusBot.AudioModule.Models
         protected override void BeforeExecute(CommandInfo command)
         {
             Player = LavaSocketClient.Instance.GetPlayer(Context.Guild.Id);
-            ModuleTexts.Culture = Context.BonusGuild.Settings.CultureInfo;
+            ModuleTexts.Culture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
 
             base.BeforeExecute(command);
         }

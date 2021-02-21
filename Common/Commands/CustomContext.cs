@@ -10,7 +10,7 @@ namespace BonusBot.Common.Commands
 {
     public class CustomContext : SocketCommandContext
     {
-        public IBonusGuild BonusGuild { get; }
+        public IBonusGuild? BonusGuild { get; }
         public MessageData MessageData { get; }
         public new SocketGuildUser? User { get; }
         public SocketUser SocketUser { get; }
@@ -20,7 +20,8 @@ namespace BonusBot.Common.Commands
             User = msgData.Message.Author.CastTo<SocketGuildUser>();
             SocketUser = msgData.Message.Author;
             MessageData = msgData;
-            BonusGuild = guildsHandler.GetGuild(Guild)!;
+            if (Guild is { })
+                BonusGuild = guildsHandler.GetGuild(Guild)!;
             //SocketUser = base.User;
         }
 
