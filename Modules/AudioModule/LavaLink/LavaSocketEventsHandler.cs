@@ -3,6 +3,7 @@ using BonusBot.AudioModule.Language;
 using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.AudioModule.LavaLink.Enums;
 using BonusBot.AudioModule.LavaLink.Models;
+using BonusBot.Common.Enums;
 using BonusBot.Common.Helper;
 using Discord;
 using System;
@@ -17,6 +18,9 @@ namespace BonusBot.AudioModule.LavaLink
             lavaSocketClient.Log += Log;
             lavaSocketClient.TrackStuck += TrackStuck;
             lavaSocketClient.TrackFinished += TrackFinished;
+            lavaSocketClient.PlayerUpdated += PlayerUpdated;
+            lavaSocketClient.SocketClosed += SocketClosed;
+            lavaSocketClient.TrackException += TrackException;
         }
 
         private static Task Log(LogMessage log)
@@ -63,6 +67,24 @@ namespace BonusBot.AudioModule.LavaLink
                     //await player.TextChannel.SendMessageAsync(player.ObjectToString());
                 }
             }
+        }
+
+        private static Task PlayerUpdated((LavaPlayer Player, AudioTrack? Track, TimeSpan Position) data)
+        {
+            ConsoleHelper.Log(LogSeverity.Info, LogSource.AudioModule, $"Player Updated For {data.Player.VoiceChannel.GuildId}: {data.Position}");
+            return Task.CompletedTask;
+        }
+
+        private static Task SocketClosed((int Code, string Reason, bool ByRemote) data)
+        {
+            ConsoleHelper.Log(LogSeverity.Info, LogSource.AudioModule, $"LavaSocket closed. Code: {data.Code} | Reason: {data.Reason} | By remote: {data.ByRemote}");
+            return Task.CompletedTask;
+        }
+
+        private static Task TrackException((LavaPlayer Player, LavaLinkTrack? FinishedTrack, string Error) data)
+        {
+            ConsoleHelper.Log(LogSeverity.Info, LogSource.AudioModule, $"Player {data.Player.VoiceChannel.GuildId} {data.Error} for {data.FinishedTrack?.Info.Title}");
+            return Task.CompletedTask;
         }
     }
 }
