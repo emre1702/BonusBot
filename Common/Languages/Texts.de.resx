@@ -162,4 +162,7 @@ Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
   <data name="RoleRequiredError" xml:space="preserve">
     <value>Rolle '{0}' wird benötigt für diese Aktion.</value>
   </data>
+  <data name="CommandInvalidUserError" xml:space="preserve">
+    <value>Die Eingabe konnte nicht als Benutzer geparst werden.</value>
+  </data>
 </root>

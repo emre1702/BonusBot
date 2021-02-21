@@ -79,6 +79,15 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input could not be parsed as a user..
+        /// </summary>
+        public static string CommandInvalidUserError {
+            get {
+                return ResourceManager.GetString("CommandInvalidUserError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to This command is only allowed in a guild channel..
         /// </summary>
         public static string CommandOnlyAllowedInGuild {

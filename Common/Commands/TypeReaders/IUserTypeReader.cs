@@ -19,12 +19,15 @@ namespace BonusBot.Common.Commands.TypeReaders
                 || ulong.TryParse(input, out userId))
                 user ??= await ctx.GetUserAsync(userId).ConfigureAwait(false);
 
-            user ??= await GetSocketGuildUserByName(ctx.Guild, input);
-            user ??= await GetUserByBan(ctx.Guild, input);
+            if (ctx.Guild is { })
+            {
+                user ??= await GetSocketGuildUserByName(ctx.Guild, input);
+                user ??= await GetUserByBan(ctx.Guild, input);
+            }
 
             return user is { }
                 ? TypeReaderResult.FromSuccess(user)
-                : TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidBooleanError);
+                : TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidUserError);
         }
 
         private async Task<IUser?> GetSocketGuildUserByName(SocketGuild guild, string input)

@@ -123,6 +123,9 @@
   <data name="CommandInvalidTimeSpanError" xml:space="preserve">
     <value>Input could not be parsed as a time span.</value>
   </data>
+  <data name="CommandInvalidUserError" xml:space="preserve">
+    <value>Input could not be parsed as a user.</value>
+  </data>
   <data name="CommandOnlyAllowedInGuild" xml:space="preserve">
     <value>This command is only allowed in a guild channel.</value>
   </data>

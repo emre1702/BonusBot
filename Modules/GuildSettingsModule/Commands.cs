@@ -72,7 +72,7 @@ namespace GuildSettingsModule
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
         [Command]
-        [Priority(10)]
+        [Priority(2)]
         public async Task Set(string moduleName, string key, IUser user)
         {
             if (await SetSetting(moduleName, key, user))
