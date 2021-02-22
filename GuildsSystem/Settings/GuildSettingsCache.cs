@@ -2,10 +2,13 @@
 using BonusBot.Common.Interfaces.Guilds;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.GuildsSystem.Settings
 {
-    public class GuildSettingsCache : IGuildSettingsCache
+    internal class GuildSettingsCache : IGuildSettingsCache
     {
         private readonly Dictionary<string, Dictionary<string, object>> _keyValueSettingByModuleName = new();
 

@@ -8,11 +8,14 @@ using BonusBot.Database;
 using Discord.WebSocket;
 using System.Globalization;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+
+[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.GuildsSystem.Settings
 {
-    public class GuildSettingsHandler : IGuildSettingsHandler
+    internal class GuildSettingsHandler : IGuildSettingsHandler
     {
 #nullable disable
         public CultureInfo CultureInfo { get; set; }

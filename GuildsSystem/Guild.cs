@@ -4,11 +4,14 @@ using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Database;
 using Discord.WebSocket;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+
+[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.GuildsSystem
 {
-    public class Guild : IBonusGuild
+    internal class Guild : IBonusGuild
     {
 #nullable disable
         public SocketGuild DiscordGuild { get; private set; }

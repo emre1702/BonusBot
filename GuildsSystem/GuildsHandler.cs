@@ -7,12 +7,15 @@ using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("BonusBot.Core")]
+
 namespace BonusBot.GuildsSystem
 {
-    public class GuildsHandler : IGuildsHandler
+    internal class GuildsHandler : IGuildsHandler
     {
         private readonly Dictionary<ulong, IBonusGuild> _guildsInitialized = new();
         private readonly SemaphoreSlim _initializeSemaphore = new(1, 1);
