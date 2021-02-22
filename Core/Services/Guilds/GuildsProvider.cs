@@ -1,6 +1,6 @@
 ﻿using BonusBot.Common.Interfaces.Guilds;
-using BonusBot.Services.Guilds;
-using GuildsSystem.Settings;
+using BonusBot.GuildsSystem;
+using BonusBot.GuildsSystem.Settings;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace BonusBot.Core.Services.Guilds
@@ -11,7 +11,6 @@ namespace BonusBot.Core.Services.Guilds
             => serviceCollection
                 .AddSingleton<IGuildsHandler, GuildsHandler>()
                 .AddTransient<IGuildSettingsCache, GuildSettingsCache>()
-                .AddTransient<IGuildSettingsHandler, GuildSettingsHandler>()
-                .AddSingleton<IBonusGuildProvider, GuildsSystem.Provider>();
+                .AddTransient<IGuildSettingsHandler, GuildSettingsHandler>();
     }
 }

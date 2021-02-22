@@ -10,7 +10,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace BonusBot.Services.Guilds
+namespace BonusBot.GuildsSystem.Settings
 {
     public class GuildSettingsHandler : IGuildSettingsHandler
     {

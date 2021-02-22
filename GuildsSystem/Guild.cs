@@ -6,7 +6,7 @@ using BonusBot.Database;
 using Discord.WebSocket;
 using System.Threading.Tasks;
 
-namespace GuildsSystem
+namespace BonusBot.GuildsSystem
 {
     public class Guild : IBonusGuild
     {

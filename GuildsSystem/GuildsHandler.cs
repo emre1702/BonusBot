@@ -4,22 +4,24 @@ using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Services.Events;
 using Discord;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BonusBot.Services.Guilds
+namespace BonusBot.GuildsSystem
 {
     public class GuildsHandler : IGuildsHandler
     {
         private readonly Dictionary<ulong, IBonusGuild> _guildsInitialized = new();
         private readonly SemaphoreSlim _initializeSemaphore = new(1, 1);
 
-        private readonly IBonusGuildProvider _bonusGuildProvider;
+        private readonly IServiceProvider _serviceProvider;
 
-        public GuildsHandler(EventsHandler eventsHandler, IBonusGuildProvider bonusGuildProvider)
+        public GuildsHandler(EventsHandler eventsHandler, IServiceProvider serviceProvider)
         {
-            _bonusGuildProvider = bonusGuildProvider;
+            _serviceProvider = serviceProvider;
 
             eventsHandler.GuildAvailable += InitGuild;
         }
@@ -49,7 +51,8 @@ namespace BonusBot.Services.Guilds
                         return;
                 }
 
-                var guild = await _bonusGuildProvider.Create(arg.Guild);
+                var guild = ActivatorUtilities.CreateInstance<Guild>(_serviceProvider);
+                await guild.Initialize(arg.Guild);
 
                 lock (_guildsInitialized) _guildsInitialized[arg.Guild.Id] = guild;
                 ConsoleHelper.Log(LogSeverity.Info, LogSource.Discord, $"Initialized Guild '{arg.Guild.Name}'.");

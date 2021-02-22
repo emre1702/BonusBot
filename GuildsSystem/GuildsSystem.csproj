@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>BonusBot.GuildsSystem</AssemblyName>
     <Nullable>enable</Nullable>
+    <RootNamespace>BonusBot.GuildsSystem</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

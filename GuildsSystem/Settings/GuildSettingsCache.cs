@@ -3,7 +3,7 @@ using BonusBot.Common.Interfaces.Guilds;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace GuildsSystem.Settings
+namespace BonusBot.GuildsSystem.Settings
 {
     public class GuildSettingsCache : IGuildSettingsCache
     {
