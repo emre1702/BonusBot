@@ -35,7 +35,7 @@ namespace BonusBot.TDSConnectorServerModule
                     RAGEServerStats.BindService(ActivatorUtilities.CreateInstance<RAGEServerStatsService>(serviceProvider)),
                     SupportRequest.BindService(ActivatorUtilities.CreateInstance<SupportRequestService>(serviceProvider)),
                 },
-                Ports = { new ServerPort("localhost", 5000, ServerCredentials.Insecure) }
+                Ports = { new ServerPort("bonusbot", 5000, ServerCredentials.Insecure) }
             };
             server.Start();
         }
