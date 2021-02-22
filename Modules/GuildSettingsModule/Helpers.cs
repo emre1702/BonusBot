@@ -1,6 +1,5 @@
 ﻿using BonusBot.Common.Attributes;
-using BonusBot.Common.Extensions;
-using BonusBot.Common.Interfaces.Services;
+using BonusBot.Common.Interfaces.Guilds;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -9,9 +8,9 @@ namespace GuildSettingsModule
 {
     internal static class Helpers
     {
-        internal static bool DoesSettingExists(IModulesHandler modulesHandler, string key, string moduleName)
+        internal static bool DoesSettingExists(IBonusGuild bonusGuild, string key, string moduleName)
         {
-            var assembly = modulesHandler.FindAssemblyByModuleName(moduleName);
+            var assembly = bonusGuild.Modules.GetActivatedModuleAssembly(moduleName);
             if (assembly is null)
                 return false;
 
@@ -33,23 +32,9 @@ namespace GuildSettingsModule
             return fields.Where(fi => fi.GetRawConstantValue() != null).Select(fi => fi.GetRawConstantValue()!.ToString()!);
         }
 
-        internal static string GetAllModulesNamesJoined(IModulesHandler modulesHandler)
+        internal static string GetModuleSettingsJoined(IBonusGuild bonusGuild, string moduleName)
         {
-            var modulesStr = string.Empty;
-            lock (modulesHandler.LoadedModuleAssemblies)
-            {
-                var moduleNames = modulesHandler.LoadedModuleAssemblies.Select(a => a.GetName()?.Name?.ToString().ToModuleName());
-                modulesStr = string.Join(", ", moduleNames);
-            }
-            return modulesStr;
-        }
-
-        internal static string GetAllModulesAndCommonNamesJoined(IModulesHandler modulesHandler)
-            => "Common, " + GetAllModulesNamesJoined(modulesHandler);
-
-        internal static string GetModuleSettingsJoined(IModulesHandler modulesHandler, string moduleName)
-        {
-            var module = modulesHandler.FindAssemblyByModuleName(moduleName);
+            var module = bonusGuild.Modules.GetActivatedModuleAssembly(moduleName);
             if (module is null)
                 return "-";
             var settingKeys = GetSettingKeys(module);

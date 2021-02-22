@@ -13,14 +13,8 @@ namespace GuildSettingsModule
     [Alias("settings", "setting")]
     public class GuildSettings : CommandBase
     {
-        private readonly IModulesHandler _modulesHandler;
         private static readonly SettingChangeEffects _settingChangeEffects = new();
         private static readonly SettingValuePreparations _settingValuePreparations = new();
-
-        public GuildSettings(IModulesHandler modulesHandler)
-        {
-            _modulesHandler = modulesHandler;
-        }
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
@@ -74,7 +68,7 @@ namespace GuildSettingsModule
 
         private async Task<bool> SetSetting(string moduleName, string key, object value)
         {
-            if (!Helpers.DoesSettingExists(_modulesHandler, key, moduleName))
+            if (!Helpers.DoesSettingExists(Context.BonusGuild!, key, moduleName))
             {
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
                 return false;
@@ -93,7 +87,7 @@ namespace GuildSettingsModule
         [Priority(1)]
         public async Task Get(string moduleName, string key)
         {
-            if (!Helpers.DoesSettingExists(_modulesHandler, key, moduleName))
+            if (!Helpers.DoesSettingExists(Context.BonusGuild!, key, moduleName))
             {
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
                 return;
@@ -106,14 +100,13 @@ namespace GuildSettingsModule
         [Command("help")]
         public async Task Help()
         {
-            var modulesStr = Helpers.GetAllModulesAndCommonNamesJoined(_modulesHandler);
-            await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextMain, modulesStr));
+            await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextMain, "Common, " + Context.BonusGuild!.Modules));
         }
 
         [Command("help")]
         public async Task Help(string moduleName)
         {
-            var moduleSettingsStr = Helpers.GetModuleSettingsJoined(_modulesHandler, moduleName);
+            var moduleSettingsStr = Helpers.GetModuleSettingsJoined(Context.BonusGuild!, moduleName);
             await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextModule, moduleName, moduleSettingsStr));
         }
     }
