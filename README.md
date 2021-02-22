@@ -17,7 +17,7 @@ Well, atleast it was much better than my [first BonusBot](https://github.com/emr
 
 ## How can I get the bot?
 You can't invite the bot I'm already running for my private servers.  
-I honestly don't have a server with many server resources to be able to handle too many guilds.  
+I honestly don't have a server with enough resources to be able to handle many guilds.  
 
 But you can:  
 Clone this repository  
