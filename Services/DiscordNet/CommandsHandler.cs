@@ -12,12 +12,15 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("BonusBot.Core")]
+
 namespace BonusBot.Services.DiscordNet
 {
-    public class CommandsHandler
+    internal class CommandsHandler
     {
         public CommandService CommandService { get; init; }
 

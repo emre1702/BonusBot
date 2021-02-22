@@ -1,13 +1,15 @@
-﻿using Discord.WebSocket;
-using BonusBot.Common.Events;
+﻿using BonusBot.Common.Events;
 using BonusBot.Common.Events.Arguments;
-using BonusBot.Common.Helper;
 using BonusBot.Helper.Events;
+using Discord.WebSocket;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+
+[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.Services.Events
 {
-    public class EventsHandler
+    internal class EventsHandler
     {
         public AsyncRelayEvent<ClientGuildArg>? GuildAvailable;
         public AsyncEvent<MessageData>? Message;

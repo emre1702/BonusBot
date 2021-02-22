@@ -5,11 +5,14 @@ using BonusBot.Services.Events;
 using Discord;
 using Discord.WebSocket;
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+
+[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.Services.DiscordNet
 {
-    public class SocketClientHandler : IDiscordClientHandler
+    internal class SocketClientHandler : IDiscordClientHandler
     {
         public TaskCompletionSource<DiscordSocketClient> ClientSource { get; } = new TaskCompletionSource<DiscordSocketClient>();
 
