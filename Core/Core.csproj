@@ -34,6 +34,7 @@
     <ProjectReference Include="..\Modules\GamePlaningModule\GamePlaningModule.csproj" />
     <ProjectReference Include="..\Modules\GuildSettingsModule\GuildSettingsModule.csproj" />
     <ProjectReference Include="..\Modules\LoggingModule\LoggingModule.csproj" />
+    <ProjectReference Include="..\Modules\ModulesControllingModule\ModulesControllingModule.csproj" />
     <ProjectReference Include="..\Modules\TDSConnectorClientModule\TDSConnectorClientModule.csproj" />
     <ProjectReference Include="..\Modules\TDSConnectorServer\TDSConnectorServerModule.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
