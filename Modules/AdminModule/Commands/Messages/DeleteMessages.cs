@@ -25,19 +25,18 @@ namespace BonusBot.AdminModule.Commands.Messages
             await RemoveMessages(messages).ConfigureAwait(false);
 
             await Class.ReplyAsync(string.Format(ModuleTexts.DeletedMessagesInfo, amountMessages));
+            Class.Context.MessageData.NeedsDelete = false;
         }
 
         private async Task<List<IMessage>> GetLastMessages(int limit)
         {
             var messages = new List<IMessage>();
-            IMessage? lastMessage = null;
+            IMessage lastMessage = Class.Context.Message;
             while (limit >= 0)
             {
                 var currentLimit = Math.Min(limit, DiscordConfig.MaxMessagesPerBatch);
                 limit -= currentLimit;
-                var fetchedMessages = lastMessage is null
-                    ? await Class.Context.Channel.GetMessagesAsync(currentLimit, CacheMode.AllowDownload).FlattenAsync().ConfigureAwait(false)
-                    : await Class.Context.Channel.GetMessagesAsync(lastMessage, Direction.Before, currentLimit, CacheMode.AllowDownload).FlattenAsync().ConfigureAwait(false);
+                var fetchedMessages = await Class.Context.Channel.GetMessagesAsync(lastMessage, Direction.Before, currentLimit, CacheMode.AllowDownload).FlattenAsync().ConfigureAwait(false);
                 if (!fetchedMessages.Any())
                     break;
                 lastMessage = fetchedMessages.Last();
@@ -50,13 +49,11 @@ namespace BonusBot.AdminModule.Commands.Messages
         private async Task<List<IMessage>> GetLastMessagesByUser(int limit, IUser user)
         {
             var messages = new List<IMessage>();
-            IMessage? lastMessage = null;
+            IMessage lastMessage = Class.Context.Message;
             while (limit >= 0)
             {
                 var currentLimit = Math.Min(limit * 5, DiscordConfig.MaxMessagesPerBatch);
-                var fetchedMessages = lastMessage is null
-                    ? await Class.Context.Channel.GetMessagesAsync(currentLimit, CacheMode.AllowDownload).FlattenAsync().ConfigureAwait(false)
-                    : await Class.Context.Channel.GetMessagesAsync(lastMessage, Direction.Before, currentLimit, CacheMode.AllowDownload).FlattenAsync().ConfigureAwait(false);
+                var fetchedMessages = await Class.Context.Channel.GetMessagesAsync(lastMessage, Direction.Before, currentLimit, CacheMode.AllowDownload).FlattenAsync().ConfigureAwait(false);
                 if (!fetchedMessages.Any())
                     break;
                 lastMessage = fetchedMessages.Last();
