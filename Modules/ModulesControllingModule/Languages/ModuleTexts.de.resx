@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ModuleDoesNotExist" xml:space="preserve">
-    <value>Das Module '{0} existiert nicht.
+    <value>Das Module '{0}' existiert nicht.
 Benutze '!modul hilfe', um alle möglichen Module anzeigen zu lassen. .</value>
   </data>
   <data name="ModuleHasBeenDisabledForGuild" xml:space="preserve">
-    <value>Das Module '{0} wurde für diesen Server deaktiviert.</value>
+    <value>Das Module '{0}' wurde für diesen Server deaktiviert.</value>
   </data>
   <data name="ModuleHasBeenEnabledForGuild" xml:space="preserve">
-    <value>Das Module '{0} wurde für diesen Server aktiviert.</value>
+    <value>Das Module '{0}' wurde für diesen Server aktiviert.</value>
   </data>
 </root>
