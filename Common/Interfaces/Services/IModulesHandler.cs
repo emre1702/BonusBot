@@ -7,6 +7,6 @@ namespace BonusBot.Common.Interfaces.Services
     {
         List<Assembly> LoadedModuleAssemblies { get; }
 
-        Assembly? FindAssemblyByModuleName(string moduleName);
+        Assembly? FindAssemblyByModuleName(string moduleName, bool includeCommon = true);
     }
 }

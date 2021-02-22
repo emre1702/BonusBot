@@ -25,10 +25,10 @@ namespace BonusBot.Services.DiscordNet
             AddModules(discordClientHandler, serviceProvider, commandsHandler);
         }
 
-        public Assembly? FindAssemblyByModuleName(string moduleName)
+        public Assembly? FindAssemblyByModuleName(string moduleName, bool includeCommon = true)
         {
             moduleName = moduleName.ToModuleName();
-            if (moduleName.Equals(typeof(CommonSettings).GetModuleName()))
+            if (includeCommon && moduleName.Equals(typeof(CommonSettings).GetModuleName()))
                 return typeof(CommonSettings).Assembly;
 
             lock (LoadedModuleAssemblies)
@@ -41,11 +41,11 @@ namespace BonusBot.Services.DiscordNet
         {
             await discordClientHandler.ClientSource.Task;
 
-            foreach (var assembly in GetModuleAssemblies())
+            foreach (var assembly in GetAndLoadModuleAssemblies())
                 await commandsHandler.CommandService.AddModulesAsync(assembly, serviceProvider);
         }
 
-        private IEnumerable<Assembly> GetModuleAssemblies()
+        private IEnumerable<Assembly> GetAndLoadModuleAssemblies()
         {
             var execPath = Directory.GetCurrentDirectory();
 
