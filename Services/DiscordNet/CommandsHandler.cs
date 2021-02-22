@@ -7,7 +7,6 @@ using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.Common.Languages;
-using BonusBot.Services.Events;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -28,7 +27,7 @@ namespace BonusBot.Services.DiscordNet
         private readonly IServiceProvider _serviceProvider;
         private readonly IGuildsHandler _guildsHandler;
 
-        public CommandsHandler(EventsHandler eventsHandler, IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider,
+        public CommandsHandler(IEventsHandler eventsHandler, IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider,
             IGuildsHandler guildsHandler)
         {
             _discordClientHandler = discordClientHandler;

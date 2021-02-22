@@ -2,6 +2,7 @@
 using BonusBot.Common.Events.Arguments;
 using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Guilds;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.Services.Events;
 using Discord;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +23,7 @@ namespace BonusBot.GuildsSystem
 
         private readonly IServiceProvider _serviceProvider;
 
-        public GuildsHandler(EventsHandler eventsHandler, IServiceProvider serviceProvider)
+        public GuildsHandler(IEventsHandler eventsHandler, IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
 

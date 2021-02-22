@@ -16,12 +16,12 @@ namespace BonusBot.Services.DiscordNet
     {
         public TaskCompletionSource<DiscordSocketClient> ClientSource { get; } = new TaskCompletionSource<DiscordSocketClient>();
 
-        public SocketClientHandler(EventsHandler eventsHandler)
+        public SocketClientHandler(IEventsHandler eventsHandler)
         {
             InitializeSocketClient(eventsHandler);
         }
 
-        private async void InitializeSocketClient(EventsHandler eventsHandler)
+        private async void InitializeSocketClient(IEventsHandler eventsHandler)
         {
             var client = CreateClient();
 
@@ -53,7 +53,7 @@ namespace BonusBot.Services.DiscordNet
             return new DiscordSocketClient(socketClientConfig);
         }
 
-        private void AddEventHandlers(DiscordSocketClient client, EventsHandler eventsHandler)
+        private void AddEventHandlers(DiscordSocketClient client, IEventsHandler eventsHandler)
         {
             client.GuildAvailable += guild => eventsHandler.TriggerGuildAvailable(client, guild);
             client.MessageReceived += eventsHandler.TriggerMessage;
