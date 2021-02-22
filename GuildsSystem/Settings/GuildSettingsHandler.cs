@@ -68,5 +68,18 @@ namespace BonusBot.GuildsSystem.Settings
 
         public Task Set(Assembly moduleAssembly, string key, object value)
             => Set(moduleAssembly.ToModuleName(), key, value);
+
+        public async Task Remove(string moduleName, string key)
+        {
+            moduleName = moduleName.ToModuleName();
+            _settingsCache.Remove(moduleName, key);
+
+            using var dbContext = _bonusDbContextFactory.CreateDbContext();
+            await dbContext.GuildsSettings.Remove(_guild.Id, key, moduleName);
+            await dbContext.SaveChangesAsync();
+        }
+
+        public Task Remove(Assembly moduleAssembly, string key)
+            => Remove(moduleAssembly.ToModuleName(), key);
     }
 }

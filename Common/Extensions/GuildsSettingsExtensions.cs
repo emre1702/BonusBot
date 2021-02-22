@@ -16,63 +16,6 @@ namespace BonusBot.Common.Extensions
                EF.Functions.Like(s.Module, moduleName)) as Task<GuildsSettings?>;
         }
 
-        public static async Task<string?> GetString(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName)
-        {
-            var setting = await Get(dbSet, guildId, key, moduleName);
-            return setting?.Value;
-        }
-
-        public static async Task<bool?> GetBool(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName)
-        {
-            var setting = await Get(dbSet, guildId, key, moduleName);
-            if (setting is null)
-                return null;
-
-            if (!bool.TryParse(setting.Value, out var value))
-                return null;
-
-            return value;
-        }
-
-        public static async Task<int?> GetInt32(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName)
-        {
-            var setting = await Get(dbSet, guildId, key, moduleName);
-            if (setting is null)
-                return null;
-
-            if (!int.TryParse(setting.Value, out var value))
-                return null;
-
-            return value;
-        }
-
-        public static async Task<ulong?> GetUInt64(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName)
-        {
-            var setting = await Get(dbSet, guildId, key, moduleName);
-            if (setting is null)
-                return null;
-
-            if (!ulong.TryParse(setting.Value, out var value))
-                return null;
-
-            return value;
-        }
-
-        public static Task<GuildsSettings?> Get(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => Get(dbSet, guildId, key, moduleAssembly.ToModuleName());
-
-        public static Task<string?> GetString(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => GetString(dbSet, guildId, key, moduleAssembly.ToModuleName());
-
-        public static Task<bool?> GetBool(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => GetBool(dbSet, guildId, key, moduleAssembly.ToModuleName());
-
-        public static Task<int?> GetInt32(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => GetInt32(dbSet, guildId, key, moduleAssembly.ToModuleName());
-
-        public static Task<ulong?> GetUInt64(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly)
-            => GetUInt64(dbSet, guildId, key, moduleAssembly.ToModuleName());
-
         public static GuildsSettings Create(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName, string value)
         {
             moduleName = moduleName.ToModuleName();
@@ -121,5 +64,14 @@ namespace BonusBot.Common.Extensions
 
         public static Task<GuildsSettings> AddOrUpdate(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, Assembly moduleAssembly, string value)
             => AddOrUpdate(dbSet, guildId, key, moduleAssembly.ToModuleName(), value);
+
+        public static async Task<bool> Remove(this DbSet<GuildsSettings> dbSet, ulong guildId, string key, string moduleName)
+        {
+            var setting = await Get(dbSet, guildId, key, moduleName);
+            if (setting is null)
+                return false;
+            dbSet.Remove(setting);
+            return true;
+        }
     }
 }

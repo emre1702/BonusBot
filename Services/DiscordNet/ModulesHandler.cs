@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Loader;
+using System.Threading.Tasks;
 
 [assembly: InternalsVisibleTo("BonusBot.Core")]
 
@@ -19,6 +20,7 @@ namespace BonusBot.Services.DiscordNet
     internal class ModulesHandler : IModulesHandler
     {
         public List<Assembly> LoadedModuleAssemblies { get; } = new();
+        public TaskCompletionSource LoadModulesTaskSource { get; } = new();
 
         public ModulesHandler(IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider, CommandsHandler commandsHandler)
         {
@@ -43,6 +45,8 @@ namespace BonusBot.Services.DiscordNet
 
             foreach (var assembly in GetAndLoadModuleAssemblies())
                 await commandsHandler.CommandService.AddModulesAsync(assembly, serviceProvider);
+
+            LoadModulesTaskSource.SetResult();
         }
 
         private IEnumerable<Assembly> GetAndLoadModuleAssemblies()

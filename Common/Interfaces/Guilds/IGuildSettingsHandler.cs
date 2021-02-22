@@ -18,5 +18,9 @@ namespace BonusBot.Common.Interfaces.Guilds
         Task Set(string moduleName, string key, object value);
 
         Task Set(Assembly moduleAssembly, string key, object value);
+
+        Task Remove(string moduleName, string key);
+
+        Task Remove(Assembly moduleAssembly, string key);
     }
 }

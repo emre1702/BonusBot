@@ -26,7 +26,7 @@ namespace ModulesControllingModule
             var assembly = await CheckGetModuleAssembly(moduleName);
             if (assembly is null)
                 return;
-            Context.BonusGuild!.Modules.Add(assembly);
+            await Context.BonusGuild!.Modules.Add(assembly);
             await ReplyToUserAsync(string.Format(ModuleTexts.ModuleHasBeenEnabledForGuild, assembly.ToModuleName()));
         }
 
@@ -37,7 +37,7 @@ namespace ModulesControllingModule
             var assembly = await CheckGetModuleAssembly(moduleName);
             if (assembly is null)
                 return;
-            Context.BonusGuild!.Modules.Remove(assembly);
+            await Context.BonusGuild!.Modules.Remove(assembly);
             await ReplyToUserAsync(string.Format(ModuleTexts.ModuleHasBeenDisabledForGuild, assembly.ToModuleName()));
         }
 

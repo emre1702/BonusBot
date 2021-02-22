@@ -9,5 +9,6 @@ namespace BonusBot.Common.Defaults
         public static string DefaultCommandPrefix => "!";
         public static string DefaultBotName => "BonusBot";
         public static bool DefaultCommandMentionAllowed => true;
+        public static string ModuleDeactivatedDbKey => "ModuleDeactivated";
     }
 }

@@ -32,15 +32,17 @@ namespace BonusBot.GuildsSystem
         {
             DiscordGuild = discordGuild;
             await Settings.Init(discordGuild);
+            await Modules.Init(Settings, discordGuild);
 
-            using var dbContext = _dbContextFactory.CreateDbContext();
+            var userName = await Settings.Get<string>(typeof(CommonSettings).Assembly, CommonSettings.BotName);
 
-            var userName = await dbContext.GuildsSettings.GetString(DiscordGuild.Id, CommonSettings.BotName, typeof(CommonSettings).Assembly);
-
-            await DiscordGuild.CurrentUser.ModifyAsync(prop =>
+            if (DiscordGuild.CurrentUser.Nickname != userName)
             {
-                prop.Nickname = userName ?? Constants.DefaultBotName;
-            });
+                await DiscordGuild.CurrentUser.ModifyAsync(prop =>
+                {
+                    prop.Nickname = userName ?? Constants.DefaultBotName;
+                });
+            }
         }
     }
 }

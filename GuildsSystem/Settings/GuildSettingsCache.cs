@@ -38,5 +38,18 @@ namespace BonusBot.GuildsSystem.Settings
 
         public void Set(Assembly assembly, string key, object value)
             => Set(assembly.ToModuleName(), key, value);
+
+        public void Remove(string moduleName, string key)
+        {
+            lock (_keyValueSettingByModuleName)
+            {
+                if (!_keyValueSettingByModuleName.ContainsKey(moduleName))
+                    return;
+                _keyValueSettingByModuleName[moduleName].Remove(key);
+            }
+        }
+
+        public void Remove(Assembly assembly, string key)
+            => Remove(assembly.ToModuleName(), key);
     }
 }
