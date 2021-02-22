@@ -25,7 +25,6 @@ namespace BonusBot.AdminModule.Commands.Messages
             await RemoveMessages(messages).ConfigureAwait(false);
 
             await Class.ReplyAsync(string.Format(ModuleTexts.DeletedMessagesInfo, amountMessages));
-            Class.Context.MessageData.NeedsDelete = false;
         }
 
         private async Task<List<IMessage>> GetLastMessages(int limit)
