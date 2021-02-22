@@ -21,7 +21,7 @@ I honestly don't have a server with many server resources to be able to handle t
 
 But you can:  
 Clone this repository  
-or 
+or  
 Use my [Docker image](https://hub.docker.com/repository/docker/emre1702/bonusbot) directly.  
 
 ### Environment variables:  
