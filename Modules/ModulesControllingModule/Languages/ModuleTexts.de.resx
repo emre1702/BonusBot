@@ -117,64 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CommandInvalidBooleanError" xml:space="preserve">
-    <value>Die Eingabe konnte nicht als Boolean geparst werden.</value>
+  <data name="ModuleDoesNotExist" xml:space="preserve">
+    <value>Das Module '{0} existiert nicht.
+Benutze '!modul hilfe', um alle möglichen Module anzeigen zu lassen. .</value>
   </data>
-  <data name="CommandInvalidTimeSpanError" xml:space="preserve">
-    <value>Die Eingabe konnte nicht als Zeitspanne geparst werden.</value>
+  <data name="ModuleHasBeenDisabledForGuild" xml:space="preserve">
+    <value>Das Module '{0} wurde für diesen Server deaktiviert.</value>
   </data>
-  <data name="CommandOnlyAllowedInGuild" xml:space="preserve">
-    <value>Dieser Befehl ist nur erlaubt in einem Gilden-Channel.</value>
-  </data>
-  <data name="GuildNotInitializedYet" xml:space="preserve">
-    <value>Die Gilde ist noch nicht initialisiert. Versuch es in paar Sekunden erneut.</value>
-  </data>
-  <data name="NumberRangeError" xml:space="preserve">
-    <value>Der Wert für {0} muss zwischen {1} und {2} sein.</value>
-  </data>
-  <data name="SettingChannelDoesNotExist" xml:space="preserve">
-    <value>Die Einstellung '{0}' für das Modul '{1}' beinhaltet einen Channel, welcher nicht (mehr) existiert. 
-
-Falls du ein Admin bist, nutze bitte '!setting {1} {0} [WERT]', um einen richtigen Channel anzugeben.
-Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
-  </data>
-  <data name="SettingInvalidError" xml:space="preserve">
-    <value>Die Einstellung '{0}' ist ungültig. 
-
-Falls du ein Admin bist, nutze bitte '!setting {1} {0} [WERT]', um die Einstellung erneut zu setzen.
-Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
-  </data>
-  <data name="SettingMissingError" xml:space="preserve">
-    <value>Die Einstellung '{0}' wurde nicht gesetzt. 
-
-Falls du ein Admin bist, nutze bitte '!setting {1} {0} [WERT]', um die Einstellung zu setzen.
-Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
-  </data>
-  <data name="SettingEmoteDoesNotExist" xml:space="preserve">
-    <value>Die Einstellung '{0}' für das Modul '{1}' beinhaltet einen Emote, welcher nicht (mehr) existiert. 
-
-Falls du ein Admin bist, nutze bitte '!setting {1} {0} [WERT]', um einen richtigen Emote anzugeben.
-Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
-  </data>
-  <data name="TargetIsHigherInHierarchyError" xml:space="preserve">
-    <value>Das Ziel '{0}' ist höher in der Hierarchie als du.</value>
-  </data>
-  <data name="RoleRequiredError" xml:space="preserve">
-    <value>Rolle '{0}' wird benötigt für diese Aktion.</value>
-  </data>
-  <data name="CommandInvalidUserError" xml:space="preserve">
-    <value>Die Eingabe konnte nicht als Benutzer geparst werden.</value>
-  </data>
-  <data name="CommandExecutedError" xml:space="preserve">
-    <value>'{0}' Fehler aufgetaucht. Fehlermeldung:
-"{1}"
-
-Befehl benutzt: 
-'{2}'</value>
-  </data>
-  <data name="ModuleIsDisabledError" xml:space="preserve">
-    <value>Dieses Modul ('{0}') wurde auf diesem Server deaktiviert.
-Falls du ein Administrator bist, kannst du es mit folgendem Befehl wieder aktivieren:
-"!modul + {0}"</value>
+  <data name="ModuleHasBeenEnabledForGuild" xml:space="preserve">
+    <value>Das Module '{0} wurde für diesen Server aktiviert.</value>
   </data>
 </root>

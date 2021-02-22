@@ -139,6 +139,11 @@ Used command:
   <data name="GuildNotInitializedYet" xml:space="preserve">
     <value>The guild is not initialized yet. Try again after some seconds.</value>
   </data>
+  <data name="ModuleIsDisabledError" xml:space="preserve">
+    <value>This module ('{0}') has been disabled in this guild.
+If you are an administrator, you can enable it again with this command:
+"!module + {0}"</value>
+  </data>
   <data name="NumberRangeError" xml:space="preserve">
     <value>The value for {0} has to be between {1} and {2}.</value>
   </data>

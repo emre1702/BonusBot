@@ -1,4 +1,5 @@
 ﻿using BonusBot.Common.Commands;
+using BonusBot.Common.Commands.Exceptions;
 using BonusBot.Common.Defaults;
 using Discord;
 using Discord.Commands;
@@ -39,9 +40,12 @@ namespace BonusBot.Common.Extensions
 
         protected override void BeforeExecute(CommandInfo command)
         {
-            Thread.CurrentThread.CurrentUICulture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
+            if (Context.BonusGuild?.Modules.Contains(GetType().Assembly) == false)
+                throw new ModuleIsDisabledException();
 
             base.BeforeExecute(command);
+
+            Thread.CurrentThread.CurrentUICulture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
         }
     }
 }

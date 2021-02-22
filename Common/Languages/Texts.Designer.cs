@@ -119,6 +119,17 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This module (&apos;{0}&apos;) has been disabled in this guild.
+        ///If you are an administrator, you can enable it again with this command:
+        ///&quot;!module + {0}&quot;.
+        /// </summary>
+        public static string ModuleIsDisabledError {
+            get {
+                return ResourceManager.GetString("ModuleIsDisabledError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value for {0} has to be between {1} and {2}..
         /// </summary>
         public static string NumberRangeError {

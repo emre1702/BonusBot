@@ -16,13 +16,15 @@ namespace BonusBot.GuildsSystem
 #nullable disable
         public SocketGuild DiscordGuild { get; private set; }
 #nullable restore
+        public IGuildModulesHandler Modules { get; }
         public IGuildSettingsHandler Settings { get; }
 
         private readonly BonusDbContextFactory _dbContextFactory;
 
-        public Guild(BonusDbContextFactory dbContextFactory, IGuildSettingsHandler guildSettingsHandler)
+        public Guild(BonusDbContextFactory dbContextFactory, IGuildModulesHandler guildModulesHandler, IGuildSettingsHandler guildSettingsHandler)
         {
             _dbContextFactory = dbContextFactory;
+            Modules = guildModulesHandler;
             Settings = guildSettingsHandler;
         }
 
