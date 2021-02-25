@@ -1,6 +1,4 @@
-﻿using BonusBot.Common.Defaults;
-using BonusBot.Common.Extensions;
-using BonusBot.Common.Interfaces.Services;
+﻿using BonusBot.Common.Extensions;
 using BonusBot.GuildSettingsModule;
 using BonusBot.GuildSettingsModule.Language;
 using Discord;

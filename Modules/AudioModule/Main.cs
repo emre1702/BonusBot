@@ -14,6 +14,7 @@ using BonusBot.Common.Interfaces.Services;
 using BonusBot.Database;
 using Discord;
 using Discord.Commands;
+using Discord.Commands.Builders;
 using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule
@@ -24,10 +25,11 @@ namespace BonusBot.AudioModule
     public class Main : AudioCommandBase
     {
         protected static Main? Instance { get; private set; }
+
         internal static LavaRestClient LavaRestClient = new();
         public BonusDbContextFactory DbContextFactory { get; }
 
-        private static bool _initialized;
+        private readonly IDiscordClientHandler _discordClientHandler;
 
         [Command("play")]
         [Alias("yt", "youtube", "ytplay", "youtubeplay", "playyt", "playyoutube")]
@@ -178,17 +180,15 @@ namespace BonusBot.AudioModule
         public Main(IDiscordClientHandler discordClientHandler, BonusDbContextFactory bonusDbContextFactory)
         {
             Instance = this;
+            _discordClientHandler = discordClientHandler;
             DbContextFactory = bonusDbContextFactory;
-            Initialize(discordClientHandler);
         }
 
-        private async void Initialize(IDiscordClientHandler discordClientHandler)
+        protected override async void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
         {
-            if (_initialized) return;
+            base.OnModuleBuilding(commandService, builder);
 
-            _initialized = true;
-
-            var client = await discordClientHandler.ClientSource.Task;
+            var client = await _discordClientHandler.ClientSource.Task;
             await LavaSocketClient.Instance.Start(client);
         }
     }

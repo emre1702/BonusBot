@@ -1,6 +1,7 @@
 ﻿using BonusBot.Common.Extensions;
 using BonusBot.TDSConnectorClientModule.Commands;
 using Discord.Commands;
+using Discord.Commands.Builders;
 using Grpc.Core;
 using Grpc.Net.Client;
 using System;
@@ -15,22 +16,15 @@ namespace BonusBot.TDSConnectorClientModule
         internal static BBCommandClient BBCommandClient { get; private set; }
 
 #nullable restore
-        private static bool _initialized;
 
         [Command("ConfirmTDS")]
         [Alias("ConfirmIdentity", "ConfirmUserId")]
         public Task ConfirmUserId()
             => new ConfirmTDS(this).Do(new());
 
-        public Main()
+        protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
         {
-            Initialize();
-        }
-
-        private static void Initialize()
-        {
-            if (_initialized) return;
-            _initialized = true;
+            base.OnModuleBuilding(commandService, builder);
 
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
             var grpcChannel = GrpcChannel.ForAddress("http://ragemp-server:5001", channelOptions: new GrpcChannelOptions

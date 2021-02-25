@@ -1,5 +1,6 @@
 ﻿using BonusBot.TDSConnectorServerModule.Services;
 using Discord.Commands;
+using Discord.Commands.Builders;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -8,32 +9,27 @@ namespace BonusBot.TDSConnectorServerModule
 {
     public class Main : ModuleBase<ICommandContext>
     {
-        private bool _initialized;
+        private readonly IServiceProvider _serviceProvider;
 
         public Main(IServiceProvider serviceProvider)
+            => _serviceProvider = serviceProvider;
+
+        protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
         {
-            Initialize(serviceProvider);
+            base.OnModuleBuilding(commandService, builder);
+            StartServer();
         }
 
-        private void Initialize(IServiceProvider serviceProvider)
-        {
-            if (_initialized)
-                return;
-
-            _initialized = true;
-            StartServer(serviceProvider);
-        }
-
-        private void StartServer(IServiceProvider serviceProvider)
+        private void StartServer()
         {
             var server = new Server
             {
                 Services =
                 {
-                    MessageToChannel.BindService(ActivatorUtilities.CreateInstance<MessageToChannelService>(serviceProvider)),
-                    MessageToUser.BindService(ActivatorUtilities.CreateInstance<MessageToUserService>(serviceProvider)),
-                    RAGEServerStats.BindService(ActivatorUtilities.CreateInstance<RAGEServerStatsService>(serviceProvider)),
-                    SupportRequest.BindService(ActivatorUtilities.CreateInstance<SupportRequestService>(serviceProvider)),
+                    MessageToChannel.BindService(ActivatorUtilities.CreateInstance<MessageToChannelService>(_serviceProvider)),
+                    MessageToUser.BindService(ActivatorUtilities.CreateInstance<MessageToUserService>(_serviceProvider)),
+                    RAGEServerStats.BindService(ActivatorUtilities.CreateInstance<RAGEServerStatsService>(_serviceProvider)),
+                    SupportRequest.BindService(ActivatorUtilities.CreateInstance<SupportRequestService>(_serviceProvider)),
                 },
                 Ports = { new ServerPort("bonusbot", 5000, ServerCredentials.Insecure) }
             };

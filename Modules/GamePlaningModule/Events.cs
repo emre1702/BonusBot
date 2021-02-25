@@ -1,10 +1,9 @@
-﻿using BonusBot.Common.Defaults;
-using BonusBot.Common.Interfaces.Guilds;
+﻿using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
-using BonusBot.GamePlaningModule.Language;
 using BonusBot.GamePlaningModule.Models;
 using Discord;
 using Discord.Commands;
+using Discord.Commands.Builders;
 using Discord.WebSocket;
 using System.Linq;
 using System.Threading;
@@ -14,8 +13,6 @@ namespace BonusBot.GamePlaningModule
 {
     public partial class GamePlaning
     {
-        private static bool _initialized;
-
         private readonly IDiscordClientHandler _discordClientHandler;
         private readonly IGuildsHandler _guildsHandler;
 
@@ -23,15 +20,17 @@ namespace BonusBot.GamePlaningModule
         {
             _discordClientHandler = discordClientHandler;
             _guildsHandler = guildsHandler;
+        }
+
+        protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
+        {
+            base.OnModuleBuilding(commandService, builder);
 
             AddEvents();
         }
 
         private async void AddEvents()
         {
-            if (_initialized) return;
-
-            _initialized = true;
             var client = await _discordClientHandler.ClientSource.Task;
             client.ReactionAdded += SetParticipantsToMessage;
             client.ReactionRemoved += SetParticipantsToMessage;
