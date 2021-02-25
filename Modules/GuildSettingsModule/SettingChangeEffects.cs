@@ -1,7 +1,6 @@
 ﻿using BonusBot.Common;
 using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces.Guilds;
-using BonusBot.GuildSettingsModule.Language;
 using System;
 using System.Globalization;
 using System.Threading;
