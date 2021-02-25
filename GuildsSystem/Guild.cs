@@ -19,11 +19,8 @@ namespace BonusBot.GuildsSystem
         public IGuildModulesHandler Modules { get; }
         public IGuildSettingsHandler Settings { get; }
 
-        private readonly BonusDbContextFactory _dbContextFactory;
-
-        public Guild(BonusDbContextFactory dbContextFactory, IGuildModulesHandler guildModulesHandler, IGuildSettingsHandler guildSettingsHandler)
+        public Guild(IGuildModulesHandler guildModulesHandler, IGuildSettingsHandler guildSettingsHandler)
         {
-            _dbContextFactory = dbContextFactory;
             Modules = guildModulesHandler;
             Settings = guildSettingsHandler;
         }
