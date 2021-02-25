@@ -3,6 +3,7 @@ using BonusBot.GuildSettingsModule;
 using BonusBot.GuildSettingsModule.Language;
 using Discord;
 using Discord.Commands;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GuildSettingsModule
@@ -98,7 +99,9 @@ namespace GuildSettingsModule
         [Command("help")]
         public async Task Help()
         {
-            await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextMain, "Common, " + Context.BonusGuild!.Modules));
+            var modulesWithSettings = Context.BonusGuild!.Modules.GetActivatedModuleAssemblies().Where(Helpers.HasSettings);
+            var moduleNames = string.Join(", ", modulesWithSettings.Select(m => m.ToModuleName()));
+            await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextMain, "Common" + (moduleNames.Length > 0 ? (", " + moduleNames) : string.Empty)));
         }
 
         [Command("help")]

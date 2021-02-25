@@ -1,5 +1,6 @@
 ﻿using BonusBot.Common.Attributes;
 using BonusBot.Common.Interfaces.Guilds;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,12 +17,18 @@ namespace GuildSettingsModule
 
             var settingsKeys = GetSettingKeys(assembly);
 
-            return settingsKeys.Any(k => k.Equals(key, System.StringComparison.CurrentCultureIgnoreCase));
+            return settingsKeys.Any(k => k.Equals(key, StringComparison.CurrentCultureIgnoreCase));
         }
+
+        internal static bool HasSettings(Assembly assembly)
+            => assembly.GetTypes().Any(t => t.GetCustomAttribute<GuildSettingsContainerAttribute>() is { });
+
+        private static IEnumerable<Type> GetClassesWithSettings(Assembly assembly)
+            => assembly.GetTypes().Where(t => t.GetCustomAttribute<GuildSettingsContainerAttribute>() is { });
 
         private static IEnumerable<FieldInfo> GetSettingFields(Assembly assembly)
         {
-            var classesWithSettings = assembly.GetTypes().Where(t => t.GetCustomAttribute<GuildSettingsContainerAttribute>() is { });
+            var classesWithSettings = GetClassesWithSettings(assembly);
             var fields = classesWithSettings.SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy).Where(fi => fi.IsLiteral && !fi.IsInitOnly));
             return fields;
         }

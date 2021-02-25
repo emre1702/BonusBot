@@ -1,4 +1,5 @@
 ﻿using Discord.WebSocket;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -10,10 +11,14 @@ namespace BonusBot.Common.Interfaces.Guilds
 
         bool Contains(Assembly assembly);
 
-        ValueTask<bool> Remove(Assembly assembly);
+        List<Assembly> GetActivatedModuleAssemblies();
+
+        Assembly? GetActivatedModuleAssembly(string moduleName);
 
         Task Init(IGuildSettingsHandler settingsHandler, SocketGuild discordGuild);
 
-        Assembly? GetActivatedModuleAssembly(string moduleName);
+        ValueTask<bool> Remove(Assembly assembly);
+
+        string ToString();
     }
 }

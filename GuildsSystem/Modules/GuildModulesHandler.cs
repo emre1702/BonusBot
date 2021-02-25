@@ -103,6 +103,14 @@ namespace BonusBot.GuildsSystem.Modules
             }
         }
 
+        public List<Assembly> GetActivatedModuleAssemblies()
+        {
+            lock (_activeModuleAssemblies)
+            {
+                return _activeModuleAssemblies.ToList();
+            }
+        }
+
         public override string ToString()
         {
             lock (_activeModuleAssemblies)
