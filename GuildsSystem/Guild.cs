@@ -1,8 +1,6 @@
 ﻿using BonusBot.Common;
 using BonusBot.Common.Defaults;
-using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces.Guilds;
-using BonusBot.Database;
 using Discord.WebSocket;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
