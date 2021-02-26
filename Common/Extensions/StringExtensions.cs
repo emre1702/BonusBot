@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace BonusBot.Common.Extensions
 {
     public static class StringExtensions
     {
+        private static readonly Regex _moduleRegex = new("Module$", RegexOptions.Compiled);
+
         public static string ToModuleName(this string str)
-            => str
-                .Replace("BonusBot.", "")
-                .Replace(".dll, ", "")
-                .Replace("Module", "");
+            => _moduleRegex.Replace(str
+                .Replace("BonusBot.", string.Empty)
+                .Replace(".dll, ", string.Empty), string.Empty);
 
         public static bool TryGetSeconds(this string input, out TimeSpan? timeSpan)
         {
