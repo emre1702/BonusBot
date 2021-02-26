@@ -177,4 +177,7 @@ Befehl benutzt:
 Falls du ein Administrator bist, kannst du es mit folgendem Befehl wieder aktivieren:
 "!modul + {0}"</value>
   </data>
+  <data name="CommandInvalidColorError" xml:space="preserve">
+    <value>Die Eingabe ist nicht im Hex oder RGB Format und konnte deshalb nicht geparst werden.</value>
+  </data>
 </root>

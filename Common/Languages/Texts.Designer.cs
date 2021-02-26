@@ -83,6 +83,15 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input is not in Hex or RGB format and could not be parsed..
+        /// </summary>
+        public static string CommandInvalidColorError {
+            get {
+                return ResourceManager.GetString("CommandInvalidColorError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input could not be parsed as a time span..
         /// </summary>
         public static string CommandInvalidTimeSpanError {

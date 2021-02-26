@@ -31,6 +31,7 @@
     <ProjectReference Include="..\GuildsSystem\GuildsSystem.csproj" />
     <ProjectReference Include="..\Modules\AdminModule\AdminModule.csproj" />
     <ProjectReference Include="..\Modules\AudioModule\AudioModule.csproj" />
+    <ProjectReference Include="..\Modules\ColorRolesModule\ColorRolesModule.csproj" />
     <ProjectReference Include="..\Modules\GamePlaningModule\GamePlaningModule.csproj" />
     <ProjectReference Include="..\Modules\GuildSettingsModule\GuildSettingsModule.csproj" />
     <ProjectReference Include="..\Modules\LoggingModule\LoggingModule.csproj" />
@@ -38,5 +39,9 @@
     <ProjectReference Include="..\Modules\TDSConnectorClientModule\TDSConnectorClientModule.csproj" />
     <ProjectReference Include="..\Modules\TDSConnectorServer\TDSConnectorServerModule.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Services\Actions\" />
   </ItemGroup>
 </Project>

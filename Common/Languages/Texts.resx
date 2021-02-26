@@ -127,6 +127,9 @@ Used command:
   <data name="CommandInvalidBooleanError" xml:space="preserve">
     <value>Input could not be parsed as a boolean.</value>
   </data>
+  <data name="CommandInvalidColorError" xml:space="preserve">
+    <value>Input is not in Hex or RGB format and could not be parsed.</value>
+  </data>
   <data name="CommandInvalidTimeSpanError" xml:space="preserve">
     <value>Input could not be parsed as a time span.</value>
   </data>

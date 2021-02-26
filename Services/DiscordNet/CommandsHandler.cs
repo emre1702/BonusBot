@@ -59,6 +59,7 @@ namespace BonusBot.Services.DiscordNet
             commandService.AddTypeReader<bool>(new BooleanTypeReader(), true);
             commandService.AddTypeReader<TimeSpan>(new TimeSpanTypeReader(), true);
             commandService.AddTypeReader<IUser>(new IUserTypeReader(), true);
+            commandService.AddTypeReader<Color>(new ColorTypeReader(), true);
         }
 
         private async Task CheckMessageIsCommand(MessageData messageData)
