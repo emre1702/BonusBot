@@ -131,7 +131,7 @@ namespace BonusBot.Common.Extensions
 
         private static string ReplaceTurkishChars(this string input)
             => input
-                .Replace('Ğ', 'g')
+                .Replace('Ğ', 'G')
                 .Replace('ğ', 'g')
                 .Replace('Ç', 'C')
                 .Replace('ç', 'c')
