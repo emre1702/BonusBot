@@ -87,6 +87,8 @@ namespace BonusBot.Common.Helper
                     => (Color.DarkGreen, "MDUL"),
                 LogSource.AudioModule
                     => (Color.DarkGreen, "AMDL"),
+                LogSource.Job
+                    => (Color.Aquamarine, "JOB"),
                 _ => (Color.Gray, "UKWN")
             };
 

@@ -58,7 +58,8 @@ namespace BonusBot.AdminModule.Commands.Bans
                 ActionType = ActionType.Unban,
                 AtDateTime = DateTime.UtcNow + args.Time,
                 SourceId = Class.Context.SocketUser.Id,
-                TargetId = args.User.Id
+                TargetId = args.User.Id,
+                MaxDelay = TimeSpan.MaxValue
             };
             dbContext.TimedActions.Add(entry);
         }

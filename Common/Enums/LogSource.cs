@@ -6,6 +6,7 @@
         Core,
         Module,
         AudioModule,
+        Job,
         Unknown
     }
 }
