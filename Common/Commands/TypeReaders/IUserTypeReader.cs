@@ -15,22 +15,29 @@ namespace BonusBot.Common.Commands.TypeReaders
     {
         public override async Task<TypeReaderResult> ReadAsync(ICommandContext context, string input, IServiceProvider services)
         {
-            var ctx = (CustomContext)context;
-            IUser? user = null;
-            if (MentionUtils.TryParseUser(input, out ulong userId)
-                || ulong.TryParse(input, out userId))
-                user ??= await ctx.GetUserAsync(userId).ConfigureAwait(false);
-
-            if (ctx.Guild is { })
+            try
             {
-                user ??= await GetSocketGuildUserByName(ctx.Guild, input);
-                user ??= await GetUserByBan(ctx.Guild, input);
-            }
+                var ctx = (CustomContext)context;
+                IUser? user = null;
+                if (MentionUtils.TryParseUser(input, out ulong userId)
+                    || ulong.TryParse(input, out userId))
+                    user ??= await ctx.GetUserAsync(userId).ConfigureAwait(false);
 
-            Thread.CurrentThread.CurrentUICulture = ctx.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
-            return user is { }
-                ? TypeReaderResult.FromSuccess(user)
-                : TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidUserError);
+                if (ctx.Guild is { })
+                {
+                    user ??= await GetSocketGuildUserByName(ctx.Guild, input);
+                    user ??= await GetUserByBan(ctx.Guild, input);
+                }
+
+                Thread.CurrentThread.CurrentUICulture = ctx.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
+                return user is { }
+                    ? TypeReaderResult.FromSuccess(user)
+                    : TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidUserError);
+            }
+            catch
+            {
+                return TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidUserError);
+            }
         }
 
         private async Task<IUser?> GetSocketGuildUserByName(SocketGuild guild, string input)
