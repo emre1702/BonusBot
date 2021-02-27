@@ -16,7 +16,7 @@ namespace BonusBot.Common.Workers
         public virtual void Start()
         {
             _runningTask = Run();
-            ConsoleHelper.Log(LogSeverity.Info, LogSource.Job, $"Job '{GetType().Name} started.");
+            ConsoleHelper.Log(LogSeverity.Info, LogSource.Job, $"Job '{GetType().Name}' started.");
         }
 
         protected virtual async Task Run()
@@ -29,7 +29,7 @@ namespace BonusBot.Common.Workers
                 }
                 catch (Exception ex)
                 {
-                    ConsoleHelper.Log(LogSeverity.Error, LogSource.Job, $"Error in job {GetType().Name}", ex);
+                    ConsoleHelper.Log(LogSeverity.Error, LogSource.Job, $"Error in job '{GetType().Name}'", ex);
                 }
                 await Task.Delay(DelayTime);
             }
