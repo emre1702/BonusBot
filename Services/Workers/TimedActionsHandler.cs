@@ -41,10 +41,10 @@ namespace BonusBot.Services.Workers
             }
         }
 
-        public IEnumerable<TimedActions> Get(string actionType, Assembly module)
+        public List<TimedActions> Get(string actionType, Assembly module)
             => Get(actionType, module.ToModuleName());
 
-        public IEnumerable<TimedActions> Get(string actionType, Type module)
+        public List<TimedActions> Get(string actionType, Type module)
             => Get(actionType, module.GetModuleName());
 
         public Task Save()
