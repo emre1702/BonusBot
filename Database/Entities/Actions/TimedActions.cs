@@ -24,6 +24,13 @@ namespace BonusBot.Database.Entities.Cases
             builder
                 .HasIndex(e => new { e.GuildId, e.Module, e.ActionType, e.TargetId })
                 .IsUnique(false);
+
+            builder
+                .Property(e => e.AtDateTime)
+                .HasConversion(
+                    fromCode => fromCode.ToUniversalTime(),
+                    fromDb => DateTime.SpecifyKind(fromDb, DateTimeKind.Utc)
+                );
         }
     }
 }

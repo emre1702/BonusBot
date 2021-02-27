@@ -17,7 +17,11 @@ namespace BonusBot.Database.Entities.Bases
 
             builder
                 .Property(e => e.AddedDateTime)
-                .HasDefaultValueSql("datetime('now')");
+                .HasDefaultValueSql("datetime('now')")
+                .HasConversion(
+                    fromCode => fromCode.ToUniversalTime(),
+                    fromDb => DateTime.SpecifyKind(fromDb, DateTimeKind.Utc)
+                );
         }
     }
 }
