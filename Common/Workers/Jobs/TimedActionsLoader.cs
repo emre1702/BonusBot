@@ -43,7 +43,7 @@ namespace BonusBot.Common.Workers.Jobs
         private Task<List<TimedActions>> LoadNewAction()
         {
             var currentDate = DateTime.UtcNow;
-            return _bonusDbContext.TimedActions.AsQueryable().Where(a => a.AddedDateTime >= _lastLoadTime && a.AtDateTime <= _lastLoadTime).ToListAsync();
+            return _bonusDbContext.TimedActions.AsQueryable().Where(a => a.AddedDateTime >= _lastLoadTime && a.AtDateTime <= currentDate).ToListAsync();
         }
     }
 }
