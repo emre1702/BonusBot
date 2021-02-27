@@ -22,15 +22,16 @@ namespace BonusBot.Services.Workers
         public TimedActionsHandler(BonusDbContextFactory dbContextFactory)
         {
             _dbContext = dbContextFactory.CreateDbContext();
-            RemoveExpiredActionsSync();
             _loadedTimedActions = _dbContext.TimedActions.ToList();
+            RemoveExpiredActionsSync();
         }
 
         private void RemoveExpiredActionsSync()
         {
             var currentTime = DateTime.UtcNow;
-            var expiredActions = _dbContext.TimedActions.AsQueryable().Where(a => a.MaxDelay.HasValue && a.AtDateTime + a.MaxDelay < currentTime).ToList();
+            var expiredActions = _loadedTimedActions.Where(a => a.MaxDelay.HasValue && a.AtDateTime + a.MaxDelay < currentTime).ToList();
             if (expiredActions.Count == 0) return;
+            _loadedTimedActions.RemoveAll(a => expiredActions.Contains(a));
             _dbContext.TimedActions.RemoveRange(expiredActions);
             _dbContext.SaveChanges();
         }
