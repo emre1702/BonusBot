@@ -31,8 +31,6 @@ namespace BonusBot.Common.Workers.Jobs
                 var newActions = await LoadNewAction();
                 if (newActions.Count == 0) return;
                 _timedActionsHandler.AddToCache(newActions);
-
-                _lastLoadTime = DateTime.UtcNow;
             }
             finally
             {
@@ -42,8 +40,9 @@ namespace BonusBot.Common.Workers.Jobs
 
         private Task<List<TimedActions>> LoadNewAction()
         {
-            var currentDate = DateTime.UtcNow;
-            return _bonusDbContext.TimedActions.AsQueryable().Where(a => a.AddedDateTime >= _lastLoadTime && a.AtDateTime <= currentDate).ToListAsync();
+            var lastLoadTime = _lastLoadTime;
+            _lastLoadTime = DateTime.UtcNow;
+            return _bonusDbContext.TimedActions.AsQueryable().Where(a => a.AddedDateTime >= lastLoadTime && a.AtDateTime <= _lastLoadTime).ToListAsync();
         }
     }
 }
