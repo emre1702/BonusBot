@@ -145,4 +145,8 @@ Zum Absagen, kannst du auf {3} drücken.</value>
   <data name="Participants" xml:space="preserve">
     <value>Teilnehmer</value>
   </data>
+  <data name="RemindInfo" xml:space="preserve">
+    <value>Es ist Zeit zum Spielen!
+{0}</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using BonusBot.Common.Commands.Conditions;
 using BonusBot.Common.Extensions;
+using BonusBot.Database.Entities.Cases;
 using BonusBot.GamePlaningModule.Models;
 using Discord;
 using Discord.Commands;
@@ -42,6 +43,29 @@ namespace BonusBot.GamePlaningModule
             await message.AddReactionAsync(lateParticipationEmote);
             await message.AddReactionAsync(maybeEmote);
             await message.AddReactionAsync(cancellationEmote);
+
+            bool? remindAtBeginning = await Context.BonusGuild.Settings.Get<bool>(moduleName, Settings.RemindAtBeginning);
+            if (remindAtBeginning != false)
+                await AddReminder(message.Id, message.Channel.Id, time);
+        }
+
+        private async Task AddReminder(ulong messageId, ulong channelId, DateTime time)
+        {
+            var timedActions = new TimedActions()
+            {
+                ActionType = ActionType.Remind,
+                AtDateTime = time.ToUniversalTime(),
+                GuildId = Context.Guild.Id,
+                MaxDelay = TimeSpan.FromMinutes(5),
+                Module = GetType().GetModuleName(),
+                SourceId = Context.SocketUser.Id,
+                TargetId = messageId,
+                AdditionalId = channelId
+            };
+
+            using var dbContext = _dbContextFactory.CreateDbContext();
+            dbContext.TimedActions.Add(timedActions);
+            await dbContext.SaveChangesAsync();
         }
     }
 }

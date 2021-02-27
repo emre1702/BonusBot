@@ -10,5 +10,6 @@ namespace BonusBot.GamePlaningModule
         public const string CancellationEmoteId = "CancellationEmoteId";
         public const string MaybeEmoteId = "MaybeEmoteId";
         public const string MentionEveryone = "MentionEveryone";
+        public const string RemindAtBeginning = "RemindAtBeginning";
     }
 }

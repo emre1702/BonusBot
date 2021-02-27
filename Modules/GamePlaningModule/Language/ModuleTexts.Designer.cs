@@ -135,5 +135,15 @@ namespace BonusBot.GamePlaningModule.Language {
                 return ResourceManager.GetString("Participants", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It&apos;s time to play!
+        ///{0}.
+        /// </summary>
+        internal static string RemindInfo {
+            get {
+                return ResourceManager.GetString("RemindInfo", resourceCulture);
+            }
+        }
     }
 }

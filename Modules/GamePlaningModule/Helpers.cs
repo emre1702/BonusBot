@@ -46,9 +46,14 @@ namespace BonusBot.GamePlaningModule
             }
         }
 
-        internal static async Task<List<string>> GetReactedUsers(IUserMessage message, Emote? emote, SocketGuild guild, IDiscordClientHandler discordClientHandler)
+        internal static Task<IEnumerable<IUser>> GetReactedUsers(IMessage message, Emote? emote)
+            => emote is { }
+            ? message.GetReactionUsersAsync(emote, 100).FlattenAsync()
+            : Task.FromResult(new List<IUser>() as IEnumerable<IUser>);
+
+        internal static async Task<List<string>> GetReactedUserNames(IMessage message, Emote? emote, SocketGuild guild, IDiscordClientHandler discordClientHandler)
         {
-            var reactedUsers = emote is { } ? await message.GetReactionUsersAsync(emote, 100).FlattenAsync() : new List<IUser>();
+            var reactedUsers = await GetReactedUsers(message, emote);
             return await GetUserNames(discordClientHandler, reactedUsers, guild).ToListAsync();
         }
 

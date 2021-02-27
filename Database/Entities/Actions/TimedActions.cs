@@ -12,6 +12,7 @@ namespace BonusBot.Database.Entities.Cases
         public string ActionType { get; set; } = string.Empty;
         public DateTime AtDateTime { get; set; }
         public TimeSpan? MaxDelay { get; set; }
+        public ulong? AdditionalId { get; set; }
     }
 
     public class TimedActionsConfiguration : ModuleTimeEntityBaseConfiguration<TimedActions>

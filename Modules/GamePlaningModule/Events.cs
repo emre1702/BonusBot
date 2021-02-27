@@ -1,5 +1,6 @@
 ﻿using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
+using BonusBot.Database;
 using BonusBot.GamePlaningModule.Models;
 using Discord;
 using Discord.Commands;
@@ -15,11 +16,13 @@ namespace BonusBot.GamePlaningModule
     {
         private readonly IDiscordClientHandler _discordClientHandler;
         private readonly IGuildsHandler _guildsHandler;
+        private readonly BonusDbContextFactory _dbContextFactory;
 
-        public GamePlaning(IDiscordClientHandler discordClientHandler, IGuildsHandler guildsHandler)
+        public GamePlaning(IDiscordClientHandler discordClientHandler, IGuildsHandler guildsHandler, BonusDbContextFactory bonusDbContextFactory)
         {
             _discordClientHandler = discordClientHandler;
             _guildsHandler = guildsHandler;
+            _dbContextFactory = bonusDbContextFactory;
         }
 
         protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
@@ -82,10 +85,10 @@ namespace BonusBot.GamePlaningModule
                 await message.AddReactionAsync(cancellationData.Emote);
         }
 
-        private async Task<EmoteData> GetEmoteData(IBonusGuild bonusGuild, IUserMessage message, string key)
+        private async Task<EmoteData> GetEmoteData(IBonusGuild bonusGuild, IMessage message, string key)
         {
             var emote = await bonusGuild.Settings.Get<Emote>(GetType().Assembly, key);
-            var reactors = await Helpers.GetReactedUsers(message, emote, bonusGuild.DiscordGuild, _discordClientHandler);
+            var reactors = await Helpers.GetReactedUserNames(message, emote, bonusGuild.DiscordGuild, _discordClientHandler);
             return new(emote, reactors);
         }
     }

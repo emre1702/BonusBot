@@ -145,4 +145,8 @@ To cancel, you can press {3}.</value>
   <data name="Participants" xml:space="preserve">
     <value>Participants</value>
   </data>
+  <data name="RemindInfo" xml:space="preserve">
+    <value>It's time to play!
+{0}</value>
+  </data>
 </root>
