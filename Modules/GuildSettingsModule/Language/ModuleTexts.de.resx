@@ -158,4 +158,7 @@ Geladene Module:
     <value>Die Einstellung wurde erfolgreich mit der Nachricht mit folgendem Inhalt gespeichert:
 {0}</value>
   </data>
+  <data name="SettingBoolSavedSuccessfully" xml:space="preserve">
+    <value>Die Einstellung wurde erfolgreich mit dem Boolean '{0}' gespeichert.</value>
+  </data>
 </root>

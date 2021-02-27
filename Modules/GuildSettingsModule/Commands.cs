@@ -65,6 +65,16 @@ namespace GuildSettingsModule
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingUserSavedSuccessfully, user.Username + "#" + user.Discriminator));
         }
 
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command]
+        [Priority(15)]
+        public async Task Set(string moduleName, string key, bool boolean)
+        {
+            if (await SetSetting(moduleName, key, boolean))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingBoolSavedSuccessfully, boolean ? bool.TrueString : bool.FalseString));
+        }
+
         private async Task<bool> SetSetting(string moduleName, string key, object value)
         {
             if (!Helpers.DoesSettingExists(Context.BonusGuild!, key, moduleName))

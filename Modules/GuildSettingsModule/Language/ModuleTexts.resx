@@ -158,4 +158,7 @@ Loaded modules:
     <value>The setting was successfully saved with the message with this content:
 {0}</value>
   </data>
+  <data name="SettingBoolSavedSuccessfully" xml:space="preserve">
+    <value>The setting was successfully saved with the boolean '{0}'.</value>
+  </data>
 </root>

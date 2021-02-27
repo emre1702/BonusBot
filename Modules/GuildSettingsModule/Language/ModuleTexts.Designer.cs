@@ -91,6 +91,15 @@ namespace BonusBot.GuildSettingsModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The setting was successfully saved with the boolean &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingBoolSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("SettingBoolSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The setting was successfully saved with the channel &apos;{0}&apos;..
         /// </summary>
         internal static string SettingChannelSavedSuccessfully {
