@@ -52,7 +52,7 @@ namespace BonusBot.GamePlaningModule.Jobs
                 var userToRemind = await GetUserToRemind(action.GuildId, message);
                 if (userToRemind?.Any() != true) return;
 
-                var remindText = string.Format(ModuleTexts.RemindInfo, string.Join(", ", userToRemind.Select(u => u.Mention)));
+                var remindText = string.Format(ModuleTexts.RemindInfo, string.Join(' ', userToRemind.Select(u => u.Mention)));
                 await channel.SendMessageAsync(remindText, messageReference: new(action.TargetId, action.AdditionalId!.Value, action.GuildId));
             }
             catch (Exception ex)
