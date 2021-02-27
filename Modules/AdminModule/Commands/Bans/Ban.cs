@@ -16,7 +16,6 @@ namespace BonusBot.AdminModule.Commands.Bans
 
         public override async Task Do(BanArgs args)
         {
-            using var dbContext = Class.DbContextFactory.CreateDbContext();
             try
             {
                 await Class.TimedActionsHandler.DoWithTransaction(async () =>
