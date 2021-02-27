@@ -35,8 +35,7 @@ namespace BonusBot.GamePlaningModule.Jobs
 
             foreach (var remindAction in remindActions)
             {
-                if (!remindAction.MaxDelay.HasValue || remindAction.AtDateTime + remindAction.MaxDelay >= DateTime.UtcNow)
-                    await HandleAction(remindAction, client);
+                await HandleAction(remindAction, client);
                 await _timedActionsHandler.Remove(remindAction);
             }
             await _timedActionsHandler.Save();

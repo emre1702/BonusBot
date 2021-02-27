@@ -22,7 +22,17 @@ namespace BonusBot.Services.Workers
         public TimedActionsHandler(BonusDbContextFactory dbContextFactory)
         {
             _dbContext = dbContextFactory.CreateDbContext();
+            RemoveExpiredActionsSync();
             _loadedTimedActions = _dbContext.TimedActions.ToList();
+        }
+
+        private void RemoveExpiredActionsSync()
+        {
+            var currentTime = DateTime.UtcNow;
+            var expiredActions = _dbContext.TimedActions.AsQueryable().Where(a => a.MaxDelay.HasValue && a.AtDateTime + a.MaxDelay < currentTime).ToList();
+            if (expiredActions.Count == 0) return;
+            _dbContext.TimedActions.RemoveRange(expiredActions);
+            _dbContext.SaveChanges();
         }
 
         public Task Add(TimedActions newAction)
@@ -54,7 +64,8 @@ namespace BonusBot.Services.Workers
             moduleName = moduleName.ToModuleName();
             lock (_loadedTimedActions)
             {
-                return _loadedTimedActions.Where(a => a.ActionType == actionType && a.Module == moduleName).ToList();
+                RemoveExpiredNoLock();
+                return _loadedTimedActions.Where(a => a.ActionType == actionType && a.Module == moduleName && a.AtDateTime <= DateTime.UtcNow).ToList();
             }
         }
 
@@ -69,7 +80,8 @@ namespace BonusBot.Services.Workers
             moduleName = moduleName.ToModuleName();
             lock (_loadedTimedActions)
             {
-                return _loadedTimedActions.Where(a => a.ActionType == actionType && a.Module == moduleName && a.TargetId == targetId).FirstOrDefault();
+                RemoveExpiredNoLock();
+                return _loadedTimedActions.Where(a => a.ActionType == actionType && a.Module == moduleName && a.TargetId == targetId && a.AtDateTime <= DateTime.UtcNow).FirstOrDefault();
             }
         }
 
@@ -78,6 +90,9 @@ namespace BonusBot.Services.Workers
 
         public TimedActions? Get(ulong targetId, string actionType, Type module)
             => Get(targetId, actionType, module.GetModuleName());
+
+        private void RemoveExpiredNoLock()
+            => _loadedTimedActions.RemoveAll(a => a.MaxDelay is { } && a.AtDateTime + a.MaxDelay < DateTime.UtcNow);
 
         public Task Save()
             => _dbContext.SaveChangesAsync();
