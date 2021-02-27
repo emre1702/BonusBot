@@ -30,7 +30,7 @@ namespace BonusBot.GamePlaningModule
 
         internal static async IAsyncEnumerable<string> GetUserNames(IDiscordClientHandler discordClientHandler, IEnumerable<IUser> reactedUsers, SocketGuild guild)
         {
-            foreach (var user in reactedUsers.Where(u => !u.IsBot))
+            foreach (var user in reactedUsers)
             {
                 var guildUser = guild.GetUser(user.Id);
                 if (guildUser is { })
@@ -46,10 +46,10 @@ namespace BonusBot.GamePlaningModule
             }
         }
 
-        internal static Task<IEnumerable<IUser>> GetReactedUsers(IMessage message, Emote? emote)
+        internal static async Task<IEnumerable<IUser>> GetReactedUsers(IMessage message, Emote? emote)
             => emote is { }
-            ? message.GetReactionUsersAsync(emote, 100).FlattenAsync()
-            : Task.FromResult(new List<IUser>() as IEnumerable<IUser>);
+            ? (await message.GetReactionUsersAsync(emote, 100).FlattenAsync()).Where(u => !u.IsBot)
+            : new List<IUser>();
 
         internal static async Task<List<string>> GetReactedUserNames(IMessage message, Emote? emote, SocketGuild guild, IDiscordClientHandler discordClientHandler)
         {
