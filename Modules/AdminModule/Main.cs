@@ -1,9 +1,8 @@
 ﻿using BonusBot.AdminModule.Commands.Bans;
 using BonusBot.AdminModule.Commands.Messages;
-using BonusBot.AdminModule.Languages;
 using BonusBot.Common.Commands.Conditions;
-using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.Database;
 using Discord;
 using Discord.Commands;
@@ -16,6 +15,7 @@ namespace BonusBot.AdminModule
     public class Main : CommandBase
     {
         internal BonusDbContextFactory DbContextFactory { get; private init; }
+        internal ITimedActionsHandler TimedActionsHandler { get; private init; }
 
         [Command("ban")]
         [Alias("TBan", "TimeBan", "BanT", "BanTime", "PermaBan", "PermanentBan", "BanPerma", "BanPermanent", "PBan", "BanP",
@@ -41,7 +41,7 @@ namespace BonusBot.AdminModule
         public Task DeleteMessages([RequireNumberRange(1, 1000)] int limit = 1, IUser? user = null)
             => new DeleteMessages(this).Do(new(limit, user));
 
-        public Main(BonusDbContextFactory bonusDbContextFactory)
-            => (DbContextFactory) = (bonusDbContextFactory);
+        public Main(BonusDbContextFactory bonusDbContextFactory, ITimedActionsHandler timedActionsHandler)
+            => (DbContextFactory, TimedActionsHandler) = (bonusDbContextFactory, timedActionsHandler);
     }
 }

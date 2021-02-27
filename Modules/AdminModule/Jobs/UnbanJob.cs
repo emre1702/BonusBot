@@ -1,14 +1,9 @@
-﻿using BonusBot.Common.Extensions;
-using BonusBot.Common.Interfaces.Services;
+﻿using BonusBot.Common.Interfaces.Services;
 using BonusBot.Common.Workers;
-using BonusBot.Database;
 using BonusBot.Database.Entities.Cases;
 using Discord.WebSocket;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.AdminModule.Jobs
@@ -33,7 +28,7 @@ namespace BonusBot.AdminModule.Jobs
             foreach (var unbanAction in unbanActions)
             {
                 await HandleAction(unbanAction, client);
-                _timedActionsHandler.Remove(unbanAction);
+                await _timedActionsHandler.Remove(unbanAction);
             }
             await _timedActionsHandler.Save();
         }

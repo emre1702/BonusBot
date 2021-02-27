@@ -51,7 +51,7 @@ namespace BonusBot.GamePlaningModule
 
         private async Task AddReminder(ulong messageId, ulong channelId, DateTime time)
         {
-            var timedActions = new TimedActions()
+            var timedAction = new TimedActions()
             {
                 ActionType = ActionType.Remind,
                 AtDateTime = time.ToUniversalTime(),
@@ -63,9 +63,8 @@ namespace BonusBot.GamePlaningModule
                 AdditionalId = channelId
             };
 
-            using var dbContext = _dbContextFactory.CreateDbContext();
-            dbContext.TimedActions.Add(timedActions);
-            await dbContext.SaveChangesAsync();
+            await _timedActionsHandler.Add(timedAction);
+            await _timedActionsHandler.Save();
         }
     }
 }

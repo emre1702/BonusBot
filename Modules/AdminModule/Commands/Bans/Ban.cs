@@ -2,7 +2,6 @@
 using BonusBot.AdminModule.Models.CommandArgs;
 using BonusBot.Common.Commands;
 using BonusBot.Common.Extensions;
-using BonusBot.Database;
 using BonusBot.Database.Entities.Cases;
 using System;
 using System.Threading.Tasks;
@@ -18,38 +17,39 @@ namespace BonusBot.AdminModule.Commands.Bans
         public override async Task Do(BanArgs args)
         {
             using var dbContext = Class.DbContextFactory.CreateDbContext();
-            var transaction = await dbContext.Database.BeginTransactionAsync();
-
             try
             {
-                await RemovePreviousDbEntry(dbContext, args.User.Id);
-                AddNewDbEntry(dbContext, args);
-                await RemovePreviousDiscordBan(args);
-                await AddNewDiscordBan(args);
+                await Class.TimedActionsHandler.DoWithTransaction(async () =>
+                {
+                    await RemovePreviousDbEntry(args.User.Id);
+                    await AddNewDbEntry(args);
+                    await RemovePreviousDiscordBan(args);
+                    await AddNewDiscordBan(args);
 
-                await dbContext.SaveChangesAsync();
-                await transaction.CommitAsync();
+                    await Class.TimedActionsHandler.Save();
+                },
+                async () =>
+                    await new BanInfo(Class).Do(new(args.User))
+                );
             }
             catch
             {
                 await Class.ReplyToUserAsync(ModuleTexts.ErrorHappenedChangesReverted);
-                await transaction.RollbackAsync();
-                throw;
             }
+
             await InformAdminAboutBan(args);
-            await new BanInfo(Class).Do(new(args.User));
         }
 
-        private async Task RemovePreviousDbEntry(BonusDbContext dbContext, ulong targetId)
+        private async ValueTask RemovePreviousDbEntry(ulong targetId)
         {
-            var unbanTask = await dbContext.TimedActions.Get(Class.Context.Guild.Id, ActionType.Unban, targetId);
+            var unbanTask = Class.TimedActionsHandler.Get(targetId, ActionType.Unban, GetType());
             if (unbanTask is { })
-                dbContext.Remove(unbanTask);
+                await Class.TimedActionsHandler.Remove(unbanTask);
         }
 
-        private void AddNewDbEntry(BonusDbContext dbContext, BanArgs args)
+        private Task AddNewDbEntry(BanArgs args)
         {
-            if (!NeedsUnbanLater(args)) return;
+            if (!NeedsUnbanLater(args)) return Task.CompletedTask;
 
             var entry = new TimedActions
             {
@@ -61,7 +61,7 @@ namespace BonusBot.AdminModule.Commands.Bans
                 TargetId = args.User.Id,
                 MaxDelay = TimeSpan.MaxValue
             };
-            dbContext.TimedActions.Add(entry);
+            return Class.TimedActionsHandler.Add(entry);
         }
 
         private async Task RemovePreviousDiscordBan(BanArgs args)

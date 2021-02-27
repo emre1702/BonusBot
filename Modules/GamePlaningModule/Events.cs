@@ -1,6 +1,5 @@
 ﻿using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
-using BonusBot.Database;
 using BonusBot.GamePlaningModule.Models;
 using Discord;
 using Discord.Commands;
@@ -16,13 +15,13 @@ namespace BonusBot.GamePlaningModule
     {
         private readonly IDiscordClientHandler _discordClientHandler;
         private readonly IGuildsHandler _guildsHandler;
-        private readonly BonusDbContextFactory _dbContextFactory;
+        private readonly ITimedActionsHandler _timedActionsHandler;
 
-        public GamePlaning(IDiscordClientHandler discordClientHandler, IGuildsHandler guildsHandler, BonusDbContextFactory bonusDbContextFactory)
+        public GamePlaning(IDiscordClientHandler discordClientHandler, IGuildsHandler guildsHandler, ITimedActionsHandler timedActionsHandler)
         {
             _discordClientHandler = discordClientHandler;
             _guildsHandler = guildsHandler;
-            _dbContextFactory = bonusDbContextFactory;
+            _timedActionsHandler = timedActionsHandler;
         }
 
         protected override void OnModuleBuilding(CommandService commandService, ModuleBuilder builder)
