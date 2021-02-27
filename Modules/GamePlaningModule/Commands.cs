@@ -22,6 +22,7 @@ namespace BonusBot.GamePlaningModule
         [RequireSetting(Settings.MentionEveryone)]
         public async Task PlanMeetup(string game, DateTime time)
         {
+            Console.WriteLine(time.Kind);
             var moduleName = GetType().Assembly.ToModuleName();
             var participationEmote = await Context.BonusGuild!.Settings.Get<Emote>(moduleName, Settings.ParticipationEmoteId);
             var lateParticipationEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.LateParticipationEmoteId);
