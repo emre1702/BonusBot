@@ -12,11 +12,11 @@ namespace BonusBot.Common.Interfaces.Services
 
         void Remove(TimedActions action);
 
-        IEnumerable<TimedActions> Get(string unban, string moduleName);
+        List<TimedActions> Get(string unban, string moduleName);
 
-        IEnumerable<TimedActions> Get(string actionType, Assembly module);
+        List<TimedActions> Get(string actionType, Assembly module);
 
-        IEnumerable<TimedActions> Get(string actionType, Type module);
+        List<TimedActions> Get(string actionType, Type module);
 
         Task Save();
     }

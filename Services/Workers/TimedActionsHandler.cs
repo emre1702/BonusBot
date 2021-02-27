@@ -32,12 +32,12 @@ namespace BonusBot.Services.Workers
             _dbContext.TimedActions.Remove(action);
         }
 
-        public IEnumerable<TimedActions> Get(string actionType, string moduleName)
+        public List<TimedActions> Get(string actionType, string moduleName)
         {
             moduleName = moduleName.ToModuleName();
             lock (_loadedTimedActions)
             {
-                return _loadedTimedActions.Where(a => a.ActionType == actionType && a.Module == moduleName);
+                return _loadedTimedActions.Where(a => a.ActionType == actionType && a.Module == moduleName).ToList();
             }
         }
 

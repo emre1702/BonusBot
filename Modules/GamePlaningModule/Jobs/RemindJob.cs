@@ -31,7 +31,7 @@ namespace BonusBot.GamePlaningModule.Jobs
             var client = await _discordClientHandler.ClientSource.Task;
 
             var remindActions = _timedActionsHandler.Get(ActionType.Remind, GetType());
-            if (!remindActions.Any()) return;
+            if (remindActions.Count == 0) return;
 
             foreach (var remindAction in remindActions)
             {
