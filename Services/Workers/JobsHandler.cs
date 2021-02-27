@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace BonusBot.Services.Workers
 {
@@ -24,6 +25,8 @@ namespace BonusBot.Services.Workers
             try
             {
                 await modulesHandler.LoadModulesTaskSource.Task;
+                // Delay to make sure everythings loaded
+                await Task.Delay(5000);
 
                 var jobTypes = GetAllJobTypes(modulesHandler);
                 var jobs = CreateJobs(serviceProvider, jobTypes);

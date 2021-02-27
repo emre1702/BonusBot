@@ -34,6 +34,7 @@ namespace BonusBot.Services.Workers
 
         public IEnumerable<TimedActions> Get(string actionType, string moduleName)
         {
+            moduleName = moduleName.ToModuleName();
             lock (_loadedTimedActions)
             {
                 return _loadedTimedActions.Where(a => a.ActionType == actionType && a.Module == moduleName);
