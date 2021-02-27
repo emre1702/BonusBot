@@ -3,10 +3,7 @@ using BonusBot.Common.Events.Arguments;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.Helper.Events;
 using Discord.WebSocket;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-
-[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.Services.Events
 {

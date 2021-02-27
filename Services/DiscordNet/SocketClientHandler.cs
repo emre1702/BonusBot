@@ -1,14 +1,10 @@
 ﻿using BonusBot.Common.Defaults;
 using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Services;
-using BonusBot.Services.Events;
 using Discord;
 using Discord.WebSocket;
 using System;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-
-[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.Services.DiscordNet
 {
