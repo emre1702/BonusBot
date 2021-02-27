@@ -40,8 +40,4 @@
     <ProjectReference Include="..\Modules\TDSConnectorServer\TDSConnectorServerModule.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Services\Actions\" />
-  </ItemGroup>
 </Project>

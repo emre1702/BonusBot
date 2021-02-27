@@ -15,40 +15,27 @@ namespace BonusBot.AdminModule.Jobs
 {
     public class UnbanJob : JobBase
     {
-        private readonly BonusDbContext _bonusDbContext;
-        private readonly SemaphoreSlim _semaphoreSlim = new(1, 1);
+        private readonly ITimedActionsHandler _timedActionsHandler;
         private readonly IDiscordClientHandler _discordClientHandler;
 
-        public UnbanJob(BonusDbContextFactory bonusDbContextFactory, IDiscordClientHandler discordClientHandler)
-            => (_bonusDbContext, _discordClientHandler) = (bonusDbContextFactory.CreateDbContext(), discordClientHandler);
+        public UnbanJob(ITimedActionsHandler timedActionsHandler, IDiscordClientHandler discordClientHandler)
+            => (_timedActionsHandler, _discordClientHandler) = (timedActionsHandler, discordClientHandler);
 
         protected override TimeSpan DelayTime => TimeSpan.FromMinutes(1);
 
         protected override async ValueTask DoWork()
         {
-            await _semaphoreSlim.WaitAsync();
-            try
-            {
-                var client = await _discordClientHandler.ClientSource.Task;
-                var unbanActions = await GetActions();
-                foreach (var unbanAction in unbanActions)
-                {
-                    await HandleAction(unbanAction, client);
-                    _bonusDbContext.TimedActions.Remove(unbanAction);
-                }
-                await _bonusDbContext.SaveChangesAsync();
-            }
-            finally
-            {
-                _semaphoreSlim.Release();
-            }
-        }
+            var client = await _discordClientHandler.ClientSource.Task;
 
-        private Task<List<TimedActions>> GetActions()
-        {
-            var currentDate = DateTime.UtcNow;
-            var moduleName = GetType().GetModuleName();
-            return _bonusDbContext.TimedActions.AsQueryable().Where(a => a.ActionType == ActionType.Unban && a.AtDateTime <= currentDate && a.Module == moduleName).ToListAsync();
+            var unbanActions = _timedActionsHandler.Get(ActionType.Unban, GetType());
+            if (!unbanActions.Any()) return;
+
+            foreach (var unbanAction in unbanActions)
+            {
+                await HandleAction(unbanAction, client);
+                _timedActionsHandler.Remove(unbanAction);
+            }
+            await _timedActionsHandler.Save();
         }
 
         private async Task HandleAction(TimedActions action, DiscordSocketClient client)

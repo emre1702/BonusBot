@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Enums;
+﻿using BonusBot.Common;
+using BonusBot.Common.Enums;
 using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.Common.Interfaces.Workers;
@@ -7,9 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("BonusBot.Core")]
+using System.Reflection;
 
 namespace BonusBot.Services.Workers
 {
@@ -41,7 +40,10 @@ namespace BonusBot.Services.Workers
         private IEnumerable<Type> GetAllJobTypes(IModulesHandler modulesHandler)
         {
             var jobType = typeof(IJob);
-            return modulesHandler.LoadedModuleAssemblies.SelectMany(a => a.GetTypes()).Where(t => t.IsAssignableTo(jobType) && !t.IsAbstract);
+            return modulesHandler.LoadedModuleAssemblies
+                .Union(new List<Assembly> { typeof(CommonSettings).Assembly })
+                .SelectMany(a => a.GetTypes())
+                .Where(t => t.IsAssignableTo(jobType) && !t.IsAbstract);
         }
 
         private IEnumerable<IJob> CreateJobs(IServiceProvider serviceProvider, IEnumerable<Type> jobTypes)

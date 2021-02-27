@@ -2,6 +2,7 @@
 using BonusBot.Core.Services.DiscordNet;
 using BonusBot.Core.Services.Events;
 using BonusBot.Core.Services.Guilds;
+using BonusBot.Core.Services.Workers;
 using BonusBot.Services.Database;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
@@ -20,7 +21,8 @@ namespace BonusBot.Core.Services
                 .WithDatabase()
                 .WithDiscordNet()
                 .WithEventsHandler()
-                .WithGuilds();
+                .WithGuilds()
+                .WithWorkers();
             return new CustomServiceProvider(serviceCollection);
         }
     }
