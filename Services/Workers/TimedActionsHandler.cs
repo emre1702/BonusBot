@@ -115,10 +115,9 @@ namespace BonusBot.Services.Workers
             {
                 await action();
             }
-            catch
+            finally
             {
                 _semaphoreSlim.Release();
-                throw;
             }
         }
     }
