@@ -71,7 +71,7 @@ namespace BonusBot.AudioModule.LavaLink
 
         private static Task PlayerUpdated((LavaPlayer Player, AudioTrack? Track, TimeSpan Position) data)
         {
-            ConsoleHelper.Log(LogSeverity.Info, LogSource.AudioModule, $"Player Updated For {data.Player.VoiceChannel.GuildId}: {data.Position}");
+            ConsoleHelper.Log(LogSeverity.Debug, LogSource.AudioModule, $"Player updated for {data.Player.VoiceChannel.GuildId}: {data.Position}");
             return Task.CompletedTask;
         }
 
