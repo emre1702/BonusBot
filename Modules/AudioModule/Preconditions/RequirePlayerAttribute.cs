@@ -46,6 +46,11 @@ namespace BonusBot.AudioModule.Preconditions
                 var defaultVolume = await GetDefaultVolume(ctx.Guild.Id, guildsHandler);
                 await _lavaPlayerInitHandler.Create(ctx.User.VoiceChannel, ctx.Channel as ITextChannel, defaultVolume);
             }
+            else
+            {
+                if (ctx.Channel is ITextChannel textChannel)
+                    player.MoveChannels(textChannel);
+            }
 
             return PreconditionResult.FromSuccess();
         }
