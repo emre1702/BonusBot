@@ -95,18 +95,22 @@ namespace BonusBot.AudioModule.LavaLink.Clients
 
         private Task OnUserVoiceStateUpdated(SocketUser user, SocketVoiceState oldState, SocketVoiceState newState)
         {
-            var channel = (oldState.VoiceChannel ?? newState.VoiceChannel);
+            var channel = oldState.VoiceChannel ?? newState.VoiceChannel;
 
-            SaveStateToPlayer(user, channel.Guild.Id, newState);
+            if (_players.TryGetValue(channel.Guild.Id, out var player) && user.Id == _socketClient?.CurrentUser.Id)
+                OnPlayerVoiceStateUpdated(player, ref channel, newState);
+
             CheckAutoDisconnect(channel);
 
             return Task.CompletedTask;
         }
 
-        private void SaveStateToPlayer(SocketUser user, ulong guildId, SocketVoiceState state)
+        private void OnPlayerVoiceStateUpdated(LavaPlayer player, ref SocketVoiceChannel channel, SocketVoiceState newState)
         {
-            if (_players.TryGetValue(guildId, out var player) && user.Id == _socketClient?.CurrentUser.Id)
-                player.CachedState = state;
+            player.CachedState = newState;
+            if (player.DisconnectToken is { IsCancellationRequested: false })
+                StopAutoDisconnect(channel.Guild.Id);
+            channel = newState.VoiceChannel ?? channel;
         }
 
         private void CheckAutoDisconnect(SocketVoiceChannel voiceChannel)
@@ -153,7 +157,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             if (!_players.TryGetValue(guildId, out var player))
                 return;
 
-            if (player.DisconnectToken is null)
+            if (player.DisconnectToken is not { IsCancellationRequested: false })
                 return;
             player.DisconnectToken.Cancel(false);
             player.DisconnectToken = null;

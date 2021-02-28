@@ -163,7 +163,7 @@ namespace BonusBot.AudioModule.LavaLink
             return _socketHelper.SendPayload(payload);
         }
 
-        public Task EqualizerAsync(List<EqualizerBand> bands)
+        public Task Equalizer(List<EqualizerBand> bands)
         {
             if (CurrentTrack is null)
                 throw new InvalidOperationException(ModuleTexts.NothingPlayingError);
