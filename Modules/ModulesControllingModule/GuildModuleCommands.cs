@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Extensions;
+﻿using BonusBot.Common;
+using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.ModulesControllingModule.Languages;
 using Discord;
@@ -26,8 +27,8 @@ namespace ModulesControllingModule
             var assembly = await CheckGetModuleAssembly(moduleName);
             if (assembly is null)
                 return;
-            await Context.BonusGuild!.Modules.Add(assembly);
-            await ReplyToUserAsync(string.Format(ModuleTexts.ModuleHasBeenEnabledForGuild, assembly.ToModuleName()));
+            if (await Context.BonusGuild!.Modules.Add(assembly))
+                await ReplyToUserAsync(string.Format(ModuleTexts.ModuleHasBeenEnabledForGuild, assembly.ToModuleName()));
         }
 
         [Command("-")]
@@ -37,8 +38,10 @@ namespace ModulesControllingModule
             var assembly = await CheckGetModuleAssembly(moduleName);
             if (assembly is null)
                 return;
-            await Context.BonusGuild!.Modules.Remove(assembly);
-            await ReplyToUserAsync(string.Format(ModuleTexts.ModuleHasBeenDisabledForGuild, assembly.ToModuleName()));
+            if (assembly == typeof(CommonSettings).Assembly)
+                return;
+            if (await Context.BonusGuild!.Modules.Remove(assembly))
+                await ReplyToUserAsync(string.Format(ModuleTexts.ModuleHasBeenDisabledForGuild, assembly.ToModuleName()));
         }
 
         private async ValueTask<Assembly?> CheckGetModuleAssembly(string moduleName)

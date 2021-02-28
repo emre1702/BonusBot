@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Defaults;
+﻿using BonusBot.Common;
+using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
@@ -44,6 +45,7 @@ namespace BonusBot.GuildsSystem.Modules
             await _modulesHandler.LoadModulesTaskSource.Task;
             lock (_activeModuleAssemblies)
             {
+                _activeModuleAssemblies.Add(typeof(CommonSettings).Assembly);
                 foreach (var moduleAssembly in _modulesHandler.LoadedModuleAssemblies)
                 {
                     var moduleName = moduleAssembly.ToModuleName();
@@ -76,6 +78,7 @@ namespace BonusBot.GuildsSystem.Modules
 
         public async ValueTask<bool> Remove(Assembly assembly)
         {
+            if (assembly == typeof(CommonSettings).Assembly) return false;
             lock (_activeModuleAssemblies)
             {
                 var removed = _activeModuleAssemblies.Remove(assembly);
@@ -98,7 +101,6 @@ namespace BonusBot.GuildsSystem.Modules
         {
             lock (_activeModuleAssemblies)
             {
-                moduleName = moduleName.ToModuleName();
                 return _activeModuleAssemblies.FirstOrDefault(a => a.ToModuleName() == moduleName);
             }
         }
