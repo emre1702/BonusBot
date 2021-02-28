@@ -202,7 +202,7 @@ There are no more tracks left in the queue.</value>
     <value>Stop time must be greater than start time.</value>
   </data>
   <data name="TrackHasBeenEnqueuedInfo" xml:space="preserve">
-    <value>{0} has been put into the playlist.</value>
+    <value>{0} has been put into the queue.</value>
   </data>
   <data name="NoLastSearchError" xml:space="preserve">
     <value>You haven't use the search command yet. Search for a song first.</value>

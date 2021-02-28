@@ -169,7 +169,7 @@
     <value>Diese Position ({0} - {1}%) ist größer als die aktuelle Länge.</value>
   </data>
   <data name="QueueEmptyInfo" xml:space="preserve">
-    <value>Es gibt keine Songs in der Playlist.</value>
+    <value>Es gibt keine Songs in der Warteschlange.</value>
   </data>
   <data name="ReplayingSongInfo" xml:space="preserve">
     <value>Wiederhole Song: {0}.</value>
@@ -188,7 +188,7 @@ Bitte nutze ?% für Prozent, ?s für Sekunden, ?m für Minuten oder Minuten:Seku
     <value>Lautstärke geändert auf {0}.</value>
   </data>
   <data name="ShuffleInfo" xml:space="preserve">
-    <value>Die Playlist ist nun gemischt.</value>
+    <value>Die Warteschlange ist nun gemischt.</value>
   </data>
   <data name="SkippedTrackNowPlayingInfo" xml:space="preserve">
     <value>Übersprungen: {0}
@@ -196,7 +196,7 @@ Spiele nun: {1}</value>
   </data>
   <data name="SkippedTrackNowStoppedInfo" xml:space="preserve">
     <value>Übersprungen: {0}
-Es gibt keine weiteren Songs in der Playlist.</value>
+Es gibt keine weiteren Songs in der Warteschlange.</value>
   </data>
   <data name="StartTimeLessThanStopTimeError" xml:space="preserve">
     <value>Stop-Zeit muss größer sein als Start-Zeit.</value>
@@ -218,11 +218,11 @@ Es gibt keine weiteren Songs in der Playlist.</value>
   </data>
   <data name="FinishedPlayingNoMoreItemsInQueueInfo" xml:space="preserve">
     <value>Zuende gespielt: {0}.
-Es gibt keine weiteren Songs in der Playlist.</value>
+Es gibt keine weiteren Songs in der Warteschlange.</value>
   </data>
   <data name="TrackStuckNoMoreItemsInQueueInfo" xml:space="preserve">
     <value>Song {0} steckt für {1} ms fest und wurde deswegen übersprungen.
-Es gibt keine weiteren Songs in der Playlist.</value>
+Es gibt keine weiteren Songs in der Warteschlange.</value>
   </data>
   <data name="TrackStuckNextSongInfo" xml:space="preserve">
     <value>Song {0} steckt für {1} ms fest und wurde deswegen übersprungen.
@@ -236,7 +236,7 @@ Spiele nun: {1}</value>
     <value>Dieser Befehl ist nur erlaubt in einem Gilden Text-Kanal.</value>
   </data>
   <data name="TrackHasBeenRemovedFromQueueInfo" xml:space="preserve">
-    <value>Song {0}, angefordert von {1}, wurde aus der Playlist entfernt.</value>
+    <value>Song {0}, angefordert von {1}, wurde aus der Warteschlange entfernt.</value>
   </data>
   <data name="PlaylistHasBeenEnqueued" xml:space="preserve">
     <value>Die Playliste mit {0} Songs wurde in die Warteschlange getan.</value>

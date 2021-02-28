@@ -426,7 +426,7 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} has been put into the playlist..
+        ///   Looks up a localized string similar to {0} has been put into the queue..
         /// </summary>
         internal static string TrackHasBeenEnqueuedInfo {
             get {
