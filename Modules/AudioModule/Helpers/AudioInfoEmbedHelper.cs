@@ -39,7 +39,8 @@ namespace BonusBot.AudioModule.Helpers
             else
             {
                 embedInfo.Embed = await embedRefresher(embedInfo.Embed);
-                await (((RestUserMessage?)embedInfo.Message)?.ModifyAsync(msg => msg.Embed = embedInfo.Embed) ?? Task.CompletedTask);
+                if (embedInfo.Message is IUserMessage userMessage)
+                    await userMessage.ModifyAsync(msg => msg.Embed = embedInfo.Embed);
             }
         }
 
