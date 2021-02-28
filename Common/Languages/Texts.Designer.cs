@@ -92,6 +92,15 @@ namespace BonusBot.Common.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Input &apos;{0}&apos; is not in valid date and/or time format..
+        /// </summary>
+        public static string CommandInvalidDateTimeOffsetError {
+            get {
+                return ResourceManager.GetString("CommandInvalidDateTimeOffsetError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Input could not be parsed as a time span..
         /// </summary>
         public static string CommandInvalidTimeSpanError {
@@ -124,6 +133,18 @@ namespace BonusBot.Common.Languages {
         public static string GuildNotInitializedYet {
             get {
                 return ResourceManager.GetString("GuildNotInitializedYet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The &apos;TimeZone&apos; setting (&apos;{0}&apos;) in &apos;Common&apos; module is invalid.
+        ///
+        ///If you are an admin of the guild, please use &apos;!setting Common TimeZone [time zone]&apos; to set a valid time zone (e.g. &apos;UTC&apos; or &apos;CET&apos;).
+        ///If not, tell an admin to do it..
+        /// </summary>
+        public static string InvalidTimeZoneIdError {
+            get {
+                return ResourceManager.GetString("InvalidTimeZoneIdError", resourceCulture);
             }
         }
         

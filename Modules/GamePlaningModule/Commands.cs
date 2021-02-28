@@ -20,7 +20,7 @@ namespace BonusBot.GamePlaningModule
         [RequireEmoteSetting(Settings.CancellationEmoteId)]
         [RequireEmoteSetting(Settings.MaybeEmoteId)]
         [RequireSetting(Settings.MentionEveryone)]
-        public async Task PlanMeetup(string game, DateTime time)
+        public async Task PlanMeetup(string game, DateTimeOffset time)
         {
             var moduleName = GetType().Assembly.ToModuleName();
             var participationEmote = await Context.BonusGuild!.Settings.Get<Emote>(moduleName, Settings.ParticipationEmoteId);
@@ -49,12 +49,12 @@ namespace BonusBot.GamePlaningModule
                 await AddReminder(message.Id, message.Channel.Id, time);
         }
 
-        private async Task AddReminder(ulong messageId, ulong channelId, DateTime time)
+        private async Task AddReminder(ulong messageId, ulong channelId, DateTimeOffset time)
         {
             var timedAction = new TimedActions()
             {
                 ActionType = ActionType.Remind,
-                AtDateTime = time.ToUniversalTime(),
+                AtDateTime = time.UtcDateTime,
                 GuildId = Context.Guild.Id,
                 MaxDelay = TimeSpan.FromMinutes(5),
                 Module = GetType().GetModuleName(),

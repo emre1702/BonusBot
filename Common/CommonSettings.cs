@@ -9,5 +9,6 @@ namespace BonusBot.Common
         public const string CommandPrefix = "CommandPrefix";
         public const string CommandPrefixMentionAllowed = "CommandPrefixMentionAllowed";
         public const string Locale = "Locale";
+        public const string TimeZone = "TimeZone";
     }
 }

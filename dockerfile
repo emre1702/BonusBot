@@ -17,6 +17,7 @@ RUN apt-get update && apt-get install -y \
 	libunwind8 \
     libssl1.1 \
     locales \
+    tzdata \
 	&& rm -rf /var/lib/apt/lists/* 
 
 # Add bonusbot user

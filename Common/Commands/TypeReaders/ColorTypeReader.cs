@@ -1,5 +1,4 @@
 ﻿using BonusBot.Common.Languages;
-using Discord;
 using Discord.Commands;
 using System;
 using System.Drawing;

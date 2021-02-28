@@ -180,4 +180,13 @@ If not, tell an admin to do it.</value>
   <data name="TargetIsHigherInHierarchyError" xml:space="preserve">
     <value>The target '{0}' is higher in the hierachie than you.</value>
   </data>
+  <data name="CommandInvalidDateTimeOffsetError" xml:space="preserve">
+    <value>Input '{0}' is not in valid date and/or time format.</value>
+  </data>
+  <data name="InvalidTimeZoneIdError" xml:space="preserve">
+    <value>The 'TimeZone' setting ('{0}') in 'Common' module is invalid.
+
+If you are an admin of the guild, please use '!setting Common TimeZone [time zone]' to set a valid time zone (e.g. 'UTC' or 'CET').
+If not, tell an admin to do it.</value>
+  </data>
 </root>

@@ -180,4 +180,13 @@ Falls du ein Administrator bist, kannst du es mit folgendem Befehl wieder aktivi
   <data name="CommandInvalidColorError" xml:space="preserve">
     <value>Die Eingabe ist nicht im Hex oder RGB Format und konnte deshalb nicht geparst werden.</value>
   </data>
+  <data name="CommandInvalidDateTimeOffsetError" xml:space="preserve">
+    <value>Die Eingabe '{0}' ist nicht in einem gültigen Datum und/oder Zeit Format.</value>
+  </data>
+  <data name="InvalidTimeZoneIdError" xml:space="preserve">
+    <value>Die 'TimeZone' Einstellung ('{0}') in 'Common' Modul ist ungültig.
+
+Falls du ein Admin bist, nutze bitte "!setting Common TimeZone [Zeitzone]", um eine gültige Zeitzone (z.B. 'UTC' oder 'CET') zu setzen.
+Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
+  </data>
 </root>
