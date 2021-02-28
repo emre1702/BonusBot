@@ -279,6 +279,15 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Queue.
+        /// </summary>
+        internal static string Queue {
+            get {
+                return ResourceManager.GetString("Queue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There are no tracks in the queue..
         /// </summary>
         internal static string QueueEmptyInfo {

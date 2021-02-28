@@ -241,4 +241,7 @@ Spiele nun: {1}</value>
   <data name="PlaylistHasBeenEnqueued" xml:space="preserve">
     <value>Die Playliste mit {0} Songs wurde in die Warteschlange getan.</value>
   </data>
+  <data name="Queue" xml:space="preserve">
+    <value>Warteschlange</value>
+  </data>
 </root>

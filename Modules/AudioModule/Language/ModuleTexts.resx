@@ -241,4 +241,7 @@ Now playing: {1}</value>
   <data name="PlaylistHasBeenEnqueued" xml:space="preserve">
     <value>The playlist with {0} songs has been enqueued.</value>
   </data>
+  <data name="Queue" xml:space="preserve">
+    <value>Queue</value>
+  </data>
 </root>
