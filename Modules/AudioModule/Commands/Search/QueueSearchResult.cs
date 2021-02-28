@@ -9,9 +9,9 @@ using static BonusBot.AudioModule.Main;
 
 namespace BonusBot.AudioModule.Commands.Search
 {
-    internal class PlaySearchResult : CommandHandlerBase<SearchGroup, PlaySearchCommandArgs>
+    internal class QueueSearchResult : CommandHandlerBase<SearchGroup, PlaySearchCommandArgs>
     {
-        public PlaySearchResult(SearchGroup searchGroup) : base(searchGroup)
+        public QueueSearchResult(SearchGroup searchGroup) : base(searchGroup)
         {
         }
 
@@ -25,7 +25,10 @@ namespace BonusBot.AudioModule.Commands.Search
             }
 
             var track = GetTrackBySearchIndex(index);
-            await Play(track);
+            if (Class.Player.CurrentTrack is null)
+                await Play(track);
+            else
+                await Queue(track);
         }
 
         private AudioTrack GetTrackBySearchIndex(int index)
@@ -38,6 +41,15 @@ namespace BonusBot.AudioModule.Commands.Search
             if (Class.Player.Status == PlayerStatus.Paused)
                 msg += Environment.NewLine + ModuleTexts.PlayerIsPausedInfo;
             await Class.ReplyAsync(msg);
+        }
+
+        private Task Queue(AudioTrack track)
+        {
+            Class.Player!.Queue.Enqueue(track);
+            var msg = string.Format(ModuleTexts.TrackHasBeenEnqueuedInfo, track);
+            if (Class.Player.Status == PlayerStatus.Paused)
+                msg += Environment.NewLine + ModuleTexts.PlayerIsPausedInfo;
+            return Class.ReplyAsync(msg);
         }
     }
 }

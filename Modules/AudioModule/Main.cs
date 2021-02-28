@@ -38,7 +38,7 @@ namespace BonusBot.AudioModule
             => new PlayYouTube(this).Do(new(query));
 
         [Command("queue")]
-        [Alias("ytqueue", "youtubequeue", "queueyt", "queueyoutube")]
+        [Alias("ytqueue", "youtubequeue", "queueyt", "queueyoutube", "ytplaylist", "ytwarteschlange")]
         [RequirePlayer]
         public Task QueueYouTube([Remainder] string query)
             => new QueueYouTube(this).Do(new(query));
@@ -141,15 +141,15 @@ namespace BonusBot.AudioModule
         [RequireAudioBotRole]
         public class SearchGroup : AudioCommandBase
         {
-            [Command]
-            [Alias("youtube", "yt", "y")]
+            [Command("YouTube")]
+            [Alias("yt", "y")]
             [Priority(2)]
             [RequirePlayer(true)]
             public Task SearchYouTube([Remainder] string query)
                 => new SearchYouTube(this).Do(new(query, 10));
 
-            [Command]
-            [Alias("youtube", "yt", "y")]
+            [Command("YouTube")]
+            [Alias("yt", "y")]
             [Priority(1)]
             [RequirePlayer(true)]
             public Task SearchYouTube([RequireNumberRange(1, 20)] int limit, [Remainder] string query)
@@ -169,12 +169,19 @@ namespace BonusBot.AudioModule
             public Task SearchSoundcloudAsync([RequireNumberRange(1, 20)] int limit, [Remainder] string query)
                 => new SearchSoundcloud(this).Do(new(query, limit));
 
-            [Command]
+            [Command("Play")]
             [Alias("play", "start")]
             [Priority(5)]
             [RequireSearchResult]
             public Task PlaySearchResult([RequireNumberRange(1, 20)] int number)
                 => new PlaySearchResult(this).Do(new(number));
+
+            [Command("Queue")]
+            [Alias("ytqueue", "scqueue", "playlist", "warteschlange")]
+            [Priority(5)]
+            [RequireSearchResult]
+            public Task QueueSearchResult([RequireNumberRange(1, 20)] int number)
+                => new QueueSearchResult(this).Do(new(number));
         }
 
         public Main(IDiscordClientHandler discordClientHandler, BonusDbContextFactory bonusDbContextFactory)
