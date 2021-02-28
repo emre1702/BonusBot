@@ -381,6 +381,15 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Track {0}, requested by {1}, has been removed from the queue..
+        /// </summary>
+        internal static string TrackHasBeenRemovedFromQueueInfo {
+            get {
+                return ResourceManager.GetString("TrackHasBeenRemovedFromQueueInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Track {0} got stuck for {1} ms and therefore skipped.
         ///Now playing: {2}.
         /// </summary>

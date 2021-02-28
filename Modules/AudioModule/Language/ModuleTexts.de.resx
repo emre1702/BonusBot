@@ -235,4 +235,7 @@ Spiele nun: {1}</value>
   <data name="OnlyAllowedInGuildChat" xml:space="preserve">
     <value>Dieser Befehl ist nur erlaubt in einem Gilden Text-Kanal.</value>
   </data>
+  <data name="TrackHasBeenRemovedFromQueueInfo" xml:space="preserve">
+    <value>Song {0}, angefordert von {1}, wurde aus der Playlist entfernt.</value>
+  </data>
 </root>

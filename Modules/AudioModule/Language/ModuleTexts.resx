@@ -235,4 +235,7 @@ Now playing: {1}</value>
   <data name="OnlyAllowedInGuildChat" xml:space="preserve">
     <value>This command is only allowed in a guild text channel.</value>
   </data>
+  <data name="TrackHasBeenRemovedFromQueueInfo" xml:space="preserve">
+    <value>Track {0}, requested by {1}, has been removed from the queue.</value>
+  </data>
 </root>

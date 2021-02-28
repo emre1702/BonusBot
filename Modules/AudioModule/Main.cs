@@ -119,9 +119,16 @@ namespace BonusBot.AudioModule
             => new Lyrics(this).Do(new());
 
         [Command("Queue")]
+        [Alias("Playlist", "Warteschlange", "Warteschleife")]
         [RequirePlayer(false)]
         public Task OutputQueue()
             => new OutputQueue(this).Do(new());
+
+        [Command("DeleteQueue")]
+        [Alias("DelQueue", "QueueDelete", "QueueDel", "DeletePlaylist", "PlaylistDelete", "PlaylistDel", "DelPlaylist", "LöscheWarteschlange", "WarteschlangeLöschen")]
+        [RequirePlayer(false)]
+        public Task DeleteQueue(int playlistNumber)
+            => new DeleteQueue(this).Do(new(playlistNumber));
 
         [Command("disconnect")]
         [Alias("leave")]
