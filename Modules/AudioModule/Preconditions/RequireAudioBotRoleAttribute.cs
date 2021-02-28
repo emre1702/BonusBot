@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Preconditions
 {
-    internal class RequireAudioBotRole : PreconditionAttribute
+    internal class RequireAudioBotRoleAttribute : PreconditionAttribute
     {
         public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
         {
