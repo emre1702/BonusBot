@@ -21,7 +21,7 @@ namespace BonusBot.AudioModule.LavaLink.Models
         public long TrackLength { get; set; }
 
         [JsonIgnore]
-        public TimeSpan Length => TimeSpan.FromMilliseconds(TrackLength);
+        public TimeSpan Length => TimeSpan.MaxValue.Milliseconds >= TrackLength ? TimeSpan.FromMilliseconds(TrackLength) : TimeSpan.MaxValue;
 
         [JsonPropertyName("position")]
         public long TrackPosition { get; set; }
