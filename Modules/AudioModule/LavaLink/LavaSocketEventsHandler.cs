@@ -61,11 +61,11 @@ namespace BonusBot.AudioModule.LavaLink
             if (data.Player is { })
             {
                 await data.Player.Play(nextTrack);
-                if (data.Player.TextChannel is { })
+                /*if (data.Player.TextChannel is { })
                 {
                     await data.Player.TextChannel.SendMessageAsync(string.Format(ModuleTexts.FinishedPlayingNowPlayingInfo, data.Track?.ToString() ?? "-", nextTrack));
                     //await player.TextChannel.SendMessageAsync(player.ObjectToString());
-                }
+                }*/
             }
         }
 
