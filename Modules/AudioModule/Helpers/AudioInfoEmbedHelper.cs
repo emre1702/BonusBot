@@ -142,12 +142,12 @@ namespace BonusBot.AudioModule.Helpers
         public static EmbedBuilder DefaultAudioInfo
             => EmbedHelper.DefaultEmbed
             .WithColor(0, 0, 150)
-            .WithFooter("Audio info")
+            .WithFooter(ModuleTexts.AudioInfoFooter)
             .WithFields(
-                new EmbedFieldBuilder().WithIsInline(true).WithName("Status:").WithValue("playing"),
-                new EmbedFieldBuilder().WithIsInline(true).WithName("Volume:"),
-                new EmbedFieldBuilder().WithIsInline(true).WithName("Length:"),
-                new EmbedFieldBuilder().WithIsInline(true).WithName("Added:")
+                new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.Status + ":").WithValue("playing"),
+                new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.Volume + ":"),
+                new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.Length + ":"),
+                new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.RequestedBy + ":")
             )
             .WithAddedQueueInfoField("-");
 

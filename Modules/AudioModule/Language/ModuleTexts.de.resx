@@ -244,4 +244,19 @@ Spiele nun: {1}</value>
   <data name="Queue" xml:space="preserve">
     <value>Warteschlange</value>
   </data>
+  <data name="RequestedBy" xml:space="preserve">
+    <value>Angefordert von:</value>
+  </data>
+  <data name="Length" xml:space="preserve">
+    <value>Länge</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Lautstärke</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="AudioInfoFooter" xml:space="preserve">
+    <value>Audio-Info</value>
+  </data>
 </root>

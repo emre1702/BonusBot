@@ -244,4 +244,19 @@ Now playing: {1}</value>
   <data name="Queue" xml:space="preserve">
     <value>Queue</value>
   </data>
+  <data name="RequestedBy" xml:space="preserve">
+    <value>Requested by:</value>
+  </data>
+  <data name="Length" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="Volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="AudioInfoFooter" xml:space="preserve">
+    <value>Audio info</value>
+  </data>
 </root>

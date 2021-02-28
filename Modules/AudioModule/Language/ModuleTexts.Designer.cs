@@ -61,6 +61,15 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Audio info.
+        /// </summary>
+        internal static string AudioInfoFooter {
+            get {
+                return ResourceManager.GetString("AudioInfoFooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gain value must be between -0.25 - 1.0 and Band value must be between 0 - 14..
         /// </summary>
         internal static string EqualizerParamsError {
@@ -131,6 +140,15 @@ namespace BonusBot.AudioModule.Language {
         internal static string LavaLinkNoMatchesError {
             get {
                 return ResourceManager.GetString("LavaLinkNoMatchesError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Length.
+        /// </summary>
+        internal static string Length {
+            get {
+                return ResourceManager.GetString("Length", resourceCulture);
             }
         }
         
@@ -306,6 +324,15 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requested by:.
+        /// </summary>
+        internal static string RequestedBy {
+            get {
+                return ResourceManager.GetString("RequestedBy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The position {0} is greater than current track&apos;s length of {1}..
         /// </summary>
         internal static string SeekPositionTooHigh {
@@ -390,6 +417,15 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        internal static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} has been put into the playlist..
         /// </summary>
         internal static string TrackHasBeenEnqueuedInfo {
@@ -424,6 +460,15 @@ namespace BonusBot.AudioModule.Language {
         internal static string TrackStuckNoMoreItemsInQueueInfo {
             get {
                 return ResourceManager.GetString("TrackStuckNoMoreItemsInQueueInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volume.
+        /// </summary>
+        internal static string Volume {
+            get {
+                return ResourceManager.GetString("Volume", resourceCulture);
             }
         }
     }
