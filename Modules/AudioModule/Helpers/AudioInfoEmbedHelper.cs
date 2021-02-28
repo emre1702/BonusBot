@@ -93,7 +93,7 @@ namespace BonusBot.AudioModule.Helpers
             var tracks = queue!.Items;
             for (int trackIndex = 0; trackIndex < tracks.Count; ++trackIndex)
             {
-                var str = (trackIndex + 1) + tracks[trackIndex].ToString();
+                var str = (trackIndex + 1) + ". " + tracks[trackIndex].ToString();
                 if (ExceedsEmbedMaxLength(builder, strBuilder, str))
                     return;
                 if (ExceedsFieldValueMaxLength(strBuilder, str))
