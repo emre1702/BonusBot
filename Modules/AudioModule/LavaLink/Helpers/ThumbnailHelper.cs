@@ -24,7 +24,7 @@ namespace BonusBot.AudioModule.Extensions
                 switch ($"{track.Info.Uri}".ToLower())
                 {
                     case var yt when yt.Contains("youtube"):
-                        return $"https://img.youtube.com/vi/{track.Info.Id}/maxresdefault.jpg";
+                        return $"https://img.youtube.com/vi/{track.Info.Id}/hqdefault.jpg";
 
                     // Doesn't work anymore - check https://dev.twitch.tv/docs/api to implement new logic
                     /*case var twich when twich.Contains("twitch"):
