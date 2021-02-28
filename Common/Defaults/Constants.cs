@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using Discord;
+using System.Globalization;
 
 namespace BonusBot.Common.Defaults
 {
@@ -10,5 +11,6 @@ namespace BonusBot.Common.Defaults
         public static string DefaultBotName => "BonusBot";
         public static bool DefaultCommandMentionAllowed => true;
         public static string ModuleDeactivatedDbKey => "ModuleDeactivated";
+        public static LogSeverity ConsoleHelperLogLevel => LogSeverity.Info;
     }
 }

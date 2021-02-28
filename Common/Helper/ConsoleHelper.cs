@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Enums;
+﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Enums;
 using Discord;
 using System;
 using static Colorful.Console;
@@ -52,6 +53,8 @@ namespace BonusBot.Common.Helper
 
         private static void HandleLog(LogSeverity severity, LogSource source, string message, Exception? exception)
         {
+            if ((int)severity > (int)Constants.ConsoleHelperLogLevel)
+                return;
             var (color, simplified) = ProcessLogSeverity(severity);
             Append($"    {simplified}", color);
 
