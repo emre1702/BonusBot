@@ -3,7 +3,6 @@ using BonusBot.Common.Events.Arguments;
 using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
-using BonusBot.Services.Events;
 using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using System;

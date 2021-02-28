@@ -28,7 +28,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
-    <ProjectReference Include="..\GuildsSystem\GuildsSystem.csproj" />
+    <ProjectReference Include="..\Systems\GuildsSystem\GuildsSystem.csproj" />
     <ProjectReference Include="..\Modules\AdminModule\AdminModule.csproj" />
     <ProjectReference Include="..\Modules\AudioModule\AudioModule.csproj" />
     <ProjectReference Include="..\Modules\ColorRolesModule\ColorRolesModule.csproj" />
