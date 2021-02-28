@@ -98,7 +98,7 @@ namespace BonusBot.AudioModule.Helpers
             for (int trackIndex = 0; trackIndex < tracks.Count; ++trackIndex)
             {
                 var str = (trackIndex + 1) + tracks[trackIndex].ToString();
-                if (strBuilder.Length + str.Length > EmbedFieldBuilder.MaxFieldValueLength)
+                if (strBuilder.Length + str.Length + 1 > EmbedFieldBuilder.MaxFieldValueLength)
                 {
                     builder = builder.WithAddedQueueInfoField(strBuilder.ToString());
                     strBuilder.Clear();
@@ -152,6 +152,6 @@ namespace BonusBot.AudioModule.Helpers
             .WithAddedQueueInfoField("-");
 
         private static EmbedBuilder WithAddedQueueInfoField(this EmbedBuilder embedBuilder, string queueStr)
-            => embedBuilder.AddField(ModuleTexts.Queue + ":", queueStr);
+            => embedBuilder.AddField(ModuleTexts.Queue + ":", string.IsNullOrWhiteSpace(queueStr) ? "-" : queueStr);
     }
 }
