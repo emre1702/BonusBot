@@ -1,5 +1,6 @@
 ﻿using BonusBot.AudioModule.Commands.Channel;
 using BonusBot.AudioModule.Commands.PlayerStatusChange;
+using BonusBot.AudioModule.Commands.Playlist;
 using BonusBot.AudioModule.Commands.Queue;
 using BonusBot.AudioModule.Commands.Search;
 using BonusBot.AudioModule.Commands.Track;
@@ -38,10 +39,38 @@ namespace BonusBot.AudioModule
             => new PlayYouTube(this).Do(new(query));
 
         [Command("queue")]
-        [Alias("ytqueue", "youtubequeue", "queueyt", "queueyoutube", "ytplaylist", "ytwarteschlange")]
+        [Alias("ytqueue", "youtubequeue", "queueyt", "queueyoutube", "ytwarteschlange")]
         [RequirePlayer]
         public Task QueueYouTube([Remainder] string query)
             => new QueueYouTube(this).Do(new(query));
+
+        [Command("playlist")]
+        [Alias("pl", "ytpl", "plyt", "ytplaylist", "playlistyoutube")]
+        [Priority(2)]
+        [RequirePlayer]
+        public Task PlaylistYouTube([RequireNumberRange(1, 100)] int limit, [Remainder] string query)
+            => new PlaylistYouTube(this).Do(new(query, limit));
+
+        [Command("playlist")]
+        [Alias("pl", "ytpl", "plyt", "ytplaylist", "playlistyoutube")]
+        [Priority(1)]
+        [RequirePlayer]
+        public Task PlaylistYouTube([Remainder] string query)
+            => new PlaylistYouTube(this).Do(new(query, 100));
+
+        [Command("playlist")]
+        [Alias("pl", "ytpl", "plyt", "ytplaylist", "playlistyoutube")]
+        [Priority(2)]
+        [RequirePlayer]
+        public Task QueuePlaylistYouTube([RequireNumberRange(1, 100)] int limit, [Remainder] string query)
+            => new QueuePlaylistYouTube(this).Do(new(query, limit));
+
+        [Command("QueuePlaylist")]
+        [Alias("qpl", "ytqpl", "qytpl", "qplyt", "plqyt", "ytqueueplaylist", "queueplaylistyoutube")]
+        [Priority(1)]
+        [RequirePlayer]
+        public Task QueuePlaylistYouTube([Remainder] string query)
+            => new QueuePlaylistYouTube(this).Do(new(query, 100));
 
         [Command("resume")]
         [Alias("unpause")]
@@ -119,16 +148,16 @@ namespace BonusBot.AudioModule
             => new Lyrics(this).Do(new());
 
         [Command("Queue")]
-        [Alias("Playlist", "Warteschlange", "Warteschleife")]
+        [Alias("Warteschlange", "Warteschleife")]
         [RequirePlayer(false)]
         public Task OutputQueue()
             => new OutputQueue(this).Do(new());
 
         [Command("DeleteQueue")]
-        [Alias("DelQueue", "QueueDelete", "QueueDel", "DeletePlaylist", "PlaylistDelete", "PlaylistDel", "DelPlaylist", "LöscheWarteschlange", "WarteschlangeLöschen")]
+        [Alias("DelQueue", "QueueDelete", "QueueDel", "LöscheWarteschlange", "WarteschlangeLöschen")]
         [RequirePlayer(false)]
-        public Task DeleteQueue(int playlistNumber)
-            => new DeleteQueue(this).Do(new(playlistNumber));
+        public Task DeleteQueue(int queueNumber)
+            => new DeleteQueue(this).Do(new(queueNumber));
 
         [Command("disconnect")]
         [Alias("leave")]
@@ -150,42 +179,24 @@ namespace BonusBot.AudioModule
         {
             [Command("YouTube")]
             [Alias("yt", "y")]
-            [Priority(2)]
             [RequirePlayer(true)]
             public Task SearchYouTube([Remainder] string query)
-                => new SearchYouTube(this).Do(new(query, 10));
-
-            [Command("YouTube")]
-            [Alias("yt", "y")]
-            [Priority(1)]
-            [RequirePlayer(true)]
-            public Task SearchYouTube([RequireNumberRange(1, 20)] int limit, [Remainder] string query)
-                => new SearchYouTube(this).Do(new(query, limit));
+                => new SearchYouTube(this).Do(new(query));
 
             [Command("SoundCloud")]
             [Alias("sc", "s")]
-            [Priority(4)]
             [RequirePlayer(true)]
             public Task SearchSoundcloudAsync([Remainder] string query)
-                => new SearchSoundcloud(this).Do(new(query, 10));
-
-            [Command("SoundCloud")]
-            [Alias("sc", "s")]
-            [Priority(3)]
-            [RequirePlayer(true)]
-            public Task SearchSoundcloudAsync([RequireNumberRange(1, 20)] int limit, [Remainder] string query)
-                => new SearchSoundcloud(this).Do(new(query, limit));
+                => new SearchSoundcloud(this).Do(new(query));
 
             [Command("Play")]
             [Alias("play", "start")]
-            [Priority(5)]
             [RequireSearchResult]
             public Task PlaySearchResult([RequireNumberRange(1, 20)] int number)
                 => new PlaySearchResult(this).Do(new(number));
 
             [Command("Queue")]
-            [Alias("ytqueue", "scqueue", "playlist", "warteschlange")]
-            [Priority(5)]
+            [Alias("ytqueue", "scqueue", "warteschlange")]
             [RequireSearchResult]
             public Task QueueSearchResult([RequireNumberRange(1, 20)] int number)
                 => new QueueSearchResult(this).Do(new(number));

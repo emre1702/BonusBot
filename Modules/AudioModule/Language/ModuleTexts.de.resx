@@ -238,4 +238,7 @@ Spiele nun: {1}</value>
   <data name="TrackHasBeenRemovedFromQueueInfo" xml:space="preserve">
     <value>Song {0}, angefordert von {1}, wurde aus der Playlist entfernt.</value>
   </data>
+  <data name="PlaylistHasBeenEnqueued" xml:space="preserve">
+    <value>Die Playliste mit {0} Songs wurde in die Warteschlange getan.</value>
+  </data>
 </root>

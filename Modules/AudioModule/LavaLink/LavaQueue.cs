@@ -1,4 +1,5 @@
-﻿using MoreLinq;
+﻿using BonusBot.AudioModule.LavaLink.Models;
+using MoreLinq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -57,6 +58,13 @@ namespace BonusBot.AudioModule.LavaLink
                 lock (_list) _list.Add(item);
                 QueueChanged?.Invoke();
             }
+        }
+
+        public void EnqueueRange(IEnumerable<T> items)
+        {
+            lock (_list) _list.AddRange(items);
+            if (IsShuffle) Shuffle();
+            else QueueChanged?.Invoke();
         }
 
         public void EnqueueRandom(T item)

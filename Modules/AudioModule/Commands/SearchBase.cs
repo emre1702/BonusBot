@@ -4,6 +4,7 @@ using BonusBot.AudioModule.LavaLink.Models;
 using BonusBot.AudioModule.Models;
 using BonusBot.AudioModule.Models.CommandArgs;
 using BonusBot.Common.Commands;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Commands
@@ -32,5 +33,11 @@ namespace BonusBot.AudioModule.Commands
 
             return false;
         }
+
+        protected AudioTrack GetAudioTrack(LavaLinkTrack track)
+            => new(track, Class.Context.User!);
+
+        protected AudioTrack GetAudioTrack(SearchResult searchResult)
+            => GetAudioTrack(searchResult.Tracks.First());
     }
 }

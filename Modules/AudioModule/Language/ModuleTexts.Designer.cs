@@ -261,6 +261,15 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The playlist with {0} songs has been enqueued..
+        /// </summary>
+        internal static string PlaylistHasBeenEnqueued {
+            get {
+                return ResourceManager.GetString("PlaylistHasBeenEnqueued", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The position ({0} - {1}%) is actually larger than the actual length..
         /// </summary>
         internal static string PositionLargeThanLengthError {

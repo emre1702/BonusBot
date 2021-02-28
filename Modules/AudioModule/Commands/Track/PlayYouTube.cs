@@ -22,7 +22,7 @@ namespace BonusBot.AudioModule.Commands.Track
                 query = query.Substring(0, playlistInUrlIndex);
             }*/
 
-            var searchResult = await Main.LavaRestClient.SearchYouTube(args.Query, 1);
+            var searchResult = await Main.LavaRestClient.SearchYouTube(args.Query);
             if (await CheckHasErrors(searchResult))
                 return;
             var audioTrack = GetAudioTrack(searchResult);
@@ -30,8 +30,5 @@ namespace BonusBot.AudioModule.Commands.Track
             await Class.Player!.Play(audioTrack);
             await Class.ReplyAsync(string.Format(ModuleTexts.NowPlayingInfo, audioTrack));
         }
-
-        private AudioTrack GetAudioTrack(SearchResult searchResult)
-            => new(searchResult.Tracks.First(), Class.Context.User!);
     }
 }

@@ -25,30 +25,30 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             _password = configuration.Password;
         }
 
-        public Task<SearchResult> SearchSoundcloud(string query, int limit = 20)
+        public Task<SearchResult> SearchSoundcloud(string query)
         {
             if (Uri.TryCreate(query, UriKind.Absolute, out Uri? uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
-                return SearchTracks(query, limit);
-            return SearchTracks($"scsearch:{query}", limit);
+                return SearchTracks(query);
+            return SearchTracks($"scsearch:{query}");
         }
 
-        public Task<SearchResult> SearchYouTube(string query, int limit = 20)
+        public Task<SearchResult> SearchYouTube(string query)
         {
             if (Uri.TryCreate(query, UriKind.Absolute, out Uri? uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
-                return SearchTracks(query, limit);
-            return SearchTracks($"ytsearch:{query}", limit);
+                return SearchTracks(query);
+            return SearchTracks($"ytsearch:{query}");
         }
 
-        public async Task<SearchResult> SearchTracks(string query, int limit = 20)
+        public async Task<SearchResult> SearchTracks(string query)
         {
-            var url = new Uri($"http://{_host}:{_port}/loadtracks?identifier={WebUtility.UrlEncode(query)}&max-results={limit}");
+            var url = new Uri($"http://{_host}:{_port}/loadtracks?identifier={WebUtility.UrlEncode(query)}");
             var request = await HttpHelper.Instance
                 .WithCustomHeader("Authorization", _password)
                 .GetString(url)
                 .ConfigureAwait(false);
 
             var result = JsonSerializer.Deserialize<SearchResult>(request)!;
-            result.Tracks = result.Tracks.Distinct();
+            // result.Tracks = result.Tracks.Distinct();
 
             return result;
         }

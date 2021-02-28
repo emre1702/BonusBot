@@ -10,9 +10,9 @@ namespace BonusBot.AudioModule.Commands.Search
         {
         }
 
-        public override async Task Do(SearchLimitArgs args)
+        public override async Task Do(SearchArgs args)
         {
-            var searchResult = await Main.LavaRestClient.SearchYouTube(args.Query, args.Limit);
+            var searchResult = await LavaRestClient.SearchYouTube(args.Query);
             await HandleSearchResult(searchResult);
         }
     }

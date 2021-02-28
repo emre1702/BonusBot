@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Commands.Search
 {
-    internal abstract class SearchLimitBase<TClass> : SearchBase<TClass, SearchLimitArgs>
+    internal abstract class SearchLimitBase<TClass> : SearchBase<TClass, SearchArgs>
         where TClass : AudioCommandBase
     {
         protected SearchLimitBase(TClass main) : base(main)

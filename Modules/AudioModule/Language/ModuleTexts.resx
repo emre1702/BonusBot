@@ -238,4 +238,7 @@ Now playing: {1}</value>
   <data name="TrackHasBeenRemovedFromQueueInfo" xml:space="preserve">
     <value>Track {0}, requested by {1}, has been removed from the queue.</value>
   </data>
+  <data name="PlaylistHasBeenEnqueued" xml:space="preserve">
+    <value>The playlist with {0} songs has been enqueued.</value>
+  </data>
 </root>
