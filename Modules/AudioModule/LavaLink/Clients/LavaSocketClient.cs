@@ -317,12 +317,6 @@ namespace BonusBot.AudioModule.LavaLink.Clients
         private async Task HandleMessageEventTrackEnd(JsonElement json, LavaPlayer player, LavaLinkTrack? track)
         {
             var endReason = Enum.Parse<TrackEndReason>(json.GetProperty("reason")!.GetString()!, true);
-            if (endReason != TrackEndReason.Replaced)
-            {
-                await player.SetCurrentTrack(null);
-                if (player.Status != PlayerStatus.Stopped)
-                    await player.SetStatus(PlayerStatus.Ended);
-            }
             await (TrackFinished?.InvokeAsync((player, track, endReason)) ?? Task.CompletedTask);
         }
 

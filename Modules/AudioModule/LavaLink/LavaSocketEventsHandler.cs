@@ -54,6 +54,8 @@ namespace BonusBot.AudioModule.LavaLink
 
             if (!data.Player.Queue.TryDequeue(out var nextTrack))
             {
+                await data.Player.SetCurrentTrack(null);
+                await data.Player.SetStatus(PlayerStatus.Ended);
                 await (data.Player.TextChannel?.SendMessageAsync(string.Format(ModuleTexts.FinishedPlayingNoMoreItemsInQueueInfo, data.Track?.ToString() ?? "-")) ?? Task.CompletedTask);
                 return;
             }
