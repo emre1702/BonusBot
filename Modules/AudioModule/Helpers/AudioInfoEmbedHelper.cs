@@ -84,7 +84,7 @@ namespace BonusBot.AudioModule.Helpers
                 AddQueueLongInfo(builder, queue);
                 return;
             }
-            builder.WithAddedQueueInfoField(queueStr);
+            builder.WithAddedQueueInfoField(queue.Count, queueStr);
         }
 
         private static void AddQueueLongInfo(EmbedBuilder builder, LavaQueue<AudioTrack> queue)
@@ -94,16 +94,24 @@ namespace BonusBot.AudioModule.Helpers
             for (int trackIndex = 0; trackIndex < tracks.Count; ++trackIndex)
             {
                 var str = (trackIndex + 1) + tracks[trackIndex].ToString();
-                if (strBuilder.Length + str.Length + 1 > EmbedFieldBuilder.MaxFieldValueLength)
+                if (ExceedsEmbedMaxLength(builder, strBuilder, str))
+                    return;
+                if (ExceedsFieldValueMaxLength(strBuilder, str))
                 {
-                    builder = builder.WithAddedQueueInfoField(strBuilder.ToString());
+                    builder = builder.WithAddedQueueInfoField(tracks.Count, strBuilder.ToString());
                     strBuilder.Clear();
                 }
                 strBuilder.AppendLine(str);
             }
-            if (strBuilder.Length > 0)
-                builder.WithAddedQueueInfoField(strBuilder.ToString());
+            if (strBuilder.Length > 0 && !ExceedsEmbedMaxLength(builder, strBuilder, string.Empty))
+                builder.WithAddedQueueInfoField(tracks.Count, strBuilder.ToString());
         }
+
+        private static bool ExceedsFieldValueMaxLength(StringBuilder strBuilder, string stringToAdd)
+            => strBuilder.Length + stringToAdd.Length + 1 > EmbedFieldBuilder.MaxFieldValueLength;
+
+        private static bool ExceedsEmbedMaxLength(EmbedBuilder embedBuilder, StringBuilder strBuilder, string stringToAdd)
+            => embedBuilder.Length + strBuilder.Length + stringToAdd.Length + 1 > EmbedBuilder.MaxEmbedLength;
 
         internal static void AddVolumeInfo(this EmbedBuilder builder, int volume)
         {
@@ -145,9 +153,9 @@ namespace BonusBot.AudioModule.Helpers
                 new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.Length + ":"),
                 new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.RequestedAt + ":")
             )
-            .WithAddedQueueInfoField("-");
+            .WithAddedQueueInfoField(0, "-");
 
-        private static EmbedBuilder WithAddedQueueInfoField(this EmbedBuilder embedBuilder, string queueStr)
-            => embedBuilder.AddField(ModuleTexts.Queue + ":", string.IsNullOrWhiteSpace(queueStr) ? "-" : queueStr);
+        private static EmbedBuilder WithAddedQueueInfoField(this EmbedBuilder embedBuilder, int amountInQueue, string queueStr)
+            => embedBuilder.AddField($"{ModuleTexts.Queue} ({amountInQueue}):", string.IsNullOrWhiteSpace(queueStr) ? "-" : queueStr);
     }
 }
