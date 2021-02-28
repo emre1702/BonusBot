@@ -5,17 +5,18 @@ using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Commands.PlayerStatusChange
 {
-    internal class Resume : CommandHandlerBase<Main, EmptyCommandArgs>
+    internal class Resume : CommandHandlerBase<Main, DelayCommandArgs>
     {
         public Resume(Main main) : base(main)
         {
         }
 
-        public override Task Do(EmptyCommandArgs _)
+        public override async Task Do(DelayCommandArgs args)
         {
+            if (args.Delay.HasValue)
+                await Task.Delay(args.Delay.Value);
             if (Class.Player!.Status == PlayerStatus.Paused)
-                return Class.Player.Resume();
-            return Task.CompletedTask;
+                await Class.Player.Resume();
         }
     }
 }

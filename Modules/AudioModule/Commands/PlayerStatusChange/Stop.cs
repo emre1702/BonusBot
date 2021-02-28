@@ -4,13 +4,17 @@ using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule.Commands.PlayerStatusChange
 {
-    internal class Stop : CommandHandlerBase<Main, EmptyCommandArgs>
+    internal class Stop : CommandHandlerBase<Main, DelayCommandArgs>
     {
         public Stop(Main main) : base(main)
         {
         }
 
-        public override Task Do(EmptyCommandArgs _)
-            => Class.Player!.Stop();
+        public override async Task Do(DelayCommandArgs args)
+        {
+            if (args.Delay.HasValue)
+                await Task.Delay(args.Delay.Value);
+            await Class.Player!.Stop();
+        }
     }
 }

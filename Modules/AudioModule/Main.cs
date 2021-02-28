@@ -9,12 +9,12 @@ using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.AudioModule.Models;
 using BonusBot.AudioModule.Preconditions;
 using BonusBot.Common.Commands.Conditions;
-using BonusBot.Common.Defaults;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.Database;
 using Discord;
 using Discord.Commands;
 using Discord.Commands.Builders;
+using System;
 using System.Threading.Tasks;
 
 namespace BonusBot.AudioModule
@@ -46,19 +46,19 @@ namespace BonusBot.AudioModule
         [Command("resume")]
         [Alias("unpause")]
         [RequirePlayer(false)]
-        public Task Resume()
-            => new Resume(this).Do(new());
+        public Task Resume(TimeSpan? delay = null)
+            => new Resume(this).Do(new(delay));
 
         [Command("pause")]
         [Alias("unresume")]
         [RequirePlayer(false)]
-        public Task Pause()
-            => new Pause(this).Do(new());
+        public Task Pause(TimeSpan? delay = null)
+            => new Pause(this).Do(new(delay));
 
         [Command("stop")]
         [RequirePlayer(false)]
-        public Task Stop()
-            => new Stop(this).Do(new());
+        public Task Stop(TimeSpan? delay = null)
+            => new Stop(this).Do(new(delay));
 
         [Command("volume")]
         [Alias("SetVolume", "SetVol", "Vol", "Volum", "lautstärke")]
