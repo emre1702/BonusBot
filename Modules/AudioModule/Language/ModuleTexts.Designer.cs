@@ -324,11 +324,11 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requested by:.
+        ///   Looks up a localized string similar to Requested at:.
         /// </summary>
-        internal static string RequestedBy {
+        internal static string RequestedAt {
             get {
-                return ResourceManager.GetString("RequestedBy", resourceCulture);
+                return ResourceManager.GetString("RequestedAt", resourceCulture);
             }
         }
         

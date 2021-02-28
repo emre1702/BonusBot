@@ -244,8 +244,8 @@ Now playing: {1}</value>
   <data name="Queue" xml:space="preserve">
     <value>Queue</value>
   </data>
-  <data name="RequestedBy" xml:space="preserve">
-    <value>Requested by:</value>
+  <data name="RequestedAt" xml:space="preserve">
+    <value>Requested at:</value>
   </data>
   <data name="Length" xml:space="preserve">
     <value>Length</value>

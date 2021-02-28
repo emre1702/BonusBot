@@ -244,8 +244,8 @@ Spiele nun: {1}</value>
   <data name="Queue" xml:space="preserve">
     <value>Warteschlange</value>
   </data>
-  <data name="RequestedBy" xml:space="preserve">
-    <value>Angefordert von:</value>
+  <data name="RequestedAt" xml:space="preserve">
+    <value>Angefordert</value>
   </data>
   <data name="Length" xml:space="preserve">
     <value>Länge</value>

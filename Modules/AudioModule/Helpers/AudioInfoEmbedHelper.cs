@@ -143,7 +143,7 @@ namespace BonusBot.AudioModule.Helpers
                 new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.Status + ":").WithValue("playing"),
                 new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.Volume + ":"),
                 new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.Length + ":"),
-                new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.RequestedBy + ":")
+                new EmbedFieldBuilder().WithIsInline(true).WithName(ModuleTexts.RequestedAt + ":")
             )
             .WithAddedQueueInfoField("-");
 
