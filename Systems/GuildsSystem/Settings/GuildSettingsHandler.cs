@@ -8,10 +8,7 @@ using BonusBot.Database;
 using Discord.WebSocket;
 using System.Globalization;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-
-[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.GuildsSystem.Settings
 {

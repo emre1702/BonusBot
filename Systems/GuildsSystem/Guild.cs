@@ -2,10 +2,7 @@
 using BonusBot.Common.Defaults;
 using BonusBot.Common.Interfaces.Guilds;
 using Discord.WebSocket;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-
-[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.GuildsSystem
 {

@@ -7,11 +7,8 @@ using Discord;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-
-[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.GuildsSystem
 {

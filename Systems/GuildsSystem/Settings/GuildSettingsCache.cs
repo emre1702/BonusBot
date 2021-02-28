@@ -2,9 +2,6 @@
 using BonusBot.Common.Interfaces.Guilds;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("BonusBot.Core")]
 
 namespace BonusBot.GuildsSystem.Settings
 {
