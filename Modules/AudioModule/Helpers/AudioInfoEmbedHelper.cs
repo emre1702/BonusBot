@@ -74,10 +74,6 @@ namespace BonusBot.AudioModule.Helpers
                 AddQueueShortInfo(builder, queue);
             else
                 AddQueueLongInfo(builder, queue);
-
-            var queueStr = queue.ToString();
-
-            builder.Fields[4].Value = string.IsNullOrEmpty(queueStr) ? "-" : queueStr;
         }
 
         private static void AddQueueShortInfo(EmbedBuilder builder, LavaQueue<AudioTrack> queue)
