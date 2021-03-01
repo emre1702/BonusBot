@@ -12,7 +12,9 @@ namespace BonusBot.Common.Commands.TypeReaders
         {
             try
             {
-                if (TryGetFromHex(input, out var color)
+                if (input.TrimEnd('0') == "#") return Task.FromResult(TypeReaderResult.FromSuccess(new Discord.Color(0, 0, 0)));
+
+                if (TryGetFromHtml(input, out var color)
                     || TryGetFromRGB(input, out color)
                     || TryGetFromName(input, out color))
                     return Task.FromResult(TypeReaderResult.FromSuccess(color));
@@ -22,7 +24,7 @@ namespace BonusBot.Common.Commands.TypeReaders
             return Task.FromResult(TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidColorError));
         }
 
-        private bool TryGetFromHex(string input, out Discord.Color? color)
+        private bool TryGetFromHtml(string input, out Discord.Color? color)
         {
             color = null;
             if (!input.StartsWith("#"))
@@ -68,7 +70,7 @@ namespace BonusBot.Common.Commands.TypeReaders
             color = null;
             try
             {
-                var wrongTypeColor = System.Drawing.Color.FromName(input);
+                var wrongTypeColor = Color.FromName(input);
                 if (wrongTypeColor.IsEmpty) return false;
 
                 color = new Discord.Color(wrongTypeColor.R, wrongTypeColor.G, wrongTypeColor.B);
