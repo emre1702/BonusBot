@@ -96,6 +96,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             {
                 await Task.Delay(1000);
                 await player.Pause();
+                await Task.Delay(1000);
                 await player.Resume();
             }
         }
