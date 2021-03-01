@@ -341,11 +341,8 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             var reason = json.GetProperty("reason")!.GetString()!;
             var code = json.GetProperty("code")!.GetInt32()!;
             var byRemote = json.GetProperty("byRemote")!.GetBoolean()!;
-            if (code == (int)VoiceCloseEventCode.Disconnected && player.ResumeOnDisconnect)
-            {
-                player.ResumeOnDisconnect = false;
+            if (code == (int)VoiceCloseEventCode.Disconnected && player.Status == PlayerStatus.Playing)
                 await player.Resume();
-            }
             await (SocketClosed?.InvokeAsync((code, reason, byRemote)) ?? Task.CompletedTask);
         }
     }

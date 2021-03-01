@@ -33,7 +33,6 @@ namespace BonusBot.AudioModule.LavaLink
         public AsyncEvent<int>? VolumeChanged { get; set; }
         public DateTimeOffset LastUpdate { get; internal set; }
         public SocketGuild Guild => (SocketGuild)VoiceChannel.Guild;
-        public bool ResumeOnDisconnect { get; set; }
 
         public event QueueChangedDelegate QueueChanged
         {
@@ -208,7 +207,6 @@ namespace BonusBot.AudioModule.LavaLink
             if (wasPlaying)
                 await Pause().ConfigureAwait(false);
             VoiceChannel = voiceChannel;
-            ResumeOnDisconnect = true;
             // await VoiceChannel.DisconnectAsync().ConfigureAwait(false);
             await voiceChannel.ConnectAsync(selfDeaf, false, true).ConfigureAwait(false);
             if (wasPlaying)
