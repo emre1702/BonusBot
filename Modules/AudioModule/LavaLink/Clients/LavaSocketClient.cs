@@ -306,7 +306,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
                     break;
 
                 case EventType.WebSocketClosed:
-                    await HandleMessageEventWebSocketClosed(json);
+                    await HandleMessageEventWebSocketClosed(json, player);
                     break;
 
                 case EventType.TrackStart:
@@ -336,12 +336,17 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             await (TrackStuck?.InvokeAsync((player, track, timeoutMs)) ?? Task.CompletedTask);
         }
 
-        private Task HandleMessageEventWebSocketClosed(JsonElement json)
+        private async Task HandleMessageEventWebSocketClosed(JsonElement json, LavaPlayer player)
         {
             var reason = json.GetProperty("reason")!.GetString()!;
             var code = json.GetProperty("code")!.GetInt32()!;
             var byRemote = json.GetProperty("byRemote")!.GetBoolean()!;
-            return (SocketClosed?.InvokeAsync((code, reason, byRemote)) ?? Task.CompletedTask);
+            if (code == (int)VoiceCloseEventCode.Disconnected && player.ResumeOnDisconnect)
+            {
+                player.ResumeOnDisconnect = false;
+                await player.Resume();
+            }
+            await (SocketClosed?.InvokeAsync((code, reason, byRemote)) ?? Task.CompletedTask);
         }
     }
 }
