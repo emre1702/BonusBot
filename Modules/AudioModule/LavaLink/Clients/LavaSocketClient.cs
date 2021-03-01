@@ -93,7 +93,10 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             await (_socketHelper?.SendPayload(update) ?? Task.CompletedTask);
 
             if (player.Status == PlayerStatus.Playing)
+            {
+                await player.Pause();
                 await player.Resume();
+            }
         }
 
         private Task OnUserVoiceStateUpdated(SocketUser user, SocketVoiceState oldState, SocketVoiceState newState)
