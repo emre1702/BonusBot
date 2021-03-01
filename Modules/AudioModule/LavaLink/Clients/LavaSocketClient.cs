@@ -93,24 +93,27 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             return (_socketHelper?.SendPayload(update) ?? Task.CompletedTask);
         }
 
-        private Task OnUserVoiceStateUpdated(SocketUser user, SocketVoiceState oldState, SocketVoiceState newState)
+        private async Task OnUserVoiceStateUpdated(SocketUser user, SocketVoiceState oldState, SocketVoiceState newState)
         {
             var channel = oldState.VoiceChannel ?? newState.VoiceChannel;
 
             if (_players.TryGetValue(channel.Guild.Id, out var player) && user.Id == _socketClient?.CurrentUser.Id)
-                OnPlayerVoiceStateUpdated(player, ref channel, newState);
+                channel = await OnPlayerVoiceStateUpdated(player, channel, newState);
 
             CheckAutoDisconnect(channel);
-
-            return Task.CompletedTask;
         }
 
-        private void OnPlayerVoiceStateUpdated(LavaPlayer player, ref SocketVoiceChannel channel, SocketVoiceState newState)
+        private async ValueTask<SocketVoiceChannel> OnPlayerVoiceStateUpdated(LavaPlayer player, SocketVoiceChannel channel, SocketVoiceState newState)
         {
             player.CachedState = newState;
             if (player.DisconnectToken is { IsCancellationRequested: false })
                 StopAutoDisconnect(channel.Guild.Id);
             channel = newState.VoiceChannel ?? channel;
+            player.VoiceChannel = channel;
+
+            if (player.Status == PlayerStatus.Playing)
+                await player.Resume();
+            return channel;
         }
 
         private void CheckAutoDisconnect(SocketVoiceChannel voiceChannel)
