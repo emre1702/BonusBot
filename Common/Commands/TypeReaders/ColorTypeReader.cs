@@ -27,9 +27,6 @@ namespace BonusBot.Common.Commands.TypeReaders
         private bool TryGetFromHtml(string input, out Discord.Color? color)
         {
             color = null;
-            if (!input.StartsWith("#"))
-                return false;
-
             try
             {
                 var wrongTypeColor = ColorTranslator.FromHtml(input);
