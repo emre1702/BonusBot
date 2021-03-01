@@ -203,14 +203,14 @@ namespace BonusBot.AudioModule.LavaLink
             if (VoiceChannel.Id == voiceChannel.Id)
                 return;
 
-            bool wasPlaying = Status == PlayerStatus.Playing;
+            /*bool wasPlaying = Status == PlayerStatus.Playing;
             if (wasPlaying)
-                await Pause().ConfigureAwait(false);
+                await Pause().ConfigureAwait(false);*/
             VoiceChannel = voiceChannel;
             // await VoiceChannel.DisconnectAsync().ConfigureAwait(false);
             await voiceChannel.ConnectAsync(selfDeaf, false, true).ConfigureAwait(false);
-            if (wasPlaying)
-                await Resume().ConfigureAwait(false);
+            /*if (wasPlaying)
+                await Resume().ConfigureAwait(false);*/
         }
 
         public void MoveChannels(ITextChannel? textChannel)

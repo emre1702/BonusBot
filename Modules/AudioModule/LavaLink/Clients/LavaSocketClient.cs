@@ -84,37 +84,36 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             return player;
         }
 
-        private Task OnVoiceServerUpdated(SocketVoiceServer server)
+        private async Task OnVoiceServerUpdated(SocketVoiceServer server)
         {
             if (!server.Guild.HasValue || !_players.TryGetValue(server.Guild.Id, out var player))
-                return Task.CompletedTask;
+                return;
 
             var update = new VoiceServerPayload(server, player.CachedState.VoiceSessionId);
-            return (_socketHelper?.SendPayload(update) ?? Task.CompletedTask);
+            await (_socketHelper?.SendPayload(update) ?? Task.CompletedTask);
+
+            if (player.Status == PlayerStatus.Playing)
+                await player.Resume();
         }
 
-        private async Task OnUserVoiceStateUpdated(SocketUser user, SocketVoiceState oldState, SocketVoiceState newState)
+        private Task OnUserVoiceStateUpdated(SocketUser user, SocketVoiceState oldState, SocketVoiceState newState)
         {
             var channel = oldState.VoiceChannel ?? newState.VoiceChannel;
 
             if (_players.TryGetValue(channel.Guild.Id, out var player) && user.Id == _socketClient?.CurrentUser.Id)
-                channel = await OnPlayerVoiceStateUpdated(player, channel, newState);
+                OnPlayerVoiceStateUpdated(player, ref channel, newState);
 
             CheckAutoDisconnect(channel);
+            return Task.CompletedTask;
         }
 
-        private async ValueTask<SocketVoiceChannel> OnPlayerVoiceStateUpdated(LavaPlayer player, SocketVoiceChannel channel, SocketVoiceState newState)
+        private void OnPlayerVoiceStateUpdated(LavaPlayer player, ref SocketVoiceChannel channel, SocketVoiceState newState)
         {
             player.CachedState = newState;
             if (player.DisconnectToken is { IsCancellationRequested: false })
                 StopAutoDisconnect(channel.Guild.Id);
             channel = newState.VoiceChannel ?? channel;
             player.VoiceChannel = channel;
-            Console.WriteLine($"OnPlayerVoiceStateUpdate: -> {channel.Name} | Status: {player.Status}");
-
-            if (player.Status == PlayerStatus.Playing)
-                await player.Resume();
-            return channel;
         }
 
         private void CheckAutoDisconnect(SocketVoiceChannel voiceChannel)
@@ -345,9 +344,6 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             var reason = json.GetProperty("reason")!.GetString()!;
             var code = json.GetProperty("code")!.GetInt32()!;
             var byRemote = json.GetProperty("byRemote")!.GetBoolean()!;
-            Console.WriteLine($"HandleMessageEventWebSocketClosed: Code: {code} | Status: {player.Status}");
-            if (code == (int)VoiceCloseEventCode.Disconnected && player.Status == PlayerStatus.Playing)
-                await player.Resume();
             await (SocketClosed?.InvokeAsync((code, reason, byRemote)) ?? Task.CompletedTask);
         }
     }
