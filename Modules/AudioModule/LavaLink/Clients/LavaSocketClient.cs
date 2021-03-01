@@ -110,6 +110,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
                 StopAutoDisconnect(channel.Guild.Id);
             channel = newState.VoiceChannel ?? channel;
             player.VoiceChannel = channel;
+            Console.WriteLine($"OnPlayerVoiceStateUpdate: -> {channel.Name} | Status: {player.Status}");
 
             if (player.Status == PlayerStatus.Playing)
                 await player.Resume();
@@ -210,7 +211,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
 
             await DisconnectAllPlayers();
 
-            ConsoleHelper.Log(LogSeverity.Debug, LogSource.Module, "Websocket disconnected! Disposing all connected players.", exception);
+            ConsoleHelper.Log(LogSeverity.Info, LogSource.Module, "Websocket disconnected! Disposing all connected players.", exception);
         }
 
         private async Task OnClosed(SocketHelper _)
@@ -344,6 +345,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             var reason = json.GetProperty("reason")!.GetString()!;
             var code = json.GetProperty("code")!.GetInt32()!;
             var byRemote = json.GetProperty("byRemote")!.GetBoolean()!;
+            Console.WriteLine($"HandleMessageEventWebSocketClosed: Code: {code} | Status: {player.Status}");
             if (code == (int)VoiceCloseEventCode.Disconnected && player.Status == PlayerStatus.Playing)
                 await player.Resume();
             await (SocketClosed?.InvokeAsync((code, reason, byRemote)) ?? Task.CompletedTask);
