@@ -26,7 +26,7 @@ namespace ColorRolesModule
         {
             IRole? role = Context.Guild.Roles.FirstOrDefault(r => r.Name == GetRoleName());
             if (role is null)
-                role = await Context.Guild.CreateRoleAsync(GetRoleName(), color: color, isMentionable: false);
+                role = await Context.Guild.CreateRoleAsync(GetRoleName(), GuildPermissions.None, color, isMentionable: false);
             else
                 await role.ModifyAsync(prop => prop.Color = color);
             await Context.User!.AddRoleAsync(role);
