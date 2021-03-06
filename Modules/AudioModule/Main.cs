@@ -172,7 +172,7 @@ namespace BonusBot.AudioModule
             => new Join(this).Do(new());
 
         [Group("search")]
-        [Alias("YouTubeSearch", "ytSearch", "SearchYt", "SearchYouTube")]
+        [Alias("YouTubeSearch", "ytSearch", "SearchYt", "SearchYouTube", "suche", "sucheyt", "ytsuche")]
         [RequirePlayer]
         [RequireAudioBotRole]
         public class SearchGroup : AudioCommandBase
