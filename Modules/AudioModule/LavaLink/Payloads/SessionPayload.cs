@@ -12,6 +12,6 @@ namespace BonusBot.AudioModule.LavaLink.Payloads
         public int Timeout { get; set; }
 
         public SessionPayload(string key, TimeSpan time) : base("configureResuming")
-            => (Key, Timeout) = (key, time.Milliseconds);
+            => (Key, Timeout) = (key, (int)time.TotalMilliseconds);
     }
 }
