@@ -49,9 +49,6 @@ namespace BonusBot.AudioModule.LavaLink
 
         private static async Task TrackFinished((LavaPlayer Player, LavaLinkTrack? Track, TrackEndReason Reason) data)
         {
-            if (!data.Reason.ShouldPlayNext())
-                return;
-
             if (!data.Player.Queue.TryDequeue(out var nextTrack))
             {
                 await data.Player.SetCurrentTrack(null);
