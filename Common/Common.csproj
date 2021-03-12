@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Discord.Net" Version="2.3.0" />
-    <PackageReference Include="Discord.Net.Commands" Version="2.3.0" />
+    <PackageReference Include="Discord.Net" Version="2.3.1" />
+    <PackageReference Include="Discord.Net.Commands" Version="2.3.1" />
     <PackageReference Include="Colorful.Console" Version="1.2.15" />
     <PackageReference Include="Macross.Json.Extensions" Version="1.5.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
