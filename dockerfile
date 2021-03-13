@@ -1,7 +1,4 @@
-ARG DOTNET_VER_SDK=5.0.103-focal
-ARG DOTNET_VER_RUNTIME=5.0.3-focal
-
-FROM mcr.microsoft.com/dotnet/sdk:${DOTNET_VER_SDK} AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:latest AS build-env
 ARG CERTIFICATE_PASSWORD
 WORKDIR /bonusbot-source
 
@@ -9,7 +6,7 @@ COPY . .
 
 RUN dotnet publish ./Core/Core.csproj -p:PublishProfile=LinuxDebug
 
-FROM mcr.microsoft.com/dotnet/runtime:${DOTNET_VER_RUNTIME} AS release
+FROM mcr.microsoft.com/dotnet/runtime:latest AS release
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
