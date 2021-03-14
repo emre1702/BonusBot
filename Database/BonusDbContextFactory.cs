@@ -1,17 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using System;
+using System.Runtime.InteropServices;
 
 namespace BonusBot.Database
 {
     public class BonusDbContextFactory : IDesignTimeDbContextFactory<BonusDbContext>
     {
-        private const string _connectionString = "Data Source=/bonusbot-data/BonusBot.db;";
+        private string ConnectionString => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
+            ? "Data Source=BonusBot.db;" 
+            : "Data Source=/bonusbot-data/BonusBot.db;";
 
         public BonusDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BonusDbContext>();
-            optionsBuilder.UseSqlite(_connectionString);
+            optionsBuilder.UseSqlite(ConnectionString);
 
             return new BonusDbContext(optionsBuilder.Options);
         }

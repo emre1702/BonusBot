@@ -324,7 +324,7 @@ namespace BonusBot.AudioModule.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Requested at:.
+        ///   Looks up a localized string similar to Requested at.
         /// </summary>
         internal static string RequestedAt {
             get {

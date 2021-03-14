@@ -54,6 +54,8 @@ namespace BonusBot.Services.DiscordNet
             {
                 var context = new AssemblyLoadContext(file);
                 var assembly = context.LoadFromAssemblyPath(file);
+                assembly.EntryPoint?.Invoke(null, new object?[] { null });
+
                 var name = assembly.ToModuleName();
                 lock (assembly)
                 {

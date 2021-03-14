@@ -28,16 +28,17 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
+    <ProjectReference Include="..\Modules\WebDashboardBoardModule\WebDashboardBoardModule.csproj" />
     <ProjectReference Include="..\Systems\GuildsSystem\GuildsSystem.csproj" />
     <ProjectReference Include="..\Modules\AdminModule\AdminModule.csproj" />
-    <ProjectReference Include="..\Modules\AudioModule\AudioModule.csproj" />
+    <ProjectReference Condition="'$(Configuration)'=='Release'" Include="..\Modules\AudioModule\AudioModule.csproj" />
     <ProjectReference Include="..\Modules\ColorRolesModule\ColorRolesModule.csproj" />
     <ProjectReference Include="..\Modules\GamePlaningModule\GamePlaningModule.csproj" />
     <ProjectReference Include="..\Modules\GuildSettingsModule\GuildSettingsModule.csproj" />
     <ProjectReference Include="..\Modules\LoggingModule\LoggingModule.csproj" />
     <ProjectReference Include="..\Modules\ModulesControllingModule\ModulesControllingModule.csproj" />
-    <ProjectReference Include="..\Modules\TDSConnectorClientModule\TDSConnectorClientModule.csproj" />
-    <ProjectReference Include="..\Modules\TDSConnectorServer\TDSConnectorServerModule.csproj" />
+    <ProjectReference Condition="'$(Configuration)'=='Release'" Include="..\Modules\TDSConnectorClientModule\TDSConnectorClientModule.csproj" />
+    <ProjectReference Condition="'$(Configuration)'=='Release'" Include="..\Modules\TDSConnectorServer\TDSConnectorServerModule.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 </Project>

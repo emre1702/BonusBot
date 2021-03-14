@@ -245,7 +245,7 @@ Now playing: {1}</value>
     <value>Queue</value>
   </data>
   <data name="RequestedAt" xml:space="preserve">
-    <value>Requested at:</value>
+    <value>Requested at</value>
   </data>
   <data name="Length" xml:space="preserve">
     <value>Length</value>

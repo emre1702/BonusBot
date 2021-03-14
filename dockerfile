@@ -4,9 +4,9 @@ WORKDIR /bonusbot-source
 
 COPY . .
 
-RUN dotnet publish ./Core/Core.csproj -p:PublishProfile=LinuxDebug
+RUN dotnet publish ./Core/Core.csproj -p:PublishProfile=Linux
 
-FROM mcr.microsoft.com/dotnet/runtime:latest AS release
+FROM mcr.microsoft.com/dotnet/aspnet:latest AS release
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
