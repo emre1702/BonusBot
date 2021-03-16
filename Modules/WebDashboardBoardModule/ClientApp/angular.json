@@ -29,7 +29,8 @@
                             "node_modules/bootstrap/dist/css/bootstrap.min.css",
                             "src/styles.scss"
                         ],
-                        "aot": true
+                        "aot": true,
+                        "allowedCommonJsDependencies": ["hammerjs"]
                     },
                     "configurations": {
                         "production": {
