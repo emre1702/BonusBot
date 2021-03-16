@@ -24,7 +24,6 @@ namespace WebDashboardBoard
             });
             services.AddSpaStaticFiles(configuration =>
             {
-                //Todo: Will that work?
                 configuration.RootPath = "ClientApp/dist";
             });
             services.AddSession(options =>

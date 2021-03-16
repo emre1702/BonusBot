@@ -14,27 +14,23 @@ namespace BonusBot.WebDashboardBoardModule.Controllers.Account
         private static readonly TokenRequestService _tokenRequestService = new();
         private static readonly UserRequestService _userRequestService = new();
 
-        [AllowAnonymous]
-        public async Task<ActionResult> Index([FromQuery] string code)
+        public async Task<ActionResult> Index([FromQuery] string code, [FromQuery] string state)
         {
             if (code is null) return Redirect("/");
-           
+
+            var currentState = HttpContext.Session.Get<string>(SessionKeys.TokenState);
+            if (currentState is null || currentState != state) throw new InvalidOperationException("Please try again!");
+
             var tokenData = await _tokenRequestService.GetTokenData(code);
             var userData = await _userRequestService.GetUser(tokenData);
 
             HttpContext.Session.Set(SessionKeys.ExpireUnixSeconds, DateTime.UtcNow.ToUnixTimeSeconds(tokenData.ExpiresInSeconds));
             HttpContext.Session.Set(SessionKeys.UserData, userData);
             HttpContext.Session.Set(SessionKeys.TokenData, tokenData);
+            HttpContext.Session.Remove(SessionKeys.TokenState);
             await HttpContext.Session.CommitAsync();
 
             return Redirect("/");
-        }
-
-        [AllowAnonymous]
-        [Route("Redirect")]
-        public ActionResult Index()
-        {
-            return Ok();
         }
     }
 }
