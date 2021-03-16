@@ -17,5 +17,8 @@ namespace BonusBot.WebDashboardBoardModule.Extensions
             return value == null ? default :
                 JsonSerializer.Deserialize<T>(value);
         }
+
+        public static bool Has(this ISession session, string key)
+            => session.Get(key) is not null;
     }
 }

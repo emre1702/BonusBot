@@ -2,17 +2,17 @@
     "compileOnSave": false,
     "compilerOptions": {
         "baseUrl": "./",
-        "module": "ESNext",
+        "module": "es2020",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
         "declaration": false,
         "moduleResolution": "node",
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
-        "target": "ESNext",
+        "target": "ES2018",
         "typeRoots": ["node_modules/@types"],
         "types": ["node"],
-        "lib": ["ESNext", "dom"]
+        "lib": ["es2018", "dom"]
     },
     "angularCompilerOptions": {
         "strictTemplates": true

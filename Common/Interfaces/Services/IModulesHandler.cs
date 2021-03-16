@@ -10,5 +10,6 @@ namespace BonusBot.Common.Interfaces.Services
         TaskCompletionSource LoadModulesTaskSource { get; }
 
         Assembly? FindAssemblyByModuleName(string moduleName, bool includeCommon = true);
+        Task LoadModules();
     }
 }

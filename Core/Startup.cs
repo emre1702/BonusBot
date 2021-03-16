@@ -1,5 +1,7 @@
 ﻿using BonusBot.Common.Helper;
+using BonusBot.Common.Interfaces.Services;
 using BonusBot.Core.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
 namespace Core
@@ -16,6 +18,8 @@ namespace Core
             ConsoleHelper.PrintHeader();
             var serviceProvider = await ServicesInitializer.InitializeAsync();
             serviceProvider.InitAllSingletons();
+
+            await serviceProvider.GetRequiredService<IModulesHandler>().LoadModules();
 
             await Task.Delay(-1);
         }

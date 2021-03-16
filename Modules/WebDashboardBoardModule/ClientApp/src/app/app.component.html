@@ -1,6 +1,7 @@
 <body>
-  <app-navigation-toolbar></app-navigation-toolbar>
-  <div class="container">
-    <router-outlet></router-outlet>
-  </div>
+    <app-navigation class="h-100">
+        <app-content>
+            <router-outlet></router-outlet>
+        </app-content>
+    </app-navigation>
 </body>

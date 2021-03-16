@@ -1,4 +1,1 @@
-<p>Login</p>
-<button mat-button *ngIf="loginService.oAuthUrl$ | async as oAuthUrl">
-    <a [href]="oAuthUrl">Login</a>
-</button>
+<a [href]="loginService.oAuthUrl$ | async"><img class="sign-in-button" src="assets/images/SignInWithDiscord.png" /></a>

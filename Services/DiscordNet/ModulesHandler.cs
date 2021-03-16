@@ -19,10 +19,13 @@ namespace BonusBot.Services.DiscordNet
         public List<Assembly> LoadedModuleAssemblies { get; } = new();
         public TaskCompletionSource LoadModulesTaskSource { get; } = new();
 
+        private readonly IDiscordClientHandler _discordClientHandler;
+        private readonly IServiceProvider _serviceProvider;
+        private readonly CommandsHandler _commandsHandler;
+        
+
         public ModulesHandler(IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider, CommandsHandler commandsHandler)
-        {
-            AddModules(discordClientHandler, serviceProvider, commandsHandler);
-        }
+            => (_discordClientHandler, _serviceProvider, _commandsHandler) = (discordClientHandler, serviceProvider, commandsHandler);
 
         public Assembly? FindAssemblyByModuleName(string moduleName, bool includeCommon = true)
         {
@@ -36,12 +39,12 @@ namespace BonusBot.Services.DiscordNet
             }
         }
 
-        private async void AddModules(IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider, CommandsHandler commandsHandler)
+        public async Task LoadModules()
         {
-            await discordClientHandler.ClientSource.Task;
+            await _discordClientHandler.ClientSource.Task;
 
             foreach (var assembly in GetAndLoadModuleAssemblies())
-                await commandsHandler.CommandService.AddModulesAsync(assembly, serviceProvider);
+                await _commandsHandler.CommandService.AddModulesAsync(assembly, _serviceProvider);
 
             LoadModulesTaskSource.SetResult();
         }
@@ -54,7 +57,6 @@ namespace BonusBot.Services.DiscordNet
             {
                 var context = new AssemblyLoadContext(file);
                 var assembly = context.LoadFromAssemblyPath(file);
-                assembly.EntryPoint?.Invoke(null, new object?[] { null });
 
                 var name = assembly.ToModuleName();
                 lock (assembly)

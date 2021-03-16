@@ -1,0 +1,5 @@
+<div class="p-3">
+    <ng-container *ngIf="service.accessLevel$ | async as accessLevel">
+        <ng-content *ngIf="!service.loading && accessLevel === accessLevelEnum.hasAccess"></ng-content>
+    </ng-container>
+</div>

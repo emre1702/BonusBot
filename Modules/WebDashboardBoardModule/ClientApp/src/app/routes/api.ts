@@ -4,8 +4,11 @@ const root = environment.apiBaseUrl;
 
 export default {
     get: {
-        httpService: {
-            init: `${root}/Init/Init`,
+        content: {
+            accessLevel: `${root}/Content/UserAccessLevel`,
+        },
+        navigation: {
+            guilds: `${root}/Navigation/Guilds`,
         },
         login: {
             oAuthUrl: `${root}/Login/OAuthUrl`,

@@ -2,7 +2,6 @@ using BonusBot.WebDashboardBoardModule.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -11,14 +10,6 @@ namespace WebDashboardBoard
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
@@ -33,11 +24,14 @@ namespace WebDashboardBoard
             });
             services.AddSpaStaticFiles(configuration =>
             {
+                //Todo: Will that work?
                 configuration.RootPath = "ClientApp/dist";
             });
-            services.AddSession(options => options.IdleTimeout = TimeSpan.FromDays(1));
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1);
+            });
 
-            services.AddMvc(option => option.EnableEndpointRouting = false);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -69,6 +63,7 @@ namespace WebDashboardBoard
                 endpoints.MapDefaultControllerRoute();
             });
 
+            //Todo: Delete later? Needs testing
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "../../../../Modules/WebDashboardBoardModule/ClientApp";
@@ -77,8 +72,6 @@ namespace WebDashboardBoard
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-            app.UseMvc();
         }
     }
 }

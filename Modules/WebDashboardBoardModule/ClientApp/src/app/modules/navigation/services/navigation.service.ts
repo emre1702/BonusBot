@@ -8,7 +8,11 @@ export class NavigationService {
     private navigateTo = new Subject<string>();
     navigateTo$ = this.navigateTo.asObservable();
 
+    navigateToUrl(url: string) {
+        this.navigateTo.next(url);
+    }
+
     navigateToLogin() {
-        this.navigateTo.next('/login');
+        this.navigateToUrl('/login');
     }
 }

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -10,8 +10,8 @@ import { NavigationService } from '../modules/navigation/services/navigation.ser
 export class HttpService {
     constructor(private readonly httpClient: HttpClient, private readonly navigationService: NavigationService) {}
 
-    get(url: string): Observable<any> {
-        return this.httpClient.get(url).pipe(catchError((err) => this.catchError(err)));
+    get<T>(url: string, options?: HttpOptions): Observable<any> {
+        return this.httpClient.get<T>(url, options).pipe(catchError((err) => this.catchError(err)));
     }
 
     getText(url: string): Observable<string> {
@@ -25,4 +25,21 @@ export class HttpService {
         }
         return throwError(error);
     }
+}
+
+export interface HttpOptions {
+    headers?:
+        | HttpHeaders
+        | {
+              [header: string]: string | string[];
+          };
+    observe?: 'body';
+    params?:
+        | HttpParams
+        | {
+              [param: string]: string | string[];
+          };
+    reportProgress?: boolean;
+    responseType?: 'json';
+    withCredentials?: boolean;
 }
