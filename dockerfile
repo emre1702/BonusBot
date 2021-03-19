@@ -21,6 +21,8 @@ RUN apt-get update && apt-get install -y \
     libssl1.1 \
     locales \
     tzdata \
+    nodejs \
+    npm \
 	&& rm -rf /var/lib/apt/lists/* 
 
 RUN useradd -m -d /home/bonusbot bonusbot
