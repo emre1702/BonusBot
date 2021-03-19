@@ -1,21 +1,21 @@
 using BonusBot.Common.Extensions;
-using BonusBot.WebDashboardBoardModule.Services;
+using BonusBot.Common.Interfaces.Core;
+using BonusBot.Common.Interfaces.Guilds;
+using BonusBot.Common.Interfaces.Services;
 using Discord.Commands;
 using Discord.Commands.Builders;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using Microsoft.Extensions.DependencyInjection;
-using BonusBot.Common.Interfaces.Services;
-using BonusBot.Common.Interfaces.Guilds;
 
 namespace WebDashboardBoard
 {
     public class Program : CommandBase
     {
-        private readonly IServiceProvider _mainServiceProvider;
+        private readonly ICustomServiceProvider _mainServiceProvider;
 
-        public Program(IServiceProvider mainServiceProvider)
+        public Program(ICustomServiceProvider mainServiceProvider)
             => _mainServiceProvider = mainServiceProvider;
 
         public static void Main()
@@ -39,13 +39,15 @@ namespace WebDashboardBoard
                         services.AddSingleton(provider => _mainServiceProvider.GetRequiredService<IDiscordClientHandler>());
                         services.AddSingleton(provider => _mainServiceProvider.GetRequiredService<IModulesHandler>());
                         services.AddSingleton(provider => _mainServiceProvider.GetRequiredService<IGuildsHandler>());
+                        services.AddSingleton(_mainServiceProvider.GetRequiredService<ICommandsHandler>());
+                        services.AddSingleton(_mainServiceProvider);
                     });
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureKestrel(option =>
                     {
                         option.ListenAnyIP(26457);
                     });
-                    
+
                 });
     }
 }

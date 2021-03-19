@@ -21,10 +21,10 @@ namespace BonusBot.Services.DiscordNet
 
         private readonly IDiscordClientHandler _discordClientHandler;
         private readonly IServiceProvider _serviceProvider;
-        private readonly CommandsHandler _commandsHandler;
+        private readonly ICommandsHandler _commandsHandler;
         
 
-        public ModulesHandler(IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider, CommandsHandler commandsHandler)
+        public ModulesHandler(IDiscordClientHandler discordClientHandler, IServiceProvider serviceProvider, ICommandsHandler commandsHandler)
             => (_discordClientHandler, _serviceProvider, _commandsHandler) = (discordClientHandler, serviceProvider, commandsHandler);
 
         public Assembly? FindAssemblyByModuleName(string moduleName, bool includeCommon = true)

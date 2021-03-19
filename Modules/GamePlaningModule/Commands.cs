@@ -35,7 +35,7 @@ namespace BonusBot.GamePlaningModule
                 new(maybeEmote, new()),
                 new(cancellationEmote, new()));
             var embedBuilder = Helpers.CreateAnnouncementEmbedBuilder(embedData)
-                .WithAuthor(Context.SocketUser);
+                .WithAuthor(Context.User);
 
             var text = mentionEveryone ? Context.Guild.EveryoneRole.Mention : string.Empty;
             var message = await Context.Channel.SendMessageAsync(text, embed: embedBuilder.Build());
@@ -58,7 +58,7 @@ namespace BonusBot.GamePlaningModule
                 GuildId = Context.Guild.Id,
                 MaxDelay = TimeSpan.FromMinutes(5),
                 Module = GetType().GetModuleName(),
-                SourceId = Context.SocketUser.Id,
+                SourceId = Context.User.Id,
                 TargetId = messageId,
                 AdditionalId = channelId
             };

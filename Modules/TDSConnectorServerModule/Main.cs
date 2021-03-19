@@ -1,9 +1,11 @@
-﻿using BonusBot.TDSConnectorServerModule.Services;
+﻿using BonusBot.Common.Defaults;
+using BonusBot.TDSConnectorServerModule.Services;
 using Discord.Commands;
 using Discord.Commands.Builders;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Runtime.InteropServices;
 
 namespace BonusBot.TDSConnectorServerModule
 {
@@ -22,6 +24,7 @@ namespace BonusBot.TDSConnectorServerModule
 
         private void StartServer()
         {
+            var host = Constants.IsDocker ? "bonusbot" : "127.0.0.1";
             var server = new Server
             {
                 Services =
@@ -31,7 +34,7 @@ namespace BonusBot.TDSConnectorServerModule
                     RAGEServerStats.BindService(ActivatorUtilities.CreateInstance<RAGEServerStatsService>(_serviceProvider)),
                     SupportRequest.BindService(ActivatorUtilities.CreateInstance<SupportRequestService>(_serviceProvider)),
                 },
-                Ports = { new ServerPort("bonusbot", 5000, ServerCredentials.Insecure) }
+                Ports = { new ServerPort(host, 5000, ServerCredentials.Insecure) }
             };
             server.Start();
         }

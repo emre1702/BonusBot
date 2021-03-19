@@ -1,11 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Settings } from '../services/settings.service';
+import { SettingsService } from '../services/settings.service';
 
 @Pipe({
     name: 'translate',
 })
 export class TranslatePipe implements PipeTransform {
-    constructor(private readonly settings: Settings) {}
+    constructor(private readonly settings: SettingsService) {}
 
     transform(index: string, ...formatReplace: any[]): any {
         const str = this.settings.language[index] || index;

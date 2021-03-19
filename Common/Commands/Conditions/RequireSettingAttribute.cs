@@ -1,5 +1,6 @@
 ﻿using BonusBot.Common.Defaults;
 using BonusBot.Common.Extensions;
+using BonusBot.Common.Interfaces.Commands;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Languages;
 using Discord.Commands;
@@ -18,7 +19,7 @@ namespace BonusBot.Common.Commands.Conditions
 
         public override async Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, CommandInfo command, IServiceProvider services)
         {
-            Thread.CurrentThread.CurrentUICulture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
+            Thread.CurrentThread.CurrentUICulture = ((ICustomCommandContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
             var guildsHandler = services.GetRequiredService<IGuildsHandler>();
             var guild = guildsHandler.GetGuild(context.Guild);
             if (guild is null)

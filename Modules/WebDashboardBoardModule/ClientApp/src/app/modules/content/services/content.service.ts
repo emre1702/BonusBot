@@ -1,9 +1,9 @@
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
-import { merge, Observable, of, ReplaySubject, Subject } from 'rxjs';
-import { finalize, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnDestroy } from '@angular/core';
+import { merge, Observable, of, Subject } from 'rxjs';
+import { distinctUntilChanged, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { Constants } from 'src/app/constants';
 import api from 'src/app/routes/api';
-import { HttpService } from 'src/app/services/http.service';
 import { GuildSelectionService } from '../../navigation/services/guild-selection.service';
 import { NavigationService } from '../../navigation/services/navigation.service';
 import { UserAccessLevel } from '../models/user-access-level';
@@ -17,7 +17,7 @@ export class ContentService implements OnDestroy {
         switchMap((params) => {
             this.loading = true;
             if (!params) return of(UserAccessLevel.hasAccess).pipe(finalize(() => (this.loading = false)));
-            return this.httpService
+            return this.httpClient
                 .get<UserAccessLevel>(api.get.content.accessLevel, { params: params })
                 .pipe(finalize(() => (this.loading = false)));
         })
@@ -25,13 +25,10 @@ export class ContentService implements OnDestroy {
 
     private destroySubject = new Subject();
 
-    constructor(navigationService: NavigationService, guildSelectionService: GuildSelectionService, private readonly httpService: HttpService) {
-        navigationService.navigateTo$
-            .pipe(takeUntil(this.destroySubject), withLatestFrom(guildSelectionService.selectedGuildId$))
-            .subscribe(([url, guildId]) => this.navigatedToUrl(url, guildId));
-        guildSelectionService.selectedGuildId$
-            .pipe(takeUntil(this.destroySubject))
-            .subscribe((guildId) => this.navigatedToUrl(window.location.pathname, guildId));
+    constructor(navigationService: NavigationService, guildSelectionService: GuildSelectionService, private readonly httpClient: HttpClient) {
+        merge(navigationService.navigateTo$, guildSelectionService.selectedGuildId$)
+            .pipe(distinctUntilChanged(), takeUntil(this.destroySubject))
+            .subscribe(([url, guildId]) => this.navigatedToUrl(url ?? window.location.pathname, guildId));
     }
 
     ngOnDestroy() {

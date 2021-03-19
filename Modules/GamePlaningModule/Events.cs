@@ -40,8 +40,9 @@ namespace BonusBot.GamePlaningModule
 
         private async Task SetParticipantsToMessage(Cacheable<IUserMessage, ulong> cachedMessageOrId, ISocketMessageChannel channel, SocketReaction reaction)
         {
+            var client = await _discordClientHandler.ClientSource.Task;
             var message = await cachedMessageOrId.DownloadAsync();
-            if (!message.Author.IsBot)
+            if (message.Author.Id != client.CurrentUser.Id)
                 return;
             var embed = message.Embeds.FirstOrDefault();
             if (embed is null)

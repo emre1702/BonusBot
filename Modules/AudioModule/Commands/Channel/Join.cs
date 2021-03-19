@@ -13,7 +13,7 @@ namespace BonusBot.AudioModule.Commands.Channel
 
         public override async Task Do(EmptyCommandArgs _)
         {
-            var voiceChannel = Class.Context.User?.VoiceChannel;
+            var voiceChannel = Class.Context.GuildUser?.VoiceChannel;
             if (voiceChannel is null)
             {
                 await Class.ReplyAsync(ModuleTexts.NotConnectToVoiceChannel);

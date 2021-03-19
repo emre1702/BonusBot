@@ -1,5 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:latest AS build-env
 ARG CERTIFICATE_PASSWORD
+ENV ISDOCKER="true"
 WORKDIR /bonusbot-source
 
 COPY . .
@@ -7,8 +8,8 @@ COPY . .
 RUN dotnet publish ./Core/Core.csproj -p:PublishProfile=Linux
 
 FROM mcr.microsoft.com/dotnet/aspnet:latest AS release
+ENV ISDOCKER="true"
 
-# Install dependencies
 RUN apt-get update && apt-get install -y \
     libc6-dev \
 	libunwind8 \
@@ -17,7 +18,6 @@ RUN apt-get update && apt-get install -y \
     tzdata \
 	&& rm -rf /var/lib/apt/lists/* 
 
-# Add bonusbot user
 RUN useradd -m -d /home/bonusbot bonusbot
 
 WORKDIR /home/bonusbot

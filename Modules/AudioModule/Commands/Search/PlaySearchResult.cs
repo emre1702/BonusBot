@@ -29,7 +29,7 @@ namespace BonusBot.AudioModule.Commands.Search
         }
 
         private AudioTrack GetTrackBySearchIndex(int index)
-            => new(Class.Player!.LastSearchResult![index], Class.Context.User!);
+            => new(Class.Player!.LastSearchResult![index], Class.Context.GuildUser!);
 
         private async Task Play(AudioTrack track)
         {

@@ -1,6 +1,7 @@
 ﻿using BonusBot.Common.Commands;
 using BonusBot.Common.Commands.Exceptions;
 using BonusBot.Common.Defaults;
+using BonusBot.Common.Interfaces.Commands;
 using Discord;
 using Discord.Commands;
 using System.Threading;
@@ -8,33 +9,31 @@ using System.Threading.Tasks;
 
 namespace BonusBot.Common.Extensions
 {
-    public class CommandBase : ModuleBase<CustomContext>
+    public class CommandBase : ModuleBase<ICustomCommandContext>
     {
         public Task<IUserMessage> ReplyAsync(EmbedBuilder embed)
         {
             if (!embed.Color.HasValue)
                 embed.WithColor(171, 31, 242);
-            return base.ReplyAsync(embed: embed.Build());
+            return ReplyAsync(embed: embed.Build());
         }
 
-        public Task<IUserMessage> ReplyAsync(string message)
-        {
-            return base.ReplyAsync(message);
-        }
+        public new Task<IUserMessage> ReplyAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null, 
+            MessageReference? messageReference = null)
+            => Context.Channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
 
-        public async Task<IUserMessage> ReplyToUserAsync(string msg)
+        public async Task<IUserMessage> ReplyToUserAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
+            MessageReference? messageReference = null)
         {
-            var user = Context.SocketUser;
-            var channel = await user.GetOrCreateDMChannelAsync();
-            return await channel.SendMessageAsync(msg);
+            var channel = await Context.User.GetOrCreateDMChannelAsync();
+            return await channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
         }
 
         public async Task<IUserMessage> ReplyToUserAsync(EmbedBuilder embed)
         {
             if (!embed.Color.HasValue)
                 embed.WithColor(171, 31, 242);
-            var user = Context.SocketUser;
-            var channel = await user.GetOrCreateDMChannelAsync();
+            var channel = await Context.User.GetOrCreateDMChannelAsync();
             return await channel.SendMessageAsync(embed: embed.Build());
         }
 

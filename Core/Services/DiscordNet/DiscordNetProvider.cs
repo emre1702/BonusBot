@@ -1,8 +1,6 @@
 ﻿using BonusBot.Common.Interfaces.Services;
 using BonusBot.Services.DiscordNet;
-using BonusBot.WebDashboardBoardModule.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace BonusBot.Core.Services.DiscordNet
 {
@@ -12,6 +10,6 @@ namespace BonusBot.Core.Services.DiscordNet
             => serviceCollection
                 .AddSingleton<IDiscordClientHandler, SocketClientHandler>()
                 .AddSingleton<IModulesHandler, ModulesHandler>()
-                .AddSingleton<CommandsHandler>();
+                .AddSingleton<ICommandsHandler, CommandsHandler>();
     }
 }

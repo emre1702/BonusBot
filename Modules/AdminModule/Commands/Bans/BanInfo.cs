@@ -2,11 +2,8 @@
 using BonusBot.AdminModule.Models.CommandArgs;
 using BonusBot.Common.Commands;
 using BonusBot.Common.Extensions;
-using BonusBot.Database;
 using BonusBot.Database.Entities.Cases;
 using Discord;
-using Discord.Rest;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BonusBot.AdminModule.Commands.Bans
@@ -38,7 +35,7 @@ namespace BonusBot.AdminModule.Commands.Bans
             return unbanActionEntry;
         }
 
-        public EmbedBuilder ToEmbedBuilder(RestBan discordBan, TimedActions? unbanAction)
+        public EmbedBuilder ToEmbedBuilder(IBan discordBan, TimedActions? unbanAction)
         {
             var embedBuilder = new EmbedBuilder()
                 .WithAuthor(discordBan.User)

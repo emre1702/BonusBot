@@ -1,4 +1,3 @@
-using BonusBot.WebDashboardBoardModule.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -18,10 +17,7 @@ namespace WebDashboardBoard
                     p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build());
             });
 
-            services.AddControllersWithViews(options =>
-            {
-                options.Filters.Add<SessionCheckFilter>();
-            });
+            services.AddControllersWithViews();
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -30,6 +26,13 @@ namespace WebDashboardBoard
             {
                 options.IdleTimeout = TimeSpan.FromHours(1);
             });
+            services.AddAuthentication()
+                .AddCookie(options =>
+                {
+                    //options.AccessDeniedPath = "/login";
+                    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+                    options.LoginPath = "/login";
+                });
 
         }
 
@@ -46,7 +49,6 @@ namespace WebDashboardBoard
                 app.UseHsts();
                 app.UseHttpsRedirection();
             }
-
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
@@ -56,6 +58,13 @@ namespace WebDashboardBoard
             app.UseRouting();
             app.UseCors();
             app.UseSession();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseCookiePolicy(new()
+            {
+                MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None
+            });
 
             app.UseEndpoints(endpoints =>
             {

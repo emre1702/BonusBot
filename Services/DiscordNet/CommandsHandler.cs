@@ -4,6 +4,7 @@ using BonusBot.Common.Commands.TypeReaders;
 using BonusBot.Common.Defaults;
 using BonusBot.Common.Events.Arguments;
 using BonusBot.Common.Extensions;
+using BonusBot.Common.Interfaces.Commands;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.Common.Languages;
@@ -16,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace BonusBot.Services.DiscordNet
 {
-    internal class CommandsHandler
+    internal class CommandsHandler : ICommandsHandler
     {
         public CommandService CommandService { get; init; }
 
@@ -125,7 +126,7 @@ namespace BonusBot.Services.DiscordNet
                 return;
 
             var botClient = await _discordClientHandler.ClientSource.Task;
-            var context = new CustomContext(botClient, messageData, _guildsHandler);
+            var context = new DiscordCommandContext(botClient, messageData, _guildsHandler);
             await CommandService.ExecuteAsync(context, messageData.CommandPrefixLength, _serviceProvider, MultiMatchHandling.Best);
         }
 
@@ -133,12 +134,12 @@ namespace BonusBot.Services.DiscordNet
         {
             if (!result.IsSuccess)
             {
-                Thread.CurrentThread.CurrentUICulture = ((CustomContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
+                Thread.CurrentThread.CurrentUICulture = ((ICustomCommandContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
                 await context.User.SendMessageAsync(
                     string.Format(Texts.CommandExecutedError, result.Error, result.ErrorReason, context.Message.Content));
             }
 
-            if (context is CustomContext ctx && ctx.MessageData.NeedsDelete)
+            if (context is DiscordCommandContext ctx && ctx.MessageData.NeedsDelete)
                 await context.Message.DeleteAsync();
         }
     }

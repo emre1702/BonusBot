@@ -11,10 +11,12 @@
     <DockerfileContext>.</DockerfileContext>
     <DockerfileFile>..\dockerfile</DockerfileFile>
     <WebDashboardSpaRoot>..\Modules\WebDashboardBoardModule\ClientApp\</WebDashboardSpaRoot>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>TRACE;TEST</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,14 +34,14 @@
     <ProjectReference Include="..\Modules\WebDashboardBoardModule\WebDashboardBoardModule.csproj" />
     <ProjectReference Include="..\Systems\GuildsSystem\GuildsSystem.csproj" />
     <ProjectReference Include="..\Modules\AdminModule\AdminModule.csproj" />
-    <ProjectReference Condition="'$(Configuration)'=='Release'" Include="..\Modules\AudioModule\AudioModule.csproj" />
+    <ProjectReference Condition="'$(ISDOCKER)' == 'true' OR $(DefineConstants.Contains('TEST'))" Include="..\Modules\AudioModule\AudioModule.csproj" />
     <ProjectReference Include="..\Modules\ColorRolesModule\ColorRolesModule.csproj" />
     <ProjectReference Include="..\Modules\GamePlaningModule\GamePlaningModule.csproj" />
     <ProjectReference Include="..\Modules\GuildSettingsModule\GuildSettingsModule.csproj" />
     <ProjectReference Include="..\Modules\LoggingModule\LoggingModule.csproj" />
     <ProjectReference Include="..\Modules\ModulesControllingModule\ModulesControllingModule.csproj" />
-    <ProjectReference Condition="'$(Configuration)'=='Release'" Include="..\Modules\TDSConnectorClientModule\TDSConnectorClientModule.csproj" />
-    <ProjectReference Condition="'$(Configuration)'=='Release'" Include="..\Modules\TDSConnectorServerModule\TDSConnectorServerModule.csproj" />
+    <ProjectReference Condition="'$(ISDOCKER)' == 'true' OR $(DefineConstants.Contains('TEST'))" Include="..\Modules\TDSConnectorClientModule\TDSConnectorClientModule.csproj" />
+    <ProjectReference Condition="'$(ISDOCKER)' == 'true' OR $(DefineConstants.Contains('TEST'))" Include="..\Modules\TDSConnectorServerModule\TDSConnectorServerModule.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 

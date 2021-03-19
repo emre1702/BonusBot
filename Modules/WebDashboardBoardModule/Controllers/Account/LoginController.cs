@@ -2,10 +2,12 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using BonusBot.WebDashboardBoardModule.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BonusBot.WebDashboardBoardModule.Controllers.Account
 {
     [Route("[controller]")]
+    [AllowAnonymous]
     public class LoginController : Controller
     {
         [HttpGet("OAuthUrl")]

@@ -1,11 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using BonusBot.Common.Interfaces.Core;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace BonusBot.Core.Services
 {
-    public class CustomServiceProvider : IServiceProvider
+    public class CustomServiceProvider : ICustomServiceProvider
     {
         private readonly IServiceCollection _serviceCollection;
         private readonly ServiceProvider _serviceProvider;
@@ -13,7 +14,7 @@ namespace BonusBot.Core.Services
         public CustomServiceProvider(IServiceCollection collection)
         {
             _serviceCollection = collection;
-            collection.AddSingleton(this);
+            collection.AddSingleton<ICustomServiceProvider>(this);
             _serviceProvider = collection.BuildServiceProvider();
         }
 

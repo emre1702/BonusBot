@@ -35,7 +35,7 @@ namespace BonusBot.AudioModule.Commands
         }
 
         protected AudioTrack GetAudioTrack(LavaLinkTrack track)
-            => new(track, Class.Context.User!);
+            => new(track, Class.Context.GuildUser!);
 
         protected AudioTrack GetAudioTrack(SearchResult searchResult)
             => GetAudioTrack(searchResult.Tracks.First());

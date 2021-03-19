@@ -56,7 +56,7 @@ namespace BonusBot.AdminModule.Commands.Bans
                 Module = GetType().Assembly.ToModuleName(),
                 ActionType = ActionType.Unban,
                 AtDateTime = DateTime.UtcNow + args.Time,
-                SourceId = Class.Context.SocketUser.Id,
+                SourceId = Class.Context.User.Id,
                 TargetId = args.User.Id
             };
             return Class.TimedActionsHandler.Add(entry);
@@ -88,8 +88,8 @@ namespace BonusBot.AdminModule.Commands.Bans
                 await dmChannel.SendMessageAsync(string.Format(ModuleTexts.YouHaveBeenBannedInfo,
                     args.Time,
                     DateTime.UtcNow + args.Time,
-                    Class.Context.SocketUser.Mention,
-                    Class.Context.SocketUser.Username + "#" + Class.Context.SocketUser.Discriminator,
+                    Class.Context.User.Mention,
+                    Class.Context.User.Username + "#" + Class.Context.User.Discriminator,
                     args.Reason));
             }
             catch
@@ -103,8 +103,8 @@ namespace BonusBot.AdminModule.Commands.Bans
             await Class.ReplyAsync(string.Format(ModuleTexts.YouHaveBannedInfo,
                     args.Time,
                     DateTime.UtcNow + args.Time,
-                    Class.Context.SocketUser.Mention,
-                    Class.Context.SocketUser.Username + "#" + Class.Context.SocketUser.Discriminator));
+                    Class.Context.User.Mention,
+                    Class.Context.User.Username + "#" + Class.Context.User.Discriminator));
         }
 
         private bool NeedsUnbanLater(BanArgs args)

@@ -1,5 +1,6 @@
 ﻿using BonusBot.Common.Events.Arguments;
 using BonusBot.Common.Extensions;
+using BonusBot.Common.Interfaces.Commands;
 using BonusBot.Common.Interfaces.Guilds;
 using Discord;
 using Discord.Commands;
@@ -8,21 +9,20 @@ using System.Threading.Tasks;
 
 namespace BonusBot.Common.Commands
 {
-    public class CustomContext : SocketCommandContext
+    public class DiscordCommandContext : SocketCommandContext, ICustomCommandContext
     {
         public IBonusGuild? BonusGuild { get; }
         public MessageData MessageData { get; }
-        public new SocketGuildUser? User { get; }
+        public SocketGuildUser? GuildUser { get; }
         public SocketUser SocketUser { get; }
 
-        public CustomContext(DiscordSocketClient client, MessageData msgData, IGuildsHandler guildsHandler) : base(client, msgData.Message as SocketUserMessage)
+        public DiscordCommandContext(DiscordSocketClient client, MessageData msgData, IGuildsHandler guildsHandler) : base(client, msgData.Message as SocketUserMessage)
         {
-            User = msgData.Message.Author.CastTo<SocketGuildUser>();
+            GuildUser = msgData.Message.Author.CastTo<SocketGuildUser>();
             SocketUser = msgData.Message.Author;
             MessageData = msgData;
             if (Guild is { })
                 BonusGuild = guildsHandler.GetGuild(Guild)!;
-            //SocketUser = base.User;
         }
 
         public async ValueTask<IUser?> GetUserAsync(ulong id)

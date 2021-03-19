@@ -7,8 +7,6 @@ import { LoginService } from '../../services/login.service';
     styleUrls: ['./login.component.scss'],
     providers: [LoginService],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
     constructor(readonly loginService: LoginService) {}
-
-    ngOnInit() {}
 }

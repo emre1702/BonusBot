@@ -13,7 +13,7 @@ namespace BonusBot.TDSConnectorClientModule.Commands
 
         public override async Task Do(EmptyCommandArgs args)
         {
-            var request = GetRequest(Class.Context.SocketUser.Id);
+            var request = GetRequest(Class.Context.User.Id);
             var reply = (await Main.BBCommandClient.UsedCommandAsync(request)).Message;
 
             await Class.ReplyToUserAsync(reply ?? ModuleTexts.CommandSentInfo);

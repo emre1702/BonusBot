@@ -15,7 +15,7 @@ namespace ColorRolesModule
         [Alias("farbe", "farben", "colour")]
         public async Task SetUserColor(Color color)
         {
-            var role = Context.User!.Roles.FirstOrDefault(r => r.Name == GetRoleName());
+            var role = Context.GuildUser!.Roles.FirstOrDefault(r => r.Name == GetRoleName());
             if (role is null)
                 await AddUserRole(color);
             else
@@ -29,13 +29,13 @@ namespace ColorRolesModule
                 role = await Context.Guild.CreateRoleAsync(GetRoleName(), GuildPermissions.None, color, isMentionable: false);
             else
                 await role.ModifyAsync(prop => prop.Color = color);
-            await Context.User!.AddRoleAsync(role);
+            await Context.GuildUser!.AddRoleAsync(role);
         }
 
         private Task ModifyUserRole(SocketRole role, Color color)
             => role.ModifyAsync(prop => prop.Color = color);
 
         private string GetRoleName()
-            => $"Role {Context.SocketUser.Username}#{Context.SocketUser.Discriminator}";
+            => $"Role {Context.User.Username}#{Context.User.Discriminator}";
     }
 }

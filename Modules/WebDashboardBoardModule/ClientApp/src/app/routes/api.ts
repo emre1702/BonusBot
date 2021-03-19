@@ -15,8 +15,8 @@ export default {
         },
     },
     post: {
-        login: {
-            signIn: `${root}/Login/SignIn`,
+        command: {
+            execute: `${root}/WebCommand/Execute`,
         },
     },
 };

@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BonusBot.Common.Interfaces.Guilds;
 using System.Threading;
 using BonusBot.Common.Defaults;
+using BonusBot.Common.Interfaces.Commands;
 
 namespace BonusBot.Common.Commands.Conditions
 {
@@ -23,7 +24,7 @@ namespace BonusBot.Common.Commands.Conditions
             if (result.Error == CommandError.UnmetPrecondition)
                 return result;
 
-            var context = (CustomContext)cmdContext;
+            var context = (ICustomCommandContext)cmdContext;
             var guildsHandler = services.GetRequiredService<IGuildsHandler>();
             var bonusGuild = guildsHandler.GetGuild(context.Guild);
 

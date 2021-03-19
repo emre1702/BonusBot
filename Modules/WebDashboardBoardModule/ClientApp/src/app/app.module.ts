@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -13,8 +13,11 @@ import { NavigationModule } from './modules/navigation/navigation.module';
 import { LoginComponent } from './modules/login/components/login/login.component';
 import { LoginModule } from './modules/login/login.module';
 import { DashboardComponent } from './modules/dashboard/dashboard/dashboard.component';
-import { AudioComponent } from './modules/audio/audio/audio.component';
+import { AudioComponent } from './modules/audio/components/audio/audio.component';
 import { ContentModule } from './modules/content/content.module';
+import { AudioModule } from './modules/audio/audio.module';
+import { AuthenticationInterceptor } from './interceptors/authentication.interceptor';
+import { SharedModule } from './modules/shared/shared.module';
 
 @NgModule({
     declarations: [AppComponent, NavMenuComponent, CounterComponent, FetchDataComponent],
@@ -36,8 +39,9 @@ import { ContentModule } from './modules/content/content.module';
         NavigationModule,
         LoginModule,
         ContentModule,
+        AudioModule,
     ],
-    providers: [],
+    providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true }],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

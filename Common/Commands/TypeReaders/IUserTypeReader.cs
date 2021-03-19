@@ -1,4 +1,5 @@
 ﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Interfaces.Commands;
 using BonusBot.Common.Languages;
 using Discord;
 using Discord.Commands;
@@ -17,16 +18,16 @@ namespace BonusBot.Common.Commands.TypeReaders
         {
             try
             {
-                var ctx = (CustomContext)context;
+                var ctx = (ICustomCommandContext)context;
                 IUser? user = null;
                 if (MentionUtils.TryParseUser(input, out ulong userId)
                     || ulong.TryParse(input, out userId))
                     user ??= await ctx.GetUserAsync(userId).ConfigureAwait(false);
 
-                if (ctx.Guild is { })
+                if (ctx.Guild is SocketGuild socketGuild)
                 {
-                    user ??= await GetSocketGuildUserByName(ctx.Guild, input);
-                    user ??= await GetUserByBan(ctx.Guild, input);
+                    user ??= await GetSocketGuildUserByName(socketGuild, input);
+                    user ??= await GetUserByBan(socketGuild, input);
                 }
 
                 Thread.CurrentThread.CurrentUICulture = ctx.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;

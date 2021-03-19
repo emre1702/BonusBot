@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Languages;
+﻿using BonusBot.Common.Interfaces.Commands;
+using BonusBot.Common.Languages;
 using Discord.Commands;
 using System;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace BonusBot.Common.Commands.TypeReaders
             if (!DateTime.TryParse(input, out var dateTime))
                 return TypeReaderResult.FromError(CommandError.ParseFailed, string.Format(Texts.CommandInvalidDateTimeOffsetError, input));
 
-            var ctx = (CustomContext)context;
+            var ctx = (ICustomCommandContext)context;
             string timeZone = "UTC";
             if (ctx.BonusGuild is { })
             {

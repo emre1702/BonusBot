@@ -1,4 +1,5 @@
 ﻿using BonusBot.Common.Defaults;
+using BonusBot.Common.Interfaces.Commands;
 using BonusBot.Common.Languages;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -12,11 +13,11 @@ namespace BonusBot.Common.Commands.Conditions
     {
         public override Task<PreconditionResult> CheckPermissionsAsync(ICommandContext context, ParameterInfo parameter, object value, IServiceProvider services)
         {
-            var ctx = (CustomContext)context;
+            var ctx = (ICustomCommandContext)context;
             var target = (SocketGuildUser)value;
 
             Thread.CurrentThread.CurrentUICulture = ctx.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
-            return ctx.User!.Hierarchy > target.Hierarchy
+            return ctx.GuildUser!.Hierarchy > target.Hierarchy
                 ? Task.FromResult(PreconditionResult.FromSuccess())
                 : Task.FromResult(PreconditionResult.FromError(string.Format(Texts.TargetIsHigherInHierarchyError, target.Nickname)));
         }

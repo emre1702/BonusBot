@@ -1,5 +1,6 @@
 ﻿using BonusBot.AudioModule.LavaLink;
 using BonusBot.AudioModule.LavaLink.Clients;
+using BonusBot.Common.Commands;
 using BonusBot.Common.Extensions;
 using Discord.Commands;
 
@@ -18,7 +19,8 @@ namespace BonusBot.AudioModule.Models
 
         protected override void AfterExecute(CommandInfo command)
         {
-            Context.MessageData.NeedsDelete = false;
+            if (Context is DiscordCommandContext discordCommandContext)
+                discordCommandContext.MessageData.NeedsDelete = false;
 
             base.AfterExecute(command);
         }

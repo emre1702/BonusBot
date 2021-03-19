@@ -1,6 +1,7 @@
 ﻿using BonusBot.AudioModule.Language;
 using BonusBot.Common.Commands;
 using BonusBot.Common.Defaults;
+using BonusBot.Common.Interfaces.Commands;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Languages;
 using Discord;
@@ -27,9 +28,9 @@ namespace BonusBot.AudioModule.Preconditions
             if (role is null)
                 return PreconditionResult.FromSuccess();
 
-            var ctx = (CustomContext)context;
+            var ctx = (ICustomCommandContext)context;
             Thread.CurrentThread.CurrentUICulture = ctx.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
-            return ctx.User?.Roles.Any(r => r.Id == role.Id) == true
+            return ctx.GuildUser?.Roles.Any(r => r.Id == role.Id) == true
                 ? PreconditionResult.FromSuccess()
                 : PreconditionResult.FromError(string.Format(Texts.RoleRequiredError, role.Name));
         }
