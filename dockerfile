@@ -5,6 +5,11 @@ WORKDIR /bonusbot-source
 
 COPY . .
 
+RUN apt-get update && apt-get install -y \
+    nodejs \
+    npm \
+	&& rm -rf /var/lib/apt/lists/* 
+
 RUN dotnet publish ./Core/Core.csproj -p:PublishProfile=Linux
 
 FROM mcr.microsoft.com/dotnet/aspnet:latest AS release
@@ -16,8 +21,6 @@ RUN apt-get update && apt-get install -y \
     libssl1.1 \
     locales \
     tzdata \
-    nodejs \
-    npm \
 	&& rm -rf /var/lib/apt/lists/* 
 
 RUN useradd -m -d /home/bonusbot bonusbot
