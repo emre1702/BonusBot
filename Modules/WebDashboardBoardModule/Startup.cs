@@ -20,7 +20,7 @@ namespace WebDashboardBoard
             services.AddControllersWithViews();
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "wwwroot";
             });
             services.AddSession(options =>
             {
