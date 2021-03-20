@@ -29,7 +29,7 @@ namespace BonusBot.WebDashboardModule.Services
                 ["client_id"] = Environment.GetEnvironmentVariable(WebEnvironmentKeys.BotClientId)!,
                 ["client_secret"] = Environment.GetEnvironmentVariable(WebEnvironmentKeys.BotClientSecret)!,
                 ["grant_type"] = "authorization_code",
-                ["redirect_uri"] = WebConstants.OAuthTokenUrlRedirectUri,
+                ["redirect_uri"] = string.Format(WebConstants.OAuthTokenUrlRedirectUri, Environment.GetEnvironmentVariable(WebEnvironmentKeys.WebBaseUrl)!),
                 ["code"] = code,
                 ["scope"] = "identify guilds"
             };

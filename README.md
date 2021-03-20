@@ -30,7 +30,10 @@ The [token of the bot](https://github.com/reactiflux/discord-irc/wiki/Creating-a
 2. BONUSBOT_CLIENT_ID  
 The "CLIENT ID" of the bot (needed for WebDashboard.  
 3. BONUSBOT_CLIENT_SECRET  
-The "CLIENT SECRET" of the bot.
+The "CLIENT SECRET" of the bot.  
+4. WEB_BASE_URL  
+The base url where the ASP.NET Core server is running.  
+E.g. my base url is "http://bonusbot.net".  
 
 ## How is the code structured?  
 There are the main, systems and module projects.
