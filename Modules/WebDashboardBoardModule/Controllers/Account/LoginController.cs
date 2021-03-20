@@ -21,7 +21,7 @@ namespace BonusBot.WebDashboardBoardModule.Controllers.Account
 
         private string SetAndReturnState()
         {
-            var guid = new Guid().ToString();
+            var guid = Guid.NewGuid().ToString();
             HttpContext.Session.Set(SessionKeys.TokenState, guid);
             return guid;
         }
