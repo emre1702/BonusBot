@@ -5,7 +5,6 @@ using Discord.Commands.Builders;
 using Grpc.Core;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Runtime.InteropServices;
 
 namespace BonusBot.TDSConnectorServerModule
 {
@@ -24,7 +23,7 @@ namespace BonusBot.TDSConnectorServerModule
 
         private void StartServer()
         {
-            var host = Constants.IsDocker ? "bonusbot" : "127.0.0.1";
+            var host = Constants.IsDocker ? "bonusbot" : "localhost";
             var server = new Server
             {
                 Services =
