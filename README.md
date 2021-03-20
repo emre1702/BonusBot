@@ -26,7 +26,11 @@ Use my [Docker image](https://hub.docker.com/repository/docker/emre1702/bonusbot
 
 ### Environment variables:  
 1. BONUSBOT_TOKEN  
-The [token of the bot](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token).
+The [token of the bot](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token).  
+2. BONUSBOT_CLIENT_ID  
+The "CLIENT ID" of the bot (needed for WebDashboard.  
+3. BONUSBOT_CLIENT_SECRET  
+The "CLIENT SECRET" of the bot.
 
 ## How is the code structured?  
 There are the main, systems and module projects.
