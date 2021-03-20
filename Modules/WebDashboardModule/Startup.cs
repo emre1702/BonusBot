@@ -55,8 +55,8 @@ namespace BonusBot.WebDashboardModule
                 app.UseSpaStaticFiles();
             }
 
-            app.UseRouting();
             app.UseCors();
+            app.UseRouting();
             app.UseSession();
 
             app.UseAuthentication();
