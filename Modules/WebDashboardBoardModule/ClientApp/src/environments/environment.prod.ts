@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiBaseUrl: 'http://localhost:26457',
+    apiBaseUrl: 'http://bonusbot.net',
 };
