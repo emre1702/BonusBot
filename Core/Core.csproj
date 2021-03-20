@@ -10,7 +10,7 @@
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>.</DockerfileContext>
     <DockerfileFile>..\dockerfile</DockerfileFile>
-    <WebDashboardSpaRoot>..\Modules\WebDashboardBoardModule\ClientApp\</WebDashboardSpaRoot>
+    <WebDashboardSpaRoot>..\Modules\WebDashboardModule\ClientApp\</WebDashboardSpaRoot>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
 
@@ -31,7 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
-    <ProjectReference Include="..\Modules\WebDashboardBoardModule\WebDashboardBoardModule.csproj" />
+    <ProjectReference Include="..\Modules\WebDashboardModule\WebDashboardModule.csproj" />
     <ProjectReference Include="..\Systems\GuildsSystem\GuildsSystem.csproj" />
     <ProjectReference Include="..\Modules\AdminModule\AdminModule.csproj" />
     <ProjectReference Condition="'$(ISDOCKER)' == 'true' OR $(DefineConstants.Contains('TEST'))" Include="..\Modules\AudioModule\AudioModule.csproj" />

@@ -44,7 +44,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ColorRolesModule", "Modules
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Systems", "Systems", "{64615D79-055A-451F-8261-53056C3112FA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDashboardBoardModule", "Modules\WebDashboardBoardModule\WebDashboardBoardModule.csproj", "{E48DB584-AA1B-4E72-9AF8-EA42782D47C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebDashboardModule", "Modules\WebDashboardModule\WebDashboardModule.csproj", "{E48DB584-AA1B-4E72-9AF8-EA42782D47C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
