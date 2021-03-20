@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 	&& rm -rf /var/lib/apt/lists/* 
 
 RUN dotnet publish ./Core/Core.csproj -p:PublishProfile=Linux
-RUN cp ./Modules/WebDashboardBoardModule/ClientApp/dist/* ./Build/wwwroot
+RUN cp -r ./Modules/WebDashboardBoardModule/ClientApp/dist/* ./Build/wwwroot/
 
 FROM mcr.microsoft.com/dotnet/aspnet:latest AS release
 ENV ISDOCKER="true"
