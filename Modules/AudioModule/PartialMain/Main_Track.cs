@@ -20,6 +20,18 @@ namespace BonusBot.AudioModule.PartialMain
         public Task QueueYouTube([Remainder] string query)
             => new QueueYouTube(this).Do(new(query));
 
+        [Command("scplay")]
+        [Alias("sc", "soundcloud", "soundcloudplay", "playsc", "playsoundcloud")]
+        [RequirePlayer]
+        public Task PlaySoundcloud([Remainder] string query)
+           => new PlaySoundcloud(this).Do(new(query));
+
+        [Command("scqueue")]
+        [Alias("scqueue", "soundcloudqueue", "queuesc", "queuesoundcloud", "scwarteschlange")]
+        [RequirePlayer]
+        public Task QueueSoundcloud([Remainder] string query)
+            => new QueueSoundcloud(this).Do(new(query));
+
         [Command("position")]
         [Alias("SetPosition", "PositionSet", "Vorspulen", "Spulen", "Zurückspulen")]
         [RequireCurrentTrack]
