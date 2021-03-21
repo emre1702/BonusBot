@@ -35,5 +35,34 @@ namespace BonusBot.AudioModule.PartialMain
         [RequirePlayer]
         public Task QueuePlaylistYouTube([Remainder] string query)
             => new QueuePlaylistYouTube(this).Do(new(query, 100));
+
+
+        [Command("scplaylist")]
+        [Alias("scpl", "plsc", "scplaylist", "playlistsoundcloud")]
+        [Priority(2)]
+        [RequirePlayer]
+        public Task PlaylistSoundcloud([RequireNumberRange(1, 100)] int limit, [Remainder] string query)
+           => new PlaylistSoundcloud(this).Do(new(query, limit));
+
+        [Command("scplaylist")]
+        [Alias("scpl", "plsc", "scplaylist", "playlistsoundcloud")]
+        [Priority(1)]
+        [RequirePlayer]
+        public Task PlaylistSoundcloud([Remainder] string query)
+            => new PlaylistSoundcloud(this).Do(new(query, 100));
+
+        [Command("ScQueuePlaylist")]
+        [Alias("scqpl", "qscpl", "qplsc", "plqsc", "soundcloudqueueplaylist", "queueplaylistsoundcloud")]
+        [Priority(2)]
+        [RequirePlayer]
+        public Task QueuePlaylistSoundcloud([RequireNumberRange(1, 100)] int limit, [Remainder] string query)
+            => new QueuePlaylistSoundcloud(this).Do(new(query, limit));
+
+        [Command("ScQueuePlaylist")]
+        [Alias("scqpl", "qscpl", "qplsc", "plqsc", "soundcloudqueueplaylist", "queueplaylistsoundcloud")]
+        [Priority(1)]
+        [RequirePlayer]
+        public Task QueuePlaylistSoundcloud([Remainder] string query)
+            => new QueuePlaylistSoundcloud(this).Do(new(query, 100));
     }
 }
