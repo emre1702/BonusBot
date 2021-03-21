@@ -14,7 +14,7 @@ namespace BonusBot.WebDashboardModule.Controllers.Account
         [HttpGet("OAuthUrl")]
         public ActionResult<string> GetOAuthUrl()
         {
-            if (HasValidSession(HttpContext.Session)) return Redirect("/");
+            if (HasValidSession(HttpContext.Session)) return Ok();
 
             var baseUrl = WebConstants.OAuthUrl;
             var clientId = Environment.GetEnvironmentVariable(WebEnvironmentKeys.BotClientId);
