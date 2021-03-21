@@ -1,0 +1,10 @@
+<app-toolbar class="d-contents" [isInLogin]="isInLogin$ | async" [(navigationOpened)]="navigationOpened" [(messagesOpened)]="messagesOpened"></app-toolbar>
+<app-sidenav-container
+    class="d-contents"
+    [isInLogin]="isInLogin$ | async"
+    [isMobileView]="mobileQuery.matches"
+    [(navigationOpened)]="navigationOpened"
+    [(messagesOpened)]="messagesOpened"
+>
+    <ng-content></ng-content>
+</app-sidenav-container>

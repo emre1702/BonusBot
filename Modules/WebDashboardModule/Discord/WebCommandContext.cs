@@ -2,12 +2,14 @@
 using BonusBot.Common.Interfaces.Guilds;
 using Discord;
 using Discord.WebSocket;
+using System;
 using System.Threading.Tasks;
 
 namespace BonusBot.WebDashboardModule.Discord
 {
     public class WebCommandContext : ICustomCommandContext
     {
+        public Guid Id { get; }
         public IBonusGuild? BonusGuild { get; }
 
         public IDiscordClient Client { get; }
@@ -22,8 +24,9 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public IUserMessage Message { get; }
 
-        public WebCommandContext(IBonusGuild? bonusGuild, DiscordSocketClient client, SocketGuild? guild, IMessageChannel channel, IUser user, SocketGuildUser? socketGuildUser, IUserMessage message)
+        public WebCommandContext(Guid id, IBonusGuild? bonusGuild, DiscordSocketClient client, SocketGuild? guild, IMessageChannel channel, IUser user, SocketGuildUser? socketGuildUser, IUserMessage message)
         {
+            Id = id;
             BonusGuild = bonusGuild;
             Client = client;
             Guild = guild;

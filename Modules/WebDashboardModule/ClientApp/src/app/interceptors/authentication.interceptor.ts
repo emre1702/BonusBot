@@ -2,7 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/c
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { NavigationService } from '../modules/navigation/services/navigation.service';
+import { NavigationService } from '../modules/page/services/navigation.service';
 
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {

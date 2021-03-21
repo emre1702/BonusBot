@@ -3,6 +3,7 @@ import { SettingsService } from '../services/settings.service';
 
 @Pipe({
     name: 'translate',
+    pure: false,
 })
 export class TranslatePipe implements PipeTransform {
     constructor(private readonly settings: SettingsService) {}

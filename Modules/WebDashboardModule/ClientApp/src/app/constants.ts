@@ -1,4 +1,4 @@
-import { NavigationButton } from './modules/navigation/models/navigation-button';
+import { NavigationButton } from './modules/page/models/navigation-button';
 
 export class Constants {
     static buttons: NavigationButton[] = [

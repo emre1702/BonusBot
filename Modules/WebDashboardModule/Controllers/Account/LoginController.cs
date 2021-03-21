@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using BonusBot.WebDashboardModule.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace BonusBot.WebDashboardModule.Controllers.Account
 {
@@ -13,6 +14,8 @@ namespace BonusBot.WebDashboardModule.Controllers.Account
         [HttpGet("OAuthUrl")]
         public ActionResult<string> GetOAuthUrl()
         {
+            if (HasValidSession(HttpContext.Session)) return Redirect("/");
+
             var baseUrl = WebConstants.OAuthUrl;
             var clientId = Environment.GetEnvironmentVariable(WebEnvironmentKeys.BotClientId);
             var redirectUrl = string.Format(WebConstants.OAuthTokenUrlRedirectUri, Environment.GetEnvironmentVariable(WebEnvironmentKeys.WebBaseUrl)!);
@@ -25,6 +28,12 @@ namespace BonusBot.WebDashboardModule.Controllers.Account
             var guid = Guid.NewGuid().ToString();
             HttpContext.Session.Set(SessionKeys.TokenState, guid);
             return guid;
+        }
+
+        private bool HasValidSession(ISession session)
+        {
+            long? expireUnixSeconds = session.Get<long>(SessionKeys.ExpireUnixSeconds);
+            return expireUnixSeconds is not null && expireUnixSeconds > DateTime.UtcNow.ToUnixTimeSeconds();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace BonusBot.WebDashboardModule.Controllers.Account
             if (code is null) return Redirect("/");
 
             var currentState = HttpContext.Session.Get<string>(SessionKeys.TokenState);
-            if (currentState is null || currentState != state) throw new InvalidOperationException("Please try again!");
+            if (currentState is null || currentState != state) return Redirect("/login");
 
             var tokenData = await _tokenRequestService.GetTokenData(code);
             var userData = await _userRequestService.GetUser(tokenData);

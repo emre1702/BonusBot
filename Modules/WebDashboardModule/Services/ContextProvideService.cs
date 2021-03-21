@@ -6,6 +6,7 @@ using BonusBot.WebDashboardModule.Extensions;
 using BonusBot.WebDashboardModule.Models.Discord;
 using Discord.WebSocket;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Threading.Tasks;
 
 namespace BonusBot.WebDashboardModule.Services
@@ -19,7 +20,7 @@ namespace BonusBot.WebDashboardModule.Services
             => (_guildsHandler, _discordClientHandler) = (guildsHandler, discordClientHandler);
 
 
-        public async Task<WebCommandContext> Get(ISession session, string? guildId, string command)
+        public async Task<WebCommandContext> Get(ISession session, string? guildId, Guid guid, string command)
         {
             var discordClient = await _discordClientHandler.ClientSource.Task;
 
@@ -31,7 +32,7 @@ namespace BonusBot.WebDashboardModule.Services
             var channel = new WebMessageChannel(user);
             var message = new WebMessage(command, user, channel);
 
-            return new(bonusGuild, discordClient, guild, channel, user, socketGuildUser, message);
+            return new(guid, bonusGuild, discordClient, guild, channel, user, socketGuildUser, message);
         }
 
         private static SocketGuildUser? GetGuildUser(ISession session, SocketGuild guild)

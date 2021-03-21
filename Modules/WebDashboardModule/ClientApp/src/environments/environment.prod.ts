@@ -1,4 +1,6 @@
+import { env } from 'node:process';
+
 export const environment = {
     production: true,
-    apiBaseUrl: 'http://bonusbot.net',
+    apiBaseUrl: process.env.WEB_BASE_URL,
 };

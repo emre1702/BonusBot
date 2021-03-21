@@ -4,9 +4,9 @@ import { merge, Observable, of, Subject } from 'rxjs';
 import { distinctUntilChanged, finalize, switchMap, takeUntil } from 'rxjs/operators';
 import { Constants } from 'src/app/constants';
 import api from 'src/app/routes/api';
-import { GuildSelectionService } from '../../navigation/services/guild-selection.service';
-import { NavigationService } from '../../navigation/services/navigation.service';
 import { UserAccessLevel } from '../models/user-access-level';
+import { GuildSelectionService } from './guild-selection.service';
+import { NavigationService } from './navigation.service';
 
 @Injectable()
 export class ContentService implements OnDestroy {

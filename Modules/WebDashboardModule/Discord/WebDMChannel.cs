@@ -93,7 +93,7 @@ namespace BonusBot.WebDashboardModule.Discord
         }
 
         public Task<IUserMessage> SendMessageAsync(string? text = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null, MessageReference? messageReference = null)
-            => _user.SendWebMessage(text, this);
+            => Task.FromResult(_user.AddWebMessage(text, this));
 
         public Task TriggerTypingAsync(RequestOptions? options = null)
         {

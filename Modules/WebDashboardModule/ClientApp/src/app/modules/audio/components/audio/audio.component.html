@@ -1,6 +1,11 @@
-<div class="flex-column">
-    <div class="w-100">
-        <input [(ngModel)]="urlOrSearch" />
-        <button mat-raised-button (click)="play()">{{ 'Play' | translate }}</button>
+<div class="container flex-column p-0 m-0">
+    <div class="d-flex">
+        <mat-form-field class="flex-grow-1 flex-shrink-1">
+            <mat-label>Youtube</mat-label>
+            <input matInput [(ngModel)]="urlOrSearch" [placeholder]="'UrlOrSearch' | translate" />
+        </mat-form-field>
+        <button class="flex-shrink-0 ml-2" mat-button (click)="play()">{{ 'Play' | translate }}</button>
+        <button class="flex-shrink-0 ml-2" mat-button (click)="queue()">{{ 'Queue' | translate }}</button>
+        <button class="flex-shrink-0 ml-2" mat-button (click)="playlist()">{{ 'Playlist' | translate }}</button>
     </div>
 </div>

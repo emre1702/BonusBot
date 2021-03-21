@@ -1,5 +1,6 @@
 ﻿using Discord;
 using System;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 
@@ -34,6 +35,7 @@ namespace BonusBot.WebDashboardModule.Discord
         public IImmutableSet<ClientType> ActiveClients => throw new NotImplementedException();
 
         public IImmutableList<IActivity> Activities => throw new NotImplementedException();
+        public List<string> Messages { get; } = new();
 
         public string GetAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
         {
@@ -48,9 +50,11 @@ namespace BonusBot.WebDashboardModule.Discord
         public Task<IDMChannel> GetOrCreateDMChannelAsync(RequestOptions? options = null)
             => Task.FromResult((IDMChannel)new WebDMChannel(this));
 
-        public Task<IUserMessage> SendWebMessage(string? text, IMessageChannel channel)
+        public IUserMessage AddWebMessage(string? text, IMessageChannel channel)
         {
-            return Task.FromResult(new WebMessage(text ?? string.Empty, this, channel) as IUserMessage);
+            if (text is not null)   
+                Messages.Add(text);
+            return new WebMessage(text ?? string.Empty, this, channel);
         }
     }
 }

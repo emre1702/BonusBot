@@ -1,0 +1,26 @@
+<mat-toolbar color="primary">
+    <button mat-icon-button *ngIf="!isInLogin" (click)="navigationOpenedChange.emit(!navigationOpened)">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    <mat-select
+        *ngIf="guildSelectionService.guilds$ | async as guilds"
+        class="ml-3 mr-3 text-center"
+        [value]="guildSelectionService.selectedGuildId$ | async"
+        (selectionChange)="guildSelectionService.selectGuildId($event.value)"
+    >
+        <mat-option *ngFor="let guild of guilds" [value]="guild.id">{{ guild.name }}</mat-option>
+    </mat-select>
+
+    <button
+        mat-icon-button
+        class="language-button"
+        *ngFor="let language of languages"
+        [style.background]="getImageUrl(language)"
+        (click)="settingsService.setLanguage(language)"
+    ></button>
+
+    <button class="float-right" mat-icon-button (click)="messagesOpenedChange.emit(!messagesOpened)">
+        <mat-icon>comment</mat-icon>
+    </button>
+</mat-toolbar>
