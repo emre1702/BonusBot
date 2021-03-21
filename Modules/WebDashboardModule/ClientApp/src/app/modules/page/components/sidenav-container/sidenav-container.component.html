@@ -1,4 +1,4 @@
-<mat-sidenav-container class="d-flex flex-md-column h-100" [style.marginTop.px]="isMobileView ? 56 : 0" [hasBackdrop]="navigationOpened">
+<mat-sidenav-container class="d-flex flex-md-column h-100" [hasBackdrop]="navigationOpened">
     <mat-sidenav
         [opened]="navigationOpened && !isInLogin"
         (openedChange)="navigationOpenedChange.emit($event)"
