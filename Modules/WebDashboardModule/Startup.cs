@@ -1,4 +1,7 @@
+using BonusBot.Common.Defaults;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection;
@@ -33,6 +36,14 @@ namespace BonusBot.WebDashboardModule
                     options.ExpireTimeSpan = TimeSpan.FromHours(1);
                     options.LoginPath = "/login";
                 });
+
+            if (Constants.IsDocker) 
+                services.AddDataProtection().PersistKeysToFileSystem(new("/bonusbot-data/temp-keys/"))
+                    .UseCryptographicAlgorithms(new()
+                    {
+                        EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+                        ValidationAlgorithm = ValidationAlgorithm.HMACSHA256
+                    });
 
         }
 
