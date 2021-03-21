@@ -4,7 +4,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                WEB_BASE_URL: process.env.WEB_BASE_URL,
+                WEB_BASE_URL: JSON.stringify(process.env.WEB_BASE_URL),
             },
         }),
     ],
