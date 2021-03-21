@@ -17,5 +17,8 @@ export default {
         command: {
             execute: `WebCommand/Execute`,
         },
+        logout: {
+            execute: `Logout/Execute`,
+        },
     },
 };

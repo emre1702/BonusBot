@@ -8,5 +8,5 @@ import { LoginService } from '../../services/login.service';
     providers: [LoginService],
 })
 export class LoginComponent {
-    constructor(readonly loginService: LoginService) {}
+    constructor(readonly service: LoginService) {}
 }

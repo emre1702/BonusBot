@@ -5,4 +5,5 @@ export interface NavigationButton {
     module?: string;
     alwaysAccess?: boolean;
     hidden?: boolean;
+    confirmationTextKey?: string;
 }

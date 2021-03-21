@@ -7,11 +7,15 @@
         fixedTopGap="56"
     >
         <mat-nav-list>
-            <a mat-list-item *ngFor="let button of buttons" (click)="navigateToUrl(button.url)">
-                <ng-container *ngIf="!button.hidden">
+            <ng-container *ngFor="let button of buttons">
+                <a mat-list-item *ngIf="!button.hidden" (click)="navigateTo(button)">
                     <mat-icon>{{ button.icon }}</mat-icon>
                     <span class="ml-3" *ngIf="!isMobileView">{{ button.name }}</span>
-                </ng-container>
+                </a>
+            </ng-container>
+            <a mat-list-item (click)="logoutService.signOut()">
+                <mat-icon>logout</mat-icon>
+                <span class="ml-3" *ngIf="!isMobileView">{{ 'Logout' | translate }}</span>
             </a>
         </mat-nav-list>
     </mat-sidenav>

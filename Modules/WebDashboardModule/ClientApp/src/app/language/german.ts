@@ -13,4 +13,6 @@ export class German extends English {
     Confirm = 'Bestätige';
     Yes = 'Ja';
     No = 'Nein';
+    LogoutConfirmationText = 'Bist du dir sicher, dass du dich abmelden willst?';
+    Logout = 'Abmelden';
 }

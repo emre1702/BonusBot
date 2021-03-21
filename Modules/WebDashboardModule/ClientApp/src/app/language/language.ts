@@ -11,4 +11,6 @@ export interface Language {
     Confirm: string;
     Yes: string;
     No: string;
+    LogoutConfirmationText: string;
+    Logout: string;
 }

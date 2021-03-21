@@ -13,4 +13,6 @@ export class English implements Language {
     Confirm = 'Confirm';
     Yes = 'Yes';
     No = 'No';
+    LogoutConfirmationText = 'Are you sure you want to log out?';
+    Logout = 'Logout';
 }
