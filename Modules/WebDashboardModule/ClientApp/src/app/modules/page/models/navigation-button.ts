@@ -4,4 +4,5 @@ export interface NavigationButton {
     url: string;
     module?: string;
     alwaysAccess?: boolean;
+    hidden?: boolean;
 }
