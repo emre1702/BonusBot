@@ -4,8 +4,10 @@
             <mat-label>Youtube</mat-label>
             <input matInput [(ngModel)]="urlOrSearch" [placeholder]="'UrlOrSearch' | translate" />
         </mat-form-field>
-        <button class="flex-shrink-0 ml-2" mat-button (click)="play()">{{ 'Play' | translate }}</button>
-        <button class="flex-shrink-0 ml-2" mat-button (click)="queue()">{{ 'Queue' | translate }}</button>
-        <button class="flex-shrink-0 ml-2" mat-button (click)="playlist()">{{ 'Playlist' | translate }}</button>
+    </div>
+    <div class="d-flex flex-wrap">
+        <button class="flex-shrink-0 mr-2" mat-button (click)="play()">{{ 'Play' | translate }}</button>
+        <button class="flex-shrink-0 mr-2" mat-button (click)="queue()">{{ 'Queue' | translate }}</button>
+        <button class="flex-shrink-0 mr-2" mat-button (click)="playlist()">{{ 'Playlist' | translate }}</button>
     </div>
 </div>
