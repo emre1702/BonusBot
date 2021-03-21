@@ -23,6 +23,7 @@
         [fixedInViewport]="isMobileView"
         fixedTopGap="56"
         position="end"
+        [class.mw-50]="!isMobileView"
     >
         <mat-nav-list class="d-flex flex-column">
             <span class="border-bottom text-prewrap p-3" mat-list-item *ngFor="let message of messagesService.messages">{{ message }}</span>
