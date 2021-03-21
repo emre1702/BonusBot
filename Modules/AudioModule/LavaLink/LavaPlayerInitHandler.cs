@@ -1,6 +1,5 @@
 ﻿using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.Common.Extensions;
-using BonusBot.Database;
 using BonusBot.Common.Helper;
 using Discord;
 using System.Threading.Tasks;
