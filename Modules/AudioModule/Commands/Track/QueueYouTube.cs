@@ -26,10 +26,13 @@ namespace BonusBot.AudioModule.Commands.Track
             var audioTrack = GetAudioTrack(searchResult);
 
             if (Class.Player!.Queue.Count > 0 || Class.Player.CurrentTrack is { })
+            {
                 Class.Player.Queue.Enqueue(audioTrack);
+                await Class.ReplyAsync(string.Format(ModuleTexts.TrackHasBeenEnqueuedInfo, audioTrack));
+            } 
             else
                 await Class.Player.Play(audioTrack);
-            await Class.ReplyAsync(string.Format(ModuleTexts.TrackHasBeenEnqueuedInfo, audioTrack));
+            
         }
     }
 }
