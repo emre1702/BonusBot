@@ -1,9 +1,11 @@
-import { DefinePlugin } from 'webpack';
+const webpack = require('webpack');
 
-export const plugins = [
-    new DefinePlugin({
-        'process.env': {
-            WEB_BASE_URL: process.env.WEB_BASE_URL,
-        },
-    }),
-];
+module.exports = {
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                WEB_BASE_URL: process.env.WEB_BASE_URL,
+            },
+        }),
+    ],
+};
