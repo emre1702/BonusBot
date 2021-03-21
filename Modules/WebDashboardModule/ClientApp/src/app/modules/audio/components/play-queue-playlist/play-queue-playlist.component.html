@@ -1,0 +1,26 @@
+<div class="container flex-column p-0 m-0 mt-3">
+    <div class="d-flex flex-column flex-wrap">
+        <app-audio-provider class="flex-shrink-0 mr-3 mb-3 w-fit-content" [audioProvider]="audioProvider"></app-audio-provider>
+        <mat-form-field class="flex-grow-1 flex-shrink-1 mb-3">
+            <mat-label>{{ 'PlaylistUrl' | translate }}</mat-label>
+            <input matInput [(ngModel)]="urlIdOrSearch" />
+        </mat-form-field>
+        <div class="d-flex mb-3 align-items-center">
+            <mat-label class="mr-3">{{ 'Limit' | translate }} {{ limit }}</mat-label>
+            <mat-slider
+                class="flex-grow-1 flex-shrink-1"
+                [min]="1"
+                [max]="100"
+                [step]="1"
+                [(ngModel)]="limit"
+                [tickInterval]="10"
+                [thumbLabel]="true"
+            ></mat-slider>
+            <!--<app-number-input [min]="1" [max]="100" [(ngModel)]="limit"></app-number-input>-->
+        </div>
+
+        <div>
+            <button class="flex-shrink-0 mr-3" mat-button *ngFor="let button of buttons" (click)="button.func()">{{ button.name | translate }}</button>
+        </div>
+    </div>
+</div>

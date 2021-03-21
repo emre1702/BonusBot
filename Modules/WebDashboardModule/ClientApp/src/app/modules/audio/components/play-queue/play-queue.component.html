@@ -1,0 +1,12 @@
+<div class="container flex-column p-0 m-0 mt-3">
+    <div class="d-flex flex-column flex-wrap">
+        <app-audio-provider class="flex-shrink-0 mr-3 mb-3 w-fit-content" [audioProvider]="audioProvider"></app-audio-provider>
+        <mat-form-field class="flex-grow-1 flex-shrink-1 mb-3">
+            <mat-label>{{ 'UrlIdOrSearch' | translate }}</mat-label>
+            <input matInput [(ngModel)]="urlIdOrSearch" />
+        </mat-form-field>
+        <div>
+            <button class="flex-shrink-0 mr-3" mat-button *ngFor="let button of buttons" (click)="button.func()">{{ button.name | translate }}</button>
+        </div>
+    </div>
+</div>

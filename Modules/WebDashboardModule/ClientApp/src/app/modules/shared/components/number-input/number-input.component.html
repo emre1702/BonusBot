@@ -1,0 +1,13 @@
+<input
+    matInput
+    type="number"
+    [(ngModel)]="value"
+    [disabled]="disabled"
+    [placeholder]="placeholder"
+    [required]="required"
+    [aria-describedby]="userAriaDescribedBy"
+    [id]="id + '-input'"
+    [max]="max"
+    [min]="min"
+    [pattern]="'^(([0-9]*)|(([0-9]*)\.([0-9]*)))$'"
+/>

@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, of } from 'rxjs';
+import { QuestionDialogComponent } from 'src/app/modules/shared/popups/question-dialog/question-dialog.component';
 import { CommandService } from 'src/app/modules/shared/services/command.service';
+import { AudioButton } from '../../models/audio-button';
 
 @Component({
     selector: 'app-audio',
@@ -8,19 +11,26 @@ import { CommandService } from 'src/app/modules/shared/services/command.service'
     styleUrls: ['./audio.component.scss'],
 })
 export class AudioComponent {
-    urlOrSearch: string;
+    /*
 
-    constructor(private readonly commandService: CommandService, private readonly sanitizer: DomSanitizer) {}
-
-    play() {
-        this.commandService.execute(`play ${this.urlOrSearch}`);
-    }
-
-    queue() {
-        this.commandService.execute(`queue ${this.urlOrSearch}`);
-    }
+    constructor(private readonly commandService: CommandService, private readonly dialog: MatDialog) {}
 
     playlist() {
-        this.commandService.execute(`playlist ${this.urlOrSearch}`);
+        this.checkPlaylistLimit().subscribe((result) => {
+            if (result) 
+        });
     }
+
+    playlistQueue() {
+        this.checkPlaylistLimit().subscribe((result) => {
+            if (result) ;
+        });
+    }
+
+    private checkPlaylistLimit(): Observable<boolean> {
+        if (this.limit <= 1) {
+            return this.dialog.open(QuestionDialogComponent, { data: 'PlaylistLimit1AreYouSure' }).afterClosed();
+        }
+        return of(true);
+    }*/
 }

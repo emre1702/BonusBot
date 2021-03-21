@@ -2,6 +2,7 @@
 using BonusBot.AudioModule.LavaLink.Enums;
 using BonusBot.AudioModule.LavaLink.Models;
 using BonusBot.AudioModule.Models.CommandArgs;
+using BonusBot.AudioModule.PartialMain;
 using BonusBot.Common.Commands;
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,13 +1,29 @@
-<div class="container flex-column p-0 m-0">
-    <div class="d-flex">
-        <mat-form-field class="flex-grow-1 flex-shrink-1">
-            <mat-label>Youtube</mat-label>
-            <input matInput [(ngModel)]="urlOrSearch" [placeholder]="'UrlOrSearch' | translate" />
-        </mat-form-field>
-    </div>
-    <div class="d-flex flex-wrap">
-        <button class="flex-shrink-0 mr-2" mat-button (click)="play()">{{ 'Play' | translate }}</button>
-        <button class="flex-shrink-0 mr-2" mat-button (click)="queue()">{{ 'Queue' | translate }}</button>
-        <button class="flex-shrink-0 mr-2" mat-button (click)="playlist()">{{ 'Playlist' | translate }}</button>
-    </div>
-</div>
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>play_arrow</mat-icon>
+        </ng-template>
+        <app-play-queue></app-play-queue>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>playlist_play</mat-icon>
+        </ng-template>
+        <app-play-queue-playlist></app-play-queue-playlist>
+    </mat-tab>
+
+    <!--<mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>replay</mat-icon>
+        </ng-template>
+        <app-play-queue-playlist></app-play-queue-playlist>
+    </mat-tab>
+
+    <mat-tab>
+        <ng-template mat-tab-label>
+            <mat-icon>video_settings</mat-icon>
+        </ng-template>
+        <app-play-queue-playlist></app-play-queue-playlist>
+    </mat-tab>-->
+</mat-tab-group>

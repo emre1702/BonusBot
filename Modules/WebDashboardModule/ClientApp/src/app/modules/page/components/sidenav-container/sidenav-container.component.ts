@@ -19,7 +19,7 @@ export class SidenavContainerComponent {
     @Input() messagesOpened: boolean;
     @Output() messagesOpenedChange = new EventEmitter<boolean>();
 
-    buttons = Constants.buttons;
+    buttons = Constants.navigationButtons;
 
     constructor(readonly messagesService: MessagesService, private readonly navigationService: NavigationService, router: Router) {
         navigationService.navigateTo$.pipe(distinctUntilChanged()).subscribe((url) => router.navigateByUrl(url));

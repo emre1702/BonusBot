@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>{{ 'Confirm' | translate }}</h1>
+<div mat-dialog-content class="text-prewrap">{{ questionKey | translate }}</div>
+<div mat-dialog-actions>
+    <button mat-raised-button [mat-dialog-close]="false" cdkFocusInitial>{{ 'No' | translate }}</button>
+    <button mat-raised-button [mat-dialog-close]="true">{{ 'Yes' | translate }}</button>
+</div>

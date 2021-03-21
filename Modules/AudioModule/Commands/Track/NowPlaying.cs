@@ -1,5 +1,6 @@
 ﻿using BonusBot.AudioModule.Extensions;
 using BonusBot.AudioModule.Models.CommandArgs;
+using BonusBot.AudioModule.PartialMain;
 using BonusBot.Common.Commands;
 using BonusBot.Common.Helper;
 using System.Threading.Tasks;

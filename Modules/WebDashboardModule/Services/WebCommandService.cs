@@ -36,19 +36,26 @@ namespace BonusBot.WebDashboardModule.Services
 
         public async Task<List<string>> Execute(ISession session, string? guildId, string command)
         {
-            _id = Guid.NewGuid();
-            var context = await _contextProvideService.Get(session, guildId, _id.Value, command);
+            try
+            {
+                _id = Guid.NewGuid();
+                var context = await _contextProvideService.Get(session, guildId, _id.Value, command);
 
-            _commandsHandler.CommandService.CommandExecuted += CommandExecuted;
+                _commandsHandler.CommandService.CommandExecuted += CommandExecuted;
 
-            await _commandsHandler.CommandService.ExecuteAsync(context, 0, _mainServiceProvider, MultiMatchHandling.Best);
-            var result = await WaitForResult();
+                await _commandsHandler.CommandService.ExecuteAsync(context, 0, _mainServiceProvider, MultiMatchHandling.Best);
+                var result = await WaitForResult();
 
-            var messages = ((WebUser)context.User).Messages;
-            if (result is null)
-                messages.Add("Timeout");
+                var messages = ((WebUser)context.User).Messages;
+                if (result is null)
+                    messages.Add("Timeout");
 
-            return messages;
+                return messages;
+            }
+            catch (Exception ex)
+            {
+                return new() { ex.Message };
+            }
         }
 
         private async Task<IResult?> WaitForResult()

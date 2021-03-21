@@ -1,6 +1,6 @@
 ﻿using BonusBot.AudioModule.Models.CommandArgs;
 using System.Threading.Tasks;
-using static BonusBot.AudioModule.Main;
+using static BonusBot.AudioModule.PartialMain.Main;
 
 namespace BonusBot.AudioModule.Commands.Search
 {

@@ -1,0 +1,4 @@
+<mat-radio-group [ngModel]="audioProvider" (ngModelChange)="audioProviderChange.emit($event)">
+    <mat-radio-button class="mr-3" value="yt">YouTube</mat-radio-button>
+    <mat-radio-button class="mr-3" value="sc">Soundcloud</mat-radio-button>
+</mat-radio-group>

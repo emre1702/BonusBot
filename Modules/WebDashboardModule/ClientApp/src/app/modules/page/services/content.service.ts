@@ -36,7 +36,7 @@ export class ContentService implements OnDestroy {
     }
 
     private navigatedToUrl(url: string, selectedGuildId: string) {
-        const button = Constants.buttons.find((b) => b.url.toLowerCase() === url.toLowerCase());
+        const button = Constants.navigationButtons.find((b) => b.url.toLowerCase() === url.toLowerCase());
         this.accessLevelRequest.next(button?.module && !button.alwaysAccess ? { module: button.module, guildId: '' + selectedGuildId } : undefined);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.AudioModule.Models.CommandArgs;
+using BonusBot.AudioModule.PartialMain;
 using BonusBot.Common.Commands;
 using System.Threading.Tasks;
 

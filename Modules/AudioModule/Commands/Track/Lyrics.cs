@@ -3,6 +3,7 @@ using BonusBot.AudioModule.Language;
 using BonusBot.AudioModule.LavaLink.Helpers;
 using BonusBot.AudioModule.LavaLink.Models;
 using BonusBot.AudioModule.Models.CommandArgs;
+using BonusBot.AudioModule.PartialMain;
 using BonusBot.Common.Commands;
 using BonusBot.Common.Helper;
 using Discord;
