@@ -5,6 +5,7 @@ using BonusBot.WebDashboardModule.Models.WebCommand;
 using BonusBot.WebDashboardModule.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace BonusBot.WebDashboardModule.Controllers.WebCommand
@@ -32,6 +33,20 @@ namespace BonusBot.WebDashboardModule.Controllers.WebCommand
             var messages = await webCommandService.Execute(HttpContext.Session, commandData.GuildId, commandData.Command);
 
             return Ok(messages);
+        }
+
+        [HttpGet("Volume")]
+        public async Task<IActionResult> GetVolume(string guildId)
+        {
+            _userValidationService.AssertIsInGuild(HttpContext.Session, guildId);
+
+            var webCommandService = new WebCommandService(_guildsHandler, _discordClientHandler, _commandsHandler, _mainServiceProvider);
+            var messages = await webCommandService.Execute(HttpContext.Session, guildId, "GetVolume true");
+
+            var volumeStr = messages.FirstOrDefault(m => int.TryParse(m, out _));
+            if (volumeStr is not null)
+                return Ok(int.Parse(volumeStr));
+            return Ok(100);
         }
     }
 }

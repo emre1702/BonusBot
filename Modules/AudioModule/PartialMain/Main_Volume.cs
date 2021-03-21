@@ -16,8 +16,8 @@ namespace BonusBot.AudioModule.PartialMain
 
         [Command("volume")]
         [Alias("GetVolume", "GetVol", "Vol", "Volum", "lautstärke")]
-        public Task GetVolume()
-            => new GetVolume(this).Do(new());
+        public Task GetVolume(bool plainOutput = false)
+            => new GetVolume(this).Do(new(plainOutput));
     }
 }
 

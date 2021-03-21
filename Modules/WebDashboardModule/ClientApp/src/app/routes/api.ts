@@ -4,6 +4,9 @@ const root = environment.apiBaseUrl;
 
 export default {
     get: {
+        command: {
+            volume: `${root}/WebCommand/Volume`,
+        },
         content: {
             accessLevel: `${root}/Content/UserAccessLevel`,
         },
