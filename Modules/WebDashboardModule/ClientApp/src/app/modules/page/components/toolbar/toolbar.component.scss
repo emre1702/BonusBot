@@ -2,4 +2,8 @@
     background-size: 100% 100% !important;
     border: 0;
     margin-right: 1rem;
+
+    &:first-child {
+        margin-left: auto;
+    }
 }
