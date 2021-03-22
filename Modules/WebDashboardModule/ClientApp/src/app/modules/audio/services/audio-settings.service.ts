@@ -9,7 +9,7 @@ export class AudioSettingsService implements OnDestroy {
     private destroySubject = new Subject();
 
     private volume = new ReplaySubject<number>();
-    volume$ = merge([this.volume, interval(20 * 1000).pipe(mergeMap(() => this.httpClient.get(api.get.command.volume)))]).pipe(
+    volume$ = merge(this.volume, interval(20 * 1000).pipe(mergeMap(() => this.httpClient.get<number>(api.get.command.volume)))).pipe(
         distinctUntilChanged(),
         takeUntil(this.destroySubject)
     );
