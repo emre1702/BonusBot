@@ -7,8 +7,6 @@ import { AudioSettingsService } from '../../services/audio-settings.service';
     styleUrls: ['./audio-settings.component.scss'],
     providers: [AudioSettingsService],
 })
-export class AudioSettingsComponent implements OnInit {
+export class AudioSettingsComponent {
     constructor(readonly service: AudioSettingsService) {}
-
-    ngOnInit(): void {}
 }
