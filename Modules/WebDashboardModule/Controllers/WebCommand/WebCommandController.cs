@@ -45,8 +45,8 @@ namespace BonusBot.WebDashboardModule.Controllers.WebCommand
 
             var volumeStr = messages.FirstOrDefault(m => int.TryParse(m, out _));
             if (volumeStr is not null)
-                return Ok(int.Parse(volumeStr));
-            return Ok(100);
+                return Ok(new WebVolumeData { Volume = int.Parse(volumeStr) });
+            return Ok(new WebVolumeData { Volume = 100 });
         }
     }
 }
