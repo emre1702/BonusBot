@@ -12,7 +12,7 @@ import { NavigationService } from './navigation.service';
 export class ContentService implements OnDestroy {
     loading: boolean;
 
-    private accessLevelRequest = new Subject<{}>();
+    private accessLevelRequest = new Subject<Record<string, string | string[]>>();
     accessLevel$: Observable<UserAccessLevel> = this.accessLevelRequest.pipe(
         switchMap((params) => {
             this.loading = true;

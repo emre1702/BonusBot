@@ -8,7 +8,7 @@ import { NavigationService } from '../modules/page/services/navigation.service';
 export class AuthenticationInterceptor implements HttpInterceptor {
     constructor(private readonly navigationService: NavigationService) {}
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         return next.handle(request).pipe(
             catchError((err: { status: number }) => {
                 if (err.status == 401) {

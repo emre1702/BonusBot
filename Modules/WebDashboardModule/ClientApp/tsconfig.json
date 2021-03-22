@@ -2,7 +2,7 @@
     "compileOnSave": false,
     "compilerOptions": {
         "baseUrl": "./",
-        "module": "es2020",
+        "module": "esnext",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,
         "declaration": false,
@@ -11,10 +11,11 @@
         "experimentalDecorators": true,
         "target": "ES2018",
         "typeRoots": ["node_modules/@types"],
-        "types": ["node"],
-        "lib": ["es2018", "dom"]
+        "types": ["node", "jest"],
+        "lib": ["es2018", "es2015", "es2016", "dom", "es5", "es6"]
     },
     "angularCompilerOptions": {
         "strictTemplates": true
-    }
+    },
+    "exclude": ["node_modules"]
 }

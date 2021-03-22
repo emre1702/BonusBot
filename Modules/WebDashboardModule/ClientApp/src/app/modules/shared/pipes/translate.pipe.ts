@@ -8,7 +8,7 @@ import { SettingsService } from '../services/settings.service';
 export class TranslatePipe implements PipeTransform {
     constructor(private readonly settings: SettingsService) {}
 
-    transform(index: string, ...formatReplace: any[]): any {
+    transform(index: string, ...formatReplace: unknown[]): string {
         const str = this.settings.language[index] || index;
         if (formatReplace) {
             return this.formatString(str, ...formatReplace);
@@ -16,7 +16,7 @@ export class TranslatePipe implements PipeTransform {
         return str;
     }
 
-    formatString(str: string, ...val: any[]) {
+    formatString(str: string, ...val: unknown[]) {
         for (let index = 0; index < val.length; index++) {
             str = str.replace(`{${index}}`, String(val[index]));
         }

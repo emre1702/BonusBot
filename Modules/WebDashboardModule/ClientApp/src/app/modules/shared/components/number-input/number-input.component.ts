@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { FocusMonitor } from '@angular/cdk/a11y';
 import { coerceBooleanProperty, coerceNumberProperty } from '@angular/cdk/coercion';
 import { Component, ElementRef, HostBinding, Input, OnDestroy, Optional, Self, ViewChild } from '@angular/core';
@@ -51,6 +52,9 @@ export class NumberInputComponent implements MatFormFieldControl<number>, Contro
         return !this.value;
     }
 
+    // eslint-disable-next-line @angular-eslint/no-input-rename
+    @Input('aria-describedby') userAriaDescribedBy: string;
+
     @HostBinding() id = `number-input-${++NumberInputComponent.currentId}`;
     @HostBinding('class.floating')
     get shouldLabelFloat() {
@@ -81,20 +85,11 @@ export class NumberInputComponent implements MatFormFieldControl<number>, Contro
     controlType = 'number-input';
     autofilled? = false;
 
+    stateChanges = new Subject<void>();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     onChanged = (_: number) => {};
     onTouched = () => {};
-
-    @Input('aria-describedby') userAriaDescribedBy: string;
-    setDescribedByIds(ids: string[]): void {
-        this.userAriaDescribedBy = ids.join(' ');
-    }
-    onContainerClick(event: MouseEvent): void {
-        if ((event.target as Element).tagName.toLowerCase() != 'input') {
-            this.elRef.nativeElement.querySelector('input').focus();
-        }
-    }
-
-    stateChanges = new Subject<void>();
 
     constructor(@Optional() @Self() public ngControl: NgControl, private fm: FocusMonitor, private elRef: ElementRef<HTMLElement>) {
         if (this.ngControl != null) {
@@ -106,16 +101,25 @@ export class NumberInputComponent implements MatFormFieldControl<number>, Contro
         });
     }
 
-    writeValue(obj: any): void {
+    setDescribedByIds(ids: string[]): void {
+        this.userAriaDescribedBy = ids.join(' ');
+    }
+    onContainerClick(event: MouseEvent): void {
+        if ((event.target as Element).tagName.toLowerCase() != 'input') {
+            this.elRef.nativeElement.querySelector('input').focus();
+        }
+    }
+
+    writeValue(obj: unknown): void {
         const number = Number(obj);
         if (!number) return;
         this.value = number;
     }
 
-    registerOnChange(fn: any): void {
+    registerOnChange(fn: (value: number) => void): void {
         this.onChanged = fn;
     }
-    registerOnTouched(fn: any): void {
+    registerOnTouched(fn: () => void): void {
         this.onTouched = fn;
     }
 
