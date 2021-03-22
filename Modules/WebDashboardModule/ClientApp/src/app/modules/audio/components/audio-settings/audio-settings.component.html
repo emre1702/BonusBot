@@ -1,14 +1,13 @@
 <div class="flex-column d-flex flex-wrap mt-3">
-    <div class="d-flex mb-3 align-items-center" *ngIf="service.volume$ as volume">
+    <div class="d-flex mb-3 align-items-center" *ngIf="service.volume$ | async as volume">
         <mat-label class="mr-3">{{ 'Volume' | translate }} {{ volume }}</mat-label>
         <mat-slider
-            class="flex-grow-1 flex-shrink-1"
+            class="flex-grow-1 flex-shrink-1 mr-3"
             [min]="0"
             [max]="200"
             [step]="1"
             [ngModel]="volume"
             (ngModelChange)="service.setVolume($event)"
-            [ngModelOptions]="{ updateOn: 'blur' }"
             [tickInterval]="10"
             [thumbLabel]="true"
         ></mat-slider>
