@@ -12,8 +12,11 @@ export class PlayQueuePlaylistComponent {
     limit = 10;
 
     buttons: AudioButton[] = [
-        { name: 'Playlist', func: () => this.commandService.execute(`${this.audioProvider}Playlist ${this.limit} ${this.urlIdOrSearch}`) },
-        { name: 'PlaylistQueue', func: () => this.commandService.execute(`${this.audioProvider}QueuePlaylist ${this.limit} ${this.urlIdOrSearch}`) },
+        { name: 'Playlist', func: () => this.commandService.execute(`${this.audioProvider}Playlist ${this.limit} ${this.urlIdOrSearch}`).subscribe() },
+        {
+            name: 'PlaylistQueue',
+            func: () => this.commandService.execute(`${this.audioProvider}QueuePlaylist ${this.limit} ${this.urlIdOrSearch}`).subscribe(),
+        },
     ];
 
     constructor(private readonly commandService: CommandService) {}

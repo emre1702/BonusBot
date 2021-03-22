@@ -36,7 +36,7 @@ namespace BonusBot.WebDashboardModule.Controllers.WebCommand
         }
 
         [HttpGet("Volume")]
-        public async Task<IActionResult> GetVolume(string guildId)
+        public async Task<IActionResult> GetVolume([FromQuery] string guildId)
         {
             _userValidationService.AssertIsInGuild(HttpContext.Session, guildId);
 

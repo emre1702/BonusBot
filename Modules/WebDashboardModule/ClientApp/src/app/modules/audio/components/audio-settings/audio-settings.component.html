@@ -1,5 +1,5 @@
 <div class="flex-column d-flex flex-wrap mt-3">
-    <div class="d-flex mb-3 align-items-center" *ngIf="service.volume$ | async as volume">
+    <div class="d-flex mb-3 align-items-center" *ngIf="(service.volume$ | async)?.toString() as volume">
         <mat-label class="mr-3">{{ 'Volume' | translate }} {{ volume }}</mat-label>
         <mat-slider
             class="flex-grow-1 flex-shrink-1 mr-3"
