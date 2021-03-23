@@ -1,40 +1,39 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { interval, merge, ReplaySubject, Subject } from 'rxjs';
-import { distinctUntilChanged, map, mergeMap, repeat, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { first, mergeMap } from 'rxjs/operators';
 import api from 'src/app/routes/api';
 import { GuildSelectionService } from '../../page/services/guild-selection.service';
 import { CommandService } from '../../shared/services/command.service';
-import { VolumeData } from '../models/volume-data';
+import { AudioSettingsState } from '../models/audio-settings-state';
+import * as Selectors from '../states/audio-settings/audio-settings.selectors';
 
 @Injectable()
 export class AudioSettingsService implements OnDestroy {
     private destroySubject = new Subject();
 
-    private volume = new ReplaySubject<number>();
-    volume$ = merge(
-        this.volume,
-        merge(interval(10 * 1000).pipe(repeat()), this.guildSelection.selectedGuildId$).pipe(
-            withLatestFrom(this.guildSelection.selectedGuildId$),
-            mergeMap(([, guildId]) =>
-                this.httpClient
-                    .get<VolumeData>(api.get.command.volume, { params: { guildId: guildId } })
-                    .pipe(map((v) => v.volume))
-            )
-        )
-    ).pipe(distinctUntilChanged(), takeUntil(this.destroySubject));
+    volume$ = this.store.select(Selectors.selectVolume);
 
     constructor(
         private readonly httpClient: HttpClient,
         private readonly guildSelection: GuildSelectionService,
-        private readonly commandService: CommandService
+        private readonly commandService: CommandService,
+        private readonly store: Store
     ) {}
 
     ngOnDestroy() {
         this.destroySubject.next();
     }
 
-    setVolume(volume: number) {
-        this.commandService.execute(`setVolume ${volume}`).subscribe(() => this.volume.next(volume));
+    setVolume(volume: number): Observable<string[]> {
+        return this.commandService.execute(`setVolume ${volume}`);
+    }
+
+    loadAudioSettings(): Observable<AudioSettingsState> {
+        return this.guildSelection.selectedGuildId$.pipe(
+            first(),
+            mergeMap((guildId) => this.httpClient.get<AudioSettingsState>(api.get.command.audioSettingsState, { params: { guildId: guildId } }))
+        );
     }
 }

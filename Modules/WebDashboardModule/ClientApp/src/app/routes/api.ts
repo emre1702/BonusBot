@@ -1,7 +1,7 @@
 export default {
     get: {
         command: {
-            volume: `WebCommand/Volume`,
+            audioSettingsState: `WebCommand/AudioSettingsState`,
         },
         content: {
             accessLevel: `Content/UserAccessLevel`,

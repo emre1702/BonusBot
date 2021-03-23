@@ -35,18 +35,18 @@ namespace BonusBot.WebDashboardModule.Controllers.WebCommand
             return Ok(messages);
         }
 
-        [HttpGet("Volume")]
-        public async Task<IActionResult> GetVolume([FromQuery] string guildId)
+        [HttpGet("AudioSettingsState")]
+        public async Task<IActionResult> GetAudioSettingsState([FromQuery] string guildId)
         {
             _userValidationService.AssertIsInGuild(HttpContext.Session, guildId);
 
             var webCommandService = new WebCommandService(_guildsHandler, _discordClientHandler, _commandsHandler, _mainServiceProvider);
-            var messages = await webCommandService.Execute(HttpContext.Session, guildId, "GetVolume true");
+            var messages = await webCommandService.Execute(HttpContext.Session, guildId, "GetState");
 
-            var volumeStr = messages.FirstOrDefault(m => int.TryParse(m, out _));
-            if (volumeStr is not null)
-                return Ok(new WebVolumeData { Volume = int.Parse(volumeStr) });
-            return Ok(new WebVolumeData { Volume = 100 });
+            var json = messages.FirstOrDefault(m => m.StartsWith("{"));
+            if (json is not null)
+                return Ok(json);
+            return Ok("{}");
         }
     }
 }

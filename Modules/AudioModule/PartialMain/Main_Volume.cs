@@ -1,6 +1,4 @@
-﻿using BonusBot.AudioModule.Commands.Channel;
-using BonusBot.AudioModule.Commands.Volume;
-using BonusBot.AudioModule.Preconditions;
+﻿using BonusBot.AudioModule.Commands.Volume;
 using BonusBot.Common.Commands.Conditions;
 using Discord.Commands;
 using System.Threading.Tasks;
@@ -16,8 +14,8 @@ namespace BonusBot.AudioModule.PartialMain
 
         [Command("volume")]
         [Alias("GetVolume", "GetVol", "Vol", "Volum", "lautstärke")]
-        public Task GetVolume(bool plainOutput = false)
-            => new GetVolume(this).Do(new(plainOutput));
+        public Task GetVolume()
+            => new GetVolume(this).Do(new());
     }
 }
 
