@@ -120,4 +120,8 @@
   <data name="PlayerLeftGuildLogInfo" xml:space="preserve">
     <value>{0} ({1}) has left the guild.</value>
   </data>
+  <data name="WebCommandExecutedInfo" xml:space="preserve">
+    <value>Command in web has been executed by {0}:
+{1}</value>
+  </data>
 </root>

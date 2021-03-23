@@ -18,14 +18,15 @@ namespace LoggingModule
         {
             base.OnModuleBuilding(commandService, builder);
 
-            Initialize();
+            Initialize(commandService);
         }
 
-        private async void Initialize()
+        private async void Initialize(CommandService commandService)
         {
             var client = await _discordClientHandler.ClientSource.Task;
 
             client.UserLeft += new UserLeft(_guildsHandler).Log;
+            commandService.CommandExecuted += new WebCommandExecuted(_guildsHandler).Log;
         }
     }
 }

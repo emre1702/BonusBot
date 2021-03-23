@@ -10,6 +10,7 @@ namespace BonusBot.Common.Interfaces.Commands
     {
         IBonusGuild? BonusGuild { get; }
         SocketGuildUser? GuildUser { get; }
+        bool IsWeb => false;
 
         ValueTask<IUser?> GetUserAsync(ulong id);
     }

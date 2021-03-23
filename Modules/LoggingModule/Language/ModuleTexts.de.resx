@@ -120,4 +120,8 @@
   <data name="PlayerLeftGuildLogInfo" xml:space="preserve">
     <value>{0} ({1}) hat den Server verlassen.</value>
   </data>
+  <data name="WebCommandExecutedInfo" xml:space="preserve">
+    <value>Befehl im Web wurde von {0} ausgeführt:
+{1}</value>
+  </data>
 </root>

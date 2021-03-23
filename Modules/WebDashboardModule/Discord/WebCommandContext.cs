@@ -24,6 +24,8 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public IUserMessage Message { get; }
 
+        public bool IsWeb => true;
+
         public WebCommandContext(Guid id, IBonusGuild? bonusGuild, DiscordSocketClient client, SocketGuild? guild, IMessageChannel channel, IUser user, SocketGuildUser? socketGuildUser, IUserMessage message)
         {
             Id = id;

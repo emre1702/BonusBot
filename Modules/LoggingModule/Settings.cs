@@ -6,5 +6,6 @@ namespace BonusBot.LoggingModule
     public class Settings
     {
         public const string UserLeftLogChannelId = "UserLeftLogChannelId";
+        public const string WebCommandExecutedChannel = "WebCommandExecutedChannel";
     }
 }

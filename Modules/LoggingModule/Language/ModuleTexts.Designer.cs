@@ -68,5 +68,15 @@ namespace BonusBot.LoggingModule.Language {
                 return ResourceManager.GetString("PlayerLeftGuildLogInfo", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command in web has been executed by {0}:
+        ///{1}.
+        /// </summary>
+        internal static string WebCommandExecutedInfo {
+            get {
+                return ResourceManager.GetString("WebCommandExecutedInfo", resourceCulture);
+            }
+        }
     }
 }
