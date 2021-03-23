@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using BonusBot.WebDashboardModule.Models.Discord;
+using Discord;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -8,25 +9,25 @@ namespace BonusBot.WebDashboardModule.Discord
 {
     public class WebUser : IUser
     {
-        public string AvatarId => throw new NotImplementedException();
+        public string AvatarId => _userData.Avatar ?? string.Empty;
 
-        public string Discriminator => throw new NotImplementedException();
+        public string Discriminator => _userData.Discriminator;
 
-        public ushort DiscriminatorValue => throw new NotImplementedException();
+        public ushort DiscriminatorValue => ushort.Parse(_userData.Discriminator);
 
-        public bool IsBot => throw new NotImplementedException();
+        public bool IsBot => _userData.IsBot ?? false;
 
-        public bool IsWebhook => throw new NotImplementedException();
+        public bool IsWebhook => false;
 
-        public string Username => throw new NotImplementedException();
+        public string Username => _userData.Username;
 
-        public UserProperties? PublicFlags => throw new NotImplementedException();
+        public UserProperties? PublicFlags => (UserProperties?)_userData.PublicFlags;
 
-        public DateTimeOffset CreatedAt => throw new NotImplementedException();
+        public DateTimeOffset CreatedAt => DateTimeOffset.UtcNow;
 
-        public ulong Id => throw new NotImplementedException();
+        public ulong Id => _userData.Id;
 
-        public string Mention => throw new NotImplementedException();
+        public string Mention => MentionUtils.MentionUser(_userData.Id);
 
         public IActivity Activity => throw new NotImplementedException();
 
@@ -52,9 +53,14 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public IUserMessage AddWebMessage(string? text, IMessageChannel channel)
         {
-            if (text is not null)   
+            if (text is not null)
                 Messages.Add(text);
             return new WebMessage(text ?? string.Empty, this, channel);
         }
+
+        private readonly UserResponseData _userData;
+
+        public WebUser(UserResponseData userData)
+            => _userData = userData;
     }
 }

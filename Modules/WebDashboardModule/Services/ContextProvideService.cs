@@ -23,22 +23,19 @@ namespace BonusBot.WebDashboardModule.Services
         public async Task<WebCommandContext> Get(ISession session, string? guildId, Guid guid, string command)
         {
             var discordClient = await _discordClientHandler.ClientSource.Task;
+            var userData = session.Get<UserResponseData>(SessionKeys.UserData)!;
 
             var guildIdUlong = guildId is not null ? ulong.Parse(guildId) : (ulong?)null;
             var bonusGuild = _guildsHandler.GetGuild(guildIdUlong);
             var guild = guildIdUlong.HasValue ? discordClient.GetGuild(guildIdUlong.Value) : null;
-            var socketGuildUser = guild is not null ? GetGuildUser(session, guild) : null;
-            var user = new WebUser();
+            var socketGuildUser = guild is not null ? GetGuildUser(userData, guild) : null;
+            var user = new WebUser(userData);
             var channel = new WebMessageChannel(user);
             var message = new WebMessage(command, user, channel);
 
             return new(guid, bonusGuild, discordClient, guild, channel, user, socketGuildUser, message);
         }
 
-        private static SocketGuildUser? GetGuildUser(ISession session, SocketGuild guild)
-        {
-            var userData = session.Get<UserResponseData>(SessionKeys.UserData);
-            return guild.GetUser(userData!.Id);
-        }
+        private static SocketGuildUser? GetGuildUser(UserResponseData userData, SocketGuild guild) => guild.GetUser(userData!.Id);
     }
 }
