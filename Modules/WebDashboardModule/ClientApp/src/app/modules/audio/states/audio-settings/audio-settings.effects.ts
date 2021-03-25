@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { GuildSelectionService } from 'src/app/modules/page/services/guild-selection.service';
 import { AudioSettingsState } from '../../models/audio-settings-state';
 import { AudioSettingsService } from '../../services/audio-settings.service';
 import * as AudioSettingsActions from './audio-settings.actions';
@@ -23,8 +24,9 @@ export class AudioSettingsEffects {
     loadAudioSettings$ = createEffect(() =>
         this.actions.pipe(
             ofType(AudioSettingsActions.loadAudioSettings),
-            mergeMap(() =>
-                this.service.loadAudioSettings().pipe(
+            withLatestFrom(this.guildSelectionService.selectedGuildId$),
+            mergeMap(([, guildId]) =>
+                this.service.loadAudioSettings(guildId).pipe(
                     map((audioSettings: AudioSettingsState) => AudioSettingsActions.loadAudioSettingsSuccess(audioSettings)),
                     catchError((err) => of(AudioSettingsActions.loadAudioSettingsFailure({ err })))
                 )
@@ -32,5 +34,9 @@ export class AudioSettingsEffects {
         )
     );
 
-    constructor(private actions: Actions, private service: AudioSettingsService) {}
+    constructor(
+        private readonly actions: Actions,
+        private readonly service: AudioSettingsService,
+        private readonly guildSelectionService: GuildSelectionService
+    ) {}
 }

@@ -9,33 +9,33 @@ namespace BonusBot.WebDashboardModule.Discord
 {
     public class WebUser : IUser
     {
-        public string AvatarId => _userData.Avatar ?? string.Empty;
+        public virtual string AvatarId => _userData.Avatar ?? string.Empty;
 
-        public string Discriminator => _userData.Discriminator;
+        public virtual string Discriminator => _userData.Discriminator;
 
-        public ushort DiscriminatorValue => ushort.Parse(_userData.Discriminator);
+        public virtual ushort DiscriminatorValue => ushort.Parse(_userData.Discriminator);
 
-        public bool IsBot => _userData.IsBot ?? false;
+        public virtual bool IsBot => _userData.IsBot ?? false;
 
-        public bool IsWebhook => false;
+        public virtual bool IsWebhook => false;
 
         public string Username => _userData.Username;
 
-        public UserProperties? PublicFlags => (UserProperties?)_userData.PublicFlags;
+        public virtual UserProperties? PublicFlags => (UserProperties?)_userData.PublicFlags;
 
-        public DateTimeOffset CreatedAt => DateTimeOffset.UtcNow;
+        public virtual DateTimeOffset CreatedAt => DateTimeOffset.UtcNow;
 
         public ulong Id => _userData.Id;
 
-        public string Mention => MentionUtils.MentionUser(_userData.Id);
+        public virtual string Mention => MentionUtils.MentionUser(_userData.Id);
 
-        public IActivity Activity => throw new NotImplementedException();
+        public virtual IActivity Activity => throw new NotImplementedException();
 
-        public UserStatus Status => throw new NotImplementedException();
+        public virtual UserStatus Status => throw new NotImplementedException();
 
-        public IImmutableSet<ClientType> ActiveClients => throw new NotImplementedException();
+        public virtual IImmutableSet<ClientType> ActiveClients => throw new NotImplementedException();
 
-        public IImmutableList<IActivity> Activities => throw new NotImplementedException();
+        public virtual IImmutableList<IActivity> Activities => throw new NotImplementedException();
         public List<string> Messages { get; } = new();
 
         public string GetAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)

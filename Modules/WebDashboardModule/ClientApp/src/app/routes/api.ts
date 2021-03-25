@@ -12,6 +12,10 @@ export default {
         login: {
             oAuthUrl: `Login/OAuthUrl`,
         },
+        settings: {
+            allModuleDatas: `Settings/AllModuleDatas`,
+            moduleSettings: `Settings/ModuleSettings`,
+        },
     },
     post: {
         command: {

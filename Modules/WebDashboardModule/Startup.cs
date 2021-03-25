@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Text.Json;
 
 namespace BonusBot.WebDashboardModule
 {
@@ -20,7 +21,7 @@ namespace BonusBot.WebDashboardModule
                     p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().Build());
             });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddJsonOptions(jsonOptions => jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "wwwroot";

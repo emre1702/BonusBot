@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace GuildSettingsModule
+namespace BonusBot.Common.Helper
 {
-    internal static class Helpers
+    public class SettingsHelper
     {
-        internal static bool DoesSettingExists(IBonusGuild bonusGuild, string key, string moduleName)
+        public static bool DoesSettingExists(IBonusGuild bonusGuild, string key, string moduleName)
         {
             var assembly = bonusGuild.Modules.GetActivatedModuleAssembly(moduleName);
             if (assembly is null)
@@ -20,26 +20,26 @@ namespace GuildSettingsModule
             return settingsKeys.Any(k => k.Equals(key, StringComparison.CurrentCultureIgnoreCase));
         }
 
-        internal static bool HasSettings(Assembly assembly)
+        public static bool HasSettings(Assembly assembly)
             => assembly.GetTypes().Any(t => t.GetCustomAttribute<GuildSettingsContainerAttribute>() is { });
 
-        private static IEnumerable<Type> GetClassesWithSettings(Assembly assembly)
+        public static IEnumerable<Type> GetClassesWithSettings(Assembly assembly)
             => assembly.GetTypes().Where(t => t.GetCustomAttribute<GuildSettingsContainerAttribute>() is { });
 
-        private static IEnumerable<FieldInfo> GetSettingFields(Assembly assembly)
+        public static IEnumerable<FieldInfo> GetSettingFields(Assembly assembly)
         {
             var classesWithSettings = GetClassesWithSettings(assembly);
             var fields = classesWithSettings.SelectMany(t => t.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy).Where(fi => fi.IsLiteral && !fi.IsInitOnly));
             return fields;
         }
 
-        private static IEnumerable<string> GetSettingKeys(Assembly assembly)
+        public static IEnumerable<string> GetSettingKeys(Assembly assembly)
         {
             var fields = GetSettingFields(assembly);
             return fields.Where(fi => fi.GetRawConstantValue() != null).Select(fi => fi.GetRawConstantValue()!.ToString()!);
         }
 
-        internal static string GetModuleSettingsJoined(IBonusGuild bonusGuild, string moduleName)
+        public static string GetModuleSettingsJoined(IBonusGuild bonusGuild, string moduleName)
         {
             var module = bonusGuild.Modules.GetActivatedModuleAssembly(moduleName);
             if (module is null)

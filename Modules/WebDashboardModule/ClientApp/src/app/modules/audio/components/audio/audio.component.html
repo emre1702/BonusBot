@@ -3,14 +3,18 @@
         <ng-template mat-tab-label>
             <mat-icon>play_arrow</mat-icon>
         </ng-template>
-        <app-play-queue></app-play-queue>
+        <ng-template matTabContent>
+            <app-play-queue></app-play-queue>
+        </ng-template>
     </mat-tab>
 
     <mat-tab>
         <ng-template mat-tab-label>
             <mat-icon>playlist_play</mat-icon>
         </ng-template>
-        <app-play-queue-playlist></app-play-queue-playlist>
+        <ng-template matTabContent>
+            <app-play-queue-playlist></app-play-queue-playlist>
+        </ng-template>
     </mat-tab>
 
     <!--<mat-tab>
@@ -24,6 +28,8 @@
         <ng-template mat-tab-label>
             <mat-icon>video_settings</mat-icon>
         </ng-template>
-        <app-audio-settings></app-audio-settings>
+        <ng-template matTabContent>
+            <app-audio-settings></app-audio-settings>
+        </ng-template>
     </mat-tab>
 </mat-tab-group>

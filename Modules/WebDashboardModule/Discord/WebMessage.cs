@@ -28,7 +28,6 @@ namespace BonusBot.WebDashboardModule.Discord
         public DateTimeOffset? EditedTimestamp => throw new NotImplementedException();
 
         public IMessageChannel Channel { get; }
-
         public IUser Author { get; }
 
         public IReadOnlyCollection<IAttachment> Attachments => throw new NotImplementedException();
@@ -55,7 +54,7 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public DateTimeOffset CreatedAt => DateTimeOffset.UtcNow;
 
-        public ulong Id => throw new NotImplementedException();
+        public ulong Id => ulong.MaxValue;
 
         public WebMessage(string content, IUser author, IMessageChannel channel)
         {

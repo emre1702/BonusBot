@@ -9,9 +9,6 @@ const intialState: AudioSettingsState = {
 export const audioSettingsReducer = createReducer(
     intialState,
 
-    on(AudioSettingsActions.setVolumeSuccess, (state, action) => {
-        return { ...state, volume: action.volume };
-    }),
-
+    on(AudioSettingsActions.setVolumeSuccess, (state, action) => ({ ...state, volume: action.volume })),
     on(AudioSettingsActions.loadAudioSettingsSuccess, (_, newState) => newState)
 );

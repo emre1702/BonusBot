@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { interval, Subject } from 'rxjs';
 import { repeat, takeUntil } from 'rxjs/operators';
-import * as Actions from './audio-settings.actions';
+import * as Actions from '../states/audio-settings/audio-settings.actions';
 
 @Injectable()
 export class AudioSettingsStateService implements OnDestroy {

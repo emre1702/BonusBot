@@ -1,4 +1,5 @@
 ﻿using BonusBot.Common.Extensions;
+using BonusBot.Common.Helper;
 using BonusBot.GuildSettingsModule;
 using BonusBot.GuildSettingsModule.Language;
 using Discord;
@@ -77,7 +78,7 @@ namespace GuildSettingsModule
 
         private async Task<bool> SetSetting(string moduleName, string key, object value)
         {
-            if (!Helpers.DoesSettingExists(Context.BonusGuild!, key, moduleName))
+            if (!SettingsHelper.DoesSettingExists(Context.BonusGuild!, key, moduleName))
             {
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
                 return false;
@@ -96,7 +97,7 @@ namespace GuildSettingsModule
         [Priority(1)]
         public async Task Get(string moduleName, string key)
         {
-            if (!Helpers.DoesSettingExists(Context.BonusGuild!, key, moduleName))
+            if (!SettingsHelper.DoesSettingExists(Context.BonusGuild!, key, moduleName))
             {
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
                 return;
@@ -109,7 +110,7 @@ namespace GuildSettingsModule
         [Command("help")]
         public async Task Help()
         {
-            var modulesWithSettings = Context.BonusGuild!.Modules.GetActivatedModuleAssemblies().Where(Helpers.HasSettings);
+            var modulesWithSettings = Context.BonusGuild!.Modules.GetActivatedModuleAssemblies().Where(SettingsHelper.HasSettings);
             var moduleNames = string.Join(", ", modulesWithSettings.Select(m => m.ToModuleName()));
             await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextMain, "Common" + (moduleNames.Length > 0 ? (", " + moduleNames) : string.Empty)));
         }
@@ -117,7 +118,7 @@ namespace GuildSettingsModule
         [Command("help")]
         public async Task Help(string moduleName)
         {
-            var moduleSettingsStr = Helpers.GetModuleSettingsJoined(Context.BonusGuild!, moduleName);
+            var moduleSettingsStr = SettingsHelper.GetModuleSettingsJoined(Context.BonusGuild!, moduleName);
             await ReplyToUserAsync(string.Format(ModuleTexts.HelpTextModule, moduleName, moduleSettingsStr));
         }
     }

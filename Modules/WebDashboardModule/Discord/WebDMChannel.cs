@@ -12,7 +12,7 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public IReadOnlyCollection<IUser> Recipients { get; }
 
-        public string Name => throw new NotImplementedException();
+        public virtual string Name => "WebDMChannel";
 
         public DateTimeOffset CreatedAt => DateTimeOffset.UtcNow;
 
@@ -47,10 +47,8 @@ namespace BonusBot.WebDashboardModule.Discord
             throw new NotImplementedException();
         }
 
-        public Task<IMessage> GetMessageAsync(ulong id, CacheMode mode = CacheMode.AllowDownload, RequestOptions? options = null)
-        {
-            throw new NotImplementedException();
-        }
+        public Task<IMessage?> GetMessageAsync(ulong id, CacheMode mode = CacheMode.AllowDownload, RequestOptions? options = null)
+            => Task.FromResult((IMessage?)null);
 
         public IAsyncEnumerable<IReadOnlyCollection<IMessage>> GetMessagesAsync(int limit = 100, CacheMode mode = CacheMode.AllowDownload, RequestOptions? options = null)
         {

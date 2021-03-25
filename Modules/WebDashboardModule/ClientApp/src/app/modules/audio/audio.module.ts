@@ -10,8 +10,8 @@ import { AudioProviderComponent } from './components/selections/audio-provider/a
 import { AudioSettingsComponent } from './components/audio-settings/audio-settings.component';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import { audioSettingsFeatureKey } from './states/audio-settings/audio-settings.state-main';
-import { audioSettingsReducer } from './states/audio-settings/audio-settings.reducer';
+import { audioSettingsFeatureKey } from './states/audio-settings/audio-settings-state.main';
+import { audioSettingsReducer } from './states/audio-settings/audio-settings.reducers';
 import { AudioSettingsEffects } from './states/audio-settings/audio-settings.effects';
 import { AudioSettingsService } from './services/audio-settings.service';
 

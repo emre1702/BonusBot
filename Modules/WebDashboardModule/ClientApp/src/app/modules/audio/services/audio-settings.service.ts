@@ -15,12 +15,7 @@ export class AudioSettingsService implements OnDestroy {
 
     volume$ = this.store.select(Selectors.selectVolume);
 
-    constructor(
-        private readonly httpClient: HttpClient,
-        private readonly guildSelection: GuildSelectionService,
-        private readonly commandService: CommandService,
-        private readonly store: Store
-    ) {}
+    constructor(private readonly httpClient: HttpClient, private readonly commandService: CommandService, private readonly store: Store) {}
 
     ngOnDestroy() {
         this.destroySubject.next();
@@ -30,10 +25,7 @@ export class AudioSettingsService implements OnDestroy {
         return this.commandService.execute(`setVolume ${volume}`);
     }
 
-    loadAudioSettings(): Observable<AudioSettingsState> {
-        return this.guildSelection.selectedGuildId$.pipe(
-            first(),
-            mergeMap((guildId) => this.httpClient.get<AudioSettingsState>(api.get.command.audioSettingsState, { params: { guildId: guildId } }))
-        );
+    loadAudioSettings(guildId: string): Observable<AudioSettingsState> {
+        return this.httpClient.get<AudioSettingsState>(api.get.command.audioSettingsState, { params: { guildId: guildId } });
     }
 }

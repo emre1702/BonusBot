@@ -16,8 +16,8 @@ namespace BonusBot.AudioModule.Commands.State
         public override async Task Do(EmptyCommandArgs _)
         {
             var volume = await GetVolume();
-            var stateInfo = new StateInfo { Volume = volume };
-            await Class.ReplyAsync(JsonSerializer.Serialize(stateInfo));
+            var stateInfo = new StateInfo(volume);
+            await Class.ReplyAsync(JsonSerializer.Serialize(stateInfo, new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
         }
 
         private async ValueTask<int> GetVolume()

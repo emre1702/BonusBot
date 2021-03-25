@@ -1,0 +1,22 @@
+<mat-tab-group *ngIf="service.moduleDatas$ | async as moduleDatas" (selectedTabChange)="service.selectedModuleChanged.next($event.tab.textLabel)">
+    <mat-tab *ngFor="let moduleData of moduleDatas" [label]="moduleData.name">
+        <ng-template matTabContent>
+            <mat-slide-toggle [ngModel]="moduleData.isActive" (ngModelChange)="service.setModuleActive(moduleData.name, $event)"></mat-slide-toggle>
+            <ng-container *ngIf="moduleData.isActive">
+                <div class="setting-container" *ngIf="service.moduleSettings$ | async as moduleSettings">
+                    <div class="setting-row" *ngFor="let setting of moduleSettings">
+                        <span>{{ setting.name }}:</span>
+                        <mat-form-field>
+                            <input
+                                matInput
+                                [ngModel]="setting.value"
+                                (ngModelChange)="service.setSetting(moduleData.name, setting.name, $event)"
+                                [ngModelOptions]="{ updateOn: 'blur' }"
+                            />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-template>
+    </mat-tab>
+</mat-tab-group>

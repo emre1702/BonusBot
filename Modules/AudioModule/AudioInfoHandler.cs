@@ -16,7 +16,7 @@ namespace BonusBot.AudioModule
 {
     internal class AudioInfoHandler
     {
-        private readonly ConcurrentDictionary<ulong, SemaphoreSlim> _guildLocks = new ConcurrentDictionary<ulong, SemaphoreSlim>();
+        private readonly ConcurrentDictionary<ulong, SemaphoreSlim> _guildLocks = new();
 
         private readonly IGuildsHandler _guildsHandler;
 

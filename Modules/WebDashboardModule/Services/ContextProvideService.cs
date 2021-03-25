@@ -4,9 +4,11 @@ using BonusBot.WebDashboardModule.Defaults;
 using BonusBot.WebDashboardModule.Discord;
 using BonusBot.WebDashboardModule.Extensions;
 using BonusBot.WebDashboardModule.Models.Discord;
+using Discord;
 using Discord.WebSocket;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace BonusBot.WebDashboardModule.Services
@@ -28,14 +30,15 @@ namespace BonusBot.WebDashboardModule.Services
             var guildIdUlong = guildId is not null ? ulong.Parse(guildId) : (ulong?)null;
             var bonusGuild = _guildsHandler.GetGuild(guildIdUlong);
             var guild = guildIdUlong.HasValue ? discordClient.GetGuild(guildIdUlong.Value) : null;
-            var socketGuildUser = guild is not null ? GetGuildUser(userData, guild) : null;
-            var user = new WebUser(userData);
-            var channel = new WebMessageChannel(user);
+            var guildUser = guild is not null ? GetGuildUser(userData, guild) : null;
+            var user = guildUser is not null ? new WebGuildUser(userData, guildUser) : new WebUser(userData);
+            IMessageChannel channel = guild is null ? new WebDMChannel(user) : new WebGuildMessageChannel(user, guild);
             var message = new WebMessage(command, user, channel);
 
-            return new(guid, bonusGuild, discordClient, guild, channel, user, socketGuildUser, message);
+            return new(guid, bonusGuild, discordClient, guild, channel, user, guildUser, message);
         }
 
-        private static SocketGuildUser? GetGuildUser(UserResponseData userData, SocketGuild guild) => guild.GetUser(userData!.Id);
+        private static SocketGuildUser? GetGuildUser(UserResponseData userData, SocketGuild guild) 
+            => guild.GetUser(userData!.Id);
     }
 }

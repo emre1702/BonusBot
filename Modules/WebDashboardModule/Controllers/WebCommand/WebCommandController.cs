@@ -4,7 +4,6 @@ using BonusBot.Common.Interfaces.Services;
 using BonusBot.WebDashboardModule.Models.WebCommand;
 using BonusBot.WebDashboardModule.Services;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,7 +27,7 @@ namespace BonusBot.WebDashboardModule.Controllers.WebCommand
         {
             if (commandData.GuildId is not null)
                 _userValidationService.AssertIsInGuild(HttpContext.Session, commandData.GuildId);
-             
+
             var webCommandService = new WebCommandService(_guildsHandler, _discordClientHandler, _commandsHandler, _mainServiceProvider);
             var messages = await webCommandService.Execute(HttpContext.Session, commandData.GuildId, commandData.Command);
 

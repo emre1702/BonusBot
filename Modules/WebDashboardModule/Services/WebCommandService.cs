@@ -19,7 +19,7 @@ namespace BonusBot.WebDashboardModule.Services
         private readonly ICustomServiceProvider _mainServiceProvider;
         private Guid? _id;
 
-        private TaskCompletionSource<IResult> _resultWaitSource = new();
+        private readonly TaskCompletionSource<IResult> _resultWaitSource = new();
 
         public WebCommandService(IGuildsHandler guildsHandler, IDiscordClientHandler discordClientHandler, ICommandsHandler commandsHandler, ICustomServiceProvider mainServiceProvider)
             => (_contextProvideService, _commandsHandler, _mainServiceProvider) = (new(guildsHandler, discordClientHandler), commandsHandler, mainServiceProvider);
