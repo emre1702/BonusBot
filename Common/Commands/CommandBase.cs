@@ -1,5 +1,4 @@
-﻿using BonusBot.Common.Commands;
-using BonusBot.Common.Commands.Exceptions;
+﻿using BonusBot.Common.Commands.Conditions;
 using BonusBot.Common.Defaults;
 using BonusBot.Common.Interfaces.Commands;
 using Discord;
@@ -9,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BonusBot.Common.Extensions
 {
+    [RequireNotDisabledInGuild]
     public class CommandBase : ModuleBase<ICustomCommandContext>
     {
         public Task<IUserMessage> ReplyAsync(EmbedBuilder embed)
@@ -18,7 +18,7 @@ namespace BonusBot.Common.Extensions
             return ReplyAsync(embed: embed.Build());
         }
 
-        public new Task<IUserMessage> ReplyAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null, 
+        public new Task<IUserMessage> ReplyAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
             MessageReference? messageReference = null)
             => Context.Channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
 
@@ -39,9 +39,6 @@ namespace BonusBot.Common.Extensions
 
         protected override void BeforeExecute(CommandInfo command)
         {
-            if (Context.BonusGuild?.Modules.Contains(GetType().Assembly) == false)
-                throw new ModuleIsDisabledException();
-
             base.BeforeExecute(command);
 
             Thread.CurrentThread.CurrentUICulture = Context.BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;

@@ -5,6 +5,7 @@ using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.Database;
 using BonusBot.Database.Entities.Settings;
+using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -91,6 +92,15 @@ namespace BonusBot.GuildsSystem.Modules
             lock (_activeModuleAssemblies)
             {
                 return _activeModuleAssemblies.Contains(assembly);
+            }
+        }
+
+        public bool Contains(ModuleInfo moduleInfo)
+        {
+            lock (_activeModuleAssemblies)
+            {
+                var moduleName = moduleInfo.Name.ToModuleName();
+                return _activeModuleAssemblies.Any(m => m.ToModuleName().Equals(moduleName, System.StringComparison.OrdinalIgnoreCase));
             }
         }
 
