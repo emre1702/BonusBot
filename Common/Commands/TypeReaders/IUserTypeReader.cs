@@ -22,7 +22,10 @@ namespace BonusBot.Common.Commands.TypeReaders
                 IUser? user = null;
                 if (MentionUtils.TryParseUser(input, out ulong userId)
                     || ulong.TryParse(input, out userId))
+                {
+                    if (userId == 0) return TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidUserError);
                     user ??= await ctx.GetUserAsync(userId).ConfigureAwait(false);
+                } 
 
                 if (ctx.Guild is SocketGuild socketGuild)
                 {
@@ -55,7 +58,7 @@ namespace BonusBot.Common.Commands.TypeReaders
 
         private IUser? GetUser(IEnumerable<IUser> users, string name)
         {
-            IUser? user = users.OfType<SocketGuildUser>().FirstOrDefault(u => u.Nickname.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            IUser? user = users.OfType<SocketGuildUser>().FirstOrDefault(u => u.Nickname?.Equals(name, StringComparison.CurrentCultureIgnoreCase) == true);
             user ??= users.FirstOrDefault(u => u.Username.Equals(name, StringComparison.CurrentCultureIgnoreCase));
             user ??= users.FirstOrDefault(u => (u.Username + "#" + u.Discriminator).Equals(name, StringComparison.CurrentCultureIgnoreCase));
             user ??= users.FirstOrDefault(u => u.Username.Equals(name, StringComparison.CurrentCultureIgnoreCase));
