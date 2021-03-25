@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Extensions;
+﻿using BonusBot.Common.Commands.Conditions;
+using BonusBot.Common.Extensions;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace ColorRolesModule
 {
     [RequireContext(ContextType.Guild)]
+    [RequireNotDisabledInGuild(typeof(Commands))]
     public class Commands : CommandBase
     {
         [Command("color")]

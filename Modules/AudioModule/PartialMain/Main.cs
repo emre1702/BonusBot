@@ -1,6 +1,7 @@
 ﻿using BonusBot.AudioModule.LavaLink.Clients;
 using BonusBot.AudioModule.Models;
 using BonusBot.AudioModule.Preconditions;
+using BonusBot.Common.Commands.Conditions;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.Database;
 using Discord;
@@ -12,6 +13,7 @@ namespace BonusBot.AudioModule.PartialMain
     [RequireContext(ContextType.Guild)]
     [RequireBotPermission(GuildPermission.Speak & GuildPermission.Connect)]
     [RequireAudioBotRole]
+    [RequireNotDisabledInGuild(typeof(Main))]
     public partial class Main : AudioCommandBase
     {
         protected static Main? Instance { get; private set; }

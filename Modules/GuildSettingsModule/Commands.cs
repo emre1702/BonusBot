@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Extensions;
+﻿using BonusBot.Common.Commands.Conditions;
+using BonusBot.Common.Extensions;
 using BonusBot.Common.Helper;
 using BonusBot.GuildSettingsModule;
 using BonusBot.GuildSettingsModule.Language;
@@ -11,6 +12,7 @@ namespace GuildSettingsModule
 {
     [Group("config")]
     [Alias("settings", "setting")]
+    [RequireNotDisabledInGuild(typeof(GuildSettings))]
     public class GuildSettings : CommandBase
     {
         private static readonly SettingChangeEffects _settingChangeEffects = new();

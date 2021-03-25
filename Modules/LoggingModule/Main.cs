@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Interfaces.Guilds;
+﻿using BonusBot.Common.Commands.Conditions;
+using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.LoggingModule.EventHandlers;
 using Discord.Commands;
@@ -6,6 +7,7 @@ using Discord.Commands.Builders;
 
 namespace LoggingModule
 {
+    [RequireNotDisabledInGuild(typeof(Main))]
     public class Main : ModuleBase<ICommandContext>
     {
         private readonly IDiscordClientHandler _discordClientHandler;

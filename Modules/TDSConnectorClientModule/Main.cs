@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Extensions;
+﻿using BonusBot.Common.Commands.Conditions;
+using BonusBot.Common.Extensions;
 using BonusBot.TDSConnectorClientModule.Commands;
 using Discord.Commands;
 using Discord.Commands.Builders;
@@ -10,6 +11,7 @@ using static BonusBot.TDSConnectorClientModule.BBCommand;
 
 namespace BonusBot.TDSConnectorClientModule
 {
+    [RequireNotDisabledInGuild(typeof(Main))]
     public class Main : CommandBase
     {
 #nullable disable

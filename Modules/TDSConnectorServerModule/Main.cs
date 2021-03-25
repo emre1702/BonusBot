@@ -1,4 +1,5 @@
-﻿using BonusBot.Common.Defaults;
+﻿using BonusBot.Common.Commands.Conditions;
+using BonusBot.Common.Defaults;
 using BonusBot.TDSConnectorServerModule.Services;
 using Discord.Commands;
 using Discord.Commands.Builders;
@@ -8,6 +9,7 @@ using System;
 
 namespace BonusBot.TDSConnectorServerModule
 {
+    [RequireNotDisabledInGuild(typeof(Main))]
     public class Main : ModuleBase<ICommandContext>
     {
         private readonly IServiceProvider _serviceProvider;

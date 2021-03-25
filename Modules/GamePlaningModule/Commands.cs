@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace BonusBot.GamePlaningModule
 {
     [RequireContext(ContextType.Guild)]
+    [RequireNotDisabledInGuild(typeof(GamePlaning))]
     public partial class GamePlaning : CommandBase
     {
         [Command("treffen")]

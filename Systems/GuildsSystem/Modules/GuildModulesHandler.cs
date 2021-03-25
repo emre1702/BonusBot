@@ -95,11 +95,10 @@ namespace BonusBot.GuildsSystem.Modules
             }
         }
 
-        public bool Contains(ModuleInfo moduleInfo)
+        public bool Contains(string moduleName)
         {
             lock (_activeModuleAssemblies)
             {
-                var moduleName = moduleInfo.Name.ToModuleName();
                 return _activeModuleAssemblies.Any(m => m.ToModuleName().Equals(moduleName, System.StringComparison.OrdinalIgnoreCase));
             }
         }

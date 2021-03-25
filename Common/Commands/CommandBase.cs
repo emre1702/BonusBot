@@ -7,8 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace BonusBot.Common.Extensions
-{
-    [RequireNotDisabledInGuild]
+{ 
     public class CommandBase : ModuleBase<ICustomCommandContext>
     {
         public Task<IUserMessage> ReplyAsync(EmbedBuilder embed)

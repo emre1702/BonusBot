@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 namespace BonusBot.AdminModule
 {
     [RequireContext(ContextType.Guild)]
+    [RequireNotDisabledInGuild(typeof(Main))]
     public class Main : CommandBase
     {
         internal BonusDbContextFactory DbContextFactory { get; private init; }

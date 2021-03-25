@@ -11,7 +11,7 @@ namespace BonusBot.Common.Interfaces.Guilds
         ValueTask<bool> Add(Assembly assembly);
 
         bool Contains(Assembly assembly);
-        bool Contains(ModuleInfo moduleInfo);
+        bool Contains(string moduleName);
 
         List<Assembly> GetActivatedModuleAssemblies();
 
