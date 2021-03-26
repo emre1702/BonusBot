@@ -5,6 +5,7 @@ import * as Actions from './server-settings.actions';
 const initialState: ServerSettingsState = {
     moduleDatas: [],
     moduleSettings: {},
+    selectedModule: '',
 };
 
 export const serverSettingsReducers = createReducer(
@@ -25,5 +26,6 @@ export const serverSettingsReducers = createReducer(
                 ...state.moduleDatas.filter((_, index) => index > dataIndex),
             ],
         };
-    })
+    }),
+    on(Actions.selectModule, (state, action) => ({ ...state, selectedModule: action.moduleName }))
 );

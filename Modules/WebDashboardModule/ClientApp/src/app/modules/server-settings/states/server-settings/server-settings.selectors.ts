@@ -4,8 +4,10 @@ import { serverSettingsFeatureKey } from './server-settings.state-main';
 
 export const selectState = createFeatureSelector<ServerSettingsState>(serverSettingsFeatureKey);
 
+export const selectSelectedModule = createSelector(selectState, (state: ServerSettingsState) => state.selectedModule);
 export const selectModuleDatas = createSelector(selectState, (state: ServerSettingsState) => state.moduleDatas);
 export const selectModuleSettings = createSelector(
     selectState,
-    (state: ServerSettingsState, props: { moduleName: string }) => state.moduleSettings[props.moduleName]
+    selectSelectedModule,
+    (state: ServerSettingsState, selectedModuleName: string) => state.moduleSettings[selectedModuleName]
 );

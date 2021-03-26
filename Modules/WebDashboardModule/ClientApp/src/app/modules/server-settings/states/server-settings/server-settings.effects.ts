@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, debounceTime, filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { GuildSelectionService } from 'src/app/modules/page/services/guild-selection.service';
 import { ServerSettingsService } from '../../services/server-settings.service';
 import * as ServerSettingsActions from './server-settings.actions';
@@ -25,6 +25,7 @@ export class ServerSettingsEffects {
     loadModuleSettings$ = createEffect(() =>
         this.actions.pipe(
             ofType(ServerSettingsActions.loadModuleSettings),
+            debounceTime(200),
             withLatestFrom(this.guildSelectionService.selectedGuildId$),
             mergeMap(([action, guildId]) =>
                 this.service.loadModuleSettings(guildId, action.moduleName).pipe(
@@ -76,7 +77,13 @@ export class ServerSettingsEffects {
         )
     );
 
-    // ;
+    selectModule$ = createEffect(() =>
+        this.actions.pipe(
+            ofType(ServerSettingsActions.selectModule),
+            mergeMap(({ moduleName }) => of(this.store.dispatch(ServerSettingsActions.loadModuleSettings({ moduleName })))),
+            map(() => ServerSettingsActions.reloadModuleSettingsTriggered())
+        )
+    );
 
     constructor(
         private readonly actions: Actions,

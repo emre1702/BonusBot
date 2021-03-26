@@ -1,4 +1,4 @@
-<mat-tab-group *ngIf="service.moduleDatas$ | async as moduleDatas" (selectedTabChange)="service.selectedModuleChanged.next($event.tab.textLabel)">
+<mat-tab-group *ngIf="service.moduleDatas$ | async as moduleDatas" (selectedTabChange)="service.selectModule($event.tab.textLabel)">
     <mat-tab *ngFor="let moduleData of moduleDatas" [label]="moduleData.name">
         <ng-template matTabContent>
             <mat-slide-toggle [ngModel]="moduleData.isActive" (ngModelChange)="service.setModuleActive(moduleData.name, $event)"></mat-slide-toggle>

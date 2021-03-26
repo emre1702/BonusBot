@@ -24,4 +24,6 @@ export const setModuleSettingSuccess = createAction(
 );
 export const setModuleSettingFailure = createAction('[Server Settings] Set Module Setting Failure', props<{ err: unknown }>());
 
+export const selectModule = createAction('[Server Settings] Select Module', props<{ moduleName: string }>());
+
 export const reloadModuleSettingsTriggered = createAction('[Server Settings] Reload Module Settings Triggered');
