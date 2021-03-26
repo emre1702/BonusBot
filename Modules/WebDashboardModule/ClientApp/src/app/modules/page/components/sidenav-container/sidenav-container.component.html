@@ -6,14 +6,14 @@
         [fixedInViewport]="isMobileView"
         fixedTopGap="56"
     >
-        <mat-nav-list>
+        <mat-nav-list class="d-flex flex-column h-100">
             <ng-container *ngFor="let button of buttons">
                 <a mat-list-item *ngIf="!button.hidden" (click)="navigateTo(button)">
                     <mat-icon>{{ button.icon }}</mat-icon>
-                    <span class="ml-3" *ngIf="!isMobileView">{{ button.name }}</span>
+                    <span class="ml-3" *ngIf="!isMobileView">{{ button.name | translate }}</span>
                 </a>
             </ng-container>
-            <a mat-list-item (click)="logoutService.signOut()">
+            <a class="mt-auto" mat-list-item (click)="logoutService.signOut()">
                 <mat-icon>logout</mat-icon>
                 <span class="ml-3" *ngIf="!isMobileView">{{ 'Logout' | translate }}</span>
             </a>
