@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, withLatestFrom } from 'rxjs/operators';
 import { GuildSelectionService } from 'src/app/modules/page/services/guild-selection.service';
 import { ServerSettingsService } from '../../services/server-settings.service';
 import * as ServerSettingsActions from './server-settings.actions';
@@ -44,6 +44,15 @@ export class ServerSettingsEffects {
                     catchError((err) => of(ServerSettingsActions.setModuleActiveFailure({ err })))
                 )
             )
+        )
+    );
+
+    setModuleActiveSuccess$ = createEffect(() =>
+        this.actions.pipe(
+            ofType(ServerSettingsActions.setModuleActiveSuccess),
+            filter(({ moduleData }) => moduleData.isActive),
+            mergeMap(({ moduleData }) => of(this.store.dispatch(ServerSettingsActions.loadModuleSettings({ moduleName: moduleData.name })))),
+            map(() => ServerSettingsActions.reloadModuleSettingsTriggered())
         )
     );
 
