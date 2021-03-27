@@ -119,7 +119,7 @@
   </resheader>
   <data name="CommandExecutedError" xml:space="preserve">
     <value>'{0}' error occured. Message:
-"{1}"
+{1}
 
 Used command: 
 '{2}'</value>

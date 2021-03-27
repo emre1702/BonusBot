@@ -167,7 +167,7 @@ Falls nicht, sag einem Admin Bescheid, dass er es tun soll.</value>
   </data>
   <data name="CommandExecutedError" xml:space="preserve">
     <value>'{0}' Fehler aufgetaucht. Fehlermeldung:
-"{1}"
+{1}
 
 Befehl benutzt: 
 '{2}'</value>

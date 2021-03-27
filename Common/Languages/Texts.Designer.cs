@@ -62,7 +62,7 @@ namespace BonusBot.Common.Languages {
         
         /// <summary>
         ///   Looks up a localized string similar to &apos;{0}&apos; error occured. Message:
-        ///&quot;{1}&quot;
+        ///{1}
         ///
         ///Used command: 
         ///&apos;{2}&apos;.
