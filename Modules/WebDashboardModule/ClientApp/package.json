@@ -12,6 +12,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/color-picker": "^5.0.2",
     "@angular-material-components/datetime-picker": "^5.1.0",
     "@angular/animations": "11.2.4",
     "@angular/cdk": "11.2.4",

@@ -17,8 +17,5 @@
     },
     "angularCompilerOptions": {
         "strictTemplates": true
-    },
-    "files": ["src/main.ts", "src/polyfills.ts"],
-    "include": ["**/*.d.ts"],
-    "exclude": ["assets", "node_modules"]
+    }
 }
