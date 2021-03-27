@@ -22,4 +22,5 @@ export class English implements Language {
     Send = 'Send';
     Game = 'Game';
     Date = 'Date';
+    Color = 'Color';
 }

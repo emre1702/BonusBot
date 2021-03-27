@@ -20,6 +20,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { GamePlaningModule } from './modules/game-planing/game-planing.module';
 import { GamePlaningComponent } from './modules/game-planing/components/game-planing/game-planing.component';
+import { ColorModule } from './modules/color/color.module';
+import { ColorComponent } from './modules/color/components/color/color.component';
 
 @NgModule({
     declarations: [AppComponent],
@@ -33,6 +35,7 @@ import { GamePlaningComponent } from './modules/game-planing/components/game-pla
             { path: 'audio', component: AudioComponent },
             { path: 'settings', component: ServerSettingsComponent },
             { path: 'gameplaning', component: GamePlaningComponent },
+            { path: 'color', component: ColorComponent },
 
             { path: '**', component: DashboardComponent },
         ]),
@@ -43,6 +46,7 @@ import { GamePlaningComponent } from './modules/game-planing/components/game-pla
         AudioModule,
         ServerSettingsModule,
         GamePlaningModule,
+        ColorModule,
 
         StoreModule.forRoot({}),
         EffectsModule.forRoot(),

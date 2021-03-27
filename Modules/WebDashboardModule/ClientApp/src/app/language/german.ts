@@ -22,4 +22,5 @@ export class German extends English {
     Send = 'Absenden';
     Game = 'Spiel';
     Date = 'Datum';
+    Color = 'Farbe';
 }

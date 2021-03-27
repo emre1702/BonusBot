@@ -1,5 +1,8 @@
 export default {
     get: {
+        color: {
+            userColor: `Color/UserColor`,
+        },
         command: {
             audioSettingsState: `WebCommand/AudioSettingsState`,
         },

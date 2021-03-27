@@ -33,9 +33,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
-import { NgxMatDatetimePickerModule, NgxMatNativeDateModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 
 const MODULES = [
     ReactiveFormsModule,
@@ -71,11 +68,6 @@ const MODULES = [
     DragDropModule,
     MatTabsModule,
     ScrollingModule,
-    MatDatepickerModule,
-    MatMomentDateModule,
-    NgxMatDatetimePickerModule,
-    NgxMatNativeDateModule,
-    NgxMatTimepickerModule,
 ];
 
 @NgModule({

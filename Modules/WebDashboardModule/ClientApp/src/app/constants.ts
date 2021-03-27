@@ -5,6 +5,7 @@ export class Constants {
         { icon: 'home', name: 'Home', url: '/dashboard' },
         { icon: 'queue_music', name: 'Audio', url: '/audio', module: 'Audio' },
         { icon: 'videogame_asset', name: 'GamePlaning', url: '/gameplaning', module: 'GamePlaning' },
+        { icon: 'color_lens', name: 'Color', url: '/color', module: 'ColorRoles' },
         { icon: 'settings', name: 'Settings', url: '/settings', module: 'GuildSettings' },
 
         { icon: '', name: '', url: '/login', alwaysAccess: true, hidden: true },

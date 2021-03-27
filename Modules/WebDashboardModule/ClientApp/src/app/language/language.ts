@@ -20,4 +20,5 @@ export interface Language {
     Send: string;
     Game: string;
     Date: string;
+    Color: string;
 }

@@ -1,0 +1,16 @@
+<input
+    matInput
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [ngxMatColorPicker]="picker"
+    [required]="required"
+    (click)="picker.opened = true"
+    [(ngModel)]="value"
+    readonly
+/>
+<ngx-mat-color-toggle [disabled]="disabled" class="position-absolute r-0 b-0" matSuffix [for]="picker"></ngx-mat-color-toggle>
+<ngx-mat-color-picker #picker [disabled]="disabled" [touchUi]="mobileService.isMobileView" color="primary">
+    <ng-template>
+        <mat-icon>done</mat-icon>
+    </ng-template>
+</ngx-mat-color-picker>

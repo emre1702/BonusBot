@@ -1,0 +1,10 @@
+<div class="setting-container">
+    <mat-form-field>
+        <mat-label>{{ 'Color' | translate }}</mat-label>
+        <app-color-picker
+            [ngModel]="service.color$ | async"
+            (ngModelChange)="service.colorChanged.next($event)"
+            [ngModelOptions]="{ updateOn: 'blur' }"
+        ></app-color-picker>
+    </mat-form-field>
+</div>
