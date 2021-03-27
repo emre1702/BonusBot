@@ -4,7 +4,6 @@ using BonusBot.Common.Helper;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
 using BonusBot.WebDashboardModule.Models.Settings;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -25,7 +24,7 @@ namespace BonusBot.WebDashboardModule.Services
 
             var allAssemblyDatas = _modulesHandler.LoadedModuleAssemblies
                 .Select(a => new ModuleData(a.ToModuleName(), bonusGuild.Modules.Contains(a)))
-                .Union(new List<ModuleData> { new(typeof(CommonSettings).GetModuleName(), true) })
+                .Union(new List<ModuleData> { new(typeof(CommonSettings).GetModuleName(), true, false) })
                 .OrderBy(a => a.Name);
 
             return allAssemblyDatas;

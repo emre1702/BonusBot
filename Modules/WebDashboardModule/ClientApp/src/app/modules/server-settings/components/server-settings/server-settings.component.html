@@ -2,7 +2,11 @@
     <mat-tab *ngFor="let moduleData of moduleDatas" [label]="moduleData.name">
         <ng-template matTabContent>
             <div class="setting-container">
-                <mat-slide-toggle [ngModel]="moduleData.isActive" (ngModelChange)="service.setModuleActive(moduleData.name, $event)"></mat-slide-toggle>
+                <mat-slide-toggle
+                    *ngIf="moduleData.canDisable"
+                    [ngModel]="moduleData.isActive"
+                    (ngModelChange)="service.setModuleActive(moduleData.name, $event)"
+                ></mat-slide-toggle>
                 <ng-container *ngIf="moduleData.isActive && (service.moduleSettings$ | async) as moduleSettings">
                     <div class="setting-row" *ngFor="let setting of moduleSettings">
                         <span>{{ setting.name }}:</span>
