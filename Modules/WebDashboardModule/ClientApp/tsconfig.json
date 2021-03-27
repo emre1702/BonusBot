@@ -1,17 +1,24 @@
 {
-    "files": [],
-    "references": [
-        {
-            "path": "./src/tsconfig.app.json"
-        },
-        {
-            "path": "./src/tsconfig.spec.json"
-        },
-        {
-            "path": "./src/tsconfig.server.json"
-        },
-        {
-            "path": "./e2e/tsconfig.e2e.json"
-        }
-    ]
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "module": "esnext",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "importHelpers": true,
+        "target": "ES2018",
+        "typeRoots": ["node_modules/@types"],
+        "types": ["node", "jest"],
+        "lib": ["es2018", "es2015", "es2016", "dom", "es5", "es6"]
+    },
+    "angularCompilerOptions": {
+        "strictTemplates": true
+    },
+    "files": ["src/main.ts", "src/polyfills.ts"],
+    "include": ["**/*.d.ts"],
+    "exclude": ["assets", "node_modules"]
 }
