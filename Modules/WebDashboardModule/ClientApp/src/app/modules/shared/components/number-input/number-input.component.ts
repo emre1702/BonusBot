@@ -106,7 +106,7 @@ export class NumberInputComponent implements MatFormFieldControl<number>, Contro
     }
     onContainerClick(event: MouseEvent): void {
         if ((event.target as Element).tagName.toLowerCase() != 'input') {
-            this.elRef.nativeElement.querySelector('input').focus();
+            this.input.focus();
         }
     }
 

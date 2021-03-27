@@ -6,25 +6,7 @@
 
     <mat-form-field>
         <mat-label>{{ 'Date' | translate }}</mat-label>
-        <input matInput [ngxMatDatetimePicker]="picker" [formControlName]="'date'" [min]="minDate" [max]="maxDate" (click)="picker.opened = true" readonly />
-        <mat-datepicker-toggle matSuffix [for]="dateTimerPicker"></mat-datepicker-toggle>
-        <ngx-mat-datetime-picker
-            #picker
-            [showSpinners]="true"
-            [showSeconds]="true"
-            [stepHour]="1"
-            [stepMinute]="1"
-            [stepSecond]="1"
-            [touchUi]="mobileService.isMobileView"
-            color="primary"
-            [enableMeridian]="false"
-        >
-            <!-- Custom icon or text of Apply icon -->
-            <ng-template>
-                <!-- <mat-icon>star</mat-icon> -->
-                <span>OK</span>
-            </ng-template>
-        </ngx-mat-datetime-picker>
+        <app-date-time-picker [formControlName]="'date'" [minDate]="minDate" [maxDate]="maxDate"></app-date-time-picker>
     </mat-form-field>
 
     <button class="one-line-button mw-50 align-self-baseline" type="submit" [disabled]="formGroup.invalid" (click)="service.createAnnouncement(formGroup)">

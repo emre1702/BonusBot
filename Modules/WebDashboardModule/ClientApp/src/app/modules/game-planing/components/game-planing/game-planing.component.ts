@@ -1,9 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { GamePlaningService } from '../../services/game-planing.service';
 import { MobileService } from 'src/app/modules/shared/services/mobile.service';
-import { NgxMatDateAdapter, NgxMatDatetimePicker } from '@angular-material-components/datetime-picker';
-import { MatDatepicker } from '@angular/material/datepicker';
+import { NgxMatDateAdapter } from '@angular-material-components/datetime-picker';
 import { Constants } from 'src/app/constants';
 
 @Component({
@@ -13,8 +12,6 @@ import { Constants } from 'src/app/constants';
     providers: [GamePlaningService],
 })
 export class GamePlaningComponent {
-    @ViewChild(NgxMatDatetimePicker, { static: true }) public dateTimerPicker?: MatDatepicker<Date>;
-
     formGroup = new FormGroup({
         // eslint-disable-next-line @typescript-eslint/unbound-method
         game: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(300)]),

@@ -1,0 +1,29 @@
+<input
+    matInput
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [ngxMatDatetimePicker]="picker"
+    [min]="minDate"
+    [max]="maxDate"
+    [required]="required"
+    (click)="picker.opened = true"
+    [(ngModel)]="value"
+    readonly
+/>
+<mat-datepicker-toggle [disabled]="disabled" class="position-absolute r-0 b-0" matSuffix [for]="dateTimerPicker"></mat-datepicker-toggle>
+<ngx-mat-datetime-picker
+    #picker
+    [disabled]="disabled"
+    [showSpinners]="true"
+    [showSeconds]="true"
+    [stepHour]="1"
+    [stepMinute]="1"
+    [stepSecond]="1"
+    [touchUi]="mobileService.isMobileView"
+    color="primary"
+    [enableMeridian]="false"
+>
+    <ng-template>
+        <mat-icon>done</mat-icon>
+    </ng-template>
+</ngx-mat-datetime-picker>
