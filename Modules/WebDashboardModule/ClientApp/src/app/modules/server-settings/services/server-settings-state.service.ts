@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { share, takeUntil } from 'rxjs/operators';
 import * as Actions from '../states/server-settings/server-settings.actions';
 import * as Selectors from '../states/server-settings/server-settings.selectors';
 
@@ -9,7 +9,7 @@ import * as Selectors from '../states/server-settings/server-settings.selectors'
 export class ServerSettingsStateService implements OnDestroy {
     moduleDatas$ = this.store.select(Selectors.selectModuleDatas);
     selectedModule$ = this.store.select(Selectors.selectSelectedModule);
-    moduleSettings$ = this.store.select(Selectors.selectModuleSettings);
+    moduleSettings$ = this.store.select(Selectors.selectModuleSettings).pipe(share());
 
     private destroySubject = new Subject();
 
