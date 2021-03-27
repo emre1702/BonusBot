@@ -24,7 +24,6 @@ namespace BonusBot.WebDashboardModule.Services
             var bonusGuild = _guildsHandler.GetGuild(ulong.Parse(guildId))!;
 
             var allAssemblyDatas = _modulesHandler.LoadedModuleAssemblies
-                .Where(SettingsHelper.HasSettings)
                 .Select(a => new ModuleData(a.ToModuleName(), bonusGuild.Modules.Contains(a)))
                 .Union(new List<ModuleData> { new(typeof(CommonSettings).GetModuleName(), true) })
                 .OrderBy(a => a.Name);
