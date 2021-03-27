@@ -14,20 +14,35 @@ namespace BonusBot.Common.Commands.TypeReaders
             if (!DateTime.TryParse(input, out var dateTime))
                 return TypeReaderResult.FromError(CommandError.ParseFailed, string.Format(Texts.CommandInvalidDateTimeOffsetError, input));
 
-            var ctx = (ICustomCommandContext)context;
-            string timeZone = "UTC";
-            if (ctx.BonusGuild is { })
+            if (DoesDateTimeHasGivenTimezone(dateTime))
             {
-                var timeZoneSetting = await ctx.BonusGuild.Settings.Get<string>(typeof(CommonSettings).Assembly, CommonSettings.TimeZone);
+                var offsetWithGivenTimezone = new DateTimeOffset(dateTime);
+                return TypeReaderResult.FromSuccess(offsetWithGivenTimezone);
+            }
+
+            var (result, timeZone) = await GetDateTimeWithGuildTimezone(dateTime, (ICustomCommandContext)context);
+            if (result is null)
+                return TypeReaderResult.FromError(CommandError.Unsuccessful, string.Format(Texts.InvalidTimeZoneIdError, timeZone));
+            return TypeReaderResult.FromSuccess(result);
+        }
+
+        private bool DoesDateTimeHasGivenTimezone(DateTime dateTime)
+            => dateTime.Kind == DateTimeKind.Local;
+
+        private async Task<(DateTimeOffset?, string)> GetDateTimeWithGuildTimezone(DateTime dateTime, ICustomCommandContext context)
+        {
+            string timeZone = "UTC";
+            if (context.BonusGuild is { })
+            {
+                var timeZoneSetting = await context.BonusGuild.Settings.Get<string>(typeof(CommonSettings).Assembly, CommonSettings.TimeZone);
                 if (timeZoneSetting is { })
                     timeZone = timeZoneSetting;
             }
 
             if (!TZConvert.TryGetTimeZoneInfo(timeZone, out var timeZoneInfo))
-                return TypeReaderResult.FromError(CommandError.Unsuccessful, string.Format(Texts.InvalidTimeZoneIdError, timeZone));
+                return (null, timeZone);
 
-            var result = new DateTimeOffset(dateTime, timeZoneInfo.BaseUtcOffset);
-            return TypeReaderResult.FromSuccess(result);
+            return (new DateTimeOffset(dateTime, timeZoneInfo.BaseUtcOffset), timeZone);
         }
     }
 }

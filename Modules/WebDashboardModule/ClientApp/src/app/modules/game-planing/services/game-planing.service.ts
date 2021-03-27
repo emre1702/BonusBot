@@ -6,7 +6,7 @@ import { CommandService } from '../../shared/services/command.service';
 export class GamePlaningService {
     createAnnouncement(formGroup: FormGroup) {
         const game = String(formGroup.controls.game.value).replace('"', "'");
-        const date = (formGroup.controls.date.value as Date).toLocaleString();
+        const date = (formGroup.controls.date.value as Date).toUTCString();
         this.commandService.execute(`meetup "${game}" "${date}"`).subscribe();
     }
 
