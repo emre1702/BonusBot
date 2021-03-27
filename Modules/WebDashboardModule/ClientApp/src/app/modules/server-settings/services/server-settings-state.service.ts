@@ -29,8 +29,8 @@ export class ServerSettingsStateService implements OnDestroy {
         this.store.dispatch(Actions.setModuleSetting({ moduleName, moduleSetting: { name, value } }));
     }
 
-    setModuleActive(moduleName: string, isActive: boolean) {
-        this.store.dispatch(Actions.setModuleActive({ moduleData: { name: moduleName, isActive } }));
+    setModuleActive(moduleName: string, isActive: boolean, canDisable: boolean) {
+        this.store.dispatch(Actions.setModuleActive({ moduleData: { name: moduleName, isActive, canDisable } }));
     }
 
     selectModule(moduleName: string) {
