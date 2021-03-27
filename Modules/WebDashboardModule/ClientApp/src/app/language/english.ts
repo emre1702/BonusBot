@@ -15,4 +15,11 @@ export class English implements Language {
     No = 'No';
     LogoutConfirmationText = 'Are you sure you want to log out?';
     Logout = 'Logout';
+    Home = 'Home';
+    Audio = 'Audio';
+    Settings = 'Settings';
+    GamePlaning = 'Game planing';
+    Send = 'Send';
+    Game = 'Game';
+    Date = 'Date';
 }

@@ -15,4 +15,11 @@ export class German extends English {
     No = 'Nein';
     LogoutConfirmationText = 'Bist du dir sicher, dass du dich abmelden willst?';
     Logout = 'Abmelden';
+    Home = 'Hauptseite';
+    Audio = 'Audio';
+    Settings = 'Einstellungen';
+    GamePlaning = 'Spiele-Planung';
+    Send = 'Absenden';
+    Game = 'Spiel';
+    Date = 'Datum';
 }

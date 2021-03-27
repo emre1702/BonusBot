@@ -2,20 +2,20 @@
     <mat-sidenav
         [opened]="navigationOpened && !isInLogin"
         (openedChange)="navigationOpenedChange.emit($event)"
-        [mode]="isMobileView ? 'over' : 'side'"
-        [fixedInViewport]="isMobileView"
+        [mode]="mobileService.isMobileView ? 'over' : 'side'"
+        [fixedInViewport]="mobileService.isMobileView"
         fixedTopGap="56"
     >
         <mat-nav-list class="d-flex flex-column h-100">
             <ng-container *ngFor="let button of buttons">
                 <a mat-list-item *ngIf="!button.hidden" (click)="navigateTo(button)">
                     <mat-icon>{{ button.icon }}</mat-icon>
-                    <span class="ml-3" *ngIf="!isMobileView">{{ button.name | translate }}</span>
+                    <span class="ml-3" *ngIf="!mobileService.isMobileView">{{ button.name | translate }}</span>
                 </a>
             </ng-container>
             <a class="mt-auto" mat-list-item (click)="logoutService.signOut()">
                 <mat-icon>logout</mat-icon>
-                <span class="ml-3" *ngIf="!isMobileView">{{ 'Logout' | translate }}</span>
+                <span class="ml-3" *ngIf="!mobileService.isMobileView">{{ 'Logout' | translate }}</span>
             </a>
         </mat-nav-list>
     </mat-sidenav>
@@ -23,11 +23,11 @@
     <mat-sidenav
         [opened]="messagesOpened"
         (openedChange)="messagesOpenedChange.emit($event)"
-        [mode]="isMobileView ? 'over' : 'side'"
-        [fixedInViewport]="isMobileView"
+        [mode]="mobileService.isMobileView ? 'over' : 'side'"
+        [fixedInViewport]="mobileService.isMobileView"
         fixedTopGap="56"
         position="end"
-        [class.mw-50]="!isMobileView"
+        [class.mw-50]="!mobileService.isMobileView"
     >
         <mat-nav-list class="d-flex flex-column">
             <span class="border-bottom text-prewrap p-3" mat-list-item *ngFor="let message of messagesService.messages">{{ message }}</span>

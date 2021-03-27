@@ -38,7 +38,7 @@ namespace BonusBot.WebDashboardModule.Discord
         public virtual IImmutableList<IActivity> Activities => throw new NotImplementedException();
         public List<string> Messages { get; } = new();
 
-        public string GetAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
+        public virtual string GetAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
         {
             throw new NotImplementedException();
         }

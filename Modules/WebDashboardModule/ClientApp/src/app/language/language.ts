@@ -13,4 +13,11 @@ export interface Language {
     No: string;
     LogoutConfirmationText: string;
     Logout: string;
+    Home: string;
+    Audio: string;
+    Settings: string;
+    GamePlaning: string;
+    Send: string;
+    Game: string;
+    Date: string;
 }

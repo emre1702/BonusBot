@@ -18,6 +18,8 @@ import { ServerSettingsModule } from './modules/server-settings/server-settings.
 import { ServerSettingsComponent } from './modules/server-settings/components/server-settings/server-settings.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
+import { GamePlaningModule } from './modules/game-planing/game-planing.module';
+import { GamePlaningComponent } from './modules/game-planing/components/game-planing/game-planing.component';
 
 @NgModule({
     declarations: [AppComponent],
@@ -30,6 +32,7 @@ import { environment } from 'src/environments/environment';
             { path: 'loginredirect', component: LoginComponent },
             { path: 'audio', component: AudioComponent },
             { path: 'settings', component: ServerSettingsComponent },
+            { path: 'gameplaning', component: GamePlaningComponent },
 
             { path: '**', component: DashboardComponent },
         ]),
@@ -39,6 +42,7 @@ import { environment } from 'src/environments/environment';
         LoginModule,
         AudioModule,
         ServerSettingsModule,
+        GamePlaningModule,
 
         StoreModule.forRoot({}),
         EffectsModule.forRoot(),

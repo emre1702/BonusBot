@@ -5,6 +5,7 @@ import { distinctUntilChanged } from 'rxjs/operators';
 import { Constants } from 'src/app/constants';
 import { LogoutService } from 'src/app/modules/login/services/logout.service';
 import { ConfirmationDialogComponent } from 'src/app/modules/shared/popups/confirmation-dialog/confirmation-dialog.component';
+import { MobileService } from 'src/app/modules/shared/services/mobile.service';
 import { NavigationButton } from '../../models/navigation-button';
 import { MessagesService } from '../../services/messages.service';
 import { NavigationService } from '../../services/navigation.service';
@@ -15,7 +16,6 @@ import { NavigationService } from '../../services/navigation.service';
     providers: [LogoutService],
 })
 export class SidenavContainerComponent {
-    @Input() isMobileView: boolean;
     @Input() isInLogin: boolean;
 
     @Input() navigationOpened: boolean;
@@ -31,7 +31,8 @@ export class SidenavContainerComponent {
         private readonly navigationService: NavigationService,
         router: Router,
         private readonly dialog: MatDialog,
-        readonly logoutService: LogoutService
+        readonly logoutService: LogoutService,
+        readonly mobileService: MobileService
     ) {
         navigationService.navigateTo$.pipe(distinctUntilChanged()).subscribe((url) => router.navigateByUrl(url));
     }

@@ -83,5 +83,8 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public Task RemoveRolesAsync(IEnumerable<IRole> roles, RequestOptions? options = null)
             => _guildUser.RemoveRolesAsync(roles, options);
+
+        public override string GetAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
+            => _guildUser.GetAvatarUrl(format, size);
     }
 }

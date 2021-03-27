@@ -7,9 +7,10 @@ import { ConfirmationDialogComponent } from './popups/confirmation-dialog/confir
 import { MaterialModule } from '../material/material.module';
 import { NumberInputComponent } from './components/number-input/number-input.component';
 import { FormsModule } from '@angular/forms';
+import { MobileService } from './services/mobile.service';
 
 const EXPORTS = [TranslatePipe, ConfirmationDialogComponent, NumberInputComponent];
-const PROVIDERS = [SettingsService, CommandService];
+const PROVIDERS = [SettingsService, CommandService, MobileService];
 
 @NgModule({
     declarations: [...EXPORTS],
