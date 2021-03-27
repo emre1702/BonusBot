@@ -1,7 +1,7 @@
 import { Color } from '@angular-material-components/color-picker';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
+import { merge, ReplaySubject, Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, mergeMap, pairwise, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import api from 'src/app/routes/api';
 import { GuildSelectionService } from '../../page/services/guild-selection.service';
@@ -10,7 +10,7 @@ import { CommandService } from '../../shared/services/command.service';
 @Injectable()
 export class ColorService implements OnDestroy {
     private colorRequest = new ReplaySubject(1);
-    color$ = this.colorRequest.pipe(
+    color$ = merge(this.colorRequest, this.guildSelectionService.selectedGuildId$).pipe(
         withLatestFrom(this.guildSelectionService.selectedGuildId$),
         mergeMap(([, guildId]) =>
             this.httpClient
