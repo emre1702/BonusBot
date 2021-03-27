@@ -4,6 +4,7 @@ using BonusBot.Database.Entities.Cases;
 using BonusBot.GamePlaningModule.Models;
 using Discord;
 using Discord.Commands;
+using Discord.WebSocket;
 using System;
 using System.Threading.Tasks;
 
@@ -21,6 +22,7 @@ namespace BonusBot.GamePlaningModule
         [RequireEmoteSetting(Settings.CancellationEmoteId)]
         [RequireEmoteSetting(Settings.MaybeEmoteId)]
         [RequireSetting(Settings.MentionEveryone)]
+        [RequireTextChannelSetting(Settings.AnnouncementChannel)]
         public async Task PlanMeetup(string game, DateTimeOffset time)
         {
             var moduleName = GetType().Assembly.ToModuleName();
@@ -29,6 +31,7 @@ namespace BonusBot.GamePlaningModule
             var cancellationEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.CancellationEmoteId);
             var maybeEmote = await Context.BonusGuild.Settings.Get<Emote>(moduleName, Settings.MaybeEmoteId);
             var mentionEveryone = await Context.BonusGuild.Settings.Get<bool>(moduleName, Settings.MentionEveryone);
+            var channel = await Context.BonusGuild.Settings.Get<SocketTextChannel >(moduleName, Settings.AnnouncementChannel);
 
             var embedData = new AnnouncementEmbedData(game, time.ToString(),
                 new(participationEmote, new()),
@@ -39,7 +42,7 @@ namespace BonusBot.GamePlaningModule
                 .WithAuthor(Context.User);
 
             var text = mentionEveryone ? Context.Guild.EveryoneRole.Mention : string.Empty;
-            var message = await Context.Channel.SendMessageAsync(text, embed: embedBuilder.Build());
+            var message = await channel.SendMessageAsync(text, embed: embedBuilder.Build());
             await message.AddReactionAsync(participationEmote);
             await message.AddReactionAsync(lateParticipationEmote);
             await message.AddReactionAsync(maybeEmote);
