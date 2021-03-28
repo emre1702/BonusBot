@@ -20,6 +20,8 @@ namespace BonusBot.LoggingModule.EventHandlers
         {
             if (context is not ICustomCommandContext { IsWeb: true } webContext)
                 return;
+            if (IsCommandToIgnore(webContext.Message.Content))
+                return;
 
             var bonusGuild = _guildsHandler.GetGuild(webContext.Guild.Id);
             if (bonusGuild is null) return;
@@ -36,5 +38,12 @@ namespace BonusBot.LoggingModule.EventHandlers
                 return guildUser.GetFullNameInfo();
             return context.User.Username + "#" + context.User.Discriminator;
         }
+
+        private bool IsCommandToIgnore(string command)
+            => command switch
+            {
+                string s when s.StartsWith("GetState", System.StringComparison.OrdinalIgnoreCase) => true,
+                _ => false
+            };
     }
 }
