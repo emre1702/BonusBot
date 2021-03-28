@@ -36,10 +36,11 @@ namespace BonusBot.WebDashboardModule
                 {
                     webBuilder.ConfigureServices(services =>
                     {
-                        services.AddSingleton(provider => _mainServiceProvider.GetRequiredService<IDiscordClientHandler>());
-                        services.AddSingleton(provider => _mainServiceProvider.GetRequiredService<IModulesHandler>());
-                        services.AddSingleton(provider => _mainServiceProvider.GetRequiredService<IGuildsHandler>());
+                        services.AddSingleton(_mainServiceProvider.GetRequiredService<IDiscordClientHandler>());
+                        services.AddSingleton(_mainServiceProvider.GetRequiredService<IModulesHandler>());
+                        services.AddSingleton(_mainServiceProvider.GetRequiredService<IGuildsHandler>());
                         services.AddSingleton(_mainServiceProvider.GetRequiredService<ICommandsHandler>());
+                        services.AddSingleton(_mainServiceProvider.GetRequiredService<ISettingsHandler>());
                         services.AddSingleton(_mainServiceProvider);
                     });
                     webBuilder.UseStartup<Startup>();
