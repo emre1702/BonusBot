@@ -6,7 +6,7 @@ import { MatFormFieldControl } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
 import { Subject } from 'rxjs';
 import { MobileService } from '../../services/mobile.service';
-import { ColorInputFormat, NgxMatColorPickerComponent } from '@angular-material-components/color-picker';
+import { Color, NgxMatColorPickerComponent } from '@angular-material-components/color-picker';
 
 @Component({
     selector: 'app-color-picker',
@@ -17,7 +17,7 @@ import { ColorInputFormat, NgxMatColorPickerComponent } from '@angular-material-
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ColorPickerComponent), multi: true },
     ],
 })
-export class ColorPickerComponent implements MatFormFieldControl<ColorInputFormat>, ControlValueAccessor, OnInit, OnDestroy, DoCheck {
+export class ColorPickerComponent implements MatFormFieldControl<Color>, ControlValueAccessor, OnInit, OnDestroy, DoCheck {
     @ViewChild(NgxMatColorPickerComponent, { static: true }) colorPicker: NgxMatColorPickerComponent;
     @ViewChild(MatInput, { static: true }) input: MatInput;
 
@@ -51,15 +51,17 @@ export class ColorPickerComponent implements MatFormFieldControl<ColorInputForma
         return this.input.id;
     }
 
-    private _value: ColorInputFormat;
-    get value(): ColorInputFormat {
+    private _value: Color;
+    get value(): Color {
         return this._value;
     }
-    set value(value: ColorInputFormat) {
+    set value(value: Color) {
+        const oldRgba = this._value?.rgba;
         this._value = value;
-        this.stateChanges.next();
+        if (!oldRgba?.length || value?.rgba === oldRgba) return;
         this.onTouched();
         this.onChanged(value);
+        this.stateChanges.next();
     }
 
     get userAriaDescribedBy(): string {
@@ -70,7 +72,7 @@ export class ColorPickerComponent implements MatFormFieldControl<ColorInputForma
     stateChanges = new Subject<void>();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    onChanged = (_: ColorInputFormat) => {};
+    onChanged = (_: Color) => {};
     onTouched = () => {};
 
     constructor(
@@ -110,11 +112,11 @@ export class ColorPickerComponent implements MatFormFieldControl<ColorInputForma
         if (!this.colorPicker.opened) this.colorPicker.open();
     }
 
-    writeValue(value: ColorInputFormat): void {
+    writeValue(value: Color): void {
         this.value = value;
     }
 
-    registerOnChange(fn: (value: ColorInputFormat) => void): void {
+    registerOnChange(fn: (value: Color) => void): void {
         this.onChanged = fn;
     }
 

@@ -1,18 +1,16 @@
 import { Color } from '@angular-material-components/color-picker';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { merge, ReplaySubject, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, mergeMap, pairwise, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { combineLatest, forkJoin, merge, of, ReplaySubject, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, map, mergeMap, pairwise, skip, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
 import api from 'src/app/routes/api';
 import { GuildSelectionService } from '../../page/services/guild-selection.service';
 import { CommandService } from '../../shared/services/command.service';
 
 @Injectable()
 export class ColorService implements OnDestroy {
-    private colorRequest = new ReplaySubject(1);
-    color$ = merge(this.colorRequest, this.guildSelectionService.selectedGuildId$).pipe(
-        withLatestFrom(this.guildSelectionService.selectedGuildId$),
-        mergeMap(([, guildId]) =>
+    color$ = this.guildSelectionService.selectedGuildId$.pipe(
+        mergeMap((guildId) =>
             this.httpClient
                 .get<{ r: number; g: number; b: number }>(api.get.color.userColor, { params: { guildId } })
                 .pipe(map((discordColor) => new Color(discordColor.r, discordColor.g, discordColor.b)))
@@ -28,18 +26,17 @@ export class ColorService implements OnDestroy {
         private readonly commandService: CommandService,
         private readonly guildSelectionService: GuildSelectionService
     ) {
-        this.colorRequest.next();
-
         this.colorChanged
-            .pipe(takeUntil(this.destroySubject), distinctUntilChanged(), pairwise(), debounceTime(3000))
-            .subscribe(([, color]) => this.setColor(color));
+            .pipe(
+                takeUntil(this.destroySubject)
+                /*mergeMap((color) => combineLatest([of(color), ])),
+                tap((color) => this.colorRequest.next(color))*/
+            )
+            /*.subscribe();*/
+            .subscribe((color) => this.commandService.execute(`color #${color.hex}`).subscribe());
     }
 
     ngOnDestroy() {
         this.destroySubject.next();
-    }
-
-    private setColor(color: Color) {
-        this.commandService.execute(`color #${color.hex}`).subscribe();
     }
 }
