@@ -1,8 +1,8 @@
 import { Color } from '@angular-material-components/color-picker';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { combineLatest, forkJoin, merge, of, ReplaySubject, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, mergeMap, pairwise, skip, switchMap, takeUntil, tap, withLatestFrom } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { map, mergeMap, takeUntil } from 'rxjs/operators';
 import api from 'src/app/routes/api';
 import { GuildSelectionService } from '../../page/services/guild-selection.service';
 import { CommandService } from '../../shared/services/command.service';
@@ -26,14 +26,7 @@ export class ColorService implements OnDestroy {
         private readonly commandService: CommandService,
         private readonly guildSelectionService: GuildSelectionService
     ) {
-        this.colorChanged
-            .pipe(
-                takeUntil(this.destroySubject)
-                /*mergeMap((color) => combineLatest([of(color), ])),
-                tap((color) => this.colorRequest.next(color))*/
-            )
-            /*.subscribe();*/
-            .subscribe((color) => this.commandService.execute(`color #${color.hex}`).subscribe());
+        this.colorChanged.pipe(takeUntil(this.destroySubject)).subscribe((color) => this.commandService.execute(`color #${color.hex}`).subscribe());
     }
 
     ngOnDestroy() {
