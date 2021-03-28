@@ -1,0 +1,10 @@
+<div class="setting-container">
+    <mat-slide-toggle *ngIf="canDisable" [ngModel]="isActive" (ngModelChange)="isActiveChange.emit($event)"></mat-slide-toggle>
+    <ng-container *ngIf="isActive">
+        <ng-container *ngIf="service.moduleSettings$ | async as moduleSettings">
+            <div class="setting-row" *ngFor="let entry of moduleSettings | keyvalue">
+                <app-settings-page-row [moduleName]="moduleName" [settingKey]="entry.key" [settingData]="entry.value"></app-settings-page-row>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

@@ -1,8 +1,8 @@
 import { ModuleData } from './module-data';
-import { ModuleSetting } from './module-setting';
+import { ServerSettingDataByKey } from './server-setting-data-by-key';
 
 export interface ServerSettingsState {
     moduleDatas: ModuleData[];
-    moduleSettings: { [key: string]: ModuleSetting[] };
+    moduleSettings: { [key: string]: ServerSettingDataByKey };
     selectedModule: string;
 }

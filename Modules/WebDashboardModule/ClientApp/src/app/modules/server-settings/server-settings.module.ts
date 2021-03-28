@@ -9,13 +9,18 @@ import { serverSettingsReducers } from './states/server-settings/server-settings
 import { EffectsModule } from '@ngrx/effects';
 import { ServerSettingsEffects } from './states/server-settings/server-settings.effects';
 import { ServerSettingsService } from './services/server-settings.service';
+import { SharedModule } from '../shared/shared.module';
+import { SettingsPageContainerComponent } from './components/page/settings-page-container/settings-page-container.component';
+import { SettingStringOptionComponent } from './components/page/options/setting-string-option/setting-string-option.component';
+import { SettingsPageRowComponent } from './components/page/settings-page-row/settings-page-row.component';
 
 @NgModule({
-    declarations: [ServerSettingsComponent],
+    declarations: [ServerSettingsComponent, SettingStringOptionComponent, SettingsPageContainerComponent, SettingsPageRowComponent],
     imports: [
         CommonModule,
         FormsModule,
         MaterialModule,
+        SharedModule,
         StoreModule.forFeature(serverSettingsFeatureKey, serverSettingsReducers),
         EffectsModule.forFeature([ServerSettingsEffects]),
     ],

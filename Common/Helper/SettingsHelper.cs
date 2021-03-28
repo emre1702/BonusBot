@@ -1,4 +1,4 @@
-﻿using BonusBot.Common.Attributes;
+﻿using BonusBot.Common.Attributes.Settings;
 using BonusBot.Common.Interfaces.Guilds;
 using System;
 using System.Collections.Generic;

@@ -4,7 +4,6 @@ import { ServerSettingsStateService } from '../../services/server-settings-state
 @Component({
     selector: 'app-server-settings',
     templateUrl: './server-settings.component.html',
-    styleUrls: ['../../../../styles/setting-styles.scss'],
     providers: [ServerSettingsStateService],
 })
 export class ServerSettingsComponent implements OnInit {

@@ -1,0 +1,12 @@
+<span>{{ name | translate }}:</span>
+<mat-form-field>
+    <input
+        matInput
+        [ngModel]="value"
+        (ngModelChange)="valueChange.emit($event)"
+        [ngModelOptions]="{ updateOn: 'blur' }"
+        [minlength]="info.min"
+        [maxlength]="info.max"
+        [placeholder]="defaultValue"
+    />
+</mat-form-field>

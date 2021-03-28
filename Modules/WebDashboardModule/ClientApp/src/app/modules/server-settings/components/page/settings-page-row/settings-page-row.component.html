@@ -1,0 +1,9 @@
+<ng-container [ngSwitch]="settingData.info.type">
+    <app-setting-string-option
+        *ngSwitchCase="typeEnum.string"
+        [name]="settingKey"
+        [value]="settingData.value"
+        (valueChange)="changeSetting($event)"
+        [info]="settingData.info"
+    ></app-setting-string-option>
+</ng-container>

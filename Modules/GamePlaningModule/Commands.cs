@@ -42,7 +42,7 @@ namespace BonusBot.GamePlaningModule
                 .WithAuthor(Context.User);
 
             var text = mentionEveryone ? Context.Guild.EveryoneRole.Mention : string.Empty;
-            var message = await channel.SendMessageAsync(text, embed: embedBuilder.Build());
+            var message = await channel!.SendMessageAsync(text, embed: embedBuilder.Build());
             await message.AddReactionAsync(participationEmote);
             await message.AddReactionAsync(lateParticipationEmote);
             await message.AddReactionAsync(maybeEmote);

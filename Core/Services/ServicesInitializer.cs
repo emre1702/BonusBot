@@ -22,6 +22,7 @@ namespace BonusBot.Core.Services
                 .WithDiscordNet()
                 .WithEventsHandler()
                 .WithGuilds()
+                .WithSettings()
                 .WithWorkers();
             return new CustomServiceProvider(serviceCollection);
         }

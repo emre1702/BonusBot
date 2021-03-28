@@ -22,6 +22,7 @@ import { GamePlaningModule } from './modules/game-planing/game-planing.module';
 import { GamePlaningComponent } from './modules/game-planing/components/game-planing/game-planing.component';
 import { ColorModule } from './modules/color/color.module';
 import { ColorComponent } from './modules/color/components/color/color.component';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
 
 @NgModule({
     declarations: [AppComponent],
@@ -41,6 +42,7 @@ import { ColorComponent } from './modules/color/components/color/color.component
         ]),
         BrowserAnimationsModule,
 
+        DashboardModule,
         PageModule,
         LoginModule,
         AudioModule,

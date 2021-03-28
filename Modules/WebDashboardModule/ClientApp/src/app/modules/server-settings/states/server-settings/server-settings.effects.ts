@@ -61,8 +61,8 @@ export class ServerSettingsEffects {
         this.actions.pipe(
             ofType(ServerSettingsActions.setModuleSetting),
             mergeMap((action) =>
-                this.service.setModuleSetting(action.moduleName, action.moduleSetting).pipe(
-                    map(() => ServerSettingsActions.setModuleSettingSuccess({ moduleName: action.moduleName, moduleSetting: action.moduleSetting })),
+                this.service.setModuleSetting(action.moduleName, action.settingKey, action.value).pipe(
+                    map(() => ServerSettingsActions.setModuleSettingSuccess(action)),
                     catchError((err) => of(ServerSettingsActions.setModuleSettingFailure({ err })))
                 )
             )
