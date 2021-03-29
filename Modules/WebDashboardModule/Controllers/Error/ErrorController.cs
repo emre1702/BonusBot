@@ -1,4 +1,4 @@
-﻿using BonusBot.WebDashboardModule.Pages;
+﻿using BonusBot.WebDashboardModule.Views.Error;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BonusBot.WebDashboardModule.Controllers.Error
