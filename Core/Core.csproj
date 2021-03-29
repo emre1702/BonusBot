@@ -31,6 +31,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
+    <ProjectReference Include="..\Modules\DateTimeTestModule\DateTimeTestModule.csproj" />
     <ProjectReference Include="..\Modules\WebDashboardModule\WebDashboardModule.csproj" />
     <ProjectReference Include="..\Systems\GuildsSystem\GuildsSystem.csproj" />
     <ProjectReference Include="..\Modules\AdminModule\AdminModule.csproj" />
