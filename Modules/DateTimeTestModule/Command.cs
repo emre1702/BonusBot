@@ -21,6 +21,7 @@ namespace BonusBot.DateTimeTestModule
             => _bonusDbFactory = bonusDbFactory;
 
         [Command("output")]
+        [Priority(1)]
         public async Task Output()
         {
             var time = DateTime.Now.ToString();
@@ -36,6 +37,7 @@ namespace BonusBot.DateTimeTestModule
         }
 
         [Command("output")]
+        [Priority(2)]
         public async Task Output(DateTimeOffset dateTimeOffset)
         {
             var time = dateTimeOffset.ToString();
