@@ -2,6 +2,7 @@
     <mat-tab *ngFor="let moduleData of moduleDatas" [label]="moduleData.name">
         <ng-template matTabContent>
             <app-settings-page-container
+                [moduleName]="moduleData.name"
                 [canDisable]="moduleData.canDisable"
                 [isActive]="moduleData.isActive"
                 (isActiveChange)="service.setModuleActive(moduleData.name, $event, moduleData.canDisable)"

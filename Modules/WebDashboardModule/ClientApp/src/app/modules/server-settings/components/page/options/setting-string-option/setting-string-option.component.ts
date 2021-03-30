@@ -4,6 +4,7 @@ import { ServerSettingInfo } from 'src/app/modules/server-settings/models/server
 @Component({
     selector: 'app-setting-string-option',
     templateUrl: './setting-string-option.component.html',
+    styleUrls: ['../options-base-styles.scss'],
 })
 export class SettingStringOptionComponent {
     @Input() name: string;
@@ -12,7 +13,8 @@ export class SettingStringOptionComponent {
 
     @Output() valueChange = new EventEmitter<string>();
 
-    get defaultValue(): string {
+    get placeHolder(): string {
+        if (this.value?.length) return '';
         return (this.info?.defaultValue as string) ?? '';
     }
 }

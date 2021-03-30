@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store';
+import { ServerSettingType } from '../../enums/server-setting-type';
 import { ModuleData } from '../../models/module-data';
 import { ServerSettingDataByKey } from '../../models/server-setting-data-by-key';
 
@@ -17,7 +18,10 @@ export const setModuleActive = createAction('[Server Settings] Set Module Active
 export const setModuleActiveSuccess = createAction('[Server Settings] Set Module Active Success', props<{ moduleData: ModuleData }>());
 export const setModuleActiveFailure = createAction('[Server Settings] Set Module Active Failure', props<{ err: unknown }>());
 
-export const setModuleSetting = createAction('[Server Settings] Set Module Setting', props<{ moduleName: string; settingKey: string; value: unknown }>());
+export const setModuleSetting = createAction(
+    '[Server Settings] Set Module Setting',
+    props<{ moduleName: string; settingKey: string; value: unknown; settingType: ServerSettingType }>()
+);
 export const setModuleSettingSuccess = createAction(
     '[Server Settings] Set Module Setting Success',
     props<{ moduleName: string; settingKey: string; value: unknown }>()

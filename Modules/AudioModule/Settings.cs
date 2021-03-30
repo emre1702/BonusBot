@@ -10,7 +10,7 @@ namespace BonusBot.AudioModule
         public const string AudioBotUserRoleId = "AudioBotUserRoleId";
         [GuildSetting(GuildSettingType.Channel)]
         public const string AudioInfoChannelId = "AudioInfoChannelId";
-        [GuildSetting(GuildSettingType.Integer, 0, 200)]
+        [GuildSetting(GuildSettingType.IntegerSlider, 0, 200, DefaultValue = 100)]
         public const string Volume = "Volume";
     }
 }

@@ -109,6 +109,15 @@ namespace BonusBot.GuildSettingsModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The setting was successfully saved with the emote &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingEmoteSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("SettingEmoteSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The value for the setting &apos;{0}&apos; for the module &apos;{1}&apos; is:
         ///{2}.
         /// </summary>
@@ -138,6 +147,15 @@ namespace BonusBot.GuildSettingsModule.Language {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The setting was successfully saved with the number &apos;{0}&apos;..
+        /// </summary>
+        internal static string SettingNumberSavedSuccessfully {
+            get {
+                return ResourceManager.GetString("SettingNumberSavedSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The setting was successfully saved with the role &apos;{0}&apos;..
         /// </summary>
         internal static string SettingRoleSavedSuccessfully {
@@ -147,7 +165,7 @@ namespace BonusBot.GuildSettingsModule.Language {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The setting was successfully saved with the value &apos;{0}&apos;..
+        ///   Looks up a localized string similar to The setting was successfully saved with the string &apos;{0}&apos;..
         /// </summary>
         internal static string SettingStringSavedSuccessfully {
             get {

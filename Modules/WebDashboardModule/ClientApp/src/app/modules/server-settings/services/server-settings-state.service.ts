@@ -2,6 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { share, takeUntil } from 'rxjs/operators';
+import { ServerSettingType } from '../enums/server-setting-type';
 import * as Actions from '../states/server-settings/server-settings.actions';
 import * as Selectors from '../states/server-settings/server-settings.selectors';
 
@@ -25,8 +26,8 @@ export class ServerSettingsStateService implements OnDestroy {
         this.store.dispatch(Actions.loadAllModuleDatas());
     }
 
-    setSetting(moduleName: string, settingKey: string, value: unknown) {
-        this.store.dispatch(Actions.setModuleSetting({ moduleName, settingKey, value }));
+    setSetting(moduleName: string, settingKey: string, value: unknown, settingType: ServerSettingType) {
+        this.store.dispatch(Actions.setModuleSetting({ moduleName, settingKey, value, settingType }));
     }
 
     setModuleActive(moduleName: string, isActive: boolean, canDisable: boolean) {

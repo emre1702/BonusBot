@@ -10,8 +10,6 @@ using System.Threading.Tasks;
 
 namespace GuildSettingsModule
 {
-    [Group("config")]
-    [Alias("settings", "setting")]
     [RequireNotDisabledInGuild(typeof(GuildSettings))]
     public class GuildSettings : CommandBase
     {
@@ -20,8 +18,18 @@ namespace GuildSettingsModule
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
-        [Command]
-        [Priority(0)]
+        [Command("ConfigInteger")]
+        [Alias("SettingsInteger", "SettingInteger")]
+        public async Task Set(string moduleName, string key, int value)
+        {
+            if (await SetSetting(moduleName, key, value))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingNumberSavedSuccessfully, value));
+        }
+
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command("ConfigString")]
+        [Alias("SettingsString", "SettingString")]
         public async Task Set(string moduleName, string key, [Remainder] string value)
         {
             if (await SetSetting(moduleName, key, value))
@@ -30,8 +38,18 @@ namespace GuildSettingsModule
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
-        [Command]
-        [Priority(10)]
+        [Command("ConfigBoolean")]
+        [Alias("SettingsBoolean", "SettingBoolean")]
+        public async Task Set(string moduleName, string key, bool value)
+        {
+            if (await SetSetting(moduleName, key, value))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingBoolSavedSuccessfully, value));
+        }
+
+        [RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command("ConfigChannel")]
+        [Alias("SettingsChannel", "SettingChannel")]
         public async Task Set(string moduleName, string key, IChannel channel)
         {
             if (await SetSetting(moduleName, key, channel))
@@ -40,18 +58,28 @@ namespace GuildSettingsModule
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
-        [Command]
-        [Priority(10)]
+        [Command("ConfigRole")]
+        [Alias("SettingsRole", "SettingRole")]
         public async Task Set(string moduleName, string key, IRole role)
         {
             if (await SetSetting(moduleName, key, role))
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingRoleSavedSuccessfully, role.Name));
         }
 
+        /*[RequireContext(ContextType.Guild)]
+        [RequireUserPermission(GuildPermission.Administrator)]
+        [Command("ConfigEmote")]
+        [Alias("SettingsEmote", "SettingEmote")]
+        public async Task Set(string moduleName, string key, IEmote emote)
+        {
+            if (await SetSetting(moduleName, key, emote))
+                await ReplyToUserAsync(string.Format(ModuleTexts.SettingEmoteSavedSuccessfully, emote.Name));
+        }*/
+
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
-        [Command]
-        [Priority(10)]
+        [Command("ConfigMessage")]
+        [Alias("SettingsMessage", "SettingMessage")]
         public async Task Set(string moduleName, string key, IMessage message)
         {
             if (await SetSetting(moduleName, key, message))
@@ -60,22 +88,12 @@ namespace GuildSettingsModule
 
         [RequireContext(ContextType.Guild)]
         [RequireUserPermission(GuildPermission.Administrator)]
-        [Command]
-        [Priority(2)]
+        [Command("ConfigUser")]
+        [Alias("SettingsUser", "SettingUser")]
         public async Task Set(string moduleName, string key, IUser user)
         {
             if (await SetSetting(moduleName, key, user))
                 await ReplyToUserAsync(string.Format(ModuleTexts.SettingUserSavedSuccessfully, user.Username + "#" + user.Discriminator));
-        }
-
-        [RequireContext(ContextType.Guild)]
-        [RequireUserPermission(GuildPermission.Administrator)]
-        [Command]
-        [Priority(15)]
-        public async Task Set(string moduleName, string key, bool boolean)
-        {
-            if (await SetSetting(moduleName, key, boolean))
-                await ReplyToUserAsync(string.Format(ModuleTexts.SettingBoolSavedSuccessfully, boolean ? bool.TrueString : bool.FalseString));
         }
 
         private async Task<bool> SetSetting(string moduleName, string key, object value)

@@ -143,7 +143,7 @@ Loaded modules:
     <value>The setting '{0}' in module '{1}' does not exist.</value>
   </data>
   <data name="SettingStringSavedSuccessfully" xml:space="preserve">
-    <value>The setting was successfully saved with the value '{0}'.</value>
+    <value>The setting was successfully saved with the string '{0}'.</value>
   </data>
   <data name="SettingRoleSavedSuccessfully" xml:space="preserve">
     <value>The setting was successfully saved with the role '{0}'.</value>
@@ -160,5 +160,11 @@ Loaded modules:
   </data>
   <data name="SettingBoolSavedSuccessfully" xml:space="preserve">
     <value>The setting was successfully saved with the boolean '{0}'.</value>
+  </data>
+  <data name="SettingNumberSavedSuccessfully" xml:space="preserve">
+    <value>The setting was successfully saved with the number '{0}'.</value>
+  </data>
+  <data name="SettingEmoteSavedSuccessfully" xml:space="preserve">
+    <value>The setting was successfully saved with the emote '{0}'.</value>
   </data>
 </root>

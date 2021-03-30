@@ -3,20 +3,20 @@
     flex-direction: column;
     flex-wrap: wrap;
     margin-top: 1rem;
+}
 
-    .setting-row {
-        display: flex;
-        margin-bottom: 1rem;
-        align-items: center;
+.setting-row {
+    display: flex;
+    margin-bottom: 1rem;
+    align-items: center;
 
-        :first-child {
-            margin-right: 1rem;
-        }
+    :first-child {
+        margin-right: 1rem;
+    }
 
-        :not(:first-child) {
-            flex-grow: 1;
-            flex-shrink: 1;
-            margin-right: 1rem;
-        }
+    :not(:first-child) {
+        flex-grow: 1;
+        flex-shrink: 1;
+        margin-right: 1rem;
     }
 }

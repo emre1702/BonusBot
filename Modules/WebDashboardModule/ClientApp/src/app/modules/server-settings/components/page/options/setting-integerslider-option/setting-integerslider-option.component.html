@@ -1,0 +1,2 @@
+<span>{{ name | translate }} ({{ valueInteger }}):</span>
+<mat-slider thumbLabel tickInterval="1" [step]="1" [value]="valueInteger" [min]="info.min" [max]="info.max" (change)="valueChanged($event.value)"> </mat-slider>

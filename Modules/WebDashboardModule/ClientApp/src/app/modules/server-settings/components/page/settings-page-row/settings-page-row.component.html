@@ -1,9 +1,25 @@
-<ng-container [ngSwitch]="settingData.info.type">
+<div [ngSwitch]="settingData.info.type">
+    <app-setting-boolean-option
+        *ngSwitchCase="typeEnum.boolean"
+        [name]="settingKey"
+        [value]="settingData.value"
+        (valueChange)="changeSetting($event)"
+        [info]="settingData.info"
+    ></app-setting-boolean-option>
+
+    <app-setting-integerslider-option
+        *ngSwitchCase="typeEnum.integerSlider"
+        [name]="settingKey"
+        [value]="settingData.value"
+        (valueChange)="changeSetting($event)"
+        [info]="settingData.info"
+    ></app-setting-integerslider-option>
+
     <app-setting-string-option
-        *ngSwitchCase="typeEnum.string"
+        *ngSwitchDefault
         [name]="settingKey"
         [value]="settingData.value"
         (valueChange)="changeSetting($event)"
         [info]="settingData.info"
     ></app-setting-string-option>
-</ng-container>
+</div>

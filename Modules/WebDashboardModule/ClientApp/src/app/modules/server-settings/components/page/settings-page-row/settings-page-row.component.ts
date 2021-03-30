@@ -18,6 +18,6 @@ export class SettingsPageRowComponent {
     constructor(private readonly service: ServerSettingsStateService) {}
 
     changeSetting(value: unknown) {
-        this.service.setSetting(this.moduleName, this.settingKey, value);
+        this.service.setSetting(this.moduleName, this.settingKey, value, this.settingData.info.type);
     }
 }
