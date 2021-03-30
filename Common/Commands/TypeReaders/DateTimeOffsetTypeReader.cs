@@ -42,7 +42,8 @@ namespace BonusBot.Common.Commands.TypeReaders
             if (!TZConvert.TryGetTimeZoneInfo(timeZone, out var timeZoneInfo))
                 return (null, timeZone);
 
-            return (new DateTimeOffset(dateTime, timeZoneInfo.BaseUtcOffset), timeZone);
+            var dateTimeOffset = new DateTimeOffset(dateTime, timeZoneInfo.GetUtcOffset(DateTime.Now));
+            return (dateTimeOffset, timeZone);
         }
     }
 }
