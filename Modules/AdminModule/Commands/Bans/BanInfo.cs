@@ -30,7 +30,7 @@ namespace BonusBot.AdminModule.Commands.Bans
 
         private async Task<TimedActions?> GetUnbanActionEntry(ulong targetId)
         {
-            using var dbContext = Class.DbContextFactory.CreateDbContext();
+            await using var dbContext = Class.DbContextFactory.CreateDbContext();
             var unbanActionEntry = await dbContext.TimedActions.Get(Class.Context.Guild.Id, ActionType.Unban, targetId);
             return unbanActionEntry;
         }

@@ -55,7 +55,7 @@ namespace BonusBot.GuildsSystem.Modules
 
         private async Task<HashSet<string>> LoadDeactivatedModuleNames(ulong guildId)
         {
-            using var dbContext = _dbContextFactory.CreateDbContext();
+            await using var dbContext = _dbContextFactory.CreateDbContext();
             var entries = await (dbContext.GuildsSettings as IQueryable<GuildsSettings>)
                 .Where(s => s.GuildId == guildId && s.Key == Constants.ModuleDeactivatedDbKey)
                 .Select(s => s.Module)

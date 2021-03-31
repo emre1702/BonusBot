@@ -65,7 +65,7 @@ namespace BonusBot.DateTimeTestModule
 
         private async Task AddToDb(DateTimeOffset dateTimeOffset, Guid guid)
         {
-            using var dbContext = _bonusDbFactory.CreateDbContext();
+            await using var dbContext = _bonusDbFactory.CreateDbContext();
             var action = new TimedActions
             {
                  ActionType = guid.ToString(),
@@ -82,7 +82,7 @@ namespace BonusBot.DateTimeTestModule
 
         private async Task<DateTime> GetFromDatabase(Guid guid)
         {
-            using var dbContext = _bonusDbFactory.CreateDbContext();
+            await using var dbContext = _bonusDbFactory.CreateDbContext();
             var action = await dbContext.TimedActions.FirstAsync(a => a.ActionType == guid.ToString());
             dbContext.Remove(action);
             await dbContext.SaveChangesAsync();

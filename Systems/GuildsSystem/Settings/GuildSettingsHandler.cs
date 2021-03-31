@@ -41,7 +41,7 @@ namespace BonusBot.GuildsSystem.Settings
             if (cachedSetting is { })
                 return await cachedSetting.ConvertTo<T>(client, _guild);
 
-            using var dbContext = _bonusDbContextFactory.CreateDbContext();
+            await using var dbContext = _bonusDbContextFactory.CreateDbContext();
             var setting = await dbContext.GuildsSettings.Get(_guild.Id, key, moduleName);
             if (setting is null)
                 return default;
@@ -58,7 +58,7 @@ namespace BonusBot.GuildsSystem.Settings
             _settingsCache.Set(moduleName, key, value);
 
             var identifier = value.GetIdentifier();
-            using var dbContext = _bonusDbContextFactory.CreateDbContext();
+            await using var dbContext = _bonusDbContextFactory.CreateDbContext();
             await dbContext.GuildsSettings.AddOrUpdate(_guild.Id, key, moduleName, identifier);
             await dbContext.SaveChangesAsync();
         }
@@ -71,7 +71,7 @@ namespace BonusBot.GuildsSystem.Settings
             moduleName = moduleName.ToModuleName();
             _settingsCache.Remove(moduleName, key);
 
-            using var dbContext = _bonusDbContextFactory.CreateDbContext();
+            await using var dbContext = _bonusDbContextFactory.CreateDbContext();
             await dbContext.GuildsSettings.Remove(_guild.Id, key, moduleName);
             await dbContext.SaveChangesAsync();
         }
