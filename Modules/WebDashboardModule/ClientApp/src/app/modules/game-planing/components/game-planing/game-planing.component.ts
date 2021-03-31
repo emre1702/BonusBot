@@ -22,7 +22,7 @@ export class GamePlaningComponent {
     minDate = new Date();
     maxDate = new Date(this.minDate.getTime() + Constants.maxGamePlaningDaysBefore * 24 * 60 * 60 * 1000);
 
-    constructor(readonly service: GamePlaningService, readonly mobileService: MobileService, private readonly adapter: NgxMatDateAdapter<Date>) {
-        adapter.setLocale('de-DE');
+    constructor(readonly service: GamePlaningService, readonly mobileService: MobileService, adapter: NgxMatDateAdapter<Date>) {
+        this.service.getLocale().subscribe((locale) => adapter.setLocale(locale));
     }
 }

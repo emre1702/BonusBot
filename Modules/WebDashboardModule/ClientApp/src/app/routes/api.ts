@@ -17,6 +17,7 @@ export default {
         },
         settings: {
             allModuleDatas: `Settings/AllModuleDatas`,
+            locale: `Settings/Locale`,
             moduleSettings: `Settings/ModuleSettings`,
         },
     },

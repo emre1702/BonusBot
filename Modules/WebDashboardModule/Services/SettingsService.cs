@@ -52,5 +52,11 @@ namespace BonusBot.WebDashboardModule.Services
 
             return settings;
         }
+
+        public ValueTask<string?> GetModuleSetting(string guildId, string moduleName, string key)
+        {
+            var bonusGuild = _guildsHandler.GetGuild(ulong.Parse(guildId))!;
+            return bonusGuild.Settings.Get<string>(moduleName, key);
+        }
     }
 }
