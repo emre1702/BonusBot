@@ -17,8 +17,11 @@ namespace BonusBot.WebDashboardModule.Controllers.Account
     [AllowAnonymous]
     public class LoginRedirectController : Controller
     {
-        private static readonly TokenRequestService _tokenRequestService = new();
-        private static readonly UserRequestService _userRequestService = new();
+        private readonly TokenRequestService _tokenRequestService;
+        private readonly UserRequestService _userRequestService;
+
+        public LoginRedirectController(TokenRequestService tokenRequestService, UserRequestService userRequestService)
+            => (_tokenRequestService, _userRequestService) = (tokenRequestService, userRequestService);
 
         public async Task<ActionResult> Index([FromQuery] string code, [FromQuery] string state)
         {

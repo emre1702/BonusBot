@@ -2,6 +2,7 @@ using BonusBot.Common.Extensions;
 using BonusBot.Common.Interfaces.Core;
 using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Interfaces.Services;
+using BonusBot.WebDashboardModule.Services;
 using Discord.Commands;
 using Discord.Commands.Builders;
 using Microsoft.AspNetCore.Hosting;
@@ -42,6 +43,15 @@ namespace BonusBot.WebDashboardModule
                         services.AddSingleton(_mainServiceProvider.GetRequiredService<ICommandsHandler>());
                         services.AddSingleton(_mainServiceProvider.GetRequiredService<ISettingsHandler>());
                         services.AddSingleton(_mainServiceProvider);
+                       
+                        services.AddSingleton<ContentService>();
+                        services.AddSingleton<ContextProvideService>();
+                        services.AddSingleton<NavigationService>();
+                        services.AddSingleton<SettingsService>();
+                        services.AddSingleton<TokenRequestService>();
+                        services.AddSingleton<UserRequestService>();
+                        services.AddSingleton<UserValidationService>();
+                        services.AddSingleton<WebCommandService>();
                     });
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureKestrel(option =>

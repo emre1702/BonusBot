@@ -21,8 +21,8 @@ namespace BonusBot.WebDashboardModule.Services
 
         private readonly TaskCompletionSource<IResult> _resultWaitSource = new();
 
-        public WebCommandService(IGuildsHandler guildsHandler, IDiscordClientHandler discordClientHandler, ICommandsHandler commandsHandler, ICustomServiceProvider mainServiceProvider)
-            => (_contextProvideService, _commandsHandler, _mainServiceProvider) = (new(guildsHandler, discordClientHandler), commandsHandler, mainServiceProvider);
+        public WebCommandService(ContextProvideService contextProvideService, ICommandsHandler commandsHandler, ICustomServiceProvider mainServiceProvider)
+            => (_contextProvideService, _commandsHandler, _mainServiceProvider) = (contextProvideService, commandsHandler, mainServiceProvider);
 
         private Task CommandExecuted(Optional<CommandInfo> cmdInfo, ICommandContext context, IResult result)
         {

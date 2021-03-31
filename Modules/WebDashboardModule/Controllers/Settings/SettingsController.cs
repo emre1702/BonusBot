@@ -1,7 +1,5 @@
 ﻿using BonusBot.Common;
 using BonusBot.Common.Extensions;
-using BonusBot.Common.Interfaces.Guilds;
-using BonusBot.Common.Interfaces.Services;
 using BonusBot.Common.Models;
 using BonusBot.WebDashboardModule.Models.Settings;
 using BonusBot.WebDashboardModule.Services;
@@ -17,8 +15,8 @@ namespace BonusBot.WebDashboardModule.Controllers.Settings
         private readonly UserValidationService _userValidationService;
         private readonly SettingsService _settingsService;
 
-        public SettingsController(IGuildsHandler guildsHandler, IModulesHandler modulesHandler, ISettingsHandler settingsHandler)
-            => (_userValidationService, _settingsService) = (new(), new(guildsHandler, modulesHandler, settingsHandler));
+        public SettingsController(UserValidationService userValidationService, SettingsService settingsService)
+            => (_userValidationService, _settingsService) = (userValidationService, settingsService);
 
         [HttpGet("AllModuleDatas")]
         public ActionResult<IEnumerable<ModuleData>> GetAllModuleDatas([FromQuery] string guildId)

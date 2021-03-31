@@ -1,5 +1,4 @@
-﻿using BonusBot.Common.Interfaces.Services;
-using BonusBot.WebDashboardModule.Defaults;
+﻿using BonusBot.WebDashboardModule.Defaults;
 using BonusBot.WebDashboardModule.Extensions;
 using BonusBot.WebDashboardModule.Models.Discord;
 using BonusBot.WebDashboardModule.Services;
@@ -15,8 +14,8 @@ namespace BonusBot.WebDashboardModule.Controllers.Navigation
     {
         private readonly NavigationService _navigationService;
 
-        public NavigationController(IDiscordClientHandler discordClientHandler)
-            => _navigationService = new(discordClientHandler);
+        public NavigationController(NavigationService navigationService)
+            => _navigationService = navigationService;
 
         [HttpGet("Guilds")]
         public async Task<ActionResult<IEnumerable<WebGuildData>>> GetGuilds()

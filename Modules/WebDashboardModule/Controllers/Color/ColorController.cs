@@ -1,7 +1,6 @@
 ﻿using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.WebDashboardModule.Defaults;
 using BonusBot.WebDashboardModule.Extensions;
-using BonusBot.WebDashboardModule.Models.Color;
 using BonusBot.WebDashboardModule.Models.Discord;
 using BonusBot.WebDashboardModule.Services;
 using Discord.WebSocket;
@@ -14,11 +13,11 @@ namespace BonusBot.WebDashboardModule.Controllers.Color
     [Route("[controller]")]
     public class ColorController : Controller
     {
-        private readonly UserValidationService _userValidationService = new();
+        private readonly UserValidationService _userValidationService;
         private readonly IGuildsHandler _guildsHandler;
 
-        public ColorController(IGuildsHandler guildsHandler)
-            => _guildsHandler = guildsHandler;
+        public ColorController(UserValidationService userValidationService, IGuildsHandler guildsHandler)
+            => (_userValidationService, _guildsHandler) = (userValidationService, guildsHandler);
 
         [HttpGet("UserColor")]
         public ActionResult<DiscordColor> GetUserColor(string guildId)

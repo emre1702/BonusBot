@@ -1,6 +1,4 @@
-﻿using BonusBot.Common.Interfaces.Guilds;
-using BonusBot.Common.Interfaces.Services;
-using BonusBot.WebDashboardModule.Enums.Content;
+﻿using BonusBot.WebDashboardModule.Enums.Content;
 using BonusBot.WebDashboardModule.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -13,8 +11,8 @@ namespace BonusBot.WebDashboardModule.Controllers.Content
         private readonly UserValidationService _userValidationService;
         private readonly ContentService _contentService;
 
-        public ContentController(IModulesHandler modulesHandler, IGuildsHandler guildsHandler)
-            => (_userValidationService, _contentService) = (new(), new(modulesHandler, guildsHandler));
+        public ContentController(UserValidationService userValidationService, ContentService contentService)
+            => (_userValidationService, _contentService) = (userValidationService, contentService);
 
         [HttpGet("UserAccessLevel")]
         public async Task<ActionResult<UserAccessLevel>> GetUserAccessLevel([FromQuery] string module, [FromQuery] string guildId)
