@@ -86,10 +86,15 @@ namespace BonusBot.WebDashboardModule
             //Todo: Delete later? Needs testing
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "../../../../Modules/WebDashboardModule/ClientApp";
+                
                 if (env.IsDevelopment())
                 {
+                    spa.Options.SourcePath = "../../../../Modules/WebDashboardModule/ClientApp";
                     spa.UseAngularCliServer(npmScript: "start");
+                }
+                else
+                {
+                    spa.Options.SourcePath = "wwwroot";
                 }
             });
         }
