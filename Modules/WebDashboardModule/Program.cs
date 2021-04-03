@@ -51,7 +51,7 @@ namespace BonusBot.WebDashboardModule
                         services.AddSingleton<TokenRequestService>();
                         services.AddSingleton<UserRequestService>();
                         services.AddSingleton<UserValidationService>();
-                        services.AddSingleton<WebCommandService>();
+                        services.AddScoped<WebCommandService>();
                     });
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureKestrel(option =>
