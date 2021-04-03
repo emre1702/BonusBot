@@ -14,20 +14,11 @@ namespace BonusBot.Common.Commands.TypeReaders
             if (!DateTime.TryParse(input, out var dateTime))
                 return TypeReaderResult.FromError(CommandError.ParseFailed, string.Format(Texts.CommandInvalidDateTimeOffsetError, input));
 
-            if (DoesDateTimeHasGivenTimezone(dateTime))
-            {
-                var offsetWithGivenTimezone = new DateTimeOffset(dateTime);
-                return TypeReaderResult.FromSuccess(offsetWithGivenTimezone);
-            }
-
             var (result, timeZone) = await GetDateTimeWithGuildTimezone(dateTime, (ICustomCommandContext)context);
             if (result is null)
                 return TypeReaderResult.FromError(CommandError.Unsuccessful, string.Format(Texts.InvalidTimeZoneIdError, timeZone));
             return TypeReaderResult.FromSuccess(result);
         }
-
-        private bool DoesDateTimeHasGivenTimezone(DateTime dateTime)
-            => dateTime.Kind == DateTimeKind.Local;
 
         private async Task<(DateTimeOffset?, string)> GetDateTimeWithGuildTimezone(DateTime dateTime, ICustomCommandContext context)
         {

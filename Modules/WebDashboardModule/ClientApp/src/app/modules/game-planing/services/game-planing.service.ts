@@ -17,7 +17,7 @@ export class GamePlaningService {
 
     createAnnouncement(formGroup: FormGroup) {
         const game = String(formGroup.controls.game.value).replace('"', "'");
-        const date = (formGroup.controls.date.value as Date).toUTCString();
+        const date = (formGroup.controls.date.value as Date).toISOString();
         this.commandService.execute(`meetup "${game}" "${date}"`).subscribe();
     }
 
