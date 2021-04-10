@@ -21,6 +21,42 @@ export class AudioSettingsEffects {
         )
     );
 
+    pause$ = createEffect(() =>
+        this.actions.pipe(
+            ofType(AudioSettingsActions.pause),
+            mergeMap(() =>
+                this.service.pause().pipe(
+                    map(() => AudioSettingsActions.pauseSuccess()),
+                    catchError((err) => of(AudioSettingsActions.pauseFailure({ err })))
+                )
+            )
+        )
+    );
+
+    resume$ = createEffect(() =>
+        this.actions.pipe(
+            ofType(AudioSettingsActions.resume),
+            mergeMap(() =>
+                this.service.resume().pipe(
+                    map(() => AudioSettingsActions.resumeSuccess()),
+                    catchError((err) => of(AudioSettingsActions.resumeFailure({ err })))
+                )
+            )
+        )
+    );
+
+    stop$ = createEffect(() =>
+        this.actions.pipe(
+            ofType(AudioSettingsActions.stop),
+            mergeMap(() =>
+                this.service.stop().pipe(
+                    map(() => AudioSettingsActions.stopSuccess()),
+                    catchError((err) => of(AudioSettingsActions.stopFailure({ err })))
+                )
+            )
+        )
+    );
+
     loadAudioSettings$ = createEffect(() =>
         this.actions.pipe(
             ofType(AudioSettingsActions.loadAudioSettings),

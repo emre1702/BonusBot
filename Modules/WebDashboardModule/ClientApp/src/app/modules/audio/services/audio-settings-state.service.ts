@@ -21,6 +21,18 @@ export class AudioSettingsStateService implements OnDestroy {
         this.store.dispatch(Actions.setVolume({ volume: volume }));
     }
 
+    pause() {
+        this.store.dispatch(Actions.pause());
+    }
+
+    resume() {
+        this.store.dispatch(Actions.resume());
+    }
+
+    stop() {
+        this.store.dispatch(Actions.stop());
+    }
+
     private reloadStateEveryMs(ms: number) {
         interval(ms)
             .pipe(repeat(), takeUntil(this.destroySubject))

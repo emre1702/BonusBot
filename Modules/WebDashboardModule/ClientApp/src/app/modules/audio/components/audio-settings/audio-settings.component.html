@@ -1,11 +1,16 @@
-<div class="setting-container">
-    <div class="setting-row" *ngIf="(service.volume$ | async)?.valueOf() as volume">
-        <mat-label>{{ 'Volume' | translate }} {{ volume }}</mat-label>
+<div class="setting-container" *ngIf="service.state$ | async as state">
+    <div class="setting-button-row">
+        <button mat-button *ngIf="state.status == playerStatusEnum.playing">{{ 'Pause' | translate }}</button>
+        <button mat-button *ngIf="state.status == playerStatusEnum.paused">{{ 'Resume' | translate }}</button>
+        <button mat-button *ngIf="state.status != playerStatusEnum.disconnected">{{ 'Stop' | translate }}</button>
+    </div>
+    <div class="setting-row">
+        <mat-label>{{ 'Volume' | translate }} {{ state.volume }}</mat-label>
         <mat-slider
             [min]="0"
             [max]="200"
             [step]="1"
-            [ngModel]="volume"
+            [ngModel]="state.volume"
             (ngModelChange)="stateService.setVolume($event)"
             [tickInterval]="10"
             [thumbLabel]="true"

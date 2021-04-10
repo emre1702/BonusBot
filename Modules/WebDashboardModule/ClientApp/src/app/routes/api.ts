@@ -1,10 +1,10 @@
 export default {
     get: {
+        audio: {
+            audioState: `Audio/GetState`,
+        },
         color: {
             userColor: `Color/UserColor`,
-        },
-        command: {
-            audioSettingsState: `WebCommand/AudioSettingsState`,
         },
         content: {
             accessLevel: `Content/UserAccessLevel`,

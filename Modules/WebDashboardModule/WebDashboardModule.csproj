@@ -29,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj" />
+    <ProjectReference Include="..\AudioModule\AudioModule.csproj" />
   </ItemGroup>
 
   <ItemGroup>

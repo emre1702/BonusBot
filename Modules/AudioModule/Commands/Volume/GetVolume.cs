@@ -1,4 +1,5 @@
-﻿using BonusBot.AudioModule.Language;
+﻿using BonusBot.AudioModule.Helpers;
+using BonusBot.AudioModule.Language;
 using BonusBot.AudioModule.Models.CommandArgs;
 using BonusBot.AudioModule.PartialMain;
 using BonusBot.Common.Commands;
@@ -14,13 +15,7 @@ namespace BonusBot.AudioModule.Commands.Volume
 
         public override async Task Do(EmptyCommandArgs _)
         {
-            if (Class.Player is { })
-            {
-                await Class.ReplyAsync(string.Format(ModuleTexts.GetVolumeInfo, Class.Player.CurrentVolume));
-                return;
-            }
-
-            int? volume = await Class.Context.BonusGuild!.Settings.Get<int>(GetType().Assembly, Settings.Volume);
+            var volume = await VolumeHelper.GetVolume(Class.Context.BonusGuild!);
             if (volume.HasValue)
             {
                 await Class.ReplyAsync(string.Format(ModuleTexts.GetVolumeInfo, volume.Value));

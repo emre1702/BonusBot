@@ -28,18 +28,5 @@ namespace BonusBot.WebDashboardModule.Controllers.WebCommand
 
             return Ok(messages);
         }
-
-        [HttpGet("AudioSettingsState")]
-        public async Task<IActionResult> GetAudioSettingsState([FromQuery] string guildId)
-        {
-            _userValidationService.AssertIsInGuild(HttpContext.Session, guildId);
-
-            var messages = await _webCommandService.Execute(HttpContext.Session, guildId, "GetState");
-
-            var json = messages.FirstOrDefault(m => m.StartsWith("{"));
-            if (json is not null)
-                return Ok(json);
-            return Ok("{}");
-        }
     }
 }
