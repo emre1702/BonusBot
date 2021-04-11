@@ -5,7 +5,7 @@ import { repeat, takeUntil } from 'rxjs/operators';
 import * as Actions from '../states/audio-settings/audio-settings.actions';
 
 @Injectable()
-export class AudioSettingsStateService implements OnDestroy {
+export class AudioSettingsStateFacade implements OnDestroy {
     private destroySubject = new Subject();
 
     constructor(private readonly store: Store) {

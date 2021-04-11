@@ -23,16 +23,24 @@ export class AudioSettingsService implements OnDestroy {
         return this.commandService.execute(`setVolume ${volume}`);
     }
 
-    pause() {
+    pause(): Observable<string[]> {
         return this.commandService.execute('pause');
     }
 
-    resume() {
+    resume(): Observable<string[]> {
         return this.commandService.execute('resume');
     }
 
-    stop() {
+    stop(): Observable<string[]> {
         return this.commandService.execute('stop');
+    }
+
+    join(): Observable<string[]> {
+        return this.commandService.execute('join');
+    }
+
+    leave(): Observable<string[]> {
+        return this.commandService.execute('leave');
     }
 
     loadAudioSettings(guildId: string): Observable<AudioSettingsState> {
