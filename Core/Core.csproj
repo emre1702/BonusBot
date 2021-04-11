@@ -57,15 +57,13 @@
   </Target>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
     
-
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
-      <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-      <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm install" />
-      <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm run build -- --prod" />
-      <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
-      
       <DistFiles Include="$(WebDashboardSpaRoot)dist\**" />
       <DistFiles Include="$(WebDashboardSpaRoot)dist-server\**" />
       <DistFiles Include="$(WebDashboardSpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
