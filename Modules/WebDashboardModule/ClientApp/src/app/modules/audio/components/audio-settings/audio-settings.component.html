@@ -16,4 +16,8 @@
             [thumbLabel]="true"
         ></mat-slider>
     </div>
+    <div class="setting-button-row">
+        <button mat-button (click)="facade.join()">{{ 'Join' | translate }}</button>
+        <button mat-button (click)="facade.leave()">{{ 'Leave' | translate }}</button>
+    </div>
 </div>

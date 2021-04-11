@@ -33,6 +33,14 @@ export class AudioSettingsStateFacade implements OnDestroy {
         this.store.dispatch(Actions.stop());
     }
 
+    join() {
+        this.store.dispatch(Actions.join());
+    }
+
+    leave() {
+        this.store.dispatch(Actions.leave());
+    }
+
     private reloadStateEveryMs(ms: number) {
         interval(ms)
             .pipe(repeat(), takeUntil(this.destroySubject))

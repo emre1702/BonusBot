@@ -57,6 +57,30 @@ export class AudioSettingsEffects {
         )
     );
 
+    join$ = createEffect(() =>
+        this.actions.pipe(
+            ofType(AudioSettingsActions.join),
+            mergeMap(() =>
+                this.service.join().pipe(
+                    map(() => AudioSettingsActions.joinSuccess()),
+                    catchError((err) => of(AudioSettingsActions.joinFailure({ err })))
+                )
+            )
+        )
+    );
+
+    leave$ = createEffect(() =>
+        this.actions.pipe(
+            ofType(AudioSettingsActions.leave),
+            mergeMap(() =>
+                this.service.leave().pipe(
+                    map(() => AudioSettingsActions.leaveSuccess()),
+                    catchError((err) => of(AudioSettingsActions.leaveFailure({ err })))
+                )
+            )
+        )
+    );
+
     loadAudioSettings$ = createEffect(() =>
         this.actions.pipe(
             ofType(AudioSettingsActions.loadAudioSettings),
