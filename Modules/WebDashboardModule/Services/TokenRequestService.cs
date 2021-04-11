@@ -12,7 +12,6 @@ namespace BonusBot.WebDashboardModule.Services
     {
         public async Task<TokenData> GetTokenData(string code)
         {
-            Console.WriteLine("GetTokenData");
             using var httpClient = new HttpClient();
             var stringContent = new FormUrlEncodedContent(GetRequestData(code)!);
             var data = await httpClient.PostAsync(WebConstants.OAuthTokenUrl, stringContent);
