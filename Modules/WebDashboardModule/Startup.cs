@@ -24,7 +24,7 @@ namespace BonusBot.WebDashboardModule
             services.AddControllersWithViews().AddJsonOptions(jsonOptions => jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = ".";
+                configuration.RootPath = "dist";
             });
             services.AddSession(options =>
             {
@@ -94,7 +94,7 @@ namespace BonusBot.WebDashboardModule
                 }
                 else
                 {
-                    spa.Options.SourcePath = ".";
+                    spa.Options.SourcePath = "dist";
                 }
             });
         }

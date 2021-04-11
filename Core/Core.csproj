@@ -29,10 +29,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="$(WebDashboardSpaRoot)\dist\**\*" CopyToPublishDirectory="PreserveNewest" Visible="false"/>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\Modules\DateTimeTestModule\DateTimeTestModule.csproj" />
@@ -61,17 +57,20 @@
   </Target>
 
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
-    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
-    <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm install" />
-    <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm run build -- --prod" />
-    <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+    
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>
-      <DistFiles Include="$(WebDashboardSpaRoot)dist\**; $(WebDashboardSpaRoot)dist-server\**" />
+      <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+      <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm install" />
+      <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm run build -- --prod" />
+      <Exec WorkingDirectory="$(WebDashboardSpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+      
+      <DistFiles Include="$(WebDashboardSpaRoot)dist\**" />
+      <DistFiles Include="$(WebDashboardSpaRoot)dist-server\**" />
       <DistFiles Include="$(WebDashboardSpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
-      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
-        <RelativePath>%(DistFiles.Identity)</RelativePath>
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)"> 
+        <RelativePath>$([System.String]::Copy('%(DistFiles.Identity)').Replace('$(WebDashboardSpaRoot)', ''))</RelativePath>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       </ResolvedFileToPublish>
