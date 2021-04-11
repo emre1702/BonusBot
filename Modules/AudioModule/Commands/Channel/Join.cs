@@ -17,7 +17,7 @@ namespace BonusBot.AudioModule.Commands.Channel
             var voiceChannel = Class.Context.GuildUser?.VoiceChannel;
             if (voiceChannel is null)
             {
-                await Class.ReplyAsync(ModuleTexts.NotConnectToVoiceChannel);
+                await Class.ReplyErrorAsync(ModuleTexts.NotConnectToVoiceChannel);
                 return;
             }
 

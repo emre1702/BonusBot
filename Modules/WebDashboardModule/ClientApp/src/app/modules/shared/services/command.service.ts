@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { first, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, first, switchMap, tap } from 'rxjs/operators';
 import api from 'src/app/routes/api';
 import { GuildSelectionService } from '../../page/services/guild-selection.service';
 import { MessagesService } from '../../page/services/messages.service';
@@ -20,7 +20,13 @@ export class CommandService {
             switchMap((guildId) => {
                 const body = { guildId, command };
 
-                return this.httpClient.post(api.post.command.execute, body).pipe(tap((messages: string[]) => this.messagesService.addMessages(messages)));
+                return this.httpClient.post(api.post.command.execute, body).pipe(
+                    tap((messages: string[]) => this.messagesService.addMessages(messages)),
+                    catchError((err: HttpErrorResponse) => {
+                        this.messagesService.addErrorMessages(err.error as string[]);
+                        throw err;
+                    })
+                );
             })
         );
     }

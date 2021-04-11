@@ -37,6 +37,7 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public virtual IImmutableList<IActivity> Activities => throw new NotImplementedException();
         public List<string> Messages { get; } = new();
+        public List<string> Errors { get; } = new();
 
         public virtual string GetAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
         {
@@ -55,6 +56,13 @@ namespace BonusBot.WebDashboardModule.Discord
         {
             if (text is not null)
                 Messages.Add(text);
+            return new WebMessage(text ?? string.Empty, this, channel);
+        }
+
+        public IUserMessage AddWebErrorMessage(string? text, IMessageChannel channel)
+        {
+            if (text is not null)
+                Errors.Add(text);
             return new WebMessage(text ?? string.Empty, this, channel);
         }
 

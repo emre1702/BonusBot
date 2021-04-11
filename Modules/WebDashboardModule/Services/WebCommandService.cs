@@ -34,7 +34,7 @@ namespace BonusBot.WebDashboardModule.Services
             return Task.CompletedTask;
         }
 
-        public async Task<List<string>> Execute(ISession session, string? guildId, string command)
+        public async Task<(List<string> Messages, List<string> Errors)> Execute(ISession session, string? guildId, string command)
         {
             try
             {
@@ -47,14 +47,15 @@ namespace BonusBot.WebDashboardModule.Services
                 var result = await WaitForResult();
 
                 var messages = ((WebUser)context.User).Messages;
+                var errors = ((WebUser)context.User).Errors;
                 if (result is null)
-                    messages.Add("Timeout");
+                    errors.Add("Timeout");
 
-                return messages;
+                return (messages, errors);
             }
             catch (Exception ex)
             {
-                return new() { ex.Message };
+                return (new() { }, new() { ex.Message });
             }
         }
 

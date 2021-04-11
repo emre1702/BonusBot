@@ -21,12 +21,20 @@ namespace BonusBot.Common.Extensions
             MessageReference? messageReference = null)
             => Context.Channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
 
+        public Task<IUserMessage> ReplyErrorAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
+            MessageReference? messageReference = null)
+            => Context.Channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
+
         public async Task<IUserMessage> ReplyToUserAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
             MessageReference? messageReference = null)
         {
             var channel = await Context.User.GetOrCreateDMChannelAsync();
             return await channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
         }
+
+        public Task<IUserMessage> ReplyErrorToUserAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
+            MessageReference? messageReference = null)
+            => Context.User.SendErrorMessage(message, isTTS, embed, options, allowedMentions, messageReference);
 
         public async Task<IUserMessage> ReplyToUserAsync(EmbedBuilder embed)
         {

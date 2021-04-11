@@ -25,7 +25,7 @@ namespace BonusBot.AudioModule.Commands.Track
 
             if (string.IsNullOrWhiteSpace(lyrics))
             {
-                await Class.ReplyAsync(string.Format(ModuleTexts.LyricsNotFoundError, audio.Info.Title));
+                await Class.ReplyErrorAsync(string.Format(ModuleTexts.LyricsNotFoundError, audio.Info.Title));
                 return;
             }
 

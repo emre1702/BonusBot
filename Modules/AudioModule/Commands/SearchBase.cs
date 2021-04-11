@@ -21,13 +21,13 @@ namespace BonusBot.AudioModule.Commands
         {
             if (searchResult.LoadType == LoadType.LoadFailed)
             {
-                await Class.ReplyAsync(ModuleTexts.LavaLinkLoadError);
+                await Class.ReplyErrorAsync(ModuleTexts.LavaLinkLoadError);
                 return true;
             }
 
             if (searchResult.LoadType == LoadType.NoMatches)
             {
-                await Class.ReplyAsync(ModuleTexts.LavaLinkNoMatchesError);
+                await Class.ReplyErrorAsync(ModuleTexts.LavaLinkNoMatchesError);
                 return true;
             }
 

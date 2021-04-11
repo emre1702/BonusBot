@@ -19,7 +19,7 @@ namespace BonusBot.AdminModule.Commands.Bans
             var ban = await Class.Context.Guild.GetBanAsync(args.User);
             if (ban is null)
             {
-                await Class.ReplyAsync(ModuleTexts.UserIsNotBannedError);
+                await Class.ReplyErrorAsync(ModuleTexts.UserIsNotBannedError);
                 return;
             }
 

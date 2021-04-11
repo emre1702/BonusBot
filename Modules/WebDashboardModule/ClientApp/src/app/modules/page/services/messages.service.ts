@@ -17,4 +17,11 @@ export class MessagesService {
             this.messages = this.messages.splice(0, this.messages.length - 100);
         }
     }
+
+    addErrorMessages(messages: string[]) {
+        this.messages.push(...messages);
+        if (this.messages.length > 100) {
+            this.messages = this.messages.splice(0, this.messages.length - 100);
+        }
+    }
 }

@@ -20,14 +20,14 @@ namespace BonusBot.AudioModule.Commands.Track
             var pos = GetPosByInput(args.Position);
             if (pos is null)
             {
-                await Class.ReplyAsync(ModuleTexts.SetPositionWrongFormatError);
+                await Class.ReplyErrorAsync(ModuleTexts.SetPositionWrongFormatError);
                 return;
             }
 
             var chosenPercentage = Math.Round(pos.Value.Divide(trackLength) * 100 * 100) / 100;
             if (pos > trackLength)
             {
-                await Class.ReplyAsync(string.Format(ModuleTexts.PositionLargeThanLengthError, pos, chosenPercentage));
+                await Class.ReplyErrorAsync(string.Format(ModuleTexts.PositionLargeThanLengthError, pos, chosenPercentage));
                 return;
             }
 

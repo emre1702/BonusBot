@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using BonusBot.Common.Interfaces.Discord;
+using Discord;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BonusBot.WebDashboardModule.Discord
 {
-    public class WebDMChannel : IDMChannel, IPrivateChannel
+    public class WebDMChannel : IDMChannel, IPrivateChannel, IErrorChannel
     {
         public IUser Recipient { get; }
 
@@ -92,6 +93,9 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public Task<IUserMessage> SendMessageAsync(string? text = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null, MessageReference? messageReference = null)
             => Task.FromResult(_user.AddWebMessage(text, this));
+
+        public Task<IUserMessage> SendErrorMessageAsync(string text)
+            => Task.FromResult(_user.AddWebErrorMessage(text, this));
 
         public Task TriggerTypingAsync(RequestOptions? options = null)
         {

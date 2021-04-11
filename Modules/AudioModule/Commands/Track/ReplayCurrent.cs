@@ -18,7 +18,7 @@ namespace BonusBot.AudioModule.Commands.Track
             var trackToReplay = GetTrackToReplay();
             if (trackToReplay is null)
             {
-                await Class.ReplyAsync(ModuleTexts.NoTrackToReplayError);
+                await Class.ReplyErrorAsync(ModuleTexts.NoTrackToReplayError);
                 return;
             }
 

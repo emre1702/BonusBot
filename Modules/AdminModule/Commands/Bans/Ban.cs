@@ -33,7 +33,7 @@ namespace BonusBot.AdminModule.Commands.Bans
             }
             catch
             {
-                await Class.ReplyToUserAsync(ModuleTexts.ErrorHappenedChangesReverted);
+                await Class.ReplyErrorToUserAsync(ModuleTexts.ErrorHappenedChangesReverted);
             }
 
             await InformAdminAboutBan(args);

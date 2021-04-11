@@ -344,7 +344,7 @@ namespace BonusBot.AudioModule.LavaLink.Clients
             await (TrackStuck?.InvokeAsync((player, track, timeoutMs)) ?? Task.CompletedTask);
         }
 
-        private async Task HandleMessageEventWebSocketClosed(JsonElement json, LavaPlayer player)
+        private async Task HandleMessageEventWebSocketClosed(JsonElement json, LavaPlayer _)
         {
             var reason = json.GetProperty("reason")!.GetString()!;
             var code = json.GetProperty("code")!.GetInt32()!;

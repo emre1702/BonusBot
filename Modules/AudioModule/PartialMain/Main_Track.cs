@@ -37,7 +37,7 @@ namespace BonusBot.AudioModule.PartialMain
         [RequireCurrentTrack]
         [Priority(1)]
         public Task InvalidPosition(int _)
-           => ReplyAsync(ModuleTexts.SetPositionWrongFormatError);
+           => ReplyErrorAsync(ModuleTexts.SetPositionWrongFormatError);
 
         [Command("position")]
         [Alias("SetPosition", "PositionSet", "Vorspulen", "Spulen", "Zurückspulen")]

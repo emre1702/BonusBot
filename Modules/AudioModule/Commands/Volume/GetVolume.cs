@@ -22,7 +22,7 @@ namespace BonusBot.AudioModule.Commands.Volume
                 return;
             }
 
-            await Class.ReplyAsync(ModuleTexts.NoVolumeSavedError);
+            await Class.ReplyErrorAsync(ModuleTexts.NoVolumeSavedError);
         }
     }
 }

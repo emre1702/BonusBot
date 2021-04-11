@@ -50,7 +50,7 @@ namespace ModulesControllingModule
             var moduleAssembly = _modulesHandler.FindAssemblyByModuleName(moduleName, false);
             if (moduleAssembly is null)
             {
-                await ReplyToUserAsync(string.Format(ModuleTexts.ModuleDoesNotExist, moduleName));
+                await ReplyErrorToUserAsync(string.Format(ModuleTexts.ModuleDoesNotExist, moduleName));
                 return null;
             }
             return moduleAssembly;

@@ -20,7 +20,7 @@ namespace BonusBot.AudioModule.Commands.Search
             var index = args.Number - 1;
             if (index >= Class.Player!.LastSearchResult!.Count)
             {
-                await Class.ReplyAsync(ModuleTexts.SongAtThisSearchNumberNotExistsError);
+                await Class.ReplyErrorAsync(ModuleTexts.SongAtThisSearchNumberNotExistsError);
                 return;
             }
 

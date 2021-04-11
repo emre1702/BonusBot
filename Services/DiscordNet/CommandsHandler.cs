@@ -135,7 +135,7 @@ namespace BonusBot.Services.DiscordNet
             if (!result.IsSuccess)
             {
                 Thread.CurrentThread.CurrentUICulture = ((ICustomCommandContext)context).BonusGuild?.Settings.CultureInfo ?? Constants.DefaultCultureInfo;
-                await context.User.SendMessageAsync(GetCommandErrorText(result, context.Message.Content));
+                await context.User.SendErrorMessage(GetCommandErrorText(result, context.Message.Content));
             }
 
             if (context is DiscordCommandContext ctx && ctx.MessageData.NeedsDelete)

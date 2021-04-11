@@ -100,7 +100,7 @@ namespace GuildSettingsModule
         {
             if (!SettingsHelper.DoesSettingExists(Context.BonusGuild!, key, moduleName))
             {
-                await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
+                await ReplyErrorToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
                 return false;
             }
 
@@ -119,7 +119,7 @@ namespace GuildSettingsModule
         {
             if (!SettingsHelper.DoesSettingExists(Context.BonusGuild!, key, moduleName))
             {
-                await ReplyToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
+                await ReplyErrorToUserAsync(string.Format(ModuleTexts.SettingInThisModuleDoesNotExist, key, moduleName));
                 return;
             }
 

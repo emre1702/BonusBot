@@ -24,8 +24,10 @@ namespace BonusBot.WebDashboardModule.Controllers.WebCommand
             if (commandData.GuildId is not null)
                 _userValidationService.AssertIsInGuild(HttpContext.Session, commandData.GuildId);
 
-            var messages = await _webCommandService.Execute(HttpContext.Session, commandData.GuildId, commandData.Command);
+            var (messages, errors) = await _webCommandService.Execute(HttpContext.Session, commandData.GuildId, commandData.Command);
 
+            if (errors.Count > 0)
+                return BadRequest(errors);
             return Ok(messages);
         }
     }
