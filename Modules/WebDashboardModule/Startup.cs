@@ -24,7 +24,7 @@ namespace BonusBot.WebDashboardModule
             services.AddControllersWithViews().AddJsonOptions(jsonOptions => jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase);
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "wwwroot";
+                configuration.RootPath = ".";
             });
             services.AddSession(options =>
             {
@@ -94,7 +94,7 @@ namespace BonusBot.WebDashboardModule
                 }
                 else
                 {
-                    spa.Options.SourcePath = "wwwroot";
+                    spa.Options.SourcePath = ".";
                 }
             });
         }

@@ -29,6 +29,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="$(WebDashboardSpaRoot)\dist\**\*" CopyToPublishDirectory="PreserveNewest" Visible="false"/>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Database\Database.csproj" />
     <ProjectReference Include="..\Modules\DateTimeTestModule\DateTimeTestModule.csproj" />
