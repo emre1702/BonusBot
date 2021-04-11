@@ -23,4 +23,10 @@ export class English implements Language {
     Game = 'Game';
     Date = 'Date';
     Color = 'Color';
+    Pause = 'Pause';
+    Resume = 'Resume';
+    Stop = 'Stop';
+    Volume = 'Volume';
+    Join = 'Join';
+    Leave = 'Leave';
 }

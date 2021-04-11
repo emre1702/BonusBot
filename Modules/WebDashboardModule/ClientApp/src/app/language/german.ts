@@ -23,4 +23,10 @@ export class German extends English {
     Game = 'Spiel';
     Date = 'Datum';
     Color = 'Farbe';
+    Pause = 'Pause';
+    Resume = 'Fortsetzen';
+    Stop = 'Stop';
+    Volume = 'Lautstärke';
+    Join = 'Beitreten';
+    Leave = 'Verlassen';
 }

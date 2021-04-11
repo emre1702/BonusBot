@@ -21,4 +21,10 @@ export interface Language {
     Game: string;
     Date: string;
     Color: string;
+    Pause: string;
+    Resume: string;
+    Stop: string;
+    Volume: string;
+    Join: string;
+    Leave: string;
 }
