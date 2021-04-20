@@ -14,7 +14,7 @@ namespace BonusBot.Common.Commands.TypeReaders
             if (!DateTime.TryParse(input, out var dateTime))
                 return TypeReaderResult.FromError(CommandError.ParseFailed, string.Format(Texts.CommandInvalidDateTimeOffsetError, input));
 
-            bool hasTimeZoneInfo = HasTimeZoneInfo(dateTime);
+            var hasTimeZoneInfo = HasTimeZoneInfo(dateTime);
             dateTime = dateTime.ToUniversalTime();
             var (result, timeZone) = await GetDateTimeWithGuildTimezone((ICustomCommandContext)context, dateTime, hasTimeZoneInfo);
             if (result is null)
