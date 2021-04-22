@@ -9,14 +9,15 @@ import { CommandService } from '../../shared/services/command.service';
 
 @Injectable()
 export class ColorService implements OnDestroy {
+    private destroySubject = new Subject();
+
     color$ = this.guildSelectionService.selectedGuildId$.pipe(
+        takeUntil(this.destroySubject),
         mergeMap((guildId) => this.httpClient.get<{ r: number; g: number; b: number }>(api.get.color.userColor, { params: { guildId } })),
         map((discordColor) => new Color(discordColor.r, discordColor.g, discordColor.b))
     );
 
     colorChanged = new Subject<Color>();
-
-    private destroySubject = new Subject();
 
     constructor(
         private readonly httpClient: HttpClient,
