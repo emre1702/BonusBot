@@ -17,7 +17,7 @@ export class NavigationToolbarComponent {
     @Input() messagesOpened: boolean;
     @Output() messagesOpenedChange = new EventEmitter<boolean>();
 
-    @Input() isInLogin: boolean;
+    @Input() isInLogin = true;
 
     languages = [LanguageValue.English, LanguageValue.German];
 
