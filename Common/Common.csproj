@@ -17,7 +17,7 @@
     <PackageReference Include="Colorful.Console" Version="1.2.15" />
     <PackageReference Include="Macross.Json.Extensions" Version="2.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
-    <PackageReference Include="TimeZoneConverter" Version="3.4.0" />
+    <PackageReference Include="TimeZoneConverter" Version="3.5.0" />
   </ItemGroup>
 
   <ItemGroup>
