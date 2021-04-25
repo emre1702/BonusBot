@@ -33,6 +33,7 @@ namespace BonusBot.Services.DiscordNet
                 return;
 
             await client.CurrentUser.ModifyAsync(prop => prop.Username = Constants.DefaultBotName);
+            await client.SetActivityAsync(new Game(Constants.Activity, ActivityType.Playing, ActivityProperties.None));
 
             ClientSource.SetResult(client);
         }
