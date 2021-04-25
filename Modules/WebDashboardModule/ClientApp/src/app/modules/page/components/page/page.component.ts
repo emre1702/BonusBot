@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { merge, Subject } from 'rxjs';
+import { filter, map, share } from 'rxjs/operators';
 
 @Component({
     selector: 'app-page',
@@ -8,13 +9,26 @@ import { filter, map } from 'rxjs/operators';
     styleUrls: ['./page.component.scss'],
 })
 export class PageComponent {
-    navigationOpened = true;
-    messagesOpened = true;
-
     isInLogin$ = this.router.events.pipe(
+        share(),
         filter((e) => e instanceof NavigationEnd),
         map((e: NavigationEnd) => e.urlAfterRedirects.endsWith('/login'))
     );
 
+    private navigationOpened = new Subject<boolean>();
+    navigationOpened$ = merge(
+        this.navigationOpened,
+        this.isInLogin$.pipe(
+            filter((isInLogin) => isInLogin),
+            map((isInLogin) => !isInLogin)
+        )
+    );
+
+    messagesOpened = true;
+
     constructor(private readonly router: Router) {}
+
+    setNavigationOpened(toggle: boolean) {
+        this.navigationOpened.next(toggle);
+    }
 }

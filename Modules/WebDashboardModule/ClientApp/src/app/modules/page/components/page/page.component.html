@@ -1,4 +1,16 @@
-<app-toolbar class="d-contents" [isInLogin]="isInLogin$ | async" [(navigationOpened)]="navigationOpened" [(messagesOpened)]="messagesOpened"></app-toolbar>
-<app-sidenav-container class="d-contents" [isInLogin]="isInLogin$ | async" [(navigationOpened)]="navigationOpened" [(messagesOpened)]="messagesOpened">
+<app-toolbar
+    class="d-contents"
+    [isInLogin]="isInLogin$ | async"
+    [navigationOpened]="navigationOpened$ | async"
+    [(messagesOpened)]="messagesOpened"
+    (navigationOpenedChange)="setNavigationOpened($event)"
+></app-toolbar>
+<app-sidenav-container
+    class="d-contents"
+    [isInLogin]="isInLogin$ | async"
+    [navigationOpened]="navigationOpened$ | async"
+    [(messagesOpened)]="messagesOpened"
+    (navigationOpenedChange)="setNavigationOpened($event)"
+>
     <ng-content></ng-content>
 </app-sidenav-container>
