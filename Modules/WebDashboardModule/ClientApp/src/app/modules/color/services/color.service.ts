@@ -1,7 +1,7 @@
 import { Color } from '@angular-material-components/color-picker';
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { filter, map, mergeMap, takeUntil, withLatestFrom } from 'rxjs/operators';
 import api from 'src/app/routes/api';
 import { GuildSelectionService } from '../../page/services/guild-selection.service';
@@ -11,11 +11,8 @@ import { CommandService } from '../../shared/services/command.service';
 export class ColorService implements OnDestroy {
     private destroySubject = new Subject();
 
-    color$ = this.guildSelectionService.selectedGuildId$.pipe(
-        takeUntil(this.destroySubject),
-        mergeMap((guildId) => this.httpClient.get<{ r: number; g: number; b: number }>(api.get.color.userColor, { params: { guildId } })),
-        map((discordColor) => new Color(discordColor.r, discordColor.g, discordColor.b))
-    );
+    private color = new ReplaySubject<Color>(1);
+    color$ = this.color.asObservable();
 
     colorChanged = new Subject<Color>();
 
@@ -24,6 +21,14 @@ export class ColorService implements OnDestroy {
         private readonly commandService: CommandService,
         private readonly guildSelectionService: GuildSelectionService
     ) {
+        this.addSubscriptions();
+    }
+
+    ngOnDestroy() {
+        this.destroySubject.next();
+    }
+
+    private addSubscriptions() {
         this.colorChanged
             .pipe(
                 takeUntil(this.destroySubject),
@@ -31,9 +36,13 @@ export class ColorService implements OnDestroy {
                 filter(([newColor, currentColor]) => newColor.rgba != currentColor.rgba)
             )
             .subscribe(([color]) => this.commandService.execute(`color #${color.hex}`).subscribe());
-    }
 
-    ngOnDestroy() {
-        this.destroySubject.next();
+        this.guildSelectionService.selectedGuildId$
+            .pipe(
+                takeUntil(this.destroySubject),
+                mergeMap((guildId) => this.httpClient.get<{ r: number; g: number; b: number }>(api.get.color.userColor, { params: { guildId } })),
+                map((discordColor) => new Color(discordColor.r, discordColor.g, discordColor.b))
+            )
+            .subscribe((color) => this.color.next(color));
     }
 }
