@@ -36,6 +36,8 @@ The base url where the ASP.NET Core server is running.
 E.g. my base url is "http://bonusbot.net".  
 5. BONUSBOT_ACTIVITY  
 Activity of the bot when started.  
+6. BONUSBOT_CONNECTION_STRING  
+Connection string for PostgreSQL.  
 
 ## How is the code structured?  
 There are the main, systems and module projects.
@@ -46,7 +48,7 @@ Startup, Initialization, Dependency Injection, module references
 * Common:  
 Common logic for everything.  
 * Database:  
-Entity Framework Core.  
+Entity Framework Core using PostgreSQL.  
 * Services:  
 Services needed for BonusBot to work.  
 
@@ -56,12 +58,13 @@ Modules contain all the functionalities and commands.
 They can be added and removed easily, need to be referenced from Core and need to end with 'Module'.  
 The module 'ModulesControllingModule' allows the guild administrators to enable and disable the modules for their guild.  
 
-
 ## Other used dependencies:  
 * [Lavalink](https://github.com/Frederikam/Lavalink):  
 Used in AudioModule for sending audio from e.g. YouTube or Soundcloud  
 * [gRPC](https://github.com/grpc/grpc-dotnet) with [Google.Protobuf](https://developers.google.com/protocol-buffers/docs/csharptutorial):  
 For my private modules to allow sending to and receiving from my other project.  
+* [Npgsql Entity Framework Core Provider](https://www.npgsql.org/efcore/)  
+Provider for EF Core and PostgreSQL.  
 * [Macross.Json.Extensions](https://blog.macrosssoftware.com/):   
 To be able to convert string to enum or vice versa with custom names in System.Text.Json.  
 * [Colorful.Console](https://github.com/tomakita/Colorful.Console):   

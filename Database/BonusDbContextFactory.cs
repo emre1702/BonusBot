@@ -7,7 +7,9 @@ namespace BonusBot.Database
 {
     public class BonusDbContextFactory : IDesignTimeDbContextFactory<BonusDbContext>
     {
-        private string ConnectionString => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
+        private string ConnectionString => /*Environment.GetEnvironmentVariable("BONUSBOT_CONNECTION_STRING")!;*/
+
+            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
             ? "Data Source=BonusBot.db;" 
             : "Data Source=/bonusbot-data/BonusBot.db;";
 
