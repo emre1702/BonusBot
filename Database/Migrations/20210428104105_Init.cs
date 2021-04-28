@@ -33,7 +33,7 @@ namespace BonusBot.Database.Migrations
                     Type = table.Column<string>(type: "text", nullable: false),
                     GuildId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
                     Module = table.Column<string>(type: "text", nullable: false),
-                    AddedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "datetime('now')")
+                    AddedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValue: new DateTime(2021, 4, 28, 10, 41, 4, 983, DateTimeKind.Utc).AddTicks(582))
                 },
                 constraints: table =>
                 {
@@ -54,7 +54,7 @@ namespace BonusBot.Database.Migrations
                     AdditionalId = table.Column<decimal>(type: "numeric(20,0)", nullable: true),
                     GuildId = table.Column<decimal>(type: "numeric(20,0)", nullable: false),
                     Module = table.Column<string>(type: "text", nullable: false),
-                    AddedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "datetime('now')")
+                    AddedDateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValue: new DateTime(2021, 4, 28, 10, 41, 4, 992, DateTimeKind.Utc).AddTicks(2134))
                 },
                 constraints: table =>
                 {

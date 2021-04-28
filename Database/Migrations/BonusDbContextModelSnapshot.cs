@@ -33,7 +33,7 @@ namespace BonusBot.Database.Migrations
                     b.Property<DateTime>("AddedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone")
-                        .HasDefaultValueSql("datetime('now')");
+                        .HasDefaultValue(new DateTime(2021, 4, 28, 10, 41, 4, 992, DateTimeKind.Utc).AddTicks(2134));
 
                     b.Property<decimal?>("AdditionalId")
                         .HasColumnType("numeric(20,0)");
@@ -74,7 +74,7 @@ namespace BonusBot.Database.Migrations
                     b.Property<DateTime>("AddedDateTime")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone")
-                        .HasDefaultValueSql("datetime('now')");
+                        .HasDefaultValue(new DateTime(2021, 4, 28, 10, 41, 4, 983, DateTimeKind.Utc).AddTicks(582));
 
                     b.Property<decimal>("GuildId")
                         .HasColumnType("numeric(20,0)");
