@@ -17,7 +17,7 @@ namespace BonusBot.Database.Entities.Bases
 
             builder
                 .Property(e => e.AddedDateTime)
-                .HasDefaultValueSql("datetime('now')")
+                .HasDefaultValue(DateTime.UtcNow)
                 .HasConversion(
                     fromCode => fromCode.ToUniversalTime(),
                     fromDb => DateTime.SpecifyKind(fromDb, DateTimeKind.Utc)
