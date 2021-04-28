@@ -14,6 +14,6 @@ namespace BonusBot.Common.Defaults
         public static string ModuleDeactivatedDbKey => "ModuleDeactivated";
         public static LogSeverity ConsoleHelperLogLevel => LogSeverity.Info;
         public static bool IsDocker => Environment.GetEnvironmentVariable("ISDOCKER") == "true";
-        public static string Activity => "www.bonusbot.net";
+        public static string Activity => Environment.GetEnvironmentVariable("BONUSBOT_ACTIVITY") ?? "www.bonusbot.net";
     }
 }

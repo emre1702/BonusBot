@@ -34,6 +34,8 @@ The "CLIENT SECRET" of the bot.
 4. WEB_BASE_URL  
 The base url where the ASP.NET Core server is running.  
 E.g. my base url is "http://bonusbot.net".  
+5. BONUSBOT_ACTIVITY  
+Activity of the bot when started.  
 
 ## How is the code structured?  
 There are the main, systems and module projects.
