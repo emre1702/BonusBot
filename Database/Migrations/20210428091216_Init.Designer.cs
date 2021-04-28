@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BonusBot.Database.Migrations
 {
     [DbContext(typeof(BonusDbContext))]
-    [Migration("20210428081959_Init")]
+    [Migration("20210428091216_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
