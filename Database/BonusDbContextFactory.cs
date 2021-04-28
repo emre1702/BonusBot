@@ -7,16 +7,12 @@ namespace BonusBot.Database
 {
     public class BonusDbContextFactory : IDesignTimeDbContextFactory<BonusDbContext>
     {
-        private string ConnectionString => /*Environment.GetEnvironmentVariable("BONUSBOT_CONNECTION_STRING")!;*/
-
-            RuntimeInformation.IsOSPlatform(OSPlatform.Windows) 
-            ? "Data Source=BonusBot.db;" 
-            : "Data Source=/bonusbot-data/BonusBot.db;";
+        private string ConnectionString => Environment.GetEnvironmentVariable("BONUSBOT_CONNECTION_STRING") ?? "Host=postgres;Database=database;Username=user;Password=password;Timeout=100;Command Timeout = 100";
 
         public BonusDbContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<BonusDbContext>();
-            optionsBuilder.UseSqlite(ConnectionString);
+            optionsBuilder.UseNpgsql(ConnectionString);
 
             return new BonusDbContext(optionsBuilder.Options);
         }
