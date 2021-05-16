@@ -7,7 +7,6 @@ BonusBot has been written to do some stuff in Discord like for example:
 * Delete multiple messages at once  
 * Ban people for a specific time and inform them  
 * Announce game planings for one of our Discord servers  
-* Connect Discord with my private GTA 5 (RAGE:MP) server TDS-V  
 * Output when someone leaves the server  
 * ... and much more  
 
