@@ -12,6 +12,7 @@
     <DockerfileFile>..\dockerfile</DockerfileFile>
     <WebDashboardSpaRoot>..\Modules\WebDashboardModule\ClientApp\</WebDashboardSpaRoot>
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
