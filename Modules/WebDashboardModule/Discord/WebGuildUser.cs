@@ -86,5 +86,17 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public override string GetAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
             => _guildUser.GetAvatarUrl(format, size);
+
+        public Task AddRoleAsync(ulong roleId, RequestOptions? options = null)
+            => _guildUser.AddRoleAsync(roleId, options);
+
+        public Task AddRolesAsync(IEnumerable<ulong> roleIds, RequestOptions? options = null)
+            => _guildUser.AddRolesAsync(roleIds, options);
+
+        public Task RemoveRoleAsync(ulong roleId, RequestOptions? options = null)
+            => _guildUser.RemoveRoleAsync(roleId, options);
+
+        public Task RemoveRolesAsync(IEnumerable<ulong> roleIds, RequestOptions? options = null)
+            => _guildUser.RemoveRolesAsync(roleIds, options);
     }
 }

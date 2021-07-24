@@ -56,6 +56,8 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public ulong Id => ulong.MaxValue;
 
+        public IReadOnlyCollection<ISticker> Stickers => throw new NotImplementedException();
+
         public WebMessage(string content, IUser author, IMessageChannel channel)
         {
             Content = content;
