@@ -1,7 +1,9 @@
 ﻿using BonusBot.Common.Interfaces.Commands;
+using BonusBot.Common.Interfaces.Guilds;
 using BonusBot.Common.Languages;
 using Discord.Commands;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using TimeZoneConverter;
 
@@ -11,7 +13,8 @@ namespace BonusBot.Common.Commands.TypeReaders
     {
         public override async Task<TypeReaderResult> ReadAsync(ICommandContext context, string input, IServiceProvider _)
         {
-            if (!DateTime.TryParse(input, out var dateTime))
+            var cultureInfo = await GetDateTimeInputCulture((ICustomCommandContext)context);
+            if (!DateTime.TryParse(input, cultureInfo, DateTimeStyles.AllowWhiteSpaces, out var dateTime))
                 return TypeReaderResult.FromError(CommandError.ParseFailed, string.Format(Texts.CommandInvalidDateTimeOffsetError, input));
 
             var hasTimeZoneInfo = HasTimeZoneInfo(dateTime);
@@ -36,21 +39,36 @@ namespace BonusBot.Common.Commands.TypeReaders
         }
 
         private async ValueTask<(TimeSpan, string)> GetTimeZoneOffset(ICustomCommandContext context, DateTime dateTime)
+            => await GetGuildTimeZoneOffset(context.BonusGuild)
+                ??  (HasTimeZoneInfo(dateTime) ? TimeZoneInfo.Local.GetUtcOffset(dateTime) : DateTimeOffset.Now.Offset, "?");
+
+        private async ValueTask<(TimeSpan timeZoneOffset, string timeZoneSetting)?> GetGuildTimeZoneOffset(IBonusGuild? guild)
         {
-            if (context.BonusGuild is { })
-            {
-                var timeZoneSetting = await context.BonusGuild.Settings.Get<string>(typeof(CommonSettings).Assembly, CommonSettings.TimeZone);
-                if (timeZoneSetting is { })
-                {
-                    if (TZConvert.TryGetTimeZoneInfo(timeZoneSetting, out var timeZoneInfo))
-                        return (timeZoneInfo.GetUtcOffset(DateTime.Now), timeZoneSetting);
-                }
-                    
-            }
-            return (HasTimeZoneInfo(dateTime) ? TimeZoneInfo.Local.GetUtcOffset(dateTime) : TimeSpan.Zero, "?");
+            if (guild is null) return null;
+
+            var timeZoneSetting = await guild.Settings.Get<string>(typeof(CommonSettings).Assembly, CommonSettings.TimeZone);
+            if (timeZoneSetting is null) return null;
+            if (!TZConvert.TryGetTimeZoneInfo(timeZoneSetting, out var timeZoneInfo)) return null;
+
+            var timeZoneOffset = timeZoneInfo.GetUtcOffset(DateTime.Now);
+
+            return (timeZoneOffset, timeZoneSetting!);
         }
 
         private bool HasTimeZoneInfo(DateTime dateTime)
             => dateTime.Kind == DateTimeKind.Local;
+
+        private async ValueTask<CultureInfo> GetDateTimeInputCulture(ICustomCommandContext context)
+            => await GetGuildDateTimeInputCulture(context.BonusGuild) ?? CultureInfo.InvariantCulture;
+
+        private async ValueTask<CultureInfo?> GetGuildDateTimeInputCulture(IBonusGuild? guild)
+        {
+            if (guild is null) return null;
+
+            var locale = await guild.Settings.Get<string>(typeof(CommonSettings).Assembly, CommonSettings.Locale);
+            if (locale is null) return null;
+
+            return new CultureInfo(locale);
+        }
     }
 }
