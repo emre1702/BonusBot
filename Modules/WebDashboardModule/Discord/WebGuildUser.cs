@@ -43,9 +43,8 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public bool IsStreaming => _guildUser.IsStreaming;
 
-        public override IImmutableSet<ClientType> ActiveClients => _guildUser.ActiveClients;
-        public override IImmutableList<IActivity> Activities => _guildUser.Activities;
-        public override IActivity Activity => _guildUser.Activity;
+        public override IReadOnlyCollection<ClientType> ActiveClients => _guildUser.ActiveClients;
+        public override IReadOnlyCollection<IActivity> Activities => _guildUser.Activities;
         public override string AvatarId => _guildUser.AvatarId;
         public override DateTimeOffset CreatedAt => _guildUser.CreatedAt;
         public override string Discriminator => _guildUser.Discriminator;
@@ -55,6 +54,18 @@ namespace BonusBot.WebDashboardModule.Discord
         public override string Mention => _guildUser.Mention;
         public override UserProperties? PublicFlags => _guildUser.PublicFlags;
         public override UserStatus Status => _guildUser.Status;
+
+        public string DisplayName => throw new NotImplementedException();
+
+        public string DisplayAvatarId => throw new NotImplementedException();
+
+        public string GuildAvatarId => throw new NotImplementedException();
+
+        public int Hierarchy => throw new NotImplementedException();
+
+        public DateTimeOffset? TimedOutUntil => throw new NotImplementedException();
+
+        public DateTimeOffset? RequestToSpeakTimestamp => throw new NotImplementedException();
 
         private readonly SocketGuildUser _guildUser;
 
@@ -98,5 +109,25 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public Task RemoveRolesAsync(IEnumerable<ulong> roleIds, RequestOptions? options = null)
             => _guildUser.RemoveRolesAsync(roleIds, options);
+
+        public string GetGuildAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string GetDisplayAvatarUrl(ImageFormat format = ImageFormat.Auto, ushort size = 128)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task SetTimeOutAsync(TimeSpan span, RequestOptions? options = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveTimeOutAsync(RequestOptions? options = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

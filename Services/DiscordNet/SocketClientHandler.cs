@@ -46,7 +46,7 @@ namespace BonusBot.Services.DiscordNet
                 ConnectionTimeout = 3 * 60 * 1000,
                 DefaultRetryMode = RetryMode.AlwaysRetry,
                 HandlerTimeout = 3 * 60 * 1000,
-                ExclusiveBulkDelete = true,
+                MaxWaitBetweenGuildAvailablesBeforeReady = 30 * 1000,
                 LogLevel = LogSeverity.Warning,
                 MessageCacheSize = 1
             };

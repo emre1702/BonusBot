@@ -84,7 +84,7 @@ namespace BonusBot.AdminModule.Commands.Bans
         {
             try
             {
-                var dmChannel = await args.User.GetOrCreateDMChannelAsync();
+                var dmChannel = await args.User.CreateDMChannelAsync();
                 await dmChannel.SendMessageAsync(string.Format(ModuleTexts.YouHaveBeenBannedInfo,
                     args.Time,
                     DateTime.UtcNow + args.Time,

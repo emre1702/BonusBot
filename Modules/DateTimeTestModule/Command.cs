@@ -4,6 +4,7 @@ using BonusBot.Database;
 using BonusBot.Database.Entities.Cases;
 using BonusBot.DateTimeTestModule.Language;
 using Discord.Commands;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Text;

@@ -19,6 +19,8 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public IReadOnlyCollection<Overwrite> PermissionOverwrites => throw new NotImplementedException();
 
+        public string RTCRegion => throw new NotImplementedException();
+
         private readonly SocketGuild _guild;
 
         public WebGuildMessageChannel(WebUser user, SocketGuild guild) : base(user)
@@ -85,6 +87,11 @@ namespace BonusBot.WebDashboardModule.Discord
         }
 
         public Task DisconnectAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task ModifyAsync(Action<AudioChannelProperties> func, RequestOptions? options = null)
         {
             throw new NotImplementedException();
         }

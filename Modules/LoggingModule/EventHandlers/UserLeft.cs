@@ -13,9 +13,9 @@ namespace BonusBot.LoggingModule.EventHandlers
         public UserLeft(IGuildsHandler guildsHandler)
             => _guildsHandler = guildsHandler;
 
-        internal async Task Log(SocketGuildUser user)
+        internal async Task Log(SocketGuild guild, SocketUser user)
         {
-            var bonusGuild = _guildsHandler.GetGuild(user.Guild.Id);
+            var bonusGuild = _guildsHandler.GetGuild(guild.Id);
             if (bonusGuild is null) return;
 
             var channel = await bonusGuild.Settings.Get<SocketTextChannel>(GetType().Assembly, Settings.UserLeftLogChannelId);

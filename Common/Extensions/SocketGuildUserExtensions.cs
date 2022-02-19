@@ -6,7 +6,7 @@ namespace BonusBot.Common.Extensions
     {
         public static string GetFullNameInfo(this SocketGuildUser socketGuildUser)
         {
-            var userName = socketGuildUser.Username + "#" + socketGuildUser.Discriminator;
+            var userName = SocketUserExtensions.GetFullNameInfo(socketGuildUser);
             if (!string.IsNullOrWhiteSpace(socketGuildUser.Nickname))
                 userName = socketGuildUser.Nickname + " / " + userName;
             return userName;

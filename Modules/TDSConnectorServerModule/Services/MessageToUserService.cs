@@ -39,7 +39,7 @@ namespace BonusBot.TDSConnectorServerModule.Services
                         ErrorType = string.Empty
                     };
 
-                var privateChat = await target.GetOrCreateDMChannelAsync();
+                var privateChat = await target.CreateDMChannelAsync();
                 await privateChat.SendMessageAsync(request.Text);
 
                 return new MessageToUserRequestReply
@@ -101,7 +101,7 @@ namespace BonusBot.TDSConnectorServerModule.Services
                 if (request.ColorR != -1 || request.ColorG != -1 || request.ColorB != -1)
                     embedBuilder.WithColor(request.ColorR != -1 ? request.ColorR : 255, request.ColorG != -1 ? request.ColorG : 255, request.ColorB != -1 ? request.ColorB : 255);
 
-                var privateChat = await target.GetOrCreateDMChannelAsync();
+                var privateChat = await target.CreateDMChannelAsync();
                 await privateChat.SendMessageAsync(embed: embedBuilder.Build());
 
                 return new MessageToUserRequestReply

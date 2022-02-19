@@ -17,30 +17,30 @@ namespace BonusBot.Common.Extensions
             return ReplyAsync(embed: embed.Build());
         }
 
-        public new Task<IUserMessage> ReplyAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
-            MessageReference? messageReference = null)
-            => Context.Channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
+        public new Task<IUserMessage> ReplyAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null, 
+            MessageReference? messageReference = null, MessageComponent? components = null, ISticker[]? stickers = null, Embed[]? embeds = null)
+            => Context.Channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference, components, stickers, embeds);
 
         public Task<IUserMessage> ReplyErrorAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
-            MessageReference? messageReference = null)
-            => Context.Channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
+            MessageReference? messageReference = null, MessageComponent? components = null, ISticker[]? stickers = null, Embed[]? embeds = null)
+            => Context.Channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference, components, stickers, embeds);
 
         public async Task<IUserMessage> ReplyToUserAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
-            MessageReference? messageReference = null)
+            MessageReference? messageReference = null, MessageComponent? components = null, ISticker[]? stickers = null, Embed[]? embeds = null)
         {
-            var channel = await Context.User.GetOrCreateDMChannelAsync();
-            return await channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference);
+            var channel = await Context.User.CreateDMChannelAsync();
+            return await channel.SendMessageAsync(message, isTTS, embed, options, allowedMentions, messageReference, components, stickers, embeds);
         }
 
         public Task<IUserMessage> ReplyErrorToUserAsync(string? message = null, bool isTTS = false, Embed? embed = null, RequestOptions? options = null, AllowedMentions? allowedMentions = null,
-            MessageReference? messageReference = null)
-            => Context.User.SendErrorMessage(message, isTTS, embed, options, allowedMentions, messageReference);
+            MessageReference? messageReference = null, MessageComponent? components = null, ISticker[]? stickers = null, Embed[]? embeds = null)
+            => Context.User.SendErrorMessage(message, isTTS, embed, options, allowedMentions, messageReference, components, stickers, embeds);
 
         public async Task<IUserMessage> ReplyToUserAsync(EmbedBuilder embed)
         {
             if (!embed.Color.HasValue)
                 embed.WithColor(171, 31, 242);
-            var channel = await Context.User.GetOrCreateDMChannelAsync();
+            var channel = await Context.User.CreateDMChannelAsync();
             return await channel.SendMessageAsync(embed: embed.Build());
         }
 

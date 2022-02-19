@@ -20,7 +20,7 @@ namespace BonusBot.WebDashboardModule.Controllers.Account
             var clientId = Environment.GetEnvironmentVariable(WebEnvironmentKeys.BotClientId);
             var redirectUrl = string.Format(WebConstants.OAuthTokenUrlRedirectUri, Environment.GetEnvironmentVariable(WebEnvironmentKeys.WebBaseUrl)!);
             var state = SetAndReturnState();
-            return Ok(string.Format(baseUrl, clientId, Uri.EscapeUriString(redirectUrl), state));
+            return Ok(string.Format(baseUrl, clientId, Uri.EscapeDataString(redirectUrl), state));
         }
 
         private string SetAndReturnState()

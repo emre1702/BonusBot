@@ -38,7 +38,7 @@ namespace BonusBot.GamePlaningModule
             client.ReactionRemoved += SetParticipantsToMessage;
         }
 
-        private async Task SetParticipantsToMessage(Cacheable<IUserMessage, ulong> cachedMessageOrId, ISocketMessageChannel channel, SocketReaction reaction)
+        private async Task SetParticipantsToMessage(Cacheable<IUserMessage, ulong> cachedMessageOrId, Cacheable<IMessageChannel, ulong> channels, SocketReaction reaction)
         {
             var client = await _discordClientHandler.ClientSource.Task;
             var message = await cachedMessageOrId.DownloadAsync();
@@ -50,7 +50,7 @@ namespace BonusBot.GamePlaningModule
             if (!embed.Footer.HasValue || embed.Footer.Value.Text != Helpers.GetAnnouncementFooter())
                 return;
 
-            var guildChannel = (SocketGuildChannel)channel;
+            var guildChannel = (SocketGuildChannel)await channels.GetOrDownloadAsync();
             var bonusGuild = _guildsHandler.GetGuild(guildChannel.Guild);
             if (bonusGuild is null)
                 return;

@@ -33,9 +33,9 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public virtual UserStatus Status => throw new NotImplementedException();
 
-        public virtual IImmutableSet<ClientType> ActiveClients => throw new NotImplementedException();
+        public virtual IReadOnlyCollection<ClientType> ActiveClients => throw new NotImplementedException();
 
-        public virtual IImmutableList<IActivity> Activities => throw new NotImplementedException();
+        public virtual IReadOnlyCollection<IActivity> Activities => throw new NotImplementedException();
         public List<string> Messages { get; } = new();
         public List<string> Errors { get; } = new();
 
@@ -49,7 +49,7 @@ namespace BonusBot.WebDashboardModule.Discord
             throw new NotImplementedException();
         }
 
-        public Task<IDMChannel> GetOrCreateDMChannelAsync(RequestOptions? options = null)
+        public Task<IDMChannel> CreateDMChannelAsync(RequestOptions? options = null)
             => Task.FromResult((IDMChannel)new WebDMChannel(this));
 
         public IUserMessage AddWebMessage(string? text, IMessageChannel channel)
