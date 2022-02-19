@@ -5,7 +5,9 @@ using BonusBot.Common.Interfaces.Guilds;
 using NSubstitute;
 using NUnit.Framework;
 using System;
+using System.Globalization;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using TimeZoneConverter;
 
@@ -26,7 +28,8 @@ namespace CommonTests.Commands.TypeReaders
         {
             var input = "24.04.2021 15:34";
             var typeReader = new DateTimeOffsetTypeReader();
-            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, TimeSpan.Zero);
+            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, DateTimeOffset.Now.Offset);
+            SetBonusGuildMock("UTC");
 
             var result = await typeReader.ReadAsync(_contextMock, input, null);
 
@@ -40,6 +43,7 @@ namespace CommonTests.Commands.TypeReaders
             var input = "24.04.2021 15:34 +0";
             var typeReader = new DateTimeOffsetTypeReader();
             var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, TimeSpan.Zero);
+            SetBonusGuildMock("UTC");
 
             var result = await typeReader.ReadAsync(_contextMock, input, null);
 
@@ -53,6 +57,7 @@ namespace CommonTests.Commands.TypeReaders
             var input = "24.04.2021 15:34 +2";
             var typeReader = new DateTimeOffsetTypeReader();
             var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, TimeSpan.FromHours(2));
+            SetBonusGuildMock("UTC");
 
             var result = await typeReader.ReadAsync(_contextMock, input, null);
 
@@ -66,6 +71,7 @@ namespace CommonTests.Commands.TypeReaders
             var input = "24.04.2021 15:34 +5";
             var typeReader = new DateTimeOffsetTypeReader();
             var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, TimeSpan.FromHours(5));
+            SetBonusGuildMock("UTC");
 
             var result = await typeReader.ReadAsync(_contextMock, input, null);
 
@@ -106,7 +112,7 @@ namespace CommonTests.Commands.TypeReaders
         [Test]
         public async Task Convert_CET_With_CET_TimeZone_Info()
         {
-            var input = "24.04.2021 15:34 +" + TimeZoneInfo.Local.GetUtcOffset(DateTime.Now).Hours;
+            var input = "24.04.2021 15:34 +" + DateTimeOffset.Now.Offset.Hours;
             var typeReader = new DateTimeOffsetTypeReader();
             SetBonusGuildMock("CET");
             var timeZone = TZConvert.GetTimeZoneInfo("CET");
@@ -133,14 +139,13 @@ namespace CommonTests.Commands.TypeReaders
             Assert.AreEqual(expected, result.BestMatch);
         }
 
-        private void SetBonusGuildMock(string timeZone)
+        private void SetBonusGuildMock(string timeZone, string locale = "de-DE")
         {
             var bonusGuildMock = Substitute.For<IBonusGuild>();
             var settings = Substitute.For<IGuildSettingsHandler>();
-#pragma warning disable CA2012 // Use ValueTasks correctly
-            settings.Get<string>(Arg.Any<string>(), CommonSettings.TimeZone).ReturnsForAnyArgs(ValueTask.FromResult(timeZone));
-            settings.Get<string>(Arg.Any<Assembly>(), CommonSettings.TimeZone).ReturnsForAnyArgs(ValueTask.FromResult(timeZone));
-#pragma warning restore CA2012 // Use ValueTasks correctly
+            settings.Get<string>(Arg.Any<string>(), CommonSettings.TimeZone).ReturnsForAnyArgs(timeZone);
+            settings.Get<string>(Arg.Any<Assembly>(), CommonSettings.TimeZone).ReturnsForAnyArgs(timeZone);
+            settings.Get<string>(Arg.Any<Assembly>(), CommonSettings.Locale).ReturnsForAnyArgs(locale);
             bonusGuildMock.Settings.ReturnsForAnyArgs(settings);
             _contextMock.BonusGuild.ReturnsForAnyArgs(bonusGuildMock);
         }
