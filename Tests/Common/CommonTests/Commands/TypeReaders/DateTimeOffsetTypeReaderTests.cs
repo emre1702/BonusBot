@@ -106,7 +106,7 @@ namespace CommonTests.Commands.TypeReaders
         [Test]
         public async Task Convert_CET_With_CET_TimeZone_Info()
         {
-            var input = "24.04.2021 15:34 +2";
+            var input = "24.04.2021 15:34 +" + TimeZoneInfo.Local.GetUtcOffset(DateTime.Now).Hours;
             var typeReader = new DateTimeOffsetTypeReader();
             SetBonusGuildMock("CET");
             var timeZone = TZConvert.GetTimeZoneInfo("CET");
