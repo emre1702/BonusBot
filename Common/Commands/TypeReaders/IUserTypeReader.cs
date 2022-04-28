@@ -3,6 +3,7 @@ using BonusBot.Common.Interfaces.Commands;
 using BonusBot.Common.Languages;
 using Discord;
 using Discord.Commands;
+using Discord.Rest;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace BonusBot.Common.Commands.TypeReaders
                 {
                     if (userId == 0) return TypeReaderResult.FromError(CommandError.ParseFailed, Texts.CommandInvalidUserError);
                     user ??= await ctx.GetUserAsync(userId).ConfigureAwait(false);
-                } 
+                }
 
                 if (ctx.Guild is SocketGuild socketGuild)
                 {
@@ -46,22 +47,23 @@ namespace BonusBot.Common.Commands.TypeReaders
 
         private async Task<IUser?> GetSocketGuildUserByName(SocketGuild guild, string input)
         {
-            var users = (await guild.GetUsersAsync().FlattenAsync().ConfigureAwait(false)).ToList();
-            return GetUser(users, input);
+            var users = guild.GetUsersAsync().SelectMany<IReadOnlyCollection<IGuildUser>, IGuildUser>(e => e.ToAsyncEnumerable());
+            return await GetUser(users, input);
         }
 
         private async Task<IUser?> GetUserByBan(SocketGuild guild, string input)
         {
-            var bans = await guild.GetBansAsync();
-            return GetUser(bans.Select(b => b.User), input);
+            var users = guild.GetBansAsync()
+                .SelectMany<IReadOnlyCollection<RestBan>, RestUser>(b => b.Select(e => e.User).ToAsyncEnumerable());
+            return await GetUser(users, input);
         }
 
-        private IUser? GetUser(IEnumerable<IUser> users, string name)
+        private async Task<IUser?> GetUser(IAsyncEnumerable<IUser> users, string name)
         {
-            IUser? user = users.OfType<SocketGuildUser>().FirstOrDefault(u => u.Nickname?.Equals(name, StringComparison.CurrentCultureIgnoreCase) == true);
-            user ??= users.FirstOrDefault(u => u.Username.Equals(name, StringComparison.CurrentCultureIgnoreCase));
-            user ??= users.FirstOrDefault(u => (u.Username + "#" + u.Discriminator).Equals(name, StringComparison.CurrentCultureIgnoreCase));
-            user ??= users.FirstOrDefault(u => u.Username.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            IUser? user = await users.OfType<SocketGuildUser>().FirstOrDefaultAsync(u => u.Nickname?.Equals(name, StringComparison.CurrentCultureIgnoreCase) == true);
+            user ??= await users.FirstOrDefaultAsync(u => u.Username.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            user ??= await users.FirstOrDefaultAsync(u => (u.Username + "#" + u.Discriminator).Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            user ??= await users.FirstOrDefaultAsync(u => u.Username.Equals(name, StringComparison.CurrentCultureIgnoreCase));
             return user;
         }
     }

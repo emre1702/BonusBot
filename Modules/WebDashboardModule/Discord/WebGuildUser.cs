@@ -3,7 +3,6 @@ using Discord;
 using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -67,9 +66,11 @@ namespace BonusBot.WebDashboardModule.Discord
 
         public DateTimeOffset? RequestToSpeakTimestamp => throw new NotImplementedException();
 
+        public bool IsVideoing => false;
+
         private readonly SocketGuildUser _guildUser;
 
-        public WebGuildUser(UserResponseData userData, SocketGuildUser guildUser): base(userData)
+        public WebGuildUser(UserResponseData userData, SocketGuildUser guildUser) : base(userData)
         {
             _guildUser = guildUser;
         }
