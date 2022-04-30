@@ -81,11 +81,11 @@ namespace CommonTests.Commands.TypeReaders
         [Test]
         public async Task Convert_CET_Without_TimeZone_Info()
         {
+            var timeZone = "Central Europe Standard Time";
             var input = "24.04.2021 15:34";
             var typeReader = new DateTimeOffsetTypeReader();
-            SetBonusGuildMock("Central Europe Standard Time");
-            var timeZones = TimeZoneInfo.GetSystemTimeZones();
-            var expected = GetOffsetWithTimeZoneInfo(2021, 4, 24, 15, 34, 0, "Central Europe Standard Time");
+            SetBonusGuildMock(timeZone);
+            var expected = GetOffsetWithTimeZoneInfo(2021, 4, 24, 15, 34, 0, timeZone);
 
             var result = await typeReader.ReadAsync(_contextMock, input, _serviceProviderMock);
 
@@ -96,10 +96,11 @@ namespace CommonTests.Commands.TypeReaders
         [Test]
         public async Task Convert_CET_With_UTC_TimeZone_Info()
         {
+            var timeZone = "Central Europe Standard Time";
             var input = "24.04.2021 15:34 +0";
             var typeReader = new DateTimeOffsetTypeReader();
-            SetBonusGuildMock("Central Europe Standard Time");
-            var expected = GetOffsetWithTimeZoneInfo(2021, 4, 24, 15 + DateTimeOffset.Now.Offset.Hours, 34, 0, "Central Europe Standard Time");
+            SetBonusGuildMock(timeZone);
+            var expected = GetOffsetWithTimeZoneInfo(2021, 4, 24, 15 + TimeZoneInfo.FindSystemTimeZoneById(timeZone).GetUtcOffset(DateTime.Now).Hours, 34, 0, timeZone);
 
             var result = await typeReader.ReadAsync(_contextMock, input, _serviceProviderMock);
 
@@ -110,10 +111,11 @@ namespace CommonTests.Commands.TypeReaders
         [Test]
         public async Task Convert_CET_With_CET_TimeZone_Info()
         {
-            var input = "24.04.2021 15:34 +" + DateTimeOffset.Now.Offset.Hours;
+            var timeZone = "Central Europe Standard Time";
+            var input = "24.04.2021 15:34 +" + TimeZoneInfo.FindSystemTimeZoneById(timeZone).GetUtcOffset(DateTime.Now);
             var typeReader = new DateTimeOffsetTypeReader();
-            SetBonusGuildMock("Central Europe Standard Time");
-            var expected = GetOffsetWithTimeZoneInfo(2021, 4, 24, 15, 34, 0, "Central Europe Standard Time");
+            SetBonusGuildMock(timeZone);
+            var expected = GetOffsetWithTimeZoneInfo(2021, 4, 24, 15, 34, 0, timeZone);
 
             var result = await typeReader.ReadAsync(_contextMock, input, _serviceProviderMock);
 
@@ -124,11 +126,11 @@ namespace CommonTests.Commands.TypeReaders
         [Test]
         public async Task Convert_CET_With_NotLocal_TimeZone_Info()
         {
+            var timeZone = "America/Whitehorse";
             var input = "24.04.2021 15:34 -7";
             var typeReader = new DateTimeOffsetTypeReader();
-            SetBonusGuildMock("America/Whitehorse");
-            var timeZone = TimeZoneInfo.FindSystemTimeZoneById("America/Whitehorse");
-            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, timeZone.GetUtcOffset(DateTime.UtcNow));
+            SetBonusGuildMock(timeZone);
+            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, TimeZoneInfo.FindSystemTimeZoneById(timeZone).GetUtcOffset(DateTime.Now));
 
             var result = await typeReader.ReadAsync(_contextMock, input, _serviceProviderMock);
 
