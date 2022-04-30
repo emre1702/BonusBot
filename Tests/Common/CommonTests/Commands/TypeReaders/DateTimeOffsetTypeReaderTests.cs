@@ -86,7 +86,7 @@ namespace CommonTests.Commands.TypeReaders
             var typeReader = new DateTimeOffsetTypeReader();
             SetBonusGuildMock("CET");
             var timeZone = TZConvert.GetTimeZoneInfo("CET");
-            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, timeZone.GetUtcOffset(DateTime.Now));
+            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, timeZone.GetUtcOffset(DateTime.UtcNow));
 
             var result = await typeReader.ReadAsync(_contextMock, input, null);
 
@@ -101,7 +101,7 @@ namespace CommonTests.Commands.TypeReaders
             var typeReader = new DateTimeOffsetTypeReader();
             SetBonusGuildMock("CET");
             var timeZone = TZConvert.GetTimeZoneInfo("CET");
-            var expected = new DateTimeOffset(2021, 4, 24, 15 + DateTimeOffset.Now.Offset.Hours, 34, 0, timeZone.GetUtcOffset(DateTime.Now));
+            var expected = new DateTimeOffset(2021, 4, 24, 15 + DateTimeOffset.Now.Offset.Hours, 34, 0, timeZone.GetUtcOffset(DateTime.UtcNow));
 
             var result = await typeReader.ReadAsync(_contextMock, input, null);
 
@@ -116,7 +116,7 @@ namespace CommonTests.Commands.TypeReaders
             var typeReader = new DateTimeOffsetTypeReader();
             SetBonusGuildMock("CET");
             var timeZone = TZConvert.GetTimeZoneInfo("CET");
-            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, timeZone.GetUtcOffset(DateTime.Now));
+            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, timeZone.GetUtcOffset(DateTime.UtcNow));
 
             var result = await typeReader.ReadAsync(_contextMock, input, null);
 
@@ -131,7 +131,7 @@ namespace CommonTests.Commands.TypeReaders
             var typeReader = new DateTimeOffsetTypeReader();
             SetBonusGuildMock("America/Whitehorse");
             var timeZone = TZConvert.GetTimeZoneInfo("America/Whitehorse");
-            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, timeZone.GetUtcOffset(DateTime.Now));
+            var expected = new DateTimeOffset(2021, 4, 24, 15, 34, 0, timeZone.GetUtcOffset(DateTime.UtcNow));
 
             var result = await typeReader.ReadAsync(_contextMock, input, null);
 
