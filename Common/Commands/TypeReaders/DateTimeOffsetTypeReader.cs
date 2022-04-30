@@ -5,7 +5,6 @@ using Discord.Commands;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
-using TimeZoneConverter;
 
 namespace BonusBot.Common.Commands.TypeReaders
 {
@@ -48,7 +47,8 @@ namespace BonusBot.Common.Commands.TypeReaders
 
             var timeZoneSetting = await guild.Settings.Get<string>(typeof(CommonSettings).Assembly, CommonSettings.TimeZone);
             if (timeZoneSetting is null) return null;
-            if (!TZConvert.TryGetTimeZoneInfo(timeZoneSetting, out var timeZoneInfo)) return null;
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(timeZoneSetting);
+            if (timeZoneInfo is null) return null;
 
             var timeZoneOffset = timeZoneInfo.GetUtcOffset(DateTime.Now);
 

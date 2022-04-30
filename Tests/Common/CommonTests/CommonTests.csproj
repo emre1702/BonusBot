@@ -8,6 +8,8 @@
     <AssemblyName>BonusBot.Tests.CommonTests</AssemblyName>
 
     <RootNamespace>BonusBot.Tests.CommonTests</RootNamespace>
+
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
